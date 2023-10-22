@@ -1,0 +1,33 @@
+{% extends 'scraper/base_scraper.html' %}
+
+{% block title  %}
+    UN{{block.super}}
+{% endblock%}
+
+ 
+{% block content %}
+
+<div class="row">
+    {% for country in object_list %}
+
+    <div class="col-md-3">
+        <a href="{{country.get_absolute_url}}" value="{{country.name}}"><h1>{{ country.name }}</h1></a>
+        <div class="card">
+            <div class="imgBx">
+                <a href="{{country.get_absolute_url}}" value="{{country.name}}">
+                    <img src="{{ country.flag.url}}" class="account-img" alt="images">
+                </a>
+            </div>
+            <div class="details">
+                <a href="{{ country.url }}"target="_blank"> url<br></a>
+                <a href="{{ country.site }}" target="_blank"> CPI site<br></a>
+                            <br>
+            </div>
+        </div>
+
+
+        <!--article-->
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

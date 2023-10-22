@@ -1,0 +1,14 @@
+{% extends 'scraper/base_scraper.html' %}
+
+{% block title  %}
+    UN{{block.super}}
+{% endblock%}
+
+
+{% block content %}
+
+{% for obj in object_list  %}
+    {{obj.name}}
+{% endfor %}
+
+{% endblock %}

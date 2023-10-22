@@ -1,0 +1,70 @@
+{% extends 'scraper/base_scraper.html' %}
+
+{% block title  %}
+    {{object.name}}
+{% endblock%}
+
+{% block content  %}
+{% if messages %}
+
+    {% for message in messages %}
+	<div class="container-fluid p-0">
+		<div class="alert {{ message.tags }} alert-dismissible" role="alert">
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    			<span aria-hidden="true">&times;</span>
+			</button>
+			{{ message }}
+		</div>
+	</div>
+    {% endfor %}
+
+{% endif %}
+{% if country.data_set.all  %}
+	<div class="container mt-3 mb-3 ">
+		<h1>{{country.name}} CPI Data</h1>
+		<table class="container">
+			<thead>
+				<!--tr>
+					<th><h1></h1></th>
+					<th><h1></h1></th>
+					<th><h1 style="text-align:center">CPI Data</h1></th>
+					<th><h1></h1></th>
+					<th><h1></h1></th>
+				</tr-->
+				<tr>
+					<th><h1>Year</h1></th>
+					<th><h1>Month</h1></th>
+					<th><h1>PDF</h1></th>
+					<th><h1>Excel</h1></th>
+					<th><h1>Ms Word</h1></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% if country.name == 'Niger' or country.name == 'Benin' %}
+					{% for data in country.data_set.all %}
+						<tr>
+							<td><a href="#" target="_blank">{{ data.year}}</a></td>
+							<td><a href="#" target="_blank">{{ data.month}}</a></td>
+							<td><a href="{{data.CPI_pdf.url}} " target="_blank">{{ data.pdf_Filename }}</a></td>
+							<td><a href="{{data.CPI_excel.url}} " target="_blank">{{ data.excel_Filename }}</a> </td>
+							<td><a href="{{data.CPI_doc.url}} " target="_blank">{{ data.doc_Filename }}</a> </td>
+
+						</tr>
+					{% endfor %}
+				{% else %}
+					{% for data in country.data_set.all %}
+					<tr>
+						<td><a href="#" target="_blank">{{ data.year}}</a></td>
+						<td><a href="#" target="_blank">{{ data.month}}</a></td>
+						<td><a href="{{data.CPI_pdf.url}} " target="_blank">{{ data.pdf_Filename }}</a></td>
+						<td><a href="{{data.CPI_excel.url}} " target="_blank">{{ data.excel_Filename }}</a> </td>
+						<td>  </td>
+
+					</tr>
+					{% endfor %}
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+{% endif %}
+{% endblock %}
