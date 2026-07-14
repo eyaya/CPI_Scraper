@@ -1,0 +1,31 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Zimbabwe National Statistics Agency (ZimStat)
+frequency: monthly
+verify_ssl: false
+
+# --- discover ---
+# ZimStat's Consumer Price Index page lists monthly workbooks; since 2024 the
+# headline is the Weighted (blended) CPI, 'CPI_Weighted_<MM>_<YYYY>.xls'. We read
+# the page via the WordPress REST API and take the newest dated file.
+discover:
+  method: latest_month_file
+  page_url: "https://www.zimstat.co.zw/wp-json/wp/v2/pages?slug=consumer-price-index"
+  url_contains:
+    - "CPI_Weighted_"
+    - ".xls"
+
+parser: zimbabwe_zimstat
+geography: National
+expect_divisions: 13          # All Items + 12 COICOP-1999 divisions
+
+notes: >
+  Weighted (blended) CPI, base April 2024 = 100 — Zimbabwe's headline since the
+  2024 currency change. The 'CPI 2' sheet is a wide monthly index series; we
+  capture the 12 COICOP-1999 divisions + All Items as index for every reported
+  month. Rows are matched by keyword on first occurrence so the analytical
+  Food / Non-food aggregates never shadow a division. (USD-only and legacy ZWL
+  workbooks are also published; we take the Weighted headline.)

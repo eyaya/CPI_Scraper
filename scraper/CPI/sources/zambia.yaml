@@ -1,0 +1,31 @@
+country: Zambia
+iso3: ZMB
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats)
+frequency: monthly
+verify_ssl: false            # ZamStats serves an incomplete TLS certificate chain
+
+# --- discover ---
+# ZamStats posts a monthly bulletin ('The Monthly', Vol NNN) newest-first on its
+# monthly-bulletin page; the CPI-by-division table lives inside it.
+discover:
+  method: page_scrape
+  page_url: "https://www.zamstats.gov.zm/monthly-bulletin/"
+  link_contains:
+    - "monthly"
+    - ".pdf"
+
+parser: zambia_zamstats
+geography: National
+expect_divisions: 13          # All items + 12 COICOP-1999 divisions
+
+notes: >
+  'The Monthly' bulletin (a ~48-page general release) carries 'Table 1.2: Consumer
+  Price Index by Division' — a wide monthly index series (from 2022) with the
+  divisions as columns and months as rows. Divisions are COICOP-1999 (12 + All
+  items) in a non-standard column order, so columns are matched to codes by a
+  header keyword (a header wrap even leaves a phantom empty column, skipped). The
+  year sits on each January row and is carried forward. Index levels only; base as
+  published by ZamStats (not restated in the bulletin table).

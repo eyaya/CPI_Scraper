@@ -1,0 +1,29 @@
+country: Rwanda
+iso3: RWA
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: National Institute of Statistics of Rwanda (NISR)
+frequency: monthly
+verify_ssl: false
+
+# --- discover (two hops) ---
+# The current-year survey page lists one publication PAGE per month; each hosts
+# the PDF in English / Kinyarwanda / French. Pick the newest month's page, then
+# the English PDF.
+discover:
+  method: latest_dated_pdf
+  index_url: https://www.statistics.gov.rw/data-sources/surveys/Consumer-Price-Index/consumer-price-index-cpi-{year}
+  link_contains:
+    - "consumer-price-index-cpi-"
+  pdf_contains: "consumer price index"
+
+parser: rwanda_nisr_cpi
+geography: National           # 'All Rwanda' aggregate (Urban/Rural also in PDF)
+expect_divisions: 13          # General index + 12 COICOP-1999 divisions
+
+notes: >
+  NISR publishes index LEVELS by division (base Feb 2014 = 100) in 'Annex 3:
+  All Rwanda'. Each report carries three index columns (prev year, prev month,
+  current) so one PDF yields three months. COICOP-1999 (12 divisions + general),
+  so expect_divisions = 13. Urban (Annex 1) and Rural (Annex 2) also available.

@@ -1,0 +1,32 @@
+country: Senegal
+iso3: SEN
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+frequency: monthly
+verify_ssl: false            # ANSD serves an incomplete TLS certificate chain
+
+# --- discover ---
+# The IHPC indicator page links a monthly 'Série de données IHPC' workbook (the
+# only .xlsx on the page; the per-month links are PDFs). We scrape that link.
+discover:
+  method: page_scrape
+  page_url: "https://www.ansd.sn/Indicateur/indice-harmonise-des-prix-la-consommation-ihpc-base-100-en-2023"
+  link_contains:
+    - "ihpc"
+    - ".xlsx"
+
+parser: waemu_ihpc
+geography: National
+expect_divisions: 14          # All items (Global) + 13 COICOP-2018 divisions
+
+notes: >
+  Harmonised CPI (IHPC) — the WAEMU/UEMOA methodology shared across 8 member
+  states, so this parser should port to Côte d'Ivoire, Benin, Mali, etc. The
+  workbook's 'DIV' sheet is a wide monthly index series (Jan 1998 -> latest,
+  spliced to base 2023 = 100) by COICOP-2018 division (codes 01..13) plus the
+  'Global' all-items row (00). Index levels only (no rates in the sheet; YoY/MoM
+  derivable). The workbook also has group- and sub-index sheets (IND_GRP,
+  Nom Sec: produits frais / énergie / local / importé …) for later. French
+  labels kept as published.

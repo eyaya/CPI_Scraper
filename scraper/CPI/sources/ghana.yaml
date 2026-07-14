@@ -1,0 +1,48 @@
+country: Ghana
+iso3: GHA
+indicator: CPI
+tier: 1                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+frequency: monthly
+verify_ssl: false
+
+# --- API (PxWeb / JSON-stat2) ---
+# GET the table_url for metadata; the collector POSTs this selection and keeps
+# the raw json-stat2 response as the retained source document.
+api:
+  table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Macroeconomic Indicators/Prices and Inflation/cpi.px"
+  save_as: Ghana_CPI_statsbank.json
+  dimensions:
+    Indicator:
+      - "Consumer Price Index"            # -> measure index
+      - "Year-on-year inflation (%)"      # -> inflation_yoy
+      - "Month-on-month inflation (%)"    # -> inflation_mom
+    Region: ["Ghana"]                     # national
+    Source: ["All sources"]
+    Product:                              # All items + 13 COICOP-2018 divisions
+      - "All products"
+      - "Food and non-alcoholic beverages"
+      - "Alcoholic beverages, tobacco and narcotics"
+      - "Clothing and footwear"
+      - "Housing, water, electricity, gas and other fuels"
+      - "Furnishings, household equipment and routine household maintenance"
+      - "Health"
+      - "Transport"
+      - "Information and communication"
+      - "Recreation, sport and culture"
+      - "Education services"
+      - "Restaurants and accommodation services"
+      - "Insurance and financial services"
+      - "Personal care, social protection and miscellaneous goods and services"
+    Month: ["*"]                          # full available history
+
+parser: ghana_pxweb_cpi
+geography: National
+expect_divisions: 14          # All items + 13 COICOP-2018 divisions
+
+notes: >
+  Ghana GSS StatsBank runs PxWeb, which exposes a JSON API (Tier 1). The cpi.px
+  table gives index level AND YoY/MoM inflation, by COICOP-2018 division and
+  region, with long history. StatsBank tends to lag the monthly PDF press
+  release by a few months, but provides a clean structured series.

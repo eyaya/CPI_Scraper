@@ -1,0 +1,31 @@
+country: Niger
+iso3: NER
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+frequency: monthly
+verify_ssl: false            # INS serves an incomplete TLS certificate chain
+
+# --- discover ---
+# INS posts the monthly IHPC note (IHPCB2023_<Month>_<Year>_VF.pdf) and links the
+# newest from its home page. We scrape the first such link.
+discover:
+  method: page_scrape
+  page_url: "https://www.stat-niger.org/"
+  link_contains:
+    - "ihpcb2023"
+    - ".pdf"
+
+parser: niger_ins_ihpc
+geography: National
+expect_divisions: 14          # Indice global (All items) + 13 COICOP-2018 divisions
+
+notes: >
+  WAEMU/UEMOA harmonised CPI (IHPC, base 2023 = 100). INS publishes only a monthly
+  PDF note (Tier 3). 'Tableau 1' reads as text: per COICOP-2018 division (codes
+  1..13) and the 'Indice global' row (00), a weight, the recent monthly index
+  columns and 1-/3-/12-month variations. The headers omit the year, so the report
+  month is taken from the title; we emit index + inflation_mom + inflation_yoy for
+  it. Weights carry thousands spaces; French labels (fixed COICOP map). A by-region
+  breakdown is also in the note for later.
