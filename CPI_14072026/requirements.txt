@@ -1,0 +1,7 @@
+pandas>=2.0
+openpyxl>=3.1
+requests>=2.31
+beautifulsoup4>=4.12
+PyYAML>=6.0
+pdfplumber>=0.11   # Tier-3 PDF table/text extraction (e.g. Kenya KNBS)
+xlrd>=2.0          # legacy .xls sources (Burkina, Benin, Zimbabwe, Mozambique)

@@ -1,0 +1,30 @@
+country: Nigeria
+iso3: NGA
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: National Bureau of Statistics (NBS)
+frequency: monthly
+
+# --- discover ---
+# NBS publishes one file per month on its NADA microdata catalog (catalog 154).
+# Recent months are ZIPs (PDF report + Excel tables); the download <id> in the
+# URL increases each month, so "latest = largest id" among data files.
+discover:
+  method: catalog_latest
+  page_url: https://microdata.nigerianstat.gov.ng/index.php/catalog/154
+  include_ext: [".zip", ".xlsx"]         # data-bearing files (skip standalone PDFs)
+  exclude_contains: ["highlight", "rebasing"]
+  base_url: https://microdata.nigerianstat.gov.ng/index.php
+  inner_suffix: ".xlsx"
+
+parser: nbs_nigeria_cpi
+geography: National           # 'Composite' national index (urban + rural)
+expect_divisions: 14          # All items + 13 COICOP-2018 divisions
+
+notes: >
+  Nigeria rebased its CPI in 2024 (base 2024 = 100, COICOP 2018, 13 divisions).
+  The monthly workbook's 'Table2' sheet holds the national time series from
+  Jan 2023. Divisions are matched by header text (cols ~14-26). The retained
+  source zip also contains the monthly CPI PDF report. State-level (Table-5)
+  and urban/rural (Table3/Table4) breakdowns are available for later.

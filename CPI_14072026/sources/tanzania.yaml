@@ -1,0 +1,33 @@
+country: Tanzania
+iso3: TZA
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+frequency: monthly
+verify_ssl: false            # NBS serves an incomplete TLS certificate chain
+
+# --- discover ---
+# The (year-specific) CPI topic page lists each month's documents newest-first;
+# the main file is 'CPI <Month> <Year>' (…CPI Release…pdf), distinct from the
+# 'CPI Summary' and 'Inflation Rates' files. We scrape the first 'Release' PDF.
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.go.tz/statistics/topic/consumer-price-index-2026"
+  link_contains:
+    - "release"
+    - ".pdf"
+
+parser: tanzania_nbs
+geography: National
+expect_divisions: 14          # All items + 13 COICOP-2018 divisions
+
+notes: >
+  National CPI (NCPI, base Jan–Dec 2020 = 100, COICOP-2018). The monthly release's
+  'Main Groups' table gives, per division, the index for three months (year-ago,
+  previous, current) plus 1-/12-month % changes; we emit the index for all three
+  dated columns (so one release yields three months). pdfplumber collapses the 13
+  division rows into one row of newline-stacked cells, which we split and key on
+  S/N = division number (canonical COICOP-2018 labels). The discover page is
+  year-specific (…-2026) and will need bumping each January. Supplementary indices
+  (Core, Non-Core, Energy, …) are in the release for later.

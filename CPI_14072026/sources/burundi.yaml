@@ -1,0 +1,31 @@
+country: Burundi
+iso3: BDI
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique du Burundi (INSBU)
+frequency: monthly
+verify_ssl: false
+
+# --- discover ---
+# Burundi's NSO (formerly ISTEEBU, now INSBU — insbu.bi) is a SPA over a Laravel
+# API; /api/publications lists the monthly reports with a document_url. We take the
+# newest 'Indice des Prix à la Consommation' publication.
+discover:
+  method: insbu_latest
+  api_url: "https://api.insbu.bi/api/publications"
+  title_contains: "Indice des Prix à la Consommation"
+  save_as: INSBU_IPC_Burundi.pdf
+
+parser: burundi_insbu
+geography: National
+expect_divisions: 13          # Ensemble + 12 COICOP-1999 functions
+
+notes: >
+  Monthly IPC report, base 100 = 2016/2017, COICOP-1999. 'Tableau 1' gives 'TOUS
+  LES PRODUITS' (code 0) + the 12 functions with three monthly indices then three
+  inflation columns (moyenne annuelle, mensuel, glissement annuel), so current
+  index = nums[-4], MoM nums[-2], YoY nums[-1]. Functions carry a leading code
+  digit (wrapped 04/05 show only the digit); dotted sub-items and analytical
+  aggregates are skipped. Report month from the header. The old ISTEEBU domain
+  (isteebu.bi) is now a parked/hijacked domain — insbu.bi is the live NSO site.

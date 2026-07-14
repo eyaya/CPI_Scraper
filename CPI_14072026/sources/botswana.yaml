@@ -1,0 +1,32 @@
+country: Botswana
+iso3: BWA
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Statistics Botswana
+frequency: monthly
+verify_ssl: false            # Statistics Botswana serves an incomplete TLS chain
+
+# --- discover ---
+# The prices-statistics page lists the monthly 'Consumer Price Index <Month>
+# <Year>' report newest-first; we scrape the first one.
+discover:
+  method: page_scrape
+  page_url: "https://www.statsbots.org.bw/prices-statistics"
+  link_contains:
+    - "consumer price index"
+    - ".pdf"
+
+parser: botswana_stats
+geography: National
+expect_divisions: 13          # All items + 12 COICOP-1999 groups
+
+notes: >
+  Statistics Botswana's monthly CPI report (base December 2018 = 100). 'Table 3:
+  National Consumer Price Group And Section Indices' gives the index by COICOP-1999
+  group for several months (this month, last month, 3/6/12 months ago); we emit
+  the index for each dated column. The table's column headers render right-to-left
+  in the PDF, so we reverse them to read the month/year; the table spans two pages
+  (the continuation's period columns are carried forward). Section (sub-group) rows
+  1.1, 1.2 … are skipped. Region breakdowns (Cities/Urban/Rural) are in the report
+  for later.

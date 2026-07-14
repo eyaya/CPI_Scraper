@@ -1,0 +1,30 @@
+country: Mauritius
+iso3: MUS
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Statistics Mauritius
+frequency: monthly
+verify_ssl: false            # govmu.org serves an incomplete TLS certificate chain
+
+# --- discover ---
+# The Monthly-CPI page lists the notes (CPI_M_<Mon><YY>_<ddmmyy>.pdf) newest-first;
+# we scrape the first one.
+discover:
+  method: page_scrape
+  page_url: "https://statsmauritius.govmu.org/Pages/Statistics/Monthly/Monthly-CPI.aspx"
+  link_contains:
+    - "cpi_m"
+    - ".pdf"
+
+parser: mauritius_cpi
+geography: National
+expect_divisions: 14          # All Divisions (All items) + 13 COICOP-2018 divisions
+
+notes: >
+  Statistics Mauritius' monthly CPI note (base Jan–Dec 2023 = 100). Its 'Division'
+  table extracts cleanly: per COICOP-2018 division (1..13) and 'All Divisions'
+  (00), the index for the previous and current month — so one note yields two
+  months (history accumulates across runs). Index levels only. Labels use the
+  canonical COICOP-2018 map. A by-group/sub-index breakdown is also in the note
+  for later.

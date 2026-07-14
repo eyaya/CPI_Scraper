@@ -1,0 +1,31 @@
+country: Guinea
+iso3: GIN
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+frequency: monthly
+verify_ssl: false            # stat-guinee.org serves an incomplete TLS certificate chain
+
+# --- discover ---
+# INS links the latest monthly 'Note_INHPC_<Mois>_<Année>_Guinee' PDF from its home page.
+discover:
+  method: page_scrape
+  page_url: "https://www.stat-guinee.org/"
+  link_contains:
+    - "Note_INHPC"
+    - ".pdf"
+# no save_as: the discovered filename carries the French month the parser needs.
+
+parser: guinea_ins
+geography: National
+expect_divisions: 13          # INDICE GLOBAL + 12 COICOP-1999 functions
+
+notes: >
+  Harmonised CPI (INHPC), UEMOA methodology, base 100 en 2019. 'Tableau 2 :
+  Evolution … par fonction' — one row per COICOP-1999 function (Roman I–XII) +
+  INDICE GLOBAL. Columns: Poids, four monthly indices, MoM %, YoY %, contribution.
+  Poids is an integer (often a thousands-space, '10 000') so matching comma
+  decimals only drops it; front-anchored current index = nums[3], MoM nums[4],
+  YoY nums[5]. Labels wrap across up to three lines (carried forward). We scope to
+  the national 'par fonction' page and emit index + inflation_mom + inflation_yoy.

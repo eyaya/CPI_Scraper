@@ -1,0 +1,30 @@
+country: Libya
+iso3: LBY
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Central Bank of Libya (CBL) — republishing the Census & Statistics Dept. CPI
+frequency: monthly
+verify_ssl: false
+
+# --- discover ---
+# The NSO (Census & Statistics Dept.) has no reachable site; the CBL's CPI page
+# lists the current 'Consumer Price Index …base-year-2024.pdf' newest-first.
+discover:
+  method: page_scrape
+  page_url: "https://cbl.gov.ly/en/eco_indicators_category/consumer-price-index/"
+  link_contains:
+    - "Consumer-Price-Index"
+    - ".pdf"
+
+parser: libya_cbl
+geography: National
+expect_divisions: 13          # Overall + 12 COICOP-1999 groups
+
+notes: >
+  Central-bank source. The CBL republishes the official CPI of Libya's Census &
+  Statistics Department (the NSO) without re-estimating it. 'Consumer Price Index
+  by Commodity Groups', base 2024 = 100, is a wide monthly index series (Jan 2024–)
+  by COICOP-1999 group + Overall; columns are a fixed order (mapped by position),
+  and the trailing Overall annual-inflation column is emitted as inflation_yoy for
+  code 00. Full division-level capture despite Libya having no reachable NSO site.

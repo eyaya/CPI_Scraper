@@ -1,0 +1,28 @@
+country: Mauritania
+iso3: MRT
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Économique (ANSADE)
+frequency: monthly
+verify_ssl: false
+
+# --- discover ---
+# ansade.mr is a SPA over a WordPress backend (admin.ansade.mr); the monthly INPC
+# note is a media item. We query the media API and take the newest dated PDF.
+discover:
+  method: wp_media_latest
+  api_url: "https://admin.ansade.mr/wp-json/wp/v2/media?search=indice&per_page=60&orderby=date&order=desc"
+  name_contains: "Indice-National-des-Prix"
+
+parser: mauritania_ansade
+geography: National
+expect_divisions: 13          # Indice général + 12 COICOP-1999 functions
+
+notes: >
+  Monthly INPC note. 'Tableau 2 : Evolution de l'indice par fonction' gives the 12
+  COICOP-1999 functions (function 02 is 'Tabac et stupéfiants' — no alcohol) +
+  Indice général, each with weight, five monthly indices and four variations
+  (monthly, 3-month, year-on-year, 12-month). We emit current index = nums[-5],
+  MoM nums[-4], YoY (glissement annuel) nums[-2]; sub-item rows (prefixed 'v') are
+  skipped. Report month is read from the note text; the base year is not stated.

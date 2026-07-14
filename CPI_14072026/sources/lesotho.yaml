@@ -1,0 +1,29 @@
+country: Lesotho
+iso3: LSO
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Lesotho Bureau of Statistics (BOS)
+frequency: monthly
+verify_ssl: false            # bos.gov.ls serves an incomplete TLS certificate chain
+
+# --- discover ---
+# BOS links the latest monthly 'CPI_<Month>_<Year>.pdf' from its home page.
+discover:
+  method: latest_dated
+  page_url: "https://www.bos.gov.ls/"
+  link_contains:
+    - "cpi"
+    - ".pdf"
+
+parser: lesotho_bos
+geography: National
+expect_divisions: 13          # Overall CPI + 12 COICOP-1999 divisions
+
+notes: >
+  'Table 1: Monthly Consumer Price Indices by COICOP Divisions' (base
+  Average 2022 = 100). Each row ends with 3 index columns then 1-month and
+  12-month % changes, so the current index is nums[-3], MoM nums[-2], YoY
+  nums[-1]. The weight column may be an integer (Overall CPI = 100).
+  Division 05's label wraps onto its data row (carried forward). We emit
+  index + inflation_mom + inflation_yoy for the report month (from filename).
