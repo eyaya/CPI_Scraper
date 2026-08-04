@@ -1,0 +1,30 @@
+country: Malawi
+iso3: MWI
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: National Statistical Office (NSO)
+frequency: monthly
+verify_ssl: false
+
+# --- discover ---
+# nsomalawi.mw is a Nuxt SPA over a Laravel CMS. The public JSON API lists the
+# monthly CPI 'Stats Flash' posts; we take the latest and pull its index .xlsx
+# attachment (not the year-on-year workbook).
+discover:
+  method: malawi_cms_cpi
+  api_base: "https://cms.nsomalawi.mw"
+  slug_prefix: "consumer-price-index"
+  file_regex: "cpi.*\\.xlsx$"
+  exclude_regex: "yoy"
+
+parser: malawi_nso
+geography: National
+expect_divisions: 13          # All items + 12 COICOP-1999 divisions
+
+notes: >
+  Monthly 'Stats Flash' workbook, base Dec 2021 = 100, with National / Urban /
+  Rural sections. Columns 5–17 are the index for the 12 COICOP-1999 divisions +
+  All items; we emit index for every division and geography plus all-items
+  month-on-month inflation, for every reported month. Discovered through the
+  headless CMS at cms.nsomalawi.mw/api/web (the SPA's own public API).

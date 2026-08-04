@@ -1,0 +1,29 @@
+country: Liberia
+iso3: LBR
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+frequency: monthly
+verify_ssl: false
+
+# --- discover ---
+# LISGIS lists every monthly 'CPI Newsletter' PDF on its price-statistics page;
+# the report month is in the filename, so latest_dated picks the newest.
+discover:
+  method: latest_dated
+  page_url: "https://www.lisgis.gov.lr/pricestats.php"
+  link_contains:
+    - "CPI_Newsletter"
+    - ".pdf"
+
+parser: liberia_lisgis
+geography: National
+expect_divisions: 1           # national all-items CPI series (divisions are chart-only)
+
+notes: >
+  Monthly CPI Newsletter, base Dec 2005 = 100. 'Table 1' gives the national
+  all-items CPI index + month-on-month and year-on-year rates as a 13-month
+  series; we emit index + inflation_mom + inflation_yoy (code 00) for every
+  month in the table. LISGIS publishes the by-division figures only as bar
+  charts (values fused into labels), so they are not extracted.

@@ -1,0 +1,32 @@
+country: Central_African_Republic
+iso3: CAF
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut Centrafricain des Statistiques et des Etudes Economiques et Sociales (ICASEES)
+frequency: monthly
+verify_ssl: false
+
+# --- discover ---
+# icasees.org is Joomla with the 'Edocman' document manager: each monthly IHPC
+# bulletin is a /component/edocman/<slug>/download document. The slug carries a
+# French month + year; we pick the newest and hit its /download route.
+discover:
+  method: edocman_latest
+  index_url: "https://www.icasees.org/"
+  slug_contains: "ihpc-bulletin"
+  base_url: "https://www.icasees.org"
+  save_as: IHPC_Bulletin_CAR.pdf   # the /download route carries no usable filename
+
+parser: car_icasees
+geography: National
+expect_divisions: 13          # INDICE NATIONAL + 12 COICOP-1999 functions
+
+notes: >
+  CEMAC harmonised CPI (IHPC), base 100 = 2019. The national table lists the 12
+  COICOP-1999 functions + INDICE NATIONAL, with detailed sub-items interleaved and
+  the table spanning two pages: eight numbers per function row (five monthly indices
+  + 1-/3-/12-month variations), so current index = nums[-4], MoM nums[-3], YoY
+  nums[-1]. Wrapped-function labels are matched on a prev+own+next window while
+  sub-items are matched on their own label, so the two never collide. Report month
+  is read from the bulletin text.

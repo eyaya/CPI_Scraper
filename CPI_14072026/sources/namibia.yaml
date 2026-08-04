@@ -1,0 +1,31 @@
+country: Namibia
+iso3: NAM
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Namibia Statistics Agency (NSA)
+frequency: monthly
+
+# --- discover (two hops) ---
+# The CPI-bulletin category archive lists, newest-first, a monthly 'Excel Tables'
+# *document page*; that page hosts the actual .xlsx. We take the newest Excel
+# Tables page, then the workbook on it.
+discover:
+  method: two_hop_scrape
+  index_url: "https://nsa.org.na/document-category/namibia-cpi-bulletin/"
+  page_link_contains:
+    - "excel tables"
+  file_link_contains:
+    - ".xlsx"
+
+parser: namibia_nsa
+geography: National
+expect_divisions: 13          # All items + 12 COICOP-1999 divisions
+
+notes: >
+  Rich Tier-2 source: the workbook's 'Tab 2' / 'Tab 3' / 'Tab 4' sheets are wide
+  monthly time series (from 2002, base Dec. 2012 = 100) giving, by COICOP-1999
+  division, the index level, month-on-month % and year-on-year %. We emit all
+  three. Sub-groups (Food, Bread and cereals, …) are interleaved with a blank
+  code and skipped. Zonal CPIs (a separate Annex workbook) are available for
+  later. Labels kept as published (English).

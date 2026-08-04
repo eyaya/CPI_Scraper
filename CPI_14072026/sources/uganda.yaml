@@ -1,0 +1,33 @@
+country: Uganda
+iso3: UGA
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Uganda Bureau of Statistics (UBOS)
+frequency: monthly
+verify_ssl: false            # UBOS serves an incomplete TLS certificate chain
+
+# --- discover ---
+# UBOS posts a monthly 'CPI Excel Tables' workbook. The statistics archive lists
+# every release with '<Stat> <Month> <Year>' link text; we match the CPI Excel
+# ('cpi' is not a substring of 'CIPI'/'PPI') and take the newest by date.
+discover:
+  method: latest_dated
+  page_url: "https://www.ubos.org/explore-statistics/30/"
+  link_contains:
+    - "cpi"
+    - "excel"
+
+parser: ubos_uganda_cpi
+geography: National           # 'Division' sheet also carries 10 urban centres
+expect_divisions: 14          # All items + 13 COICOP-2018 divisions
+
+notes: >
+  Rich Tier-2 source: the workbook's 'Division' sheet is a wide monthly time
+  series (Jul 2017 -> latest, base 2016/17 = 100). It stacks index levels,
+  annual % (YoY) and monthly % (MoM) both by COICOP-2018 division (national) and
+  by urban centre (Kampala High/Middle/Low Income, Masaka, Mbarara, Jinja,
+  Mbale, Gulu, Arua, Fortportal). We emit all three measures for the national
+  divisions (codes 00..13; division numbers map straight to COICOP-2018) and the
+  All-items series for each centre (keyed on the `geography` column). The
+  'Decomposed' sheet (elementary items / core index) is available for later.
