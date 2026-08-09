@@ -1,0 +1,33 @@
+country: Algeria
+iso3: DZA
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Office National des Statistiques (ONS)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ONS links its 'Comptes économiques' national-accounts PDF from its home page;
+# the filename carries the year range. We scrape the first such link.
+discover:
+  method: page_scrape
+  page_url: "https://www.ons.dz/"
+  link_contains:
+    - "comptes_econo"
+    - ".pdf"
+
+parser: algeria_ons_gdp
+geography: National
+
+notes: >
+  ONS Algeria 'Comptes économiques' annual national accounts (PDF). We extract the
+  GDP summary: GDP (PIB) by the expenditure approach (household & government final
+  consumption, gross fixed capital formation, change in inventories, exports,
+  imports) and by the income approach (compensation of employees, net taxes on
+  production, gross operating surplus / mixed income) — annual, at current prices,
+  in millions of dinars (DZD). Read line-by-line from the summary page (the
+  detailed by-branch tables don't extract cleanly). Verified: PIB 2024 = 36.1tn DA,
+  and both the expenditure and income identities sum exactly to PIB. GNI is
+  excluded; the constant-price / by-branch detail is a later pass. Everything as
+  published; nothing derived.

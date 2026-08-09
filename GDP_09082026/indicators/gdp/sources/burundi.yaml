@@ -1,0 +1,37 @@
+country: Burundi
+iso3: BDI
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique du Burundi (INSBU/ISTEEBU)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# insbu.bi is a SPA over a Laravel API at api.insbu.bi/api/publications (same API as
+# the CPI source). We take the newest 'Comptes Nationaux Trimestriels' note.
+discover:
+  method: insbu_latest
+  api_url: "https://api.insbu.bi/api/publications"
+  title_contains: "Comptes Nationaux Trimestriels"
+  save_as: "INSBU_Comptes_Nationaux_Trimestriels.pdf"
+
+parser: burundi_insbu_gdp
+geography: National
+
+notes: >
+  INSBU Burundi quarterly national-accounts note (CNT PDF, French), production
+  approach by branch of activity, chained volumes referenced to 2005 (SCN 1993).
+  The annex tables have no ruling lines and wrap the branch labels across the lines
+  above/below their figures, so pdfplumber's default extractor fails; the parser
+  uses the TEXT-based table strategy and reconstructs each value row's label from
+  the 'sandwich' of text cells above/below it. Captured: the two tables that parse
+  completely and reconcile at PIB — T5 real GDP growth rates (%) by branch and T4
+  structure of GDP at current prices (shares %, hierarchical sector + sub-branch),
+  quarterly (8 quarters, currently 2024Q2-2026Q1). Verified: PIB real growth 2026-Q1
+  = 3.4% (range 3.1-5.2% over the window), PIB share = 100. LIMITATIONS: the level
+  tables (PIB volumes / courant, billion BIF) come out only partially from this
+  wrapped PDF and are DEFERRED, with the contribution, nominal-growth and deflator
+  tables; and ~3 of 21 multi-line branch labels (Transports, SIFIM, public
+  administration) remain partial though their values are correct. Everything as
+  published; nothing derived.

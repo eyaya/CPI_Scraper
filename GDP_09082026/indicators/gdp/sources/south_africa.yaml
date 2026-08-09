@@ -1,0 +1,39 @@
+country: South_Africa
+iso3: ZAF
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Statistics South Africa (Stats SA)
+publication_code: P0441
+frequency: quarterly         # annual + quarterly both captured; parser sets per row
+verify_ssl: false            # Stats SA serves an incomplete TLS chain
+
+# --- discover ---
+# The P0441 downloads page lists the current quarter's "GDP Time series" workbook
+# (…GDP Time series Q1 2026_v2.xlsx); the filename carries the quarter, so we just
+# take the single 'GDP Time series' .xlsx link and let the file itself date it.
+# Like the CPI pages, this listing sits behind Incapsula, so both the page fetch
+# and the download use a browser TLS fingerprint (impersonate).
+discover:
+  method: page_scrape
+  page_url: "https://www.statssa.gov.za/?page_id=1854&PPN=P0441"
+  link_contains:
+    - "GDP Time series"
+    - ".xlsx"
+  impersonate: chrome124
+
+parser: statssa_gdp
+geography: Total country
+
+notes: >
+  Stats SA GDP (P0441) time-series workbook. Same H-code layout as the CPI file.
+  We emit every SNA series it publishes: value added by economic activity
+  (production), the expenditure-on-GDP components (final consumption, gross fixed
+  capital formation, change in inventories, exports/imports), the income
+  components (compensation of employees, gross operating surplus + net taxes), and
+  the GDP-at-market-prices aggregate — each at current and constant 2015 prices,
+  annual and quarterly (quarterly split into actual vs seasonally-adjusted-and-
+  annualised), plus the YoY (annual & quarterly) and QoQ (quarterly) percentage
+  changes. Deflator and per-capita are not published in this file (derivable later
+  from current/constant and a population series). The two 'Coe seasonal' sheets
+  (seasonally adjusted compensation of employees) are not separately parsed in v1.

@@ -1,0 +1,39 @@
+country: Morocco
+iso3: MAR
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Haut-Commissariat au Plan (HCP) — Direction de la Comptabilité Nationale
+frequency: quarterly
+
+# --- discover ---
+# HCP publishes each national-accounts indicator as its own one-series Google
+# Sheet (stable sheet ids, updated in place). We pull the GDP-relevant ones: the
+# primary is the headline GDP growth sheet; the rest come as extra_urls. Each
+# save_as name carries the key the parser routes on.
+discover:
+  method: static_url
+  url: "https://docs.google.com/spreadsheets/d/1rRwz9JIJuxW_4ozLE9fbwP_k1LdNsjHqx6T1l7dNS74/export?format=xlsx"
+  save_as: Morocco_GDP_growth.xlsx
+
+extra_urls:
+  - url: "https://docs.google.com/spreadsheets/d/1JSubrJIlOF-KeSsSF5jg6yEU_mtE-KulZV0Zp70Scy8/export?format=xlsx"
+    save_as: Morocco_NonAg_GDP_growth.xlsx
+  - url: "https://docs.google.com/spreadsheets/d/18s9vxHfzLom-yyZz3tt7umtyo4fD7dGPsiNxqA1y83U/export?format=xlsx"
+    save_as: Morocco_Agri_VA_growth.xlsx
+  - url: "https://docs.google.com/spreadsheets/d/1OhImF3mOJg4Ug_XHAM97SJvClXh22pXlNzQh-2lPDl0/export?format=xlsx"
+    save_as: Morocco_GDP_per_capita.xlsx
+  - url: "https://docs.google.com/spreadsheets/d/1wxK1lCZ_09-8ijtZjyyMQuptpfAkM0LTmbzj9cOUEqw/export?format=xlsx"
+    save_as: Morocco_GDP_deflator.xlsx
+
+parser: morocco_hcp_gdp
+geography: National
+
+notes: >
+  HCP's structured national-accounts indicators, each a one-series Google Sheet
+  (stable ids): real GDP growth (YoY, quarterly), non-agricultural GDP growth,
+  agricultural value-added growth, GDP per capita (dirham, annual), and the
+  implicit GDP price deflator change (YoY). Growth series are real. Quarterly
+  periods stamped 'YYYY:Q'. Everything as published by HCP DCN — nothing derived.
+  The detailed by-branch and by-expenditure tables (HCP issues them as PDF
+  reports) and the savings/investment/financing ratios are a later pass.

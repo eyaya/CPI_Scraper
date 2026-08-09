@@ -1,0 +1,44 @@
+country: Somalia
+iso3: SOM
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: csv
+agency: Somalia National Bureau of Statistics (SNBS)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# SNBS publishes national accounts as tidy CSVs on its WordPress media library
+# (same host as the CPI source). Current-price levels are primary; real levels,
+# growth and shares are extras. Update the /uploads/<YYYY>/<MM>/ paths for a newer
+# release (query nbs.gov.so/wp-json/wp/v2/media?search=GDP).
+discover:
+  method: static_url
+  url: "https://nbs.gov.so/wp-content/uploads/2026/07/GDP-Current-Prices.csv"
+
+extra_urls:
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/07/GDP-Real-Table.csv"
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/07/GDP-Growth-Rate-Table.csv"
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/07/GDP-Shares-table.csv"
+
+parser: somalia_snbs_gdp
+geography: National
+
+notes: >
+  SNBS Somalia national accounts, expenditure approach, annual 2019-2025. Somalia
+  is a dollarised economy, so GDP is reported in US dollars (levels in million USD,
+  per-capita in USD). Four tidy CSVs read together (each 'Expenditure items,<years>'
+  with one component per row): GDP-Current-Prices -> current levels;
+  GDP-Real-Table -> constant/real levels (base year not stated in the file, left
+  blank rather than guessed); GDP-Growth-Rate-Table -> real growth %;
+  GDP-Shares-table -> shares %. Components: household & government final
+  consumption, gross fixed capital formation, exports (of which livestock), minus
+  imports; aggregates GDP at purchasers' prices, gross national
+  expenditure/income/disposable income; plus GDP per capita (USD). Verified: 2025
+  GDP at purchasers' prices = 13,234.49 = HFC 16,307.09 + govt 1,162.47 + GFCF
+  2,960.34 + exports 2,688.76 - imports 9,884.17 (US$13.2bn); real growth 2025 =
+  3.1%; per capita 2025 = US$793. The Deflators CSV (a % change, not an index) and
+  the *-Revisions / *-Graph CSVs are left out. No production/income approach; no
+  quarterly. DISCOVER via the SNBS WordPress media (same host as the CPI source);
+  static URLs pinned to the 2026-07 release. Everything as published; nothing
+  derived.

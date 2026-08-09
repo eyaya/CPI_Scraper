@@ -1,0 +1,38 @@
+country: Libya
+iso3: LBY
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Central Bank of Libya (CBL)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# The NSO (Bureau of Statistics & Census) publishes little online, so CBL is the
+# accessible source (as for Libya CPI). Its 'GDP statistics' page lists one
+# downloadable file; we take the link whose href contains the year span.
+discover:
+  method: page_scrape
+  page_url: "https://cbl.gov.ly/en/eco_indicators_category/gdp-statistics/"
+  link_contains:
+    - "2013-2019"
+    - ".pdf"
+  save_as: "CBL_Libya_GDP_2013_2019.pdf"   # the published name is Arabic; give it an ASCII name
+
+parser: libya_cbl_gdp
+geography: National
+
+notes: >
+  Central Bank of Libya 'GDP Statistics 2013-2019', a three-page bilingual PDF
+  (English left, Arabic right), production approach by economic sector, millions of
+  LYD. Page 1 = GDP by sector at constant prices (base 2013), page 2 = at current
+  prices, page 3 = GDP deflator (2013 = 100). Each table has a header row 'No.
+  Economic Sectors 2019 2018 … 2013' (years DESCENDING) then one sector per row
+  (letter code, English label, seven figures, then the Arabic label which is
+  dropped). Verified: in the 2013 base year constant = current for every sector
+  (e.g. Mining 55,673.4) and the deflator = 100.0; 'Total activités' (= GDP) 2013 =
+  112,217 / 2019 = 104,735 million LYD (the oil-driven swings, incl. the 2016
+  trough, are genuine). Units million LYD (levels), index (deflator). This is the
+  latest CBL GDP release (ends 2019); no expenditure/income approach and no
+  quarterly. Central-bank fallback like Libya CPI (libya_cbl). Everything as
+  published; nothing derived.

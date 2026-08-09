@@ -1,0 +1,28 @@
+country: Chad
+iso3: TCD
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique, des Études Économiques et Démographiques (INSEED)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# inseed.ssn-tchad.td is a Node API; /api/publications lists releases with a
+# fichier.url. We take the newest 'Comptes Nationaux Trimestriels (…Trimestre …)'.
+discover:
+  method: inseed_tchad_quarterly
+  api_base: "https://inseed.ssn-tchad.td"
+  title_contains: "COMPTES NATIONAUX TRIMESTRIELS"
+
+parser: chad_inseed_gdp
+geography: National
+
+notes: >
+  INSEED Chad quarterly national accounts (CNT) PDF — a francophone CEMAC note.
+  GDP (PIB) by branch of activity (production approach), quarterly: value levels in
+  chained-volume constant prices (Tableau 1) and current prices (Tableau 3), plus
+  the implicit deflator (Tableau 4, base 2017=100). Units billion XAF (FCFA);
+  French number format. Verified: the deflator equals current/constant × 100
+  exactly (2025-Q4 = 118). The contribution-to-growth table and the trailing growth
+  columns are left for a later pass. Everything as published; nothing derived.

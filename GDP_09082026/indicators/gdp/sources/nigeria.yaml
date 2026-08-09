@@ -1,0 +1,35 @@
+country: Nigeria
+iso3: NGA
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: National Bureau of Statistics (NBS)
+frequency: quarterly
+
+# --- discover ---
+# NBS publishes the quarterly GDP report on its NADA microdata catalog (catalog
+# 147). Recent quarters are ZIPs (PDF report + Excel workbook); the download <id>
+# grows each quarter, so "latest = largest id" among the quarterly-report zips.
+# The 2019-2024 rebased-figures xlsx, the rebasing PDF and the older
+# expenditure/income file are excluded so we pick the current quarterly workbook.
+discover:
+  method: catalog_latest
+  page_url: https://microdata.nigerianstat.gov.ng/index.php/catalog/147
+  include_ext: [".zip"]
+  exclude_contains: ["expenditure", "rebasing", "estimate"]
+  base_url: https://microdata.nigerianstat.gov.ng/index.php
+  inner_suffix: ".xlsx"
+
+parser: nbs_nigeria_gdp
+geography: National
+
+notes: >
+  Nigeria rebased GDP in 2025 (base 2019). The quarterly report workbook holds the
+  PRODUCTION/activity approach: 46 activity sectors + GDP-at-basic-price, net
+  indirect taxes and GDP-at-market-price, at current and 2019-constant prices,
+  with the implicit price deflator and % distribution, plus nominal and real
+  (year-on-year) growth — quarterly from 2024-Q1 and the annual "Total" columns.
+  All taken as published by NBS (deflator and distribution included because NBS
+  publishes them; nothing derived). The expenditure/income-approach workbook, the
+  broad-sector contribution sheet, and the pre-rebasing history are separate NBS
+  products left for a later pass. National only (no state breakdown in this file).

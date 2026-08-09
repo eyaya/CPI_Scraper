@@ -1,0 +1,41 @@
+country: Tunisia
+iso3: TUN
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: html
+agency: Banque Centrale de Tunisie (BCT)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INS Tunisia's national accounts sit behind an interactive portal
+# (dataportal.ins.tn) with no direct files, so we use the BCT statistics site,
+# which renders two GDP tables into stable JSP pages. We download each page's HTML
+# and parse its table. Primary = GDP total, extra = the expenditure breakdown.
+discover:
+  method: static_url
+  url: "https://www.bct.gov.tn/bct/siteprod/tableau_n.jsp?params=PL203150,PL203160&la=an"
+  save_as: "BCT_GDP_total.html"
+
+extra_urls:
+  - url: "https://www.bct.gov.tn/bct/siteprod/tableau_statistique_a.jsp?params=PL203180&la=an"
+    save_as: "BCT_Use_of_GDP.html"
+
+parser: tunisia_bct_gdp
+geography: National
+
+notes: >
+  Banque Centrale de Tunisie GDP statistics, annual, current prices, millions of
+  Tunisian dinars (TND), 2017-2022. Two HTML tables: 'Gross domestic product (GDP)'
+  (the total; its 'Constant prices' row is an empty placeholder and is skipped) and
+  'Use of gross domestic product' (expenditure components: private & government
+  consumption, gross fixed capital formation, change in stocks, exports, imports;
+  the GFCF Administration/Businesses/households sub-rows are unfilled 0.0 and
+  skipped). Verified: GDP at current prices 2022 = 143,767.7 million TND (~US$46bn)
+  and the expenditure components reconcile to it (private 106,028 + government
+  29,242 + GFCF 23,020 + stocks 2,750 + exports 70,968 - imports 88,240 = 143,768).
+  LIMITATIONS: current prices only (the portal's constant-price series is empty), no
+  production/by-sector or growth here, annual only. INS Tunisia (the NSO) publishes
+  richer national accounts but only through the interactive dataportal.ins.tn (no
+  direct files); BCT is the accessible source (like Tunisia CPI uses INS's rendered
+  HTML table). Everything as published; nothing derived.

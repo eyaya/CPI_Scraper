@@ -1,0 +1,41 @@
+country: Liberia
+iso3: LBR
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# LISGIS links its national-accounts workbooks from nationalaccount.php under
+# admin_area/nationalaccount/. Production (primary) and expenditure (extra) are
+# separate files. Update when LISGIS revises to a newer vintage.
+discover:
+  method: static_url
+  url: "https://www.lisgis.gov.lr/admin_area/nationalaccount/GDP_P_Estimates_2016_2024_revised_table.xlsx"
+
+extra_urls:
+  - url: "https://www.lisgis.gov.lr/admin_area/nationalaccount/GDP_E_Estimates_2016_2023_revised_Table.xlsx"
+
+parser: liberia_lisgis_gdp
+geography: National
+
+notes: >
+  LISGIS annual GDP, base year 2016, two workbooks read together — production
+  (primary, 2016-2024) and expenditure (extra, 2016-2023). Each has six tables as
+  sheets: GDP at current prices, GDP at constant prices, Structure of GDP (share),
+  Real Growth Rates, Contribution to growth, Deflators (2016=100). Layout: header
+  row of years (constant/growth years suffixed '*'/'**' for provisional/estimate —
+  stripped), col1 = ISIC/line code, col2 = label, years from col3. KEY GOTCHA: the
+  LEVEL sheets (CP, KP) repeat the full breakdown TWICE — first in million $L
+  (Liberian dollars), then a US$-million FX conversion after a blank gap + repeated
+  header. The USD block is derived, so the parser reads only the first (LRD) block
+  and STOPS at the repeated header; unit = 'LRD million'. Rate/index sheets are a
+  single block and are already percentages/index (no rescaling). Verified: GDP at
+  market prices 2016 = 304,799.9 m$L = GVA 285,173.2 + net taxes 19,626.6; nominal
+  GDP 2024 = 986,175 m$L, real GDP grows 6.0% (2023)/4.0% (2024), deflator 2024 =
+  266.5 (2016=100). Expenditure GDP equals production GDP (both kept as aggregate).
+  No income approach. Quarterly production files exist (Quarterly_GDP-P...xlsx) but
+  that workbook is a sprawl of ad-hoc sheets — deferred to a later pass. Everything
+  as published; nothing derived or FX-converted.

@@ -1,0 +1,32 @@
+country: Mauritius
+iso3: MUS
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Statistics Mauritius
+frequency: quarterly         # quarterly + annual (Yr columns); parser sets per row
+verify_ssl: false
+
+# --- discover ---
+# The National Accounts page lists several Historical-Series quarterly workbooks
+# (HS_QNA_<quarter>_<DDMMYY>.xlsx); pick the newest by the DDMMYY stamp.
+discover:
+  method: latest_datestamp_file
+  page_url: https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/National_Accounts/SB_National_Accounts.aspx
+  link_contains:
+    - "hs_qna"
+    - ".xlsx"
+
+parser: mauritius_gdp
+geography: National
+
+notes: >
+  Statistics Mauritius Quarterly National Accounts (HS_QNA historical series),
+  quarterly from 2013 + the annual 'Yr' column. Production: gross value added by
+  industry group at current basic prices and reference-2018 prices, with implicit
+  deflators and real YoY growth; expenditure: on GDP at current & reference-2018
+  prices, deflators and real YoY growth; plus seasonally-adjusted QoQ GDP growth.
+  Growth is real — verified: Tab 2 growth matches the reference-2018-price levels,
+  not current prices. Units are Rs (MUR) million. Everything as published;
+  nothing derived. The annual HS_NA workbook and the fiscal-year tables (Tab 5/10)
+  are left for a later pass.

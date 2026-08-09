@@ -1,0 +1,40 @@
+country: Comoros
+iso3: COM
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: csv
+agency: Institut National de la Statistique et des Etudes Economiques et Demographiques (INSEED)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSEED's 'Note sur les comptes nationaux' (Strapi CMS, same host as the CPI
+# source) attaches its two chart datafiles as CSVs under /backend/uploads/. These
+# are the only structured GDP data in the note. The filenames carry a content
+# hash; refresh them from the API when a newer note is published:
+#   /backend/api/publications?filters[publicationSlug][$contains]=national&populate[graphics][populate]=*
+discover:
+  method: static_url
+  url: "https://www.inseed-comores.org/backend/uploads/national_accounts_2022_graph1_45e321f068.csv"
+  save_as: "comoros_na_2022_sector_contributions.csv"
+
+extra_urls:
+  - url: "https://www.inseed-comores.org/backend/uploads/national_accounts_2022_graph2_20663d3da5.csv"
+    save_as: "comoros_na_2022_expenditure_contributions.csv"
+
+parser: comoros_inseed_gdp
+geography: National
+
+notes: >
+  INSEED Comoros national accounts ('Note sur les comptes nationaux definitifs
+  2022 et provisoires 2023'), annual 2021-2023. The note is mostly narrative; its
+  only structured data are the two chart CSVs: graph1 = production-side
+  contributions to real GDP growth (primary/secondary/tertiary/net taxes, in
+  percentage points) and graph2 = expenditure-side contributions (final
+  consumption/investment/net exports). The 'pib' column in each is real GDP growth
+  itself (percent, captured once as the PIB aggregate). NO levels are published in
+  this note, so only growth + contributions are captured. Verified: 2023 real
+  growth 3.1% = primary 0.7 + secondary 0.4 + tertiary 1.6 + net taxes 0.3.
+  DISCOVER via the INSEED Strapi CMS (same host as the CPI source); the datafile
+  URLs carry a content hash and are pinned here (refresh from the publications API
+  on a new release). Everything as published; nothing derived.
