@@ -1,0 +1,38 @@
+country: DR_Congo
+iso3: COD
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Banque Centrale du Congo (BCC)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INS-RDC (the NSO) is WAF-blocked, so BCC is the accessible source (as for CPI).
+# The real-sector page embeds the workbook directly at a stable /sites/default/
+# files/statistiques/ path.
+discover:
+  method: static_url
+  url: "https://www.bcc.cd/sites/default/files/statistiques/pib_rdc_1959_-_2020.xlsx"
+
+parser: drc_bcc_gdp
+geography: National
+
+notes: >
+  Banque Centrale du Congo aggregate GDP time series 'PIB RDC 1959-2020' (xlsx).
+  A compact annual table (years down rows) with real GDP (constant, base 2000),
+  real GDP growth, nominal GDP (current), population and per-capita columns, each
+  in both CDF and USD. We keep the NATIVE CDF-denominated, BCC-published series —
+  real GDP level (constant, base 2000; CDF), nominal GDP level (current; CDF),
+  real GDP growth (%), and real GDP per capita (constant, base 2000; CDF) — and
+  skip the USD columns (a BCC FX conversion, consistent with how the Liberia USD
+  block was excluded) and the population column (out of GDP scope). Aggregate only
+  (no activity/expenditure breakdown). Coverage differs by measure because BCC
+  filled the columns over different spans: constant level & growth 1959/1960-2007,
+  nominal level 1985-2020, real per-capita 1960-2020 (194 rows). Old-year OBS
+  cells are text and old nominal cells hold float-noise placeholders (~1e-9) — both
+  handled. Verified: growth 1960 = 1.1% = 510,056.6/504,507.0-1; nominal 2020 =
+  90.2tn CDF (~US$48bn). Units million CDF (levels), CDF (per-capita), percent
+  (growth). Everything as published; the USD conversions are left out, nothing
+  derived. This is a central-bank fallback like DRC CPI (drc_bcc); INS-RDC's own
+  by-branch national accounts remain unreachable.

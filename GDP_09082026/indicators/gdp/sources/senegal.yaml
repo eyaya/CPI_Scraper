@@ -1,0 +1,41 @@
+country: Senegal
+iso3: SEN
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Agence Nationale de la Statistique et de la Demographie (ANSD)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ANSD's renovated national-accounts page hosts the publication workbook under
+# /sites/default/files/<YYYY-MM>/. This is the newest edition (base 2021,
+# 2021-2024, published 30/06/2026). Update the URL when ANSD posts a newer one.
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2026-06/Tableaux-publication_30_06_2026_Base2021.xlsx"
+
+parser: senegal_ansd_gdp
+geography: National
+
+notes: >
+  ANSD Senegal renovated national accounts, base 2021, annual 2021-2024, units
+  million FCFA (XOF). Three of the workbook's sheets are read: 'Les trois approches
+  du PIB' (GDP by the production, expenditure AND income approaches at current
+  prices, with SNA operation codes B.1/B.1b/D.21/P.3/P.5/D.1/B.2...), 'PIB par
+  secteur d'activite' (a stacked sheet of sub-tables: GDP/VA by ISIC activity at
+  current prices, in volume/constant prices referenced to 2021, and annual real
+  growth %; the two trailing untitled sub-tables = structure/contribution are
+  deferred), and 'Agregats' (real GDP growth rate + national-income aggregates
+  RNB/RNDB). Verified: PIB market price 2024 = 22,745,886 = VA 21,097,520 + product
+  taxes 2,234,034 - subsidies 585,668, and the three approaches all equal PIB each
+  year (income: wages 5,126,697 + gross operating surplus 15,595,793 + production
+  taxes 2,733,703 - subsidies 710,307 = 22,745,886); real GDP growth 2024 = 6.3%
+  (oil/gas start-up). NOTE: the constant series is taken from the sector 'volume'
+  table which states 'annee de reference 2021'; the 'Agregats' constant block is
+  mislabelled 'prix constants de 2014' (its values are identical, base 2021) and is
+  skipped to avoid the conflicting label. Per-capita (incl. a USD FX column) and the
+  supply-use TRE sheets are left for a later pass; no quarterly. Everything as
+  published; nothing derived. ANSD site (ansd.sn) is a Drupal site with files under
+  /sites/default/files/ (like BCC DRC); the interactive Knoema portal
+  nso-senegal.opendataforafrica.org stays API-403.

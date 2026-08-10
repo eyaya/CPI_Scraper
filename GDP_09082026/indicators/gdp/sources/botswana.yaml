@@ -1,0 +1,35 @@
+country: Botswana
+iso3: BWA
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Statistics Botswana
+frequency: quarterly
+verify_ssl: false            # Statistics Botswana serves an incomplete TLS chain
+
+# --- discover ---
+# Statistics Botswana lists its 'Gross Domestic Product' quarterly reports
+# newest-first on the national-accounts page; we scrape the first such link. (The
+# report is a large file on a slow server; the download can take ~30s.)
+discover:
+  method: page_scrape
+  page_url: "https://www.statsbots.org.bw/national-accounts"
+  link_contains:                # href is URL-encoded ('…DOMESTIC%20PRODUCT…')
+    - "domestic"
+    - ".pdf"
+
+parser: botswana_gdp
+geography: National
+
+notes: >
+  Statistics Botswana quarterly GDP report (Tier 3 PDF). Statistical annex tables:
+  value added by kind of economic activity at current (Table 1) and constant 2016
+  (Table 3) prices, the percentage change in GVA (Table 4, real), the contribution
+  of GVA to GDP (Table 2, share), and GDP by type of expenditure at current
+  (Table 5) and constant 2016 (Table 6) prices — annual from 2013 and quarterly.
+  Units P (BWP) million. Like the CPI report, activity column headers render
+  right-to-left and INCONSISTENTLY (some cells forward, some reversed, multi-line
+  cells scrambled); each header is oriented by matching national-accounts
+  keywords, so a few multi-word sector labels may keep minor word-order artifacts
+  (values, periods and the GDP totals are exact). Verified: GDP 2024 = P261.6bn,
+  GDP real growth 2025-Q4 = -5.4%. Everything as published; nothing derived.

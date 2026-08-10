@@ -1,0 +1,45 @@
+country: Mauritania
+iso3: MRT
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Agence Nationale de la Statistique et de l'Analyse Demographique et Economique (ANSADE)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ANSADE hosts the national accounts as a numbered set of xlsx on its WordPress
+# media library (admin.ansade.mr/wp-content/uploads/). File 1 (PIB courant) is the
+# primary; files 2-5 (growth, contribution, emplois, emplois growth) are extras.
+# Update the URLs when ANSADE posts a newer '…de-1998-a-<YYYY>' vintage (query the
+# media API: admin.ansade.mr/wp-json/wp/v2/media?search=PIB).
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2023/07/1.PIB-Courant-par-branche-dactivite-de-1998-a-2022.xlsx"
+
+extra_urls:
+  - url: "https://admin.ansade.mr/wp-content/uploads/2023/07/2.Croissance-du-PIB-reel-par-branche-dactivite-de-1998-a-2022.xlsx"
+  - url: "https://admin.ansade.mr/wp-content/uploads/2023/07/3.Contribution-a-la-croissance-du-PIB-reel-de-1998-a-2022.xlsx"
+  - url: "https://admin.ansade.mr/wp-content/uploads/2023/07/4.Emplois-du-PIB-aux-prix-courants-en-millions-de-MRU-de-1998-a-2022.xlsx"
+  - url: "https://admin.ansade.mr/wp-content/uploads/2023/07/5.Croissance-reelle-des-emplois-de-1998-a-2022.xlsx"
+
+parser: mauritania_ansade_gdp
+geography: National
+
+notes: >
+  ANSADE Mauritania national accounts, annual 1998-2022, a numbered set of five
+  one-sheet xlsx (million MRU, the post-2018 new ouguiya throughout): (1) PIB
+  courant par branche d'activite -> production current levels; (2) Croissance du
+  PIB reel par branche -> production real growth; (3) Contribution a la croissance
+  du PIB reel -> production contribution; (4) Emplois du PIB aux prix courants ->
+  expenditure current levels; (5) Croissance reelle des emplois -> expenditure real
+  growth. Each sheet: label in column 1, years across the columns; approach/measure
+  taken from the sheet title ('emplois' -> expenditure, else production;
+  'croissance' -> real growth, 'contribution' -> contribution, else current level).
+  Growth/contribution cells are percent-formatted fractions (x100 to the shown
+  value). Verified: PIB 1998 = 38,304.8 / 2022 = 361,696.3 million MRU (~US$1.0bn /
+  ~US$9.7bn); real GDP growth 2022 = 6.4%. Units million MRU (levels), percent
+  (growth/contribution). No constant-price levels or income approach in this set;
+  no quarterly. DISCOVER via ANSADE WordPress media (same host as the CPI source);
+  static URLs pinned to the 1998-2022 vintage. Everything as published; nothing
+  derived.

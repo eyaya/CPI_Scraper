@@ -1,0 +1,38 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL)
+frequency: annual
+verify_ssl: false            # Stats SL serves an incomplete TLS certificate chain
+
+# --- discover ---
+# Stats SL links the annual GDP report PDF from its home page under
+# /images/StatisticsSL/Documents/gdp/gdp_<YEAR>/. We take the newest by the
+# 4-digit year embedded in the path (currently gdp_2024/GDP-Report_2024...).
+discover:
+  method: latest_year_file
+  page_url: "https://www.statistics.sl/"
+  link_contains:
+    - "gdp"
+    - ".pdf"
+
+parser: sierraleone_stats_gdp
+geography: National
+
+notes: >
+  Stats SL annual GDP report (PDF, English), years 2020-2024. Activities/components
+  in rows, years in columns. We capture six tables: Table 1 GDP at current prices
+  and Table 2 at 2018 constant prices (production, by activity — levels); Table 3
+  shares (%); Table 4 growth rates (real, % YoY); Table 5 deflator (index,
+  2018=100); Table 6 expenditure (current & constant 2018 levels). CURRENCY BREAK:
+  Sierra Leone redenominated the leone in July 2022 (1000 old = 1 new). The report
+  prints the 2020 column of every LEVEL table in OLD leone and 2021-2024 in NEW
+  leone, with no explicit unit label; rather than infer/convert we DROP the
+  ambiguous 2020 level column and keep 2021-2024 (unit 'SLE million'). The unit-free
+  tables (shares, growth, deflator) are kept for all five years. Verified: the
+  expenditure aggregate GDP-E current 2024 = 142,969.1 matches the production-side
+  GDP 142,969.2 (accounting identity). The back-casted historical tables (7-10,
+  2012-2017 in old leone) and the memorandum items are left for a later pass.
+  Everything as published; nothing derived or converted.

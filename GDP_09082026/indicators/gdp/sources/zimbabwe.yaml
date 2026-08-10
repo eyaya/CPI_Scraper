@@ -1,0 +1,31 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Zimbabwe National Statistics Agency (ZimStat)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# ZimStat lists the national-accounts files on one page; the quarterly GDP (ZWG)
+# workbooks carry a DD_MM_YYYY date in the filename, so we take the newest by date.
+discover:
+  method: latest_dmy_file
+  page_url: "https://www.zimstat.co.zw/national-accounts/"
+  link_contains:
+    - "quarterly_gdp"
+    - "zwg"
+    - ".xlsx"
+
+parser: zimbabwe_zimstat_gdp
+geography: National
+
+notes: >
+  ZimStat Quarterly GDP workbook (current ZWG — Zimbabwe Gold — series, 2023
+  onward). GDP by industry (production approach): value levels at current and
+  constant prices, the implied deflator, contributions to growth, and QoQ & YoY
+  real growth. Units ZWG for levels, percent for growth, index for the deflator.
+  Verified: real GDP growth 2025 Q1-Q3 = 5.1% / 11.2% / 9.6% (post-drought
+  recovery). The 2.x tables (2019-2023 in the old ZWL currency) and the provincial
+  GDP files are left for a later pass. Everything as published; nothing derived.

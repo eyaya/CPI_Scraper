@@ -1,0 +1,39 @@
+country: Madagascar
+iso3: MDG
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Institut National de la Statistique (INSTAT)
+frequency: annual            # annual + quarterly both present; parser sets per row
+verify_ssl: false
+
+# --- discover ---
+# INSTAT publishes a monthly 'Tableau de Bord de l'Economie' (TBE) workbook that
+# carries the rebased national accounts. This is TBE no.62 (April 2026). Update the
+# URL for a newer issue (linked from its /p/tableau-de-bord-de-leconomie-… page on
+# instat.mg; the number increments monthly).
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_TBE62_04-2026.xlsx"
+
+parser: madagascar_instat_gdp
+geography: National
+
+notes: >
+  INSTAT Madagascar rebased national accounts, from the monthly 'Tableau de Bord de
+  l'Economie' (TBE) workbook. We read the production value-added-by-branch sheets:
+  Sortie_CN2 (Tableau 5 = VAB by branch at constant prices, Tableau 6 = at current
+  prices, annual 2007-2024) and Sortie_CNT3 (Tableau 11 = VAB by branch at constant
+  prices, quarterly 2018Q4-2022Q4). Units billion Ariary. Codes+branch labels in the
+  first two columns, periods across the row. Verified: Agriculture 2024 constant =
+  3,823 vs current = 11,600 billion Ariary (nominal >> real, as expected under
+  Madagascar inflation). DEFERRED for now: the by-branch growth tables (Tableau
+  7/12) store values at inconsistent scales (some fractions, some percent) with no
+  reliable number-format in this broken workbook to disambiguate — recording them
+  would risk a wrong x100; the aggregate 'COMPTES NATIONAUX' summary sheet reads as
+  #REF! (formula-driven) in values mode; and the expenditure 'origines et emplois'
+  tables (Sortie_CN1) + inflation table are a later pass. Constant-series base year
+  is not stated in the workbook, so base_period is left blank rather than guessed.
+  The workbook has broken chart drawings so the parser opens it read-only.
+  Everything as published; nothing derived. (instat.mg home page is spam-injected
+  but the /documents/upload/main/ file paths and /p/ publication pages are clean.)

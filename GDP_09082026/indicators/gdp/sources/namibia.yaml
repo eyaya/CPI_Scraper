@@ -1,0 +1,35 @@
+country: Namibia
+iso3: NAM
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Namibia Statistics Agency (NSA)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover (two hops) ---
+# The GDP document category lists each release; the newest 'Gross Domestic
+# Product … quarter … tables' document page hosts the Excel tables workbook
+# (Quarter_<n>_<year>_GDP_Tables.xlsx).
+discover:
+  method: two_hop_scrape
+  index_url: https://nsa.org.na/document-category/gdp/
+  page_link_contains:
+    - "gross-domestic-product"
+    - "tables"
+  file_link_contains:
+    - "GDP_Tables"
+    - ".xlsx"
+
+parser: namibia_gdp
+geography: National
+
+notes: >
+  NSA Quarterly GDP tables (transposed layout: Year/Quarter down the rows,
+  industries/expenditure components across the columns). Production (GDP by
+  activity) at current and constant 2015 prices, with percentage shares and real
+  YoY growth; expenditure on GDP at current & constant 2015 prices, with shares
+  and real growth. Units N$ (NAD) million. Growth is real YoY — verified: GDP real
+  growth 2026-Q1 = 2.0% equals the YoY change in constant-price GDP. Quarterly
+  only (2015-Q1 onward); the annual 1980-2024 time-series workbook is a later
+  extension. Everything as published; nothing derived.

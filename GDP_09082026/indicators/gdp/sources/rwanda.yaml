@@ -1,0 +1,33 @@
+country: Rwanda
+iso3: RWA
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: National Institute of Statistics of Rwanda (NISR)
+frequency: quarterly         # annual + quarterly both present; parser sets per row
+verify_ssl: false
+
+# --- discover (two hops, newest quarter) ---
+# The GDP subject page lists each release; the quarterly 'GDP National Accounts
+# q<N>-<year>' page hosts the Excel time-series workbook. Pick the newest quarter
+# and take the .xlsx on that page.
+discover:
+  method: latest_quarter_two_hop
+  index_url: https://www.statistics.gov.rw/statistical-publications/gross-domestic-product
+  page_link_contains:
+    - "gdp-national-accounts-q"
+  file_suffix: ".xlsx"
+
+parser: rwanda_nisr_gdp
+geography: National
+
+notes: >
+  NISR publishes a clean GDP time-series workbook (quarterly from 2006-Q1 + the
+  latest annual). Production approach by ISIC4 activity at current & constant 2024
+  prices, with real growth, contributions to growth, implicit deflators (2024=100)
+  and shares of GDP; plus the expenditure approach (final consumption, gross
+  capital formation, exports/imports) at current & constant prices with deflators,
+  shares and growth. No income approach. Units are billion RWF for levels. NISR
+  percent-formats its ratio cells (growth/shares stored as fractions, e.g. 0.10 =
+  "10%"); the parser reads each cell's number format and records the displayed
+  percentage. Everything is as published — nothing derived.

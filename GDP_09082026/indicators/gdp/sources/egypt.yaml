@@ -1,0 +1,46 @@
+country: Egypt
+iso3: EGY
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Central Bank of Egypt (CBE)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# CAPMAS (the NSO) does not publish GDP (it is the Ministry of Planning's mandate),
+# so we use the Central Bank of Egypt time-series 'GDP' category, which hosts four
+# 'All Years' workbooks (factor cost & by expenditure, each constant & current).
+# These are stable /-/media/ paths; refresh from the CBE GDP time-series page if the
+# links change.
+discover:
+  method: static_url
+  url: "https://www.cbe.org.eg/-/media/project/cbe/listing/time-series/gdp/gdp-at-factor-cost-constant/gdp_factor-cost_constant-prices_quarter_.xlsx"
+  save_as: "CBE_GDP_factor-cost_constant.xlsx"
+
+extra_urls:
+  - url: "https://www.cbe.org.eg/-/media/project/cbe/listing/time-series/gdp/gdp-at-factor-cost-current/gdp_factor-cost_current-prices_quarterly_.xlsx"
+    save_as: "CBE_GDP_factor-cost_current.xlsx"
+  - url: "https://www.cbe.org.eg/-/media/project/cbe/listing/time-series/gdp/gdp-by-expenditure-constant/gdp_expenditure_constant-prices_quarterly_.xlsx"
+    save_as: "CBE_GDP_expenditure_constant.xlsx"
+  - url: "https://www.cbe.org.eg/-/media/project/cbe/listing/time-series/gdp/gdp-by-expenditure-current/gdp_expenditure_current-prices_quarterly_.xlsx"
+    save_as: "CBE_GDP_expenditure_current.xlsx"
+
+parser: egypt_cbe_gdp
+geography: National
+
+notes: >
+  Central Bank of Egypt GDP time series, quarterly. Four workbooks (factor cost =
+  production approach, by expenditure = expenditure approach; each at constant and
+  current prices), one sheet per fiscal year (Egypt's fiscal year runs July-June).
+  Factor-cost sheets split each quarter into Public/Private/Total (we take Total;
+  the public/private split is a later pass) in EGP million; expenditure sheets have
+  one column per quarter in EGP billion (the two reconcile: Total GDP 2,304,719 mn =
+  GDP at factor cost 2,304.7 bn). Fiscal quarters are mapped to CALENDAR quarters
+  (FY Q1 = Jul-Sep -> calendar Q3, Q3 -> next-year Q1, etc.) — a faithful relabel of
+  the same three months, so periods span 2001-Q3..2022-Q3. The constant base year is
+  read from each sheet's 'at YYYY/YYYY prices' caption and varies (Egypt reprices to
+  the previous year and has rebased over time: 2001/02, 2006/07, 2011/12, 2016/17,
+  2021/22). Aggregates captured: Total GDP, GDP at Market Prices, GDP at Factor Cost.
+  CAPMAS (NSO) has no GDP; CBE is the accessible source (like Egypt CPI's CBE
+  fallback). Everything as published; nothing derived.

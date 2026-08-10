@@ -1,0 +1,36 @@
+country: Togo
+iso3: TGO
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Institut National de la Statistique et des Etudes Economiques et Demographiques (INSEED)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSEED publishes national-accounts annexes through a WordPress download-manager
+# (/download/<id>/). The VAB-by-branch workbook is id 3412. Update the id if
+# INSEED re-uploads a newer VAB series.
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/3412/"
+  save_as: "INSEED_Togo_VAB_branches_2007_2015.xlsx"
+
+parser: togo_inseed_gdp
+geography: National
+
+notes: >
+  INSEED Togo national accounts — 'Valeurs ajoutees brutes des branches' workbook
+  (single sheet 'Vab des branches'): gross value added by ISIC branch (code in
+  col1, label col2) across 2007-2019, plus a 'Total des branches' row. Production
+  approach, current prices (the WAEMU/AFRISTAT convention for an unlabelled VAB
+  annexe of this vintage; the profile is nominal), unit million XOF (FCFA).
+  Verified: Total des branches 2015 = 3,095,068 / 2019 = 3,691,325 million XOF.
+  LIMITATIONS: covers value added only (VAB by branch, 2007-2019) — no
+  product-tax / GDP-at-market row, no constant-price and no expenditure tables in
+  this file (INSEED's other national-accounts files are older PDFs and 2007-2013
+  supply-use TREs). No income approach; no quarterly. DISCOVER: WordPress
+  download-manager, static file id 3412 (filenames are hidden behind /download/<id>
+  — probe Content-Disposition; other national-accounts ids: 3396/3400 synthesis
+  PDFs 2018/2019, 3418-3427 Annexe 3 Emploi 2016-2019). Everything as published;
+  nothing derived.

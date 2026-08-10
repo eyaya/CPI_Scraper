@@ -1,0 +1,31 @@
+country: Guinea
+iso3: GIN
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# INS links the latest quarterly national-accounts note
+# (Comptes_nationaux_trimestriels_T<n>_<year>_VF.pdf) from its home page; we take
+# the newest by the T<n>_<year> stamp.
+discover:
+  method: latest_quarter_file
+  page_url: "https://www.stat-guinee.org/"
+  link_contains:
+    - "comptes_nationaux_trimestriels"
+    - ".pdf"
+
+parser: guinea_ins_gdp
+geography: National
+
+notes: >
+  INS Guinea quarterly national-accounts note (PDF, French). This note publishes
+  RATES, not levels: GDP (PIB) by sector of activity as year-on-year (T/T-4) real
+  growth (Tableau 1) and contributions to growth (Tableau 3), quarterly. Values are
+  percent. Verified: PIB real growth 2025 quarters 8.5/7.5/6.9/6.7%, full-year 2024
+  = 5.7% (matching the mining-driven acceleration). The deflator-variation table
+  (2) and the trailing full-year columns are left for a later pass. Everything as
+  published; nothing derived.
