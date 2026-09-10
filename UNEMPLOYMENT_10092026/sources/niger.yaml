@@ -1,0 +1,61 @@
+country: Niger
+iso3: NER
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Niger)
+publication_code: ERI-ESI 2017
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 4
+
+# --- discover ---
+# INS Niger runs WordPress; the ERI-ESI report sits at a stable path under
+# /wp-content/uploads/rapport_enquete/. There is exactly one employment survey
+# and its URL has not moved, so a static URL is honest -- a listing scrape
+# would only ever resolve to this same file.
+#
+# NOTE stat-niger.org redirects HTTPS->HTTP, which loops a client that force-
+# upgrades. The pipeline's requests client follows it normally.
+discover:
+  method: static_url
+  url: "https://stat-niger.org/wp-content/uploads/rapport_enquete/Niger_ERI-ESI_RapportFinal.pdf"
+  save_as: niger_eriesi_2017.pdf
+
+parser: niger_pdf
+geography: Total country
+
+notes: >
+  INS Niger, Enquête Régionale Intégrée sur l'Emploi et le Secteur Informel
+  (ERI-ESI) 2017. The front-matter recap "Principaux indicateurs de l'emploi",
+  columns Niamey urbain | Autres urbains | Ensemble urbain | Rural | Niger.
+
+  BLOCK STRUCTURE: most indicators are a header line carrying the name and NO
+  numbers, followed by indented Ensemble / Homme / Femme sub-rows that carry
+  the five values. A parser that keys on the bare label "Ensemble" without
+  block context will mix four different indicators together -- which is exactly
+  what happened on a first pass at this table. The layout scopes each sub-row
+  to its own block.
+
+  Two indicators are instead single lines carrying their own numbers and an age
+  band (BIT unemployment 15-34 and 35+, and the same split for labour
+  underutilisation); those are matched directly.
+
+  DELIBERATELY NOT CAPTURED: the recap also carries migration and schooling
+  blocks, imputed monthly income (FCFA), average unemployment duration (years),
+  wages below the SMIG, and excessive working hours. None has a home in the
+  topic vocabulary and none is forced into one.
+
+  Printed typo preserved: the underutilisation rows read "main œuvre", missing
+  the "de la".
+
+  FR conventions: comma decimals, space thousands.
+
+  SERIES IS FROZEN: ERI-ESI 2017 is the last labour survey INS Niger has
+  published (report released October 2019). EHCVM-II reports exist but are
+  poverty-focused.
+
+  CROSS-CHECK (Niger column): chômage BIT ensemble 7,9% (H 8,0 / F 7,7);
+  15-34 ans 12,2%; 35 ans et plus 5,0%; taux combiné sous-emploi et chômage
+  29,8%; sous-utilisation de la main d'oeuvre 60,2% (H 51,9 / F 72,6);
+  15-34 ans 69,2%.

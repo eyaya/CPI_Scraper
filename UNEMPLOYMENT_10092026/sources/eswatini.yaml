@@ -1,0 +1,53 @@
+country: Eswatini
+iso3: SWZ
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Central Statistical Office (CSO), Ministry of Economic Planning and Development
+publication_code: ILFS 2023
+frequency: ad_hoc
+expect_topics: 4
+
+# --- discover ---
+# Eswatini's CSO has NO standalone domain — it publishes under the government
+# portal gov.sz, which dumps files flat into /images/ with no reliable index
+# page. The LMIS page (gov.sz/index.php?id=2303) contains no report links at
+# all, only a minister's speech. A static URL is therefore the honest choice
+# here; there is nothing to scrape.
+discover:
+  method: static_url
+  url: "https://www.gov.sz/images/2023-LFS-KEY-FINDINGS-booklet.pdf"
+
+parser: eswatini_pdf
+geography: Total country
+
+notes: >
+  CSO Integrated Labour Force Survey 2023, key findings booklet. There is no
+  combined headline table: the indicators live in four separate single-topic
+  tables, each shaped Region | Male | Female | Both Sexes.
+
+  Strict = Table 6.7 "Unemployment rate by sex and region" (national 35.4%).
+  Broad  = Table 6.25 "Combined rates of unemployment and potential labour
+  force" (LU3, national 45.6%). Note 6.25 prints "Both sexes" with a lower-case
+  s while 6.7 prints "Both Sexes" — do not normalise captions before matching.
+  Table 6.9's caption reads "Treads of unemployment rate by region"; the typo
+  is in the original.
+
+  The booklet gives NO fieldwork dates — only the conceptual "a specified brief
+  period of one week" — so the period is pinned to 2023 in the layout rather
+  than guessed from a regex.
+
+  THIS IS A SUMMARY BOOKLET. A fuller ILFS 2023 volume very likely exists but
+  no URL for it was found; only the key-findings booklet is reachable.
+
+  A 2025 LFS is reported to exist (unemployment down 35.4% → 33.5%) but NO
+  official CSO or gov.sz file for it could be located — only Eswatini press and
+  social media. THE 33.5% FIGURE IS NOT INGESTED and must not be, until an
+  official URL is found. Re-check gov.sz/images and www.lmis.gov.sz.
+
+  Cadence is triennial (2023 is the sixth round since 2007), so a frequent
+  scheduled run will find nothing new for years.
+
+  CROSS-CHECK (All regions): LFPR 54.1 / 48.0 / 50.8; EPR 36.2 / 29.9 / 32.8;
+  unemployment 33.1 / 37.6 / 35.4; combined LU3 42.4 / 48.4 / 45.6
+  (Male / Female / Both sexes).

@@ -1,0 +1,45 @@
+country: Somalia
+iso3: SOM
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Somali National Bureau of Statistics (SNBS)
+publication_code: PESS 2014 — Volume II
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# nbs.gov.so is WordPress; its media REST endpoint is open, so the PESS volumes are
+# found by searching it rather than scraping a page (the same route the Somalia CPI
+# source uses for its monthly note). Volume II is the age/sex composition report.
+discover:
+  # `wp_media_named`, not `wp_media_latest`: a monthly bulletin can be ordered by
+  # the month in its filename, but this one-off volume carries none, so it is
+  # matched by name and ordered by the API's own upload date.
+  method: wp_media_named
+  api_url: "https://nbs.gov.so/wp-json/wp/v2/media?search=population&per_page=50&orderby=date&order=desc"
+  name_contains: "Population-Composition"
+  save_as: somalia_pess_vol2.pdf   # the published name is long and non-ASCII
+
+parser: snbs_somalia_population
+geography: Total country
+
+notes: >
+  2014 Population Estimation Survey (PESS), Volume II 'Population Composition and
+  Demographic Characteristics of the Somali People'. Appendix A gives the national
+  population by five-year age band and sex (Table A.1 — 19 bands, whose counts sum
+  to the published 12,316,895 exactly) and the median age by region (Table A.2),
+  emitted as the schema's `median_age` measure — 114 rows over 19 geographies.
+  series_type is 'estimate', NOT 'census': the PESS is a large-scale household
+  SAMPLE survey used to estimate the population — Somalia's first in more than
+  three decades — so calling it a census would overstate what it is.
+  NOT EMITTED, deliberately: Table A.2's 'Type of residence' block (Rural / Urban /
+  IDP Camps / Nomadic) and Table A.3 (sex ratio by age and residence). Those are
+  residence CATEGORIES, not sub-national units, and the schema's `geography` is the
+  country or a place within it — a 'Nomadic' geography would not mean what the
+  column name suggests.
+  Parser note: the report's list-of-tables repeats every caption, so the page
+  carrying a caption is not necessarily the page carrying its data; the parser
+  picks the candidate page with the most matching rows.
+  Deferred: the other PESS volumes on the same media endpoint, and the 2025
+  'Population and Development Composite Index'.

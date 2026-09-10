@@ -1,0 +1,53 @@
+country: Seychelles
+iso3: SYC
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS Seychelles)
+publication_code: Seychelles MPI 2019
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+
+# --- discover ---
+# Joomla Phoca downloads. The working form is the SHORT one,
+# /downloads/<docId>-<slug>/download — not the <catId>/<docId> two-level form.
+# MPI sits in category 81 under parent 34 (Social Statistics); newest = highest
+# doc id (629 -> 678 -> 839).
+discover:
+  method: static_url
+  url: "https://www.nbs.gov.sc/downloads/839-multidimensional-poverty-index-report-2019/download"
+  save_as: seychelles_mpi_2019.pdf
+
+parser: seychelles_mpi
+geography: Total country
+
+notes: >
+  NBS Seychelles "Multidimensional Poverty Index Report 2019", computed from the
+  Quarterly Labour Force Survey Q3 2019.
+
+  NATIONAL measure: 4 dimensions — Living Standards, Health, Education,
+  Employment — 14 indicators, **k = 25%**, the joint-lowest cutoff collected
+  (with Nigeria). A parser hard-coding the global 33.3% would mislabel every
+  Seychellois row. A 20% cutoff is also shown in the report for comparison and
+  is not captured.
+
+  THE INDICATOR SET IS THE FURTHEST FROM THE GLOBAL MPI of anything here:
+  Crime, Obesity, Substance use/abuse and Teenage pregnancy have no global
+  analogue at all.
+
+  ROWS ARE METRICS in the headline table, with columns `Index Value | CI lower |
+  CI upper` — one of only three measures collected that publish confidence
+  intervals, and the only one whose headline table is shaped this way. The
+  intervals ARE captured here.
+
+  There is no urban/rural split, which is not meaningful in Seychelles; the
+  published breakdowns are household size, age group, labour force status, sex
+  and education of the household head, and island of residence.
+
+  NOTHING NEWER EXISTS: category 81 holds three items (2018 pilot, 2018 Q4,
+  2019). OPHI's index lists a "2020" entry — that is the 2020 PUBLICATION date
+  of this 2019 report, not a separate edition.
+
+  CROSS-CHECK: MPI 0.040 [0.030, 0.049]; H 11.88 [9.23, 14.53];
+  A 33.26 [31.07, 35.45].

@@ -1,0 +1,28 @@
+country: Gambia
+iso3: GMB
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Gambia Bureau of Statistics (GBoS)
+publication_code: 2024 GPHC Preliminary Report
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# GBoS data portal (gbosdata.org) — the 2024 Population & Housing Census
+# preliminary report, Table 13 (population by sex and age group). The download
+# route serves the file via the full-slug URL (same portal as Gambia CPI/GDP).
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/544-2024-gphc-preliminary-report"
+  save_as: gambia_gphc2024_preliminary.pdf
+
+parser: gbos_gambia_population
+geography: Total country
+
+notes: >
+  GBoS 2024 Gambia Population & Housing Census, national population by five-year
+  age group and sex (Table 13 of the Preliminary Report). Total 2,422,712
+  (M 1,186,293 / F 1,236,419); the 19 age bands sum to it exactly. series_type =
+  census. Same gbosdata.org portal (and full-slug download quirk) as Gambia CPI and
+  GDP. Deferred: the 2013 census thematic reports and LGA-level tables.

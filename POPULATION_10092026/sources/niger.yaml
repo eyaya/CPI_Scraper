@@ -1,0 +1,28 @@
+country: Niger
+iso3: NER
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: RGPH 2012
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INS Niger's RGPH 2012 "Etat et structure de la population" report; its Annexe
+# Tableau A1 has the national population by five-year age group and sex.
+discover:
+  method: static_url
+  url: "http://stat-niger.org/wp-content/uploads/2020/05/ETAT_STRUCTURE_POPULATION.pdf"
+  save_as: niger_rgph2012_etat_structure.pdf
+
+parser: niger_ins_population
+geography: Total country
+
+notes: >
+  INS Niger RGPH 2012 national population by five-year age group and sex (Annexe
+  Tableau A1). The table breaks down by residence (Urbain / Rural / Total); we take
+  the Total (national) triple. Total 17,138,707 (M 8,518,818 / F 8,619,889); the 18
+  age bands sum to it exactly. Numbers are plain space-separated integers (unlike
+  the Senegal report's space-grouped thousands). series_type = census. RGPH-5 (a
+  newer census) is on rgph5.ne, which times out — revisit for a more recent year.

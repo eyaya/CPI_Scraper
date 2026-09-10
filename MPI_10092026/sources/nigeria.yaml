@@ -1,0 +1,55 @@
+country: Nigeria
+iso3: NGA
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+publication_code: Nigeria MPI 2022
+frequency: ad_hoc
+expect_metrics: 2
+
+# --- discover ---
+# One edition only, at a stable path under /pdfuploads/. The e-library mirror is
+# /elibrary/read/1241254 -> /download/1241254, with the companion snapshot at
+# the consecutive id 1241255.
+#
+# DO NOT probe /download/<id> by incrementing: an unused id returns the literal
+# string "Invalid Download Request" with HTTP 200, which a naive fetcher would
+# happily save as a PDF.
+discover:
+  method: static_url
+  url: "https://www.nigerianstat.gov.ng/pdfuploads/NIGERIA%20MULTIDIMENSIONAL%20POVERTY%20INDEX%20SURVEY%20RESULTS%202022.pdf"
+  save_as: nigeria_mpi_2022.pdf
+
+parser: nigeria_mpi
+geography: Total country
+
+notes: >
+  NBS Nigeria MPI 2022 — the largest MPI exercise in Africa, disaggregated to
+  36 states plus the FCT and 109 senatorial districts.
+
+  NATIONAL measure: 4 dimensions (Health, Education, Living Standards, Work and
+  Shocks), 16 indicators, k = 25% ("more than a quarter of weighted
+  indicators"). The Work and Shocks dimension has no global-MPI analogue.
+
+  THE ONE GLOBAL-MPI REPUBLICATION FOUND ANYWHERE. Across all 54 countries this
+  is the only case of an NSO reprinting its own country's OPHI global MPI: the
+  report quotes Nigeria's 2018 global figures (H 46.4%, MPI 0.254) as a
+  comparison line. That row is an OPHI estimate, not an NBS national figure. It
+  is NOT captured. Its exact printed form could not be read before delivery,
+  and a speculative layout for a single comparison line is not worth the risk of
+  silently mixing an OPHI estimate into a national series. The schema is ready
+  for it — `mpi_type: global`, enforced at 3 dimensions and 10 indicators — so
+  adding it later is a small change. See README section 4.
+
+  A separate CHILD MPI adds a fifth dimension (Child Survival and Development)
+  for 24 indicators, with under-5 headcount 83.5%. Not yet collected — it is a
+  different measure, not a breakdown of this one.
+
+  ⚠️ LAYOUT NOT VERIFIED against the printed table. The headline values below
+  are confirmed, but the summary table's exact column order could not be read
+  before delivery. Check the cross-check on the first run: if the values come
+  out transposed, adjust the column order in parsers/nigeria_mpi.py.
+
+  CROSS-CHECK: national H 63% (133 million people), A ≈41%, MPI 0.257;
+  Rural H 72% / A 42%; Urban H 42% / A 37%.

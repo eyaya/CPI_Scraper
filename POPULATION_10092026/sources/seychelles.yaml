@@ -1,0 +1,33 @@
+country: Seychelles
+iso3: SYC
+indicator: Population
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+publication_code: Mid-2026 ERP
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# NBS Seychelles publishes an annual "Estimated Resident Population (ERP)" report.
+# Table 3a gives the mid-year All-Resident population by single-year age and sex.
+discover:
+  method: static_url
+  url: "https://www.nbs.gov.sc/downloads/1996-revised-mid-year-2026-estimated-resident-population-erp/download"
+  save_as: seychelles_erp_mid2026.pdf
+
+parser: nbs_seychelles_population
+geography: Total country
+
+notes: >
+  NBS Seychelles Revised Mid-2026 Estimated Resident Population. National (All-
+  Resident) total 123,565 (M 67,243 / F 56,322); Table 3a gives single-year ages
+  0-94 and 95+, which sum EXACTLY to the national total, with M+F=Total per age.
+  series_type = estimate (mid-year, 30 June 2026). Tier-3: Table 3a is laid out in
+  three side-by-side column-blocks (ages 0-34 | 35-69 | 70-95+) interleaved with
+  5-year subtotal rows; the parser walks (age, Males, Females, Total) cells and
+  keeps single-year ages only (subtotal ranges skipped to avoid double counting).
+  Deferred: the Seychellois-only estimates (Table 3b, same page-set) and the broad-
+  age Table 3c 2023-2026 series. NBS is a clean edocman/Joomla portal — population
+  files live under /downloads/34-social-statistics/16-population-and-vital-statistics
+  by year folder (a good source for other Seychelles indicators too).

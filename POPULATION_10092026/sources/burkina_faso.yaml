@@ -1,0 +1,31 @@
+country: Burkina Faso
+iso3: BFA
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Demographie (INSD)
+publication_code: RGPH-5 2019
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSD's 5e RGPH (2019) "Rapport des resultats definitifs". Tableau 5 gives the
+# national population by five-year age group and sex. The file is served via the
+# INSD Drupal file-download route (public id 2071).
+discover:
+  method: static_url
+  url: "https://www.insd.bf/fr/file-download/download/public/2071"
+  save_as: burkina_rgph5_2019_synthese.pdf
+
+parser: burkina_insd_population
+geography: Total country
+
+notes: >
+  INSD Burkina Faso 5e RGPH 2019 (results published 2022). National total
+  20,505,155 (M 9,900,847 / F 10,604,308); the 18 five-year age bands (0-4 ... 85+)
+  sum exactly to the national total. Tier-3: Tableau 5 is a fully ruled table, so
+  pdfplumber's lines strategy recovers clean columns (age | Masculin | Feminin |
+  Ensemble | Proportion | Rapport de masculinite). series_type = census.
+  Deferred: the region/province tables and Volume 1 single-year detail (id 2163).
+  Note the INSD page also links a burkinafaso.opendataforafrica.org (Knoema)
+  mirror, which is an aggregator and deliberately NOT used.

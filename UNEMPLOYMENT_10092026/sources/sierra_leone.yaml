@@ -1,0 +1,49 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL)
+publication_code: SLLFS 2014
+frequency: ad_hoc
+expect_topics: 4
+
+# --- discover ---
+# Stats SL is a server-side Joomla site whose PDFs sit at a stable path under
+# /images/StatisticsSL/Documents/<Section>/<year>/. There is exactly one labour
+# force survey and its URL has not moved, so a static URL is honest here: a
+# listing scrape would only ever resolve to this same file.
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/StatisticsSL/Documents/Publications/2014/sierra_leone_labour_force_survey_report_2014-1.pdf"
+
+parser: sierra_leone_pdf
+geography: Total country
+
+notes: >
+  Stats SL Labour Force Survey 2014, Table 1 "Key Aggregate Labor Market
+  Statistics" (the US spelling is as printed).
+
+  TRANSPOSED LAYOUT: unlike every other source here, the ROWS are population
+  groups (Overall, Men, Women, districts, education levels, residence) and the
+  COLUMNS are indicators. The topics therefore live in the column specs.
+
+  TWO COLUMNS ARE DELIBERATELY NOT CAPTURED. "Unemployed (ILO)" and
+  "Unemployed (Broad)" are expressed as shares of the WORKING-AGE population,
+  not of the labour force, so neither is an unemployment rate; and the report
+  prints no broad unemployment RATE column at all. They are held as skip
+  placeholders so the positional map stays honest rather than silently
+  shifting. Capturing them would require a "share of working-age population"
+  topic, which is a deliberate schema decision, not a default.
+
+  WORKING-AGE BASE IS 15-64 — the only closed-upper-bound base in the
+  collector. Not comparable with a 15+ rate without saying so.
+
+  SERIES IS DEAD: fieldwork July-August 2014, published Sept 2015, and Stats SL
+  has published no labour force survey since — no LFS 2015-2026, and no labour
+  thematic report from the MTPHC 2021 census. This is a data-availability
+  blocker, not a technical one.
+
+  CROSS-CHECK (Overall): EPR 62.2%; working-age population 3,009,472;
+  workforce 1,956,912; LFPR 65.0%; unemployment 4.3%.
+  Identity: 62.2 + 2.8 = 65.0, and 2.8 / 65.0 = 4.3.

@@ -1,0 +1,47 @@
+country: Ghana
+iso3: GHA
+indicator: Population
+tier: 1                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+publication_code: PHC 2021
+frequency: annual            # mid-year projections, one value per year
+verify_ssl: false
+
+# --- API (PxWeb / JSON-stat2), single table ---
+# GSS StatsBank publishes the 2021 Population & Housing Census projection series
+# under "PHC 2021 StatsBank/Population/projections.px": population by Year
+# (2021-2050), Geographic_Area (Ghana + 16 regions), Age, Sex and Locality.
+# We select every year, every geography, both sexes + male + female, the total
+# ("All locality types"), and a clean NON-OVERLAPPING age set — the all-ages total
+# plus the 18 published five-year bands (<1, 1-4, 5-9 … 80+). The many single-year
+# ages and the broad/overlapping aggregates ("0 years to 14 years", "15 years to
+# 64 years", "18 years and older", …) are left out of v1 so nothing double-counts;
+# they can be added later as their own age_group rows.
+api:
+  table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Population/projections.px"
+  save_as: Ghana_population_projections.json
+  dimensions:
+    Year: ["*"]
+    Geographic_Area: ["*"]
+    Age: ["All ages", "<1", "1-4", "5-9", "10-14", "15-19", "20-24", "25-29",
+          "30-34", "35-39", "40-44", "45-49", "50-54", "55-59", "60-64", "65-69",
+          "70-74", "75-79", "80+"]
+    Sex: ["*"]
+    Locality: ["All locality types"]
+
+parser: ghana_pxweb_population
+geography: Total country
+
+notes: >
+  Ghana GSS StatsBank PHC 2021 population projections (projections.px). One tidy
+  row per (year, geography, age band, sex) as a population head count, 2021-2050,
+  for Ghana + its 16 regions. The 2021 all-ages both-sexes national figure is
+  30,832,019, matching the 2021 census, so the series is anchored on the census
+  and projected forward — series_type = projection. GSS publishes the all-ages and
+  both-sexes TOTALS directly, so they are emitted as published (age_group "Total" /
+  sex "total"), not summed by us. Deferred to a later pass: the rural/urban
+  locality split, single-year ages, and the census-count tables (population_table.px
+  by single age/region/education). Same StatsBank PxWeb backend as Ghana GDP —
+  and it also carries Fertility & Mortality, Education, and Multidimensional
+  Poverty databases for future indicators.

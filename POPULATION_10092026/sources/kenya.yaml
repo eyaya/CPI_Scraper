@@ -1,0 +1,35 @@
+country: Kenya
+iso3: KEN
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+publication_code: 2019 KPHC Volume III
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# The 2019 Kenya Population & Housing Census Volume III ("Distribution of
+# Population by Age and Sex") is a direct PDF download from KNBS.
+discover:
+  method: static_url
+  url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/2019-Kenya-population-and-Housing-Census-Volume-3-Distribution-of-Population-by-Age-and-Sex.pdf"
+  save_as: kenya_kphc2019_vol3.pdf
+
+# Volume I adds the county-level population (by sex, all ages) — Table 2.2.
+extra_urls:
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/2019-Kenya-population-and-Housing-Census-Volume-1-Population-By-County-And-Sub-County.pdf"
+    save_as: kenya_kphc2019_vol1.pdf
+
+parser: knbs_population
+geography: Total country
+
+notes: >
+  Kenya KNBS 2019 census, national population by five-year age group and sex
+  (Volume III, Table 2.2). Total 47,564,296 across 5-year bands 0-4 … 100+. Tier-3
+  text-table extraction: the report renders each number's leading digit as a
+  separate run, so figures are read by column and de-spaced, then each row is
+  checked as Male + Female + Intersex = Total. Kenya's Intersex category (1,524
+  nationally) is folded into the published Total (our sex vocabulary is
+  male/female/total). Deferred: the rural/urban split, single-year ages, and the
+  county-level tables (Volume III has one per county).

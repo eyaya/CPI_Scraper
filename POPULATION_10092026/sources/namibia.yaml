@@ -1,0 +1,39 @@
+country: Namibia
+iso3: NAM
+indicator: Population
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Namibia Statistics Agency (NSA)
+publication_code: NPHC 2023
+frequency: annual            # a census count for the 2023 reference year
+verify_ssl: false
+
+# --- discover ---
+# The 2023 Population & Housing Census "Main report Excel tables" workbook is
+# linked from a stable NSA document page; take the .xlsx it hosts (the file name
+# carries a release date that changes on re-upload, so scrape the page).
+discover:
+  method: page_scrape
+  page_url: "https://nsa.org.na/document/2023-population-and-housing-census-main-report-excel-table/"
+  link_contains:
+    - "Census-Main-report-Excel"
+    - ".xlsx"
+  # NSA's published filename is 97 chars; inside this deep OneDrive path the full
+  # path exceeds Windows' 260-char MAX_PATH and Excel refuses to open the retained
+  # file. Save it under a short name (parser reads whatever file it's handed).
+  save_as: namibia_nphc2023_census.xlsx
+
+parser: namibia_nsa_population
+geography: Total country
+
+notes: >
+  NSA 2023 Namibia Population & Housing Census (NPHC 2023) main-report workbook.
+  We emit population head counts (series_type census, period 2023) from two clean
+  count tables: Table 2.2 — population by sex and area, giving the national total
+  (3,022,401) and each of the 14 regions by total/male/female (age_group Total);
+  and Table 2.5 — the national population by single year of age (0-120) and sex.
+  The all-ages and both-sexes figures are NSA's own totals, emitted as published.
+  Deferred to a later pass: the urban/rural locality split, the region x
+  broad-age-group appendix (no sex), constituency-level detail (Appendix I), and
+  any region x 5-year-age x sex cross-tab from the census dashboard
+  (census.nsa.org.na). No projection series is published in this workbook.

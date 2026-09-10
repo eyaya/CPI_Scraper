@@ -1,0 +1,63 @@
+country: Guinea_Bissau
+iso3: GNB
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE Guiné-Bissau)
+publication_code: ERI-ESI / IRIESI 2017-2018
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 4
+
+# --- discover ---
+# A hand-written static site. NOTE THE SITE'S OWN TYPO IN THE PATH:
+# "Pubicações" is missing the l, and that misspelling is what the server
+# serves -- percent-encoded here as Pubica%C3%A7%C3%B5es. There are exactly two
+# employment files and both have fixed URLs, so a static URL is honest.
+discover:
+  method: static_url
+  url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/emprego/Rapport_Synthse.pdf"
+  save_as: guinea_bissau_eriesi_synthese.pdf
+
+parser: guinea_bissau_pdf
+geography: Total country
+
+notes: >
+  INE Guiné-Bissau, Inquérito Regional Integrado sobre Emprego e Setor Informal
+  (ERI-ESI / IRIESI) 2017-2018, "Principais indicadores de emprego".
+
+  COLUMNS: SAB | Outros urbanos | Total urbano | Rural | Guiné-Bissau. SAB is
+  the Setor Autónomo de Bissau. Note there is a `Total urbano` AGGREGATE column
+  sitting between the two urban strata and Rural -- five columns, not four, and
+  assuming four silently shifts every value.
+
+  SEX AND AGE ARE ROWS, NOT COLUMNS. Like Niger, this is a block table: an
+  indicator header line with no numbers, then Total / Homem / Mulher sub-rows,
+  plus 15-34 and 35+ sub-rows on two of the indicators.
+
+  The headline "Taxa de subutilização da mão-de-obra" is SU4 -- the general
+  report's Tabela 24 names it as the composite measure explicitly.
+
+  LANGUAGE AND TYPOS: the document is Portuguese with French-language residue in
+  some captions and heavy typesetting errors -- "RALATÓRIO SÍNTESE" on the title
+  page, "Taux de pluriativitdade", "maão-de-obra", "criânças". The regexes are
+  kept loose accordingly and captions are never normalised before matching.
+
+  CONFIDENCE NOTE: the Total sub-rows reproduced identically across four
+  independent reads and are solid. The Homem / Mulher and 35+ sub-rows did NOT
+  reproduce consistently, so while the layout captures them, verify those
+  against the PDF on the first run before trusting them.
+
+  The general report (Rapport_geral_corrigido.pdf, same folder) carries the
+  fuller Tabela 23 and Tabela 24 but their numeric bodies would not extract.
+
+  REFERENCE PERIOD conflict in the source itself: the synthesis says fieldwork
+  ran "de 17 de Dezembro de 2017 a 18 de Março de 2018" while the general report
+  says "a 04 de Março de 2018". Both start 17 December 2017.
+
+  SITE IS EFFECTIVELY ABANDONED -- its newest content of any kind is from 2020.
+
+  CROSS-CHECK (Guiné-Bissau column, Total rows): desemprego OIT 7,1%;
+  15-34 anos 10,5%; subemprego combinado 13,1%; subutilização 23,7%;
+  15-34 anos 26,2%; emprego formal não agrícola 7,8%. SAB desemprego 13,0%
+  against rural 5,2% -- the urban/rural gap is the quickest sanity check.

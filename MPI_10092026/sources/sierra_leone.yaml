@@ -1,0 +1,45 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL)
+publication_code: Sierra Leone MPI 2019
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 2
+
+# --- discover ---
+# Joomla; files sit under two inconsistent roots — /images/StatisticsSL/
+# Documents/ (newer) and /images/StatisticsSL/Documents/Publications/<YEAR>/
+# (older). This file is on the newer root.
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/StatisticsSL/Documents/Sierra_Leone_MPI_2019.pdf"
+  save_as: sierra_leone_mpi_2019.pdf
+
+parser: sierra_leone_mpi
+geography: Total country
+
+notes: >
+  Stats SL "Sierra Leone Multidimensional Poverty Index 2019", from MICS 2017.
+
+  NATIONAL measure: 5 dimensions — Education, Health, HOUSING, Living Standards
+  and ENERGY, with Housing and Energy split out as dimensions in their own right,
+  which is distinctive — 14 indicators, k = 40%.
+
+  THE BY-CATEGORY TABLE HAS TWO NUMERIC COLUMNS, not three: `Incidence | MPI`.
+  Intensity is published for the nation in the text but not per category, so
+  assuming the usual H/A/M0 triple would shift every value one column left.
+
+  THE 2023 UPDATE IS NOT COLLECTABLE. "Multidimensional Poverty in Sierra Leone"
+  (2023) exists only on UNDP and OPHI — both aggregators — with no Stats SL copy.
+  The newest NSO-hosted Sierra Leone MPI is therefore this 2019 edition on
+  MICS 2017 data.
+
+  Two companion Stats SL products on the same domain, not yet collected:
+  Multidimensional-Child-Poverty-Report_2019.pdf and its infographic — a child
+  measure on a separate methodology.
+
+  CROSS-CHECK: national H 64.8, A 57.9, M0 0.375. Rural 86.3 / 0.520;
+  Urban 37.6 / 0.191; Northern 75.8 / 0.452; Western 36.2 / 0.182.

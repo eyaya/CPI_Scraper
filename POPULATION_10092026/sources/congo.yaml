@@ -1,0 +1,44 @@
+country: Congo
+iso3: COG
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: RGPH-5 2023
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INS rebuilt its site in 2026; the census products are plain files listed on
+# publications.html (the same page the CPI source now reads). The RGPH-5 resident-
+# population report is matched on its own name.
+discover:
+  method: page_scrape
+  page_url: "https://ins-congo.cg/publications.html"
+  link_contains:
+    - "population-residentes"
+    - ".pdf"
+
+parser: ins_congo_population
+geography: Total country
+
+notes: >
+  RGPH-5, Congo's fifth census — enumeration 25 April to 5 June 2023, with a
+  post-censitaire survey that September, so the reference year is 2023. From
+  'Tableau 2 : Répartition de la population par département selon le sexe' we take
+  the twelve departments plus the national 'Congo' row: male/female/total counts
+  and the published sex ratio (RM, hommes pour 100 femmes) as a `sex_ratio`
+  measure — 52 rows. The departments sum to the published national total exactly
+  (6,142,180).
+  Tier-3 quirk: French space thousands separators, so counts are rebuilt from word
+  x-gaps rather than by splitting on whitespace, and every row is validated against
+  hommes + femmes = ensemble.
+  DELIBERATELY NOT READ: the bulk of this 168-page report is the same breakdown for
+  every LOCALITY — district, commune, arrondissement, quartier, village — thousands
+  of rows per department. That detail is published and parseable with the same
+  routine, but it is a different granularity from the province/region level this
+  indicator carries, and each department's locality table simply repeats the
+  department total taken here. A worthwhile later addition if sub-department
+  geography is wanted.
+  Deferred: the RGPH-5 age-structure volume (this report gives no age breakdown, so
+  Congo currently has age_group 'Total' only).

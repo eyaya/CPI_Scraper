@@ -1,0 +1,32 @@
+country: Togo
+iso3: TGO
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Etudes Economiques et Demographiques (INSEED)
+publication_code: RGPH-5 2022
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSEED's 5e RGPH (November 2022) definitive results, "Livret 01" (population by
+# sex). Its NIVEAU NATIONAL page carries Tableau 1: national population by five-year
+# age group, residence and sex. Served via the WordPress Download Manager route
+# (opaque package id 6619).
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/6619/"
+  save_as: togo_rgph5_2022_livret01.pdf
+
+parser: inseed_togo_population
+geography: Total country
+
+notes: >
+  INSEED Togo 5e RGPH 2022 (definitive results). National total 8,095,498
+  (M 3,944,510 / F 4,150,988); five-year age bands (0, 1-4, 5-9 ... 85+) plus an
+  "ND" age-not-stated row sum exactly to the national total. Tier-3: Tableau 1 on
+  the NIVEAU NATIONAL page is fully ruled, so pdfplumber's lines strategy recovers
+  the 10 columns (age | Urbain H/F/Ens | Rural H/F/Ens | Total H/F/Ens); we take the
+  Total (national) columns. series_type = census. Deferred: the urban/rural split
+  (available in the same table) and the commune-level age-sex tables in Livret 02
+  (id 6622). Togo uses opaque WPDM download ids; 6619 = Livret 01, 6622 = Livret 02.

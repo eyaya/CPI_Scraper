@@ -1,0 +1,64 @@
+country: Seychelles
+iso3: SYC
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS Seychelles)
+publication_code: LFS Bulletin
+frequency: quarterly
+expect_topics: 4
+
+# --- discover (two hops) ---
+# NBS runs Joomla with PhocaDownload. The labour-force-survey category holds a
+# folder per year (/downloads/{folderId}-{YYYY}) whose folderId is assigned
+# per-folder and is NOT derivable, and each item inside is
+# /downloads/{docId}-{slug}/download with docId increasing over time.
+# Slugs are inconsistent ("labour-force-survey-quarter-1-2026" vs
+# "labour-force-survey-bulletin-q1-2026"), so we match on the stable stem plus
+# a quarter token rather than an exact slug.
+#
+# DO NOT confuse this with /downloads/38-economic-statistics/11-employment-earnings
+# — that series is payroll/establishment-based formal employment, a different
+# universe, and must never be merged with the household LFS.
+discover:
+  method: two_hop_scrape
+  index_url: "https://www.nbs.gov.sc/downloads/34-social-statistics/161-labour-force-survey"
+  page_link_contains:
+    - "-2026"
+  file_link_contains:
+    - "labour-force-survey"
+    - "download"
+  save_as: seychelles_lfs_bulletin.pdf
+
+parser: seychelles_pdf
+geography: Total country
+
+notes: >
+  NBS Seychelles Labour Force Survey Bulletin, quarterly. Table 1A
+  "Distribution of key populations by sex for selected key indicators", a
+  two-tier header of [previous quarter | current quarter] x [Male | Female |
+  Both Sexes]. Only the current quarter's three columns are captured.
+
+  ONLY THE RATES BLOCK IS CAPTURED. Everything above the "RATES (%)" divider
+  is a set of sex SHARES that sum to 100 — distributions, not levels — and
+  reading those "population" rows as counts would be badly wrong. Every value
+  in Table 1A is a percentage; there are no absolute persons in it at all.
+
+  Every indicator has two indented sub-rows, "National (15 years and above)"
+  and "Youth (15 to 24)", so the age band comes from the row, not the column.
+
+  LABEL TRAP: NEET appears twice with near-identical wording — "Youth not in
+  employment or education and training (NEET)" in the shares block against
+  "Youth not in employment, education or training (NEET) rate" in the rates
+  block. The layout matches the rates form only.
+
+  Underemployment is not published by NBS Seychelles.
+
+  YEAR FOLDER IS PINNED: `page_link_contains: ["-2026"]` selects the 2026
+  folder. This is the one piece of the descriptor that needs a yearly edit —
+  bump it each January, or replace it with a folder-picking discovery method.
+
+  CROSS-CHECK (Q1 2026, Male / Female / Both): unemployment 3.5 / 3.2 / 3.3;
+  youth 15-24 unemployment 14.1 / 11.7 / 12.8; LFPR 69.8 / 66.1 / 67.8;
+  EPR 67.4 / 64.0 / 65.6; NEET 24.5 / 18.5 / 21.4.
+  Identity EPR = LFPR x (1 − unemployment rate) holds on every headline cell.

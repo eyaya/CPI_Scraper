@@ -1,0 +1,63 @@
+country: South_Africa
+iso3: ZAF
+indicator: Unemployment
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Statistics South Africa (Stats SA)
+publication_code: P0211
+frequency: quarterly
+verify_ssl: false            # Stats SA serves an incomplete TLS chain
+expect_topics: 4
+
+# --- discover ---
+# The P0211 downloads page WITHOUT an SCH parameter always renders the newest
+# release, so the current quarter's workbook is the first "QLFS Trends" .xlsx
+# link on it. The filename carries the quarter
+# ("QLFS Trends 2008-<YYYY>Q<n>.xlsx") and the whole back-series to 2008 is in
+# that one file, so no month is ever hardcoded.
+#
+# Like the Stats SA CPI and GDP pages this listing sits behind Incapsula, so
+# both the page fetch and the download use a browser TLS fingerprint.
+#
+# DO NOT discover by the archive page's SCH ids: they are NOT monotonic with
+# time (Q4:2025 = 74047 but Q3:2025 = 74048, inverted). Parse the title.
+discover:
+  method: page_scrape
+  page_url: "https://www.statssa.gov.za/?page_id=1854&PPN=P0211"
+  link_contains:
+    - "QLFS Trends"
+    - ".xlsx"
+  impersonate: chrome124
+
+parser: south_africa_excel
+geography: Total country
+
+notes: >
+  Stats SA Quarterly Labour Force Survey (P0211) trends workbook — the single
+  highest-value source in this collector: quarterly, current, structured, and
+  carrying the full 2008-onward series in one file.
+
+  BOTH unemployment definitions are captured and tagged: the OFFICIAL (strict)
+  rate and the EXPANDED rate that also counts discouraged work-seekers. They
+  differ by about ten points (Q2 2026: 33.6% vs 43.8%), so a series that does
+  not carry `definition` is meaningless.
+
+  TERMINOLOGY CHANGE: Stats SA renamed "Not economically active" to "Outside
+  the labour force". The layout matches both spellings so the series survives
+  the rename in either direction.
+
+  Levels are published in THOUSANDS and are emitted with unit
+  `thousand_persons`, never silently converted.
+
+  UNVERIFIED DETAIL: the workbook's internal sheet names could not be read
+  before delivery (no environment on this build could open the binary), so the
+  layout scans every sheet and finds the period header row and label column by
+  structure. If the first run is noisy or slow, narrow `sheet_contains` in
+  parsers/excel_layouts.py to the trends sheet and re-run.
+
+  Stats SA has no PxWeb/SDMX API — `/api/v1/en/` returns 404 and the ISIbalo
+  portal exposes no machine-readable endpoint.
+
+  CROSS-CHECK (Q2 2026): official unemployment 33.6%; expanded 43.8%;
+  LFPR 59.6%; absorption 39.6%; employed 16,739 thousand; unemployed 8,481
+  thousand; outside the labour force 17,090 thousand.

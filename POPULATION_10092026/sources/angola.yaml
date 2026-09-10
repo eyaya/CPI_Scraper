@@ -1,0 +1,30 @@
+country: Angola
+iso3: AGO
+indicator: Population
+tier: 2
+source_type: excel
+agency: Instituto Nacional de Estatística (INE)
+publication_code: Censo 2024
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INE Angola's Censo 2024 portal publishes a national summary workbook (and one
+# workbook per province). The national file has population by province and sex plus
+# broad national age groups.
+discover:
+  method: static_url
+  url: "https://censo2024.ine.gov.ao/Censo2024_Angola_INE_Completo.xlsx"
+  save_as: angola_censo2024.xlsx
+
+parser: ine_angola_population
+geography: Total country
+
+notes: >
+  INE Angola 2024 Census. National total 36,604,681 (M 17,928,050 / F 18,676,631);
+  population by 21 provinces and sex (sum to the national total within 1 person); and
+  the three broad national age groups (0-14, 15-64, 65+) which sum to 36,520,296 (the
+  ~84k residual is age-not-stated, kept as published). series_type = census.
+  Deferred: the 21 per-province workbooks (Excel_Provincial_<Province>_Censo2024.xlsx)
+  which may carry finer age-sex detail. (The old ine.gov.ao/inicio/preview?value=pib
+  export remains value-less — this Censo 2024 portal is the working source.)

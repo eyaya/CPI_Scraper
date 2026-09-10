@@ -1,0 +1,45 @@
+country: Djibouti
+iso3: DJI
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut de la Statistique de Djibouti (INSTAD)
+publication_code: RGPH-3 2024
+frequency: annual
+
+# --- discover ---
+# Same backend the CPI source uses: instad.dj is a Nuxt SPA whose documents come
+# from an Express API, `GET <api_base>/fichiers/<categorie>/<year>`, with the file
+# itself in the project's Firebase Storage bucket. The 'RGPH' category holds the
+# census volumes rather than one file per month, so the volume is chosen by title.
+discover:
+  method: instad_dj_ipc
+  api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
+  categorie: "RGPH"
+  title_contains: "Etat et structure de la population"
+
+parser: instad_djibouti_population
+geography: Total country
+
+notes: >
+  RGPH-3 (2024 census), Thématique 1 'État et structure de la population',
+  published November 2025. The volume carries the five-year age-by-sex
+  distribution once nationally (Tableau n°16) and once per region (Tableaux
+  n°23–28: Djibouti-Ville, Ali-Sabieh, Dikhil, Tadjourah, Obock, Arta), so one
+  PDF yields 7 geographies x 20 age bands x male/female/total, plus the published
+  sex ratio as its own `sex_ratio` measure — 576 rows. The period is the census
+  reference year 2024, not the 2025 publication date.
+  Tier-3 quirks handled: French space thousands separators (numbers are rebuilt
+  from word x-positions, since a percentage may be written without a decimal so
+  whitespace splitting is ambiguous), a percentage that rounds to zero printed as
+  '(0)' or '*' (non-numeric, so the oldest age rows carry as few as three
+  numbers), and one row whose text layer is garbled by an overlapping glyph
+  ('192 (0)9 494' in the national 90-94 row) — recovered through the table's own
+  male + female = total identity, which every row is checked against.
+  SOURCE INCONSISTENCY, kept as published: for Tadjourah the age bands sum to
+  57,338 while the same table's 'Ensemble' row reads 57,257 (+81, and +41 on the
+  male column). Six of the seven geographies reconcile exactly; INSTAD's own
+  arithmetic is emitted unchanged rather than adjusted.
+  Deferred: the other RGPH-3 volumes in the same category (economic
+  characteristics, matrimonial status, education, the 2024–2064 projections),
+  which would add projection series and non-count demographic measures.

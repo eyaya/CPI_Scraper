@@ -1,0 +1,51 @@
+country: Somalia
+iso3: SOM
+indicator: Unemployment
+tier: 3                      # discovery is Tier 1 (WordPress REST); payload is a PDF
+source_type: pdf
+agency: Somali National Bureau of Statistics (SNBS)
+publication_code: SLFS 2019
+frequency: ad_hoc
+expect_topics: 6
+
+# --- discover ---
+# SNBS runs WordPress and its media REST endpoint works — the only reliable
+# machine-readable DISCOVERY route in the whole East Africa group. We query it
+# for labour PDFs and take the newest.
+#
+# TRAP, verified: the file named "Labour-Force-Survey-Reports-2021.pdf" is NOT
+# a 2021 survey — it is the SAME 2019 survey, merely published in Sept 2021.
+# There is exactly one Somali LFS. That is why `period` is pinned to 2019 in
+# the layout and never read from the filename.
+# `wp_media_named`, NOT `wp_media_latest`: the latter orders by a MONTH NAME in
+# the filename, which a monthly CPI bulletin has and a one-off survey report
+# does not, so it discarded this file as undated and reported "no dated PDF".
+# The search term is in the URL because the default media listing returns only
+# the newest handful of items.
+discover:
+  method: wp_media_named
+  api_url: "https://nbs.gov.so/wp-json/wp/v2/media?search=labour&per_page=100"
+  name_contains: "labour"
+  save_as: somalia_lfs_2019.pdf
+
+parser: somalia_pdf
+geography: Total country
+
+notes: >
+  SNBS Somali Labour Force Survey 2019, Table 1.1 "Key Labour force Indicators"
+  (the lower-case "force" is as printed). Columns: Total | Male | Female |
+  Urban | Rural, with MIXED UNITS — the first block of rows is absolute persons
+  and the second is percentages, distinguishable only by the row label.
+
+  COVERAGE CAVEAT, material and permanent: the survey EXCLUDES the nomadic and
+  pastoralist population and non-liberated areas. These are not national
+  estimates in the sense the other countries' are, and any cross-country use
+  must carry that.
+
+  ONE ROUND ONLY, seven years old. No repeat survey has been announced. A
+  scheduled run will keep re-collecting 2019.
+
+  CROSS-CHECK (2019, Total): working-age 15+ 3,751,264; labour force 1,215,472;
+  employed 955,820; unemployed 259,652; LFPR 32.4%; EPR 25.5%; unemployment
+  21.4%; youth 15-24 37.4%; NEET 44.2%; LU3 34.8%; LU4 38.0%.
+  Internal identity holds: 259,652 / 1,215,472 = 21.4%.

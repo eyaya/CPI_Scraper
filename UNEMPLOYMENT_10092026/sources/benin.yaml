@@ -1,0 +1,60 @@
+country: Benin
+iso3: BEN
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INStaD)
+publication_code: ERI-ESI 2018
+frequency: ad_hoc
+expect_topics: 4
+
+# --- discover ---
+# INStaD (rebranded from INSAE -- the legacy "insae" string is still in every
+# file path) keeps a static file tree. The ERI-ESI report has a stable URL with
+# spaces and accents that must be percent-encoded.
+#
+# Note instad.bj/statistiques/emploi is disallowed by robots.txt while the
+# statistiques-sociales path is not.
+discover:
+  method: static_url
+  url: "https://instad.bj/images/docs/insae-statistiques/sociales/ERI_ESI/Rapport%20de%20synth%C3%A8se%20de%20l%27Enqu%C3%AAte%20R%C3%A9gionale%20Int%C3%A9gr%C3%A9e%20de%20l%27Emploi%20et%20du%20Secteur%20Informel%20%28ERIESI%29.pdf"
+  save_as: benin_eriesi_2018.pdf
+
+parser: benin_pdf
+geography: Total country
+
+notes: >
+  INStaD, ERI-ESI 2018, Tableau 1.8 "Principales caractéristiques de la
+  sous-utilisation de la main d'œuvre" -- the report's only headline labour
+  table, and a rich one: sex, eight age bands, four education levels, the
+  Cotonou / autres urbains / rural strata and all twelve départements.
+
+  TRANSPOSED, like Sierra Leone: the rows are sociodemographic characteristics
+  and the columns are indicators, so the topics live in the column specs.
+
+  THE TWO `Effectif` COLUMNS ARE INTERLEAVED at positions 3 and 6, not at the
+  end -- confirmed twice against the printed table. They close two blocks with
+  DIFFERENT denominators: the first is the labour force (3 833 655 nationally),
+  the second the extended labour force (4 143 534). Reading them as a trailing
+  pair would silently swap two different populations.
+
+  WHAT THIS REPORT DOES NOT CONTAIN: no participation rate and no
+  employment-to-population ratio, anywhere -- verified against the full 40-entry
+  Liste des tableaux. The only related figure is a prose statement that
+  available jobs represent 60,5% of the working-age population. Do not go
+  looking for a participation table; there isn't one.
+
+  Tableau 1.10 (employment opportunities and adequate earnings) sits past a
+  text-layer truncation at page 31 and is not captured.
+
+  Printed typos preserved in the regexes: "sousutilisation" without the hyphen,
+  and "main œuvre" missing the "de la".
+
+  FREE CONSISTENCY CHECK: Cotonou and Littoral are identical by construction
+  (Cotonou IS the Littoral département), so those two rows must match exactly
+  in any correct parse.
+
+  CROSS-CHECK (Bénin row): chômage BIT 2,3%; taux combiné sous-emploi et
+  chômage 10,8%; effectif main-d'oeuvre 3 833 655; taux combiné chômage et
+  main-d'oeuvre potentielle 9,7%; sous-utilisation 17,6%; effectif
+  main-d'oeuvre élargie 4 143 534.

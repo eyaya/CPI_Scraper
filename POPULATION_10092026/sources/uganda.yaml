@@ -1,0 +1,34 @@
+country: Uganda
+iso3: UGA
+indicator: Population
+tier: 2
+source_type: excel
+agency: Uganda Bureau of Statistics (UBOS)
+publication_code: Population Projections 2015-2050
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# UBOS publishes the national population projections by 5-year age group and sex
+# as a stable Excel file under wp-content/uploads/publications.
+discover:
+  method: static_url
+  url: "https://www.ubos.org/wp-content/uploads/publications/04_2019National_Population_Projections_by_5_year_age_groups_and_sex.xlsx"
+  save_as: uganda_pop_projections_5yr.xlsx
+
+# also retain and parse the district-level projections (all-ages, by sex, 2015-2030)
+extra_urls:
+  - url: "https://www.ubos.org/wp-content/uploads/publications/04_2019Projected_population_by_district_(2015-2030).xlsx"
+    save_as: uganda_pop_projections_district.xlsx
+
+parser: ubos_population
+geography: Total country
+
+notes: >
+  UBOS national population projections (2014-census based), by 5-year age band and
+  sex, mid-year 2015-2050. National only; one tidy row per (age band, sex, year) as
+  a projected head count. The workbook stacks 3 years per block down the sheet; the
+  parser reads each year-header block and its 17 age rows. UBOS publishes male and
+  female (no combined total in this file), kept as published. Deferred: the
+  district / single-age / sub-county projection workbooks, and the newer 2025-2050
+  projections (published only as PDF).

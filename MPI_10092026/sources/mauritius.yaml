@@ -1,0 +1,56 @@
+country: Mauritius
+iso3: MUS
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Statistics Mauritius (Ministry of Finance)
+publication_code: National MPI 2022
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+
+# --- discover ---
+# Filenames carry a DDMMYY PUBLISH STAMP (2022_National_MPI_050826.pdf =
+# 5 Aug 2026), so the URL cannot be guessed — the newest is the highest stamp.
+# Scrape the Poverty subject page for /Documents/Statistics/By_Subject/Poverty/
+# hrefs matching National_MPI.
+discover:
+  method: page_scrape
+  page_url: "https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/Poverty/SB_Poverty.aspx"
+  link_contains:
+    - "National_MPI"
+    - ".pdf"
+
+parser: mauritius_mpi
+geography: Total country
+
+notes: >
+  Statistics Mauritius "National Multidimensional Poverty Index, 2022" —
+  Mauritius' FIRST MPI, published July 2026 from the 2022 Housing and
+  Population Census.
+
+  NATIONAL measure: 5 dimensions — Employment, Living Standards, Health,
+  Education, Housing — 15 indicators, k = 30%. WEIGHTS ARE NOT EQUAL across
+  dimensions (Employment 3/15, Health 1/5, Housing 1/5, ...), and several
+  indicators are Mauritius-specific: SC and CPE/PSAC are national exam
+  credentials, and flood risk and teenage marriage have no analogue elsewhere.
+
+  Table A1 columns: `Geographical code | Area | Resident population | Number of
+  persons in multidimensional poverty | H (%) | A (%) | National MPI`. The
+  geographical code is an identifier that merely happens to be numeric and the
+  resident population is a denominator — both are skipped. The COUNT of poor
+  persons is captured as population_poor.
+
+  M0 is a 0-1 decimal here (0.041) — the opposite convention to Morocco.
+
+  BREAKDOWN CEILING: 166 administrative areas (160 Municipal Wards / Village
+  Council Areas plus 6 Regions of Rodrigues), plus Island of Mauritius against
+  Rodrigues. There is no plain urban/rural split; the ward/VCA distinction
+  carries it. Only the three headline rows are captured so far — the 166-area
+  Table A1 and the 15-indicator censored-headcount Table A2 are a natural
+  extension.
+
+  Do not conflate with the "Relative Development Index" (RDI_Yr22_*.pdf) on the
+  same URL prefix — a separate, older deprivation index.
+
+  CROSS-CHECK: Republic H 10.8, A 37.9, MPI 0.041 (≈130,000 persons).

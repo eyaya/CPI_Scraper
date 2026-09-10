@@ -1,0 +1,52 @@
+country: Angola
+iso3: AGO
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE Angola)
+publication_code: IPM-A 2020
+frequency: ad_hoc
+expect_metrics: 3
+
+# --- discover ---
+# INE detail-page ids are base64 of a SMALL numeric key (Ng== = "6"), which is
+# unrelated to the long Publicacao_<18-digit> filename (a .NET tick timestamp).
+# The PDF name cannot be derived from the id, so the detail page must be
+# fetched and its href scraped — or, as here, the resolved file used directly.
+# THE DOUBLE SLASH in arquivosCarregados//Carregados is literal and required.
+discover:
+  method: static_url
+  url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637494425092204878.pdf"
+  save_as: angola_ipm_2020.pdf
+
+parser: angola_mpi
+geography: Total country
+
+notes: >
+  INE Angola "Índice de Pobreza Multidimensional de Angola" (IPM-A), from the
+  IIMS 2015-2016. The listing calls it June 2020 and the cover says July 2020 —
+  the reference period is what matters and it is the 2015-16 survey.
+
+  NATIONAL measure: 4 dimensions each at 25% — Saúde, Educação, Qualidade de
+  vida and EMPREGO — 16 indicators, k = 30%. The employment dimension is the
+  distinctive national departure from the global MPI.
+
+  COLUMN ORDER: `População (%) | IPM-A | Incidência (H) | Intensidade (A)` —
+  population share first, then the index. The share is a weight and is skipped.
+
+  One of only THREE measures collected that publish CONFIDENCE INTERVALS (with
+  Mali and Seychelles); those are not yet captured.
+
+  The index is called both IPM-A and IPMA in different places in the same
+  document.
+
+  A COMPANION MUNICIPAL REPORT exists — "Pobreza Multidimensional nos
+  Municípios de Angola" (2014, 164 municipalities), detail page
+  /publicacoes/detalhes/Nzk= , file Publicacao_637586747742336023.pdf. Not yet
+  collected; it is a different vintage and methodology.
+
+  PT conventions: comma decimals, space thousands.
+
+  CROSS-CHECK: IPM-A 0,264 (CI 0,252-0,276); Incidência 54,0% (51,7-56,3);
+  Intensidade 48,9% (48,2-49,6). Urbana 0,152 / 35,0 / 43,4;
+  Rural 0,463 / 87,8 / 52,8; Luanda 0,094 / 23,7; Cunene 0,405 / 77,6.

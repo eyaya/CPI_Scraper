@@ -1,0 +1,65 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: ENB-ESI 2023
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 4
+
+# --- discover ---
+# INSD runs Drupal; files sit under /sites/default/files/<YYYY-MM>/ where the
+# date folder is the PUBLICATION month, not the reference period. The labour
+# listing page is scraped for the ENB-ESI note.
+#
+# NOTE insd.bf/fr/publications is a 404 -- the real listing is the
+# statistiques-sociales path used here.
+# THE FILENAME IS THE SELECTOR, and it has to be, because every link on this
+# page is captioned "Telecharger" -- the link text carries nothing at all.
+# Matching "emploi" alone took the first PDF on the page, which is
+# "Bulletin semestriel sur emploi_ENSE3_0.pdf": the recurring ENSE bulletin
+# that the layout's own note says must NOT be used, because its numbers exist
+# only as chart data labels. The document with real tables is the ENB-ESI
+# synthesis note, and this matches it by name.
+discover:
+  method: page_scrape
+  page_url: "https://www.insd.bf/fr/statistiques-sociales/statistiques-sur-le-travail-et-l-emploi"
+  link_contains:
+    - "note_synth"
+    - "secteurinformel"
+    - ".pdf"
+  save_as: burkina_enbesi_note.pdf
+
+parser: burkina_faso_pdf
+geography: Total country
+
+notes: >
+  INSD, Note synthétique de l'Enquête nationale sur l'emploi et le secteur
+  informel (ENB-ESI) 2023. Tableau 2 gives the main labour indicators by
+  National / Urbain / Rural and all thirteen régions, with columns
+  Proportion main d'œuvre | Taux d'emploi | Taux de chômage (SU1) | SU2 | SU3 | SU4.
+
+  WHY THIS DOCUMENT AND NOT THE RECURRING BULLETIN. INSD's semestrial ENSE
+  bulletin is the fresher publication (2nd semester 2025, unemployment 6,5%)
+  but it has 26 `Graphique` captions and ZERO `Tableau` -- its numbers exist
+  only as chart data labels, which drop trailing zeros ("80" for 80,0) and
+  carry no category names. Verified twice, including against INSD's own NADA
+  related-materials listing for the ENSE rounds, which attaches only
+  questionnaires, manuals and the bulletin PDF -- no Excel, no CSV, no fuller
+  report. The ENB-ESI note is the one INSD labour publication with real tables,
+  so it is collected as a 2023 benchmark rather than a live series.
+
+  WORKING-AGE BASE IS 16+, not 15+ -- unusual for West Africa, and shared with
+  the ENSE bulletins. It travels on every row.
+
+  If a later run resolves the ENSE bulletin's chart labels reliably, note that
+  its strata are FOUR, not a binary: Ouagadougou / Bobo-Dioulasso / autres
+  centres urbains / rural.
+
+  FR conventions: comma decimals, space thousands.
+
+  CROSS-CHECK (National row): proportion de la main d'oeuvre 49,3%; taux
+  d'emploi 46,7%; taux de chômage 5,3%. Labour force 5 532 715.
+  Reference period January-April 2023.

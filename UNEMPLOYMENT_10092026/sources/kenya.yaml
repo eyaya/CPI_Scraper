@@ -1,0 +1,59 @@
+country: Kenya
+iso3: KEN
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+publication_code: QLFS
+frequency: quarterly
+verify_ssl: false            # KNBS serves an incomplete TLS certificate chain
+expect_topics: 6
+
+# --- discover ---
+# A HISTORICAL BACKFILL. KNBS ran the Quarterly Labour Force Survey from
+# 2019 Q1 to 2022 Q4 and then stopped; the entire run was bulk-uploaded into a
+# single /2023/09/ folder, which is itself the evidence the series was archived
+# rather than continued. A static URL to the final quarter is therefore the
+# honest descriptor -- there is no "newest" to discover.
+#
+# To backfill the rest, point this at the other quarters in turn; the pattern is
+# .../2023/09/Quarterly-Labour-Force-Report-<YYYY>-Quarter-<N>.pdf and the
+# quarters confirmed present are 2019 Q1, 2019 Q4, 2020 Q1, 2020 Q2, 2021 Q3,
+# 2022 Q1, 2022 Q3 and 2022 Q4.
+discover:
+  method: static_url
+  url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/Quarterly-Labour-Force-Report-2022-Quarter-4.pdf"
+  save_as: kenya_qlfs_2022q4.pdf
+
+parser: kenya_pdf
+geography: Total country
+
+notes: >
+  KNBS Quarterly Labour Force Report. Table shape: Indicator, then the
+  year-ago quarter, the previous quarter and the current quarter. Only the
+  current quarter's column is captured -- the other two are restatements the
+  earlier reports already carry.
+
+  WORKING-AGE BASE IS 15-64, a closed upper bound (as in Sierra Leone), not the
+  usual open-ended 15+.
+
+  BOTH ICLS RATES are published and explicitly labelled: LU1 is the strict
+  unemployment rate (4.9% in 2022 Q4) and LU3 the broad measure combining
+  unemployment with the potential labour force (13.9%). Both are captured and
+  tagged.
+
+  WHAT IS DELIBERATELY NOT USED: the Economic Survey's Chapter 3 workbook
+  ("Chapter-3-Employment-Earnings-and-Consumer-Price-Indices.xlsx") is
+  establishment and administrative employment -- wage employment by industry,
+  public/private split, earnings indices -- not an ILO household unemployment
+  rate. It is a different universe and does not belong in this indicator, even
+  though it is the fresher and more structured file.
+
+  SUCCESSOR IN THE FIELD: the 2026 Kenya Integrated Labour Force Survey is
+  collecting now and will supersede the QLFS. Nothing is published yet; watch
+  knbs.or.ke/2026-kenya-integrated-labour-force-survey-ilfs/ and add a new
+  descriptor when results appear rather than stretching this one.
+
+  CROSS-CHECK (2022 Q4, October-December 2022): population 15-64 29,066,237;
+  labour force 19,398,165; employed 18,438,164; LFPR 66.7%; EPR 63.4%;
+  LU1 4.9%; LU3 13.9%; long-term unemployment 3.2%; NEET 19.0%.

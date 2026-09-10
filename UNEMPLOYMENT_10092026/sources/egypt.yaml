@@ -1,0 +1,63 @@
+country: Egypt
+iso3: EGY
+indicator: Unemployment
+tier: 1
+source_type: pdf
+agency: Central Agency for Public Mobilization and Statistics (CAPMAS)
+publication_code: LFS quarterly bulletin (publication id 11)
+frequency: quarterly
+expect_topics: 3
+
+# --- discover ---
+# The same JSON API the CPI collector already uses successfully, on the same
+# host and PORT 8080: GET /api/Publication/<id> returns the newest issue with
+# `pdfUrl` and `excelUrl`. Only the id differs -- 32 is CPI, 11 is the quarterly
+# Labour Force Survey bulletin. Verified live: id 11 returns Q1 2026 with both
+# an Excel and a PDF url, and files are served from port 8080 too.
+#
+# Companion ids, should they be wanted later: 12 = annual LFS bulletin (has
+# Excel), 157 = quarterly analytical report and 149 = annual analytical report
+# (both PDF-only).
+discover:
+  method: capmas_publication
+  api_base: "https://www.capmas.gov.eg:8080"
+  publication_id: 11
+  # PDF, NOT EXCEL: CAPMAS publishes this bulletin in either format and
+  # the current issue (Q2 2026) is PDF only. Discovery used to fall back
+  # silently, writing a PDF to a .xlsx name; that is now refused. If the
+  # workbook returns, switch `prefer` and `parser` back TOGETHER.
+  prefer: pdf
+  save_as: egypt_lfs_quarterly.pdf
+
+parser: egypt_pdf
+geography: Total country
+
+notes: >
+  CAPMAS quarterly Labour Force Survey bulletin (بحث القوى العاملة - الربع
+  سنوي) -- about 27 tables covering labour force size, employment,
+  unemployment, the participation rate, employment status, occupation and
+  economic activity, broken down by sex, urban/rural (حضر/ريف), all 27
+  governorates, age group and educational status. Sample is 1,875 clusters and
+  22,500 households per quarter.
+
+  THE WORKBOOK IS ARABIC. The layout matches both the Arabic row labels and any
+  English gloss, so it survives either: قوة العمل (labour force), المشتغلون
+  (employed), المتعطلون (unemployed), معدل البطالة (unemployment rate),
+  معدل المساهمة (participation rate).
+
+  UNVERIFIED: the workbook's internal sheet and cell structure could not be
+  opened during this build, so the layout scans every sheet and locates the
+  period header row and label column by structure rather than by address.
+  Narrow `sheet_excludes` / add `sheet_contains` in parsers/excel_layouts.py
+  after the first successful run, and check the cross-check below before
+  trusting the output.
+
+  SCHEDULING: the API returns `nextPublishDate` (2026-11-15 at time of writing)
+  and distinguishes `releaseDate` from `publishDate` -- Q1 2026 was released
+  2026-06-15 but only published 2026-07-28. Poll on publishDate.
+
+  Base is 15+ for labour-force measures; the unemployment tables focus 15-64.
+  Levels are in thousands.
+
+  CROSS-CHECK (Q1 2026): unemployment rate 6.0%. Recent quarters for context:
+  Q4 2025 6.2%, Q3 2025 6.4%, annual 2024 6.6%.

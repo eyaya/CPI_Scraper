@@ -1,0 +1,33 @@
+country: Central African Republic
+iso3: CAF
+indicator: Population
+tier: 3
+source_type: html
+agency: Institut Centrafricain des Statistiques et des Etudes Economiques et Sociales (ICASEES)
+publication_code: RGPH-4 projection
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ICASEES publishes its RGPH-4 population projections as HTML tables. This page
+# ("Projection de la population de la RCA par groupe d'age et par sexe") carries a
+# national population-by-age-and-sex table for 2022 and 2023.
+discover:
+  method: static_url
+  url: "https://icasees.org/index.php/actualites/rgph-4/212-projection-de-la-population-de-la-rca-par-groupe"
+  save_as: car_icasees_rgph4_pop_age_sex.html
+
+parser: icasees_car_population
+geography: Total country
+
+notes: >
+  ICASEES Central African Republic RGPH-4 population projection by five-year age
+  group and sex, published as an HTML table. National totals: 2023 = 6,340,948
+  (M 3,146,767 / F 3,194,181); 2022 = 6,214,316 (M 3,086,107 / F 3,128,209). For
+  both years the 20 age bands (0-4 ... 95+) sum EXACTLY to the national total and
+  M+F=Total. series_type = projection (ICASEES labels the table a projection; CAR's
+  RGPH-4 census enumeration was still pending). French thousands separator is a
+  non-breaking space (\xa0). The page also renders a third (right-hand) age-sex
+  column-block with no assignable year label, deliberately LEFT OUT (no guessing).
+  Deferred: the RGPH-4 sub-national tables on sibling pages 199/207/209/211
+  (population by prefecture/commune/sexe).

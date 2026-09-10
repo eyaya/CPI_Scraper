@@ -1,0 +1,44 @@
+country: South_Sudan
+iso3: SSD
+indicator: Population
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+publication_code: South Sudan Population Projections 2020-2040
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# NBS links the projections report from its demographic-indicators page under a
+# stable /assets/images/ path (the same folder its CPI releases use). The page
+# also carries the superseded 2015-2020 projections, so the link is matched on the
+# current report's own name.
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.gov.ss/statistics/Demographic_Indicators.php"
+  link_contains:
+    - "population-projections-for-south-sudan"
+    - ".pdf"
+
+parser: nbs_southsudan_population
+geography: Total country
+
+notes: >
+  NBS population projections 2020–2040 for South Sudan and its ten states —
+  14,478 rows over 11 geographies, 21 years, 22 age bands and male/female/total.
+  The report carries two table families, distinguished by their own captions: the
+  plural 'population projections, 2020-2040' keys rows by YEAR (age_group Total),
+  the singular 'population projection, <year>' keys rows by five-year AGE BAND for
+  that year. series_type is 'projection' throughout, 2020 base year included.
+  Tier-3 quirks handled: tables are printed TWO ACROSS, so `extract_text()` returns
+  two tables' rows concatenated on one line ('2020 6,775,160 … 2020 1,076,072 …')
+  — the parser splits each page on the word x-midpoint and walks each column
+  top-to-bottom, so a page holding four tables (two across, two down) resolves
+  correctly. Captions also wrap mid-range ('… projections, 2020-' / '2040'); the
+  wrapped pair is matched before the bare line, because on the truncated line the
+  span regex would read '2020' and mistake a year-keyed table for a single-year
+  age table — that silently cost the national 2040 column before it was fixed.
+  Every row is checked against males + females = total; the national age bands sum
+  to within 2 persons of the published national total (NBS rounding).
+  NOTE this is a projection, not a census: South Sudan's last census was 2008 and
+  the report states its projections were rebased on that count.

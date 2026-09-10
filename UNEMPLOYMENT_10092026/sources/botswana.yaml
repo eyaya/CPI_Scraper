@@ -1,0 +1,72 @@
+country: Botswana
+iso3: BWA
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Statistics Botswana
+publication_code: QMTS Labour Force Module
+frequency: quarterly
+verify_ssl: false
+expect_topics: 6
+
+# --- discover ---
+# All Statistics Botswana files sit flat under
+# /sites/default/files/publications/<Title>.pdf with literal spaces. The
+# filenames are inconsistent -- real names contain double spaces and stray
+# spaces ("Quarterly Multi -Topic Survey", "2024 5    Labour") -- so the
+# listing page is scraped and nothing is constructed.
+# "LABOUR FORCE MODULE", NOT "LABOUR FORCE". This page is Statistics Botswana's
+# entire labour catalogue -- Work Permits Holders, Formal Sector Employment,
+# Stats Updates, Labour Statistics Reports -- and it is ordered newest-first.
+# Matching "labour force" alone took the top entry, which is now the
+# BOTSWANA MULTI TOPIC HOUSEHOLD SURVEY 2024/25 Labour Force Preliminary Stats
+# Brief: a DIFFERENT SURVEY, and precisely the one the notes below say must not
+# be chained to the QMTS series because of the level break between them. It
+# failed on dating rather than on values, which was luck, not a safety net.
+#
+# "quarterly" + "labour force module" selects the QMTS module and nothing else:
+# the Q3 2023 "Summary Headline Labour Force Indicators" brief and the BMTHS
+# brief both lack the word "module".
+#
+# The BMTHS is worth collecting in its own right, as its own descriptor with
+# its own layout and series -- see PENDING.md. It is not a newer QMTS.
+discover:
+  method: page_scrape
+  page_url: "https://www.statsbots.org.bw/publication-by-sector/labour"
+  link_contains:
+    - "quarterly"
+    - "labour force module"
+    - ".pdf"
+
+parser: botswana_pdf
+geography: Total country
+
+notes: >
+  Statistics Botswana QMTS Labour Force Module, "Table 1.0: National Headline
+  Labour Force Indicators". Seven numeric columns -- two historical quarters,
+  then the current quarter's Total / Male / Female, then two derived % change
+  columns. Only the current quarter's three are captured.
+
+  TWO PARALLEL WORKING-AGE BASES, 15+ and 18+, published side by side. Both are
+  captured, each tagged with its own base.
+
+  BOTH DEFINITIONS: strict is "Unemployment Rate % (15 year and above)" (27.6%
+  in Q1 2024); broad is "Extended Unemployment Rate %" (32.5%), which the report
+  defines as "the combination of people actively seeking work and those who were
+  willing to work but did not take steps looking for jobs".
+
+  LEVEL BREAK -- DO NOT CHAIN: the quarterly QMTS series (27.6%) is NOT
+  continuous with the newer Botswana Multi-Topic Household Survey 2024/25
+  (21.0%, preliminary brief March 2026). They are different instruments on
+  different bases. The QMTS quarterly series appears to have stopped after
+  Q1 2024, so a scheduled run will keep re-collecting that quarter until
+  Statistics Botswana resumes or the BMTHS is wired in as its own descriptor.
+
+  PRINTED TYPOS the row regexes must survive: "Employment to Population Ration"
+  (not Ratio) and "(15 year and above)" (singular). Row numbering is not
+  contiguous either -- an in-table sub-header "Change (Percentage points)"
+  occupies position 16 and position 23 is skipped.
+
+  CROSS-CHECK (Q1 2024): population 15+ 1,651,820; labour force 1,041,204;
+  employed 754,146; unemployed 287,059; EPR 45.7%; LFPR 63.0%; unemployment
+  27.6% (M 27.2 / F 27.9); extended 32.5%; youth 15-35 38.2%; NEET 41.3%.

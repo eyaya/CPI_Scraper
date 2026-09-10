@@ -1,0 +1,30 @@
+country: Mauritius
+iso3: MUS
+indicator: Population
+tier: 2
+source_type: excel
+agency: Statistics Mauritius
+publication_code: Demographic Statistics
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# Statistics Mauritius publishes the annual "Demographic Statistics - Island of
+# Mauritius" workbook; Table 13 is the estimated resident population by age group
+# and sex, mid-year 1984-2024. The filename carries a release stamp (…Yr24_DDMMYY),
+# so update to the newest when a new year is posted.
+discover:
+  method: static_url
+  url: "https://statsmauritius.govmu.org/Documents/Statistics/By_Subject/Population/HS_Demography_Isl_of_Mtius_Yr24_091225.xls"
+  save_as: mauritius_demography.xls
+
+parser: mauritius_population
+geography: Total country
+
+notes: >
+  Statistics Mauritius estimated resident population (Island of Mauritius) by
+  age group and sex, mid-year 1984-2024 (Table 13 of the Demographic Statistics
+  workbook). Total 2024 = 1,201,245; the 19 five-year age bands sum to it. National
+  (Island of Mauritius; the Island of Rodrigues has its own separate workbook,
+  deferred). series_type = estimate. The same workbook also carries single-year ages
+  (T14), births/deaths, life expectancy and fertility (deferred to their indicators).

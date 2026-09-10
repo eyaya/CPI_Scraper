@@ -1,0 +1,59 @@
+country: Morocco
+iso3: MAR
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: Activité, emploi et chômage — résultats annuels
+frequency: annual
+expect_topics: 3
+
+# --- discover ---
+# HCP's downloads listing is tag-filtered and newest-first; publications are
+# served from /file/<6-digit id>/ and press notes from /attachment/<7-digit id>/,
+# with ids increasing over time. The topic pages (/downloads/*_tNNNNN.html) are
+# client-rendered and come back empty — always use the ?tag= route.
+discover:
+  method: page_scrape
+  page_url: "https://www.hcp.ma/downloads/?tag=Emploi"
+  link_contains:
+    - "activité, emploi et chômage"
+  save_as: morocco_activite_emploi_chomage.pdf
+
+parser: morocco_pdf
+geography: Total country
+
+notes: >
+  HCP "Activité, emploi et chômage, résultats annuels" — Tableau 2 (activité)
+  and Tableau 3 (chômage), both headed
+  Indicateurs | Masculin | Féminin | Urbain | Rural | National.
+
+  METHODOLOGY BREAK, and it is a big one: HCP replaced the Enquête Nationale
+  sur l'Emploi (ENE) with the Enquête sur la Main-d'Œuvre (EMO2026) from Q1
+  2026, and the two series are NOT comparable — annual 2025 reads 13,0% against
+  Q2 2026's 9,5%. This descriptor collects the ANNUAL ENE report. Do not chain
+  it to an EMO quarterly note without a level-shift flag.
+
+  TIER-2 UPGRADE AVAILABLE: HCP publishes the retropolated 2017-2025 bridge on
+  the EMO basis as a workbook at https://www.hcp.ma/file/248688/ ("Principaux
+  indicateurs trimestriels rétropolés provisoires du marché du travail selon la
+  méthodologie EMO"). That file is the right long-run backbone once its sheet
+  layout has been read; it could not be opened during this build.
+
+  SPARSE ROWS ARE REAL: the "Taux de féminisation" and "selon le sexe" sub-rows
+  print only THREE of the five cells (Masculin and Féminin are empty and the
+  three printed numbers are Urbain / Rural / National). The parser SKIPS a row
+  with fewer numbers than columns rather than shifting them left, so those rows
+  are deliberately not collected — a wrong alignment would be far worse.
+
+  Tableau 2 breaks across a page and its caption is REPEATED with "(suite)".
+
+  FR conventions: comma decimals; stocks are "en milliers" and are emitted with
+  unit `thousand_persons`. The quarterly EMO note uses a PERIOD for thousands
+  ("18.022") — a different convention in the same agency's output, which is why
+  the quarterly note is not parsed by this layout.
+
+  CROSS-CHECK (2025, National): population active 12 488 mille; taux d'activité
+  43,5%; population active en chômage 1 621 mille; taux de chômage 13,0%
+  (Masculin 10,8 / Féminin 20,5 / Urbain 16,4 / Rural 6,6).
+  Verified: 1052 + 569 = 1621 and 1621 / 12488 = 13,0.

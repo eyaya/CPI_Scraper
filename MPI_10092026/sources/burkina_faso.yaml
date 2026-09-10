@@ -1,0 +1,48 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: IPM local 2019
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+
+# --- discover ---
+# Drupal; files under /sites/default/files/<YYYY-MM>/. `web2.insd.bf` mirrors
+# `www.insd.bf` one-for-one and is a useful failover.
+#
+# THREE DATES, ALL DIFFERENT: the upload folder is 2024-10, the cover date is
+# December 2023, and the reference year is 2019. Never infer the reference year
+# from the URL — hence the fixed `period` in the layout.
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2024-10/Rapport_IPM_2019.pdf"
+  save_as: burkina_ipm_2019.pdf
+
+parser: burkina_faso_mpi
+geography: Total country
+
+notes: >
+  INSD "La pauvreté multidimensionnelle au niveau local en 2019 — Rapport
+  national".
+
+  NATIONAL measure: 5 dimensions (Santé, Cadre de vie, Protection sociale/de
+  l'enfance, Éducation, Emploi), 21 indicators — the most of any measure
+  collected — k = 38%. Alkire-Foster (2007).
+
+  A POVERTY-MAPPING PRODUCT: because it is built on the RGPH 2019 census it
+  reports provinces and communes, and it prints NO NATIONAL HEADLINE ROW. The
+  parser therefore emits no national figure; deriving one by aggregating the
+  province rows would be computing a number INSD did not publish.
+
+  Note Burkina is absent from OPHI's national-MPI directory even though INSD
+  clearly publishes an Alkire-Foster index — a good reminder that the directory
+  is a useful index, not a sufficient one.
+
+  A separate "VOLUME 3 - CARTOGRAPHIE DE LA PAUVRETE" (2023-07) is likely
+  monetary poverty mapping and is deliberately not collected here.
+
+  CROSS-CHECK: H ranges from 10% (Kadiogo) to 67% (Tapoa); A between 44% and
+  48%; IPM from 0,04 to 0,32.

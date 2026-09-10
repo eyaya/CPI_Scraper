@@ -1,0 +1,36 @@
+country: South_Africa
+iso3: ZAF
+indicator: Population
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Statistics South Africa (Stats SA)
+publication_code: P0302
+frequency: annual            # mid-year estimates, one value per year
+verify_ssl: false            # Stats SA serves an incomplete TLS chain
+
+# --- discover ---
+# The P0302 "Mid-year population estimates" downloads page lists several
+# workbooks; we take the provincial projection file — population by province,
+# sex and 5-year age band across every mid-year 2002..2026. Like the CPI/GDP
+# pages this listing sits behind Incapsula, so the page fetch and the download
+# both use a browser TLS fingerprint (impersonate).
+discover:
+  method: page_scrape
+  page_url: "https://www.statssa.gov.za/?page_id=1854&PPN=P0302"
+  link_contains:
+    - "Provincial projection by sex and age"
+    - ".xlsx"
+  impersonate: chrome124
+
+parser: statssa_population
+geography: Total country
+
+notes: >
+  Stats SA mid-year population estimates (P0302), provincial workbook. We emit one
+  tidy row per (province, sex, 5-year age band, mid-year) as a population head
+  count, 2002-2026, across the nine provinces. The file's 2026 column matches the
+  official MYPE 2026 release table, so the whole span is the published estimate
+  series. Deferred to a later pass: the national by-population-group series
+  (Country projection …xlsx) and the release's demographic indicators (total
+  fertility, life expectancy, mortality, net migration) carried in the MYPE
+  report tables workbook.

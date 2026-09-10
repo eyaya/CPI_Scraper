@@ -1,0 +1,101 @@
+country: Ghana
+iso3: GHA
+indicator: MPI
+tier: 1
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+publication_code: PHC 2021
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+
+# --- API (PxWeb / JSON-stat2), multi-table ---
+# The only machine-readable NSO MPI source in Africa. PHC 2021 multidimensional
+# poverty, disaggregated three ways: by sex of household head, by locality, and
+# the contribution of each of the 13 MPI indicators. All geographies are
+# requested (["*"]); the parser keeps the national row and the 16 regions and
+# drops the district detail.
+#
+# The methodology block is repeated on each table because it travels onto every
+# emitted row: an MPI value without its cutoff and shape is not interpretable,
+# and the schema rejects rows that lack it.
+api:
+  tables:
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Multidimensional Poverty/MPI_by_sex.px"
+      topic: sex_of_head
+      save_as: ghana_mpi_by_sex.json
+      mpi_type: national
+      measure_name: Ghana MPI (PHC 2021)
+      survey: PHC 2021 (Population and Housing Census)
+      k_cutoff: 33.3
+      n_dimensions: 3
+      n_indicators: 13
+      unit_of_analysis: person
+      period: 2021
+      reference_period: Census 2021
+      frequency: ad_hoc
+      dimensions:
+        poverty_measure: ["*"]
+        sex_head_of_household: ["*"]
+        Geographic_Area: ["*"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Multidimensional Poverty/MPI_by_locality.px"
+      topic: locality
+      save_as: ghana_mpi_by_locality.json
+      mpi_type: national
+      measure_name: Ghana MPI (PHC 2021)
+      survey: PHC 2021 (Population and Housing Census)
+      k_cutoff: 33.3
+      n_dimensions: 3
+      n_indicators: 13
+      unit_of_analysis: person
+      period: 2021
+      reference_period: Census 2021
+      frequency: ad_hoc
+      dimensions:
+        poverty_measure: ["*"]
+        locality: ["*"]
+        Geographic_Area: ["*"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Multidimensional Poverty/MPI_contributors.px"
+      topic: contributor
+      save_as: ghana_mpi_contributors.json
+      mpi_type: national
+      measure_name: Ghana MPI (PHC 2021)
+      survey: PHC 2021 (Population and Housing Census)
+      k_cutoff: 33.3
+      n_dimensions: 3
+      n_indicators: 13
+      unit_of_analysis: person
+      period: 2021
+      reference_period: Census 2021
+      frequency: ad_hoc
+      dimensions:
+        indicator: ["*"]
+        Geographic_Area: ["*"]
+
+parser: ghana_pxweb_mpi
+geography: Total country
+
+notes: >
+  GSS StatsBank PHC 2021 multidimensional poverty — the only NSO MPI in Africa
+  exposed through a machine-readable API, on the same StatsBank backend as
+  Ghana GDP, population, labour and education.
+
+  NATIONAL measure, census-based. Three cuts in one tidy file: the metrics
+  (incidence H, intensity A, index M0) by sex of household head and by locality,
+  plus the percentage contribution of each of the 13 MPI indicators. H, A and
+  the contributions are percents; M0 is a 0-1 index. National plus 16 regions;
+  districts are requested but dropped by the parser.
+
+  THIS IS NOT GHANA'S ONLY MPI. See ghana_report.yaml for the GLSS7-based 2020
+  report (3 dimensions, 12 indicators) and PENDING.md for the quarterly
+  AHIES/QLFS series, which is GSS-authored but hosted off the NSO domain. The
+  three use different methodologies and must not be chained.
+
+  ⚠️ THE METHODOLOGY BLOCK IS PARTLY INFERRED. The 13-indicator count is taken
+  from the contributors table; the 3-dimension count and k = 33.3% follow GSS's
+  stated OPHI/UNDP methodology but were not read off a StatsBank metadata field.
+  Confirm against the GSS PHC 2021 MPI documentation and correct here if needed —
+  the values travel onto every row.
+
+  Deferred: district-level detail, and the MPI-by-education and MPI-by-industry
+  cuts published in the same StatsBank folder.

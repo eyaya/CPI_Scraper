@@ -1,0 +1,49 @@
+country: Gabon
+iso3: GAB
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Direction Générale de la Statistique (DGS)
+publication_code: EGEP II 2017 — Rapport de synthèse
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# NOTE the live DGS site is instatgabon.org / new.instatgabon.org, NOT the dead
+# dgstat.ga the CPI notes warn about. The demographic-statistics page links the
+# EGEP II synthesis report from a stable /uploads/ path.
+discover:
+  method: page_scrape
+  page_url: "https://new.instatgabon.org/autres-statistiques-demographiques"
+  link_contains:
+    - "RAPPORT_DE"
+    - ".pdf"
+  save_as: gabon_egep2_synthese.pdf
+
+parser: dgs_gabon_population
+geography: Total country
+
+notes: >
+  'Enquête Gabonaise pour le Suivi et l'Evaluation de la Pauvreté de 2017'
+  (EGEP II 2017), synthesis report published September 2018. Tableau 3 gives the
+  national population by five-year age band and sex — 17 bands plus Total, whose
+  bands sum to the published 1,981,579 exactly — and Tableau 4's national rows add
+  the median age by sex as the schema's `median_age` measure. 57 rows.
+  series_type is 'estimate', NOT 'census': EGEP II is a household SAMPLE survey
+  (666 clusters drawn from the RGPL-2013 sampling frame, its population reweighted
+  and projected forward from that census), so these are survey estimates for 2017,
+  not an enumeration. Gabon's actual census is the RGPL 2013, whose own count
+  (1,811,079, per the DGS IHPC dashboard) differs from this survey estimate —
+  do not treat the two as one series.
+  Tier-3 quirk, the worst met so far: Tableau 3 is a spreadsheet pasted in with
+  per-glyph letter spacing, and `extract_words()` mangles it — age labels lose
+  their leading digit to a separate glyph column ('10 - 14' becomes '0 - 1 4') and
+  adjacent columns fuse into nonsense ('3020927627644763836242'). The parser
+  therefore works from the raw CHARACTER stream, where ordering by x reconstructs
+  each line exactly, and groups digits into numbers by x-delta. Since the count
+  columns are not at a fixed index (an age row is preceded by its band's two
+  digits, '80 et +' by one, the Total row by none), the triple is located by the
+  table's own identity, masculin + féminin = total.
+  NOT EMITTED: Tableau 4's mean age (no schema measure) and its residence/region
+  blocks, whose rows are survey strata ('Ouest rural', 'Est') rather than
+  administrative units.

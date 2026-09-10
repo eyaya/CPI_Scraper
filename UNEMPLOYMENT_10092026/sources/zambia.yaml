@@ -1,0 +1,57 @@
+country: Zambia
+iso3: ZMB
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats)
+publication_code: LFS
+frequency: annual
+expect_topics: 6
+
+# --- discover ---
+# ZamStats runs WordPress; the annual LFS report is published as
+# /wp-content/uploads/<YYYY>/<MM>/<YYYY>-Labour-Force-Survey-Report.pdf, where
+# the YEAR IN THE FILENAME is the reference year and the /YYYY/MM/ path is the
+# upload date (the 2024 report was uploaded in 2025/11). We take the newest
+# year-stamped link from the publications listing.
+#
+# DUPLICATE ALERT: the same report is listed from two upload paths
+# (…/2025/10/… and …/2025/11/…) with an identical basename. Discovery resolves
+# one of them; both are the same file.
+discover:
+  method: latest_year_file
+  page_url: "https://www.zamstats.gov.zm/latest-publications/"
+  link_contains:
+    - "labour-force-survey-report"
+    - ".pdf"
+
+parser: zambia_pdf
+geography: Total country
+
+notes: >
+  ZamStats Labour Force Survey, annual, assembled from four quarterly
+  collection rounds (the last seven days of each quarter's final month).
+  Front-matter table "Summary of 2024 Labour Force Survey".
+
+  Columns: Indicator | Mode of measurement | Total | Male | Female | Rural |
+  Urban. RURAL PRECEDES URBAN — the reverse of Namibia, and re-confirmed on a
+  second read precisely because getting it backwards would swap two real series
+  and nothing downstream would notice.
+
+  This is the cleanest PDF source in the collector: units are given by an
+  explicit "Mode of measurement" column (Number / Percent) rather than being
+  inferred from a row label.
+
+  YOUTH IS 19-34, Zambia's national definition — not 15-24, not 15-35. The band
+  is carried in `age_group` on every youth row so it can never be silently
+  aligned to another country's. (The bracket is confirmed by the table's own
+  row labels; the report's Concepts and Definitions chapter does not restate
+  it, and the report uses a 15-24 cohort elsewhere.)
+
+  The layout reads numbers from the END of each line because labels embed
+  digits ("15 years or older", "(19-34 years)").
+
+  CROSS-CHECK (2024, Total): working-age 15+ 11,995,355; labour force
+  4,560,760; employed 3,972,883; unemployed 587,876; LFPR 38.0%; EPR 33.1%;
+  unemployment 12.9% (M 11.8 / F 14.6 / Rural 11.6 / Urban 13.9);
+  youth 19-34 unemployment 18.4%.

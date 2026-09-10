@@ -1,0 +1,37 @@
+country: Guinea-Bissau
+iso3: GNB
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatistica (INE)
+publication_code: Projection 2014-2063
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INE Guinea-Bissau's "Relatorio de projecao 2014-2063" (based on the RGPH 2009
+# census). Tabela 10 gives national population by age and sex per year; only the
+# national Total rows are extracted here (see parser/notes).
+discover:
+  method: static_url
+  url: "https://www.stat-guinebissau.com/Menu_principal/IV_RGPH/rgph1/projecoes/relatorio_projecao_2014_2063.pdf"
+  save_as: guineabissau_projecao_2014_2063.pdf
+
+parser: ine_guineabissau_population
+geography: Total country
+
+notes: >
+  INE Guinea-Bissau population projection (base RGPH 2009), Tabela 10. National
+  population by SEX, 2014-2026: 2014 = 1,514,450 (M 740,981 / F 773,470) rising
+  smoothly (~2%/yr) to 2026 = 1,890,250; Male+Female=Total EXACTLY for every year.
+  series_type = projection. RELAXED-GRANULARITY entry: national totals by sex only.
+  Age detail is NOT extracted — the table's nine columns use alternating "."/OCR-space
+  thousands separators that cannot be split by delimiter, and year captions are
+  unreliable in the text layer, so age×sex would require guessing. The national Total
+  rows are unambiguous under Male+Female=Total (7-digit total = first 3 digit-groups).
+  Years are assigned by position from 2014 and cross-check the explicit captions
+  (2014/2015/2016/2019/2020/2023/2024/2025 all align); emission stops at the first
+  >3% YoY jump (2027), a symptom of a mis-paginated/dropped row — later years and the
+  age/urban/rural detail are deliberately left out (not guessed). Parser scans ~102
+  pages (slow) — run in the background. Also on-site: RGPH-2009 per-region PDFs
+  (Regiao_de_*_RGPH_2009.pdf) and RGPH-2025 questionnaires (deferred).

@@ -1,0 +1,63 @@
+country: Guinea
+iso3: GIN
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Guinée)
+publication_code: RGPH3 - Analyse de la pauvreté
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 1
+
+discover:
+  method: static_url
+  url: "https://www.stat-guinee.org/images/Documents/Publications/INS/rapports_enquetes/RGPH3/RGPH3_rapport_pauvrete.pdf"
+  save_as: guinea_rgph3_pauvrete.pdf
+
+parser: guinea_mpi
+geography: Total country
+
+notes: >
+  INS Guinée, RGPH3 thematic volume "Analyse de la pauvreté" (December 2017,
+  from the March-April 2014 census).
+
+  LABEL THIS ONE CAREFULLY. It mirrors the global MPI skeleton — 3 dimensions,
+  k = 33.33% — but substitutes census-available indicators and has NINE of
+  them, not ten. (Corrected after the first real run: the report states "Le MPI
+  a utilisé neuf indicateurs", and Tableau 2-2 prints nine indicator columns.
+  This descriptor previously said eight.) The nine: infant mortality stands in for the entire health dimension
+  because nutrition is unavailable in a census. It is NSO-computed and NOT
+  comparable to the global MPI despite the resemblance. This is exactly the case
+  the schema guards: `mpi_type: global` is refused for anything that is not
+  3 dimensions AND 10 indicators, so a look-alike cannot be mislabelled.
+
+  UNIT OF ANALYSIS IS THE HOUSEHOLD, not the person.
+
+  INCIDENCE ONLY. The volume publishes the poor share by group plus a four-band
+  severity classification (severely poor ≥50%, moderately poor 33.33-50%,
+  vulnerable 20-33.33%, non-poor <20%); intensity and M0 are computed but not
+  foregrounded, so only H is captured and nothing is derived from it.
+
+  A secondary composite well-being index (ICBE, built by Multiple
+  Correspondence Analysis) also appears in the volume. It is not an MPI and is
+  not collected.
+
+  CROSS-CHECK: national 35,4% of households multidimensionally poor;
+  Rural 46,8%; Urbain 14,1%. Female-headed households 29,7% against
+  male-headed 36,3% — note the INVERSION (female-headed are LESS poor here), a
+  genuine and unusual result that must not be "corrected".
+
+# ---------------------------------------------------------------------------
+# CONFIRMED AGAINST THE DOWNLOADED PDF (2026-09-09), Tableau 2-1.
+#
+# THE INDEX IS PUBLISHED AS A PERCENTAGE, not as a 0-1 index: Guinée reads
+# 35,4 and 68,7 x 51,5 = 35,4 confirms it. The M0 columns therefore carry
+# `unit: percent` and the value is never rescaled.
+#
+# Conakry has no rural population and prints "-" in its three rural cells; it
+# gets its own six-column spec so nothing is shifted left to fill the gap.
+#
+# Tableau 2-2 ("contribution des indicateurs par région") is deliberately NOT
+# harvested: its rows sum to roughly 165%, so whatever those numbers are they
+# are not contributions, and the caption cannot be trusted over the arithmetic.
+# ---------------------------------------------------------------------------

@@ -1,0 +1,29 @@
+country: Senegal
+iso3: SEN
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: RGPH-5 2023
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ANSD's RGPH-5 (2023 census) report, Chapter 1 ("Etat et structure de la
+# population"), has the national population by five-year age group and sex.
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/recensements/rapport/Chapitre-1_ETAT-STRUCTURE-POPULATION-Rapport-def-RGPH-5.pdf"
+  save_as: senegal_rgph5_ch1.pdf
+
+parser: ansd_senegal_population
+geography: Total country
+
+notes: >
+  ANSD RGPH-5 2023 national population by five-year age group and sex (Tableau I-14,
+  Chapter 1). Total 18,126,390 (M 9,178,896 / F 8,947,494); the 20 age bands sum to
+  it within 2 persons (source rounding). series_type = census. Tier-3: French
+  numbers use a space thousands separator, so the parser reconstructs each number
+  from word x-positions (gap < 15 pt = thousands separator) rather than text
+  splitting. Deferred: the region/department age-sex tables (later in the chapter)
+  and the online locality-level population export (2013, times out).

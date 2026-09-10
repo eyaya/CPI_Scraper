@@ -1,0 +1,29 @@
+country: Malawi
+iso3: MWI
+indicator: Population
+tier: 2
+source_type: excel
+agency: National Statistical Office (NSO)
+publication_code: 2018 MPHC Series A
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# NSO Malawi's CMS serves the 2018 census "Series A. Population Tables" workbook
+# as a direct download. (The census reports are exposed via cms.nsomalawi.mw/api/
+# web/census/2018 -> resources -> media; this is the published-tables xlsx.)
+discover:
+  method: static_url
+  url: "https://cms.nsomalawi.mw/api/download/277/Series-A.-Population-Tables.xlsx"
+  save_as: malawi_2018_series_a.xlsx
+
+parser: malawi_nso_population
+geography: Total country
+
+notes: >
+  Malawi NSO 2018 Population & Housing Census, Series A population tables. Emits
+  Table A1 (population by sex at national / regional / district level, 2018 and
+  2008 — the national total is 17,563,749) and Table A4 (population by age group
+  at national and regional level, 2018). Sub-national by sex plus national/regional
+  age structure. Deferred: single-year ages (A5), district-level age (A6/A7),
+  traditional-authority detail, urban/rural split, and non-Malawian population (A8).

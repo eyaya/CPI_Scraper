@@ -1,0 +1,29 @@
+country: Tanzania
+iso3: TZA
+indicator: Population
+tier: 3                      # census report PDF (the NBS census API is login-gated)
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+publication_code: 2022 PHC
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# The 2022 census dashboard (sensa.nbs.go.tz) is a SPA over a login-gated API, but
+# its publication PDFs are directly downloadable. The national "URT Demographic and
+# Socio-Economic Profile" carries Table 3.1 (population by 5-year age group & sex).
+discover:
+  method: static_url
+  url: "https://sensa.nbs.go.tz/publication/01.%20URT_Demographic_and_Socioeconomic_Profile.pdf"
+  save_as: tanzania_urt_profile_2022phc.pdf
+
+parser: nbs_tanzania_population
+geography: Total country
+
+notes: >
+  Tanzania NBS 2022 Population & Housing Census, national population by five-year
+  age group and sex (Table 3.1 of the URT Demographic & Socio-Economic Profile).
+  Total 61,741,120 (M 30,053,130 / F 31,687,990), 18 age bands 0-4 … 85+, census
+  reference 2022. Tier-3 text extraction from the report PDF because the NBS census
+  API (tisp.nbs.go.tz) is login-gated. Deferred: the rural/urban split (Tables
+  3.2/3.3), regional/district population, and the per-region profile PDFs.

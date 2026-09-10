@@ -1,0 +1,32 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Zimbabwe National Statistics Agency (ZimStat)
+publication_code: 2022 PHC Population Projection Report
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ZimStat's 2022 census "Population Projection Report" (Table 3.4) tabulates the
+# national population by single year of age and sex for each year 2022-2042.
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads//Census/2022_POPULATION_PROJECTION_REPORT.pdf"
+  save_as: zimbabwe_pop_projection_2022.pdf
+
+parser: zimstat_population
+geography: Total country
+
+notes: >
+  ZimStat 2022 census population projections (Table 3.4), national population by
+  single year of age (0-85) and sex, 2022-2042. The 2022 base year totals
+  15,178,957, matching the 2022 census (15,178,979) to ~22 persons (projection-base
+  rounding). Tier-3 text extraction; the report pairs two years per page-spread with
+  the year header sometimes under a caption and the final year (2042) standing
+  alone. KNOWN GAP: single age 43 in projection years 2024 and 2025 is not
+  extractable (it falls in a page break and is absent from the PDF text layer) — it
+  is omitted, not imputed. All other years/ages are complete. series_type =
+  projection. The main 2022_PHC_Report presents age as pyramids (charts), so the
+  projection report is the tabular source. Deferred: provincial projections.

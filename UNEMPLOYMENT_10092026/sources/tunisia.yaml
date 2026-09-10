@@ -1,0 +1,69 @@
+country: Tunisia
+iso3: TUN
+indicator: Unemployment
+tier: 2
+source_type: html
+agency: Institut National de la Statistique (INS Tunisie)
+publication_code: P0201
+frequency: quarterly
+verify_ssl: false
+expect_topics: 3
+
+# --- discover ---
+# THREE SERVER-RENDERED HTML PAGES, not a file. INS publishes the quarterly
+# labour series as real <table> markup on its theme pages, refreshed the same
+# day as the quarterly note. The primary page is /153 (chômage); /151
+# (population active) and /152 (population occupée) are pulled as extras and
+# every configured table is looked for across all three, so it does not matter
+# which page a given series sits on.
+discover:
+  method: static_url
+  url: "https://www.ins.tn/statistiques/153"
+  save_as: tunisia_chomage.html
+
+extra_urls:
+  - url: "https://www.ins.tn/statistiques/151"
+    save_as: tunisia_population_active.html
+  - url: "https://www.ins.tn/statistiques/152"
+    save_as: tunisia_population_occupee.html
+
+parser: tunisia_html
+geography: Total country
+
+notes: >
+  INS Tunisie, Indicateurs de l'emploi et du chômage, quarterly.
+
+  WHY HTML AND NOT THE PDF -- this is the whole reason Tunisia is collectable.
+  The quarterly note is a bilingual Arabic/French document whose numeric runs
+  come out of the text layer BIDI-SCRAMBLED, and differently in each table:
+  Tableau 1's row is fully REVERSED (2026-Q2 first, 2022-Q1 last), Tableau 4's
+  is ROTATED by four positions, and Tableau 5's digits are run together with no
+  recoverable boundaries. That was proved by anchoring on the note's own
+  narrative figures, not assumed. There is no correct way to align those numbers
+  with their quarters, so the PDF is not parsed at all. The theme pages carry
+  the same series in reading order.
+
+  Row labels are Total / Masculin / Féminin; column headers are French ordinal
+  quarter labels ("première-trimestre 2024") -- note INS uses a HYPHEN where the
+  usual French form has a space.
+
+  ROLLING WINDOW: only about eight or nine quarters are rendered at a time, and
+  the window is NOT identical across the three pages (Q4 2024 appears on /151
+  but not on /153). History therefore accumulates across runs rather than
+  arriving complete in one scrape. Each run writes every quarter it can see.
+
+  Levels are published "en millier" and are emitted with unit thousand_persons.
+
+  ALSO PUBLISHED, not yet captured: youth 15-24 unemployment, unemployment among
+  higher-education graduates, and the sector distribution of employment, each on
+  its own table with a stable numeric dataset id (1611321389 population active,
+  1611321992 occupée, 1611322781 chômeurs, 1611322839 taux de chômage).
+
+  dataportal.ins.tn is a Prognoz portal that advertises an API but 302s HTTPS
+  down to HTTP and loads its data by XHR behind opaque tokens -- not usable
+  without a JS client, and not needed given these pages.
+
+  CROSS-CHECK (Q2 2026): population active 4 190,5 mille (M 2 887,7 /
+  F 1 302,8); occupés 3 568,1 mille; chômeurs 622,4 mille (M 341,6 / F 280,7);
+  taux de chômage 14,9% (M 11,8 / F 21,6). Q1 2026: chômeurs 641,7 mille;
+  taux de chômage 15,0%.

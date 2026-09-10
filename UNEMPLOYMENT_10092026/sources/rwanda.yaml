@@ -1,0 +1,80 @@
+country: Rwanda
+iso3: RWA
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: LFS
+frequency: annual
+verify_ssl: false
+expect_topics: 6
+
+# --- discover (two hops) ---
+# NISR runs Drupal. The Labour Force Survey landing page lists a node per year;
+# each year node hosts the annual report PDF under
+# /sites/default/files/documents/<YYYY-MM>/, where YYYY-MM is the PUBLICATION
+# month, not the reference period (the 2025 annual report sits in 2026-03).
+#
+# PIN THE APEX DOMAIN: www.statistics.gov.rw serves a certificate with a
+# HOSTNAME MISMATCH and fails TLS outright. statistics.gov.rw works.
+#
+# Filenames are wildly inconsistent -- "Annual LFS 2025 Report..pdf" (with a
+# doubled dot), "Annual Report LFS 2024.pdf", "RWLFS2023Q4_Final_Report.pdf",
+# "LFS 2025-Q1.pdf" -- so the listing is scraped and nothing is templated.
+# THREE LEVELS, AND THE NEWEST YEAR IS NOT THE ANSWER. NISR's LFS index lists
+# year pages newest-first (2026, 2025, 2024...); each year page links to its
+# ANNUAL REPORT page; the PDF is on that. A two-hop walk took 2026 and stopped,
+# but the 2026 round has so far published only quarterly bulletins -- the
+# annual report with the tables is still 2025's. `chain_scrape` backtracks: it
+# tries 2026, finds no annual-report page, and moves to 2025.
+#
+# The slug carries the year ("labour-force-survey-annual-report-2025"), so
+# matching on "annual-report" alone is what keeps this from being pinned to a
+# year that will go stale.
+discover:
+  method: chain_scrape
+  index_url: "https://statistics.gov.rw/data-sources/surveys/Labour-Force-Survey"
+  steps:
+    - ["labour-force-survey-20"]     # the year page
+    - ["annual-report"]              # that year's annual report page
+    - ["annual", ".pdf"]             # the report itself
+  save_as: rwanda_annual_lfs.pdf
+
+parser: rwanda_pdf
+geography: Total country
+
+notes: >
+  NISR annual Labour Force Survey. The captured table is the seven-year trend
+  matrix "Trend of Labour force survey Main indicators (Compare 7 years)" --
+  rows are indicators, columns are years -- so every run re-collects the whole
+  back-series, which is deliberate: NISR revises earlier years.
+
+  WORKING-AGE BASE IS 16+. Data are collected from 14 years and above, but
+  "only persons aged 16 years and above are covered for reporting".
+
+  MIXED UNITS BY ROW and the label is the only cue: most rows are percent, one
+  is thousands of jobs, two are median weekly hours, four are Rwandan francs.
+  Only the percent rows in the topic vocabulary are captured; the francs and
+  hours rows are deliberately left rather than mislabelled as rates.
+
+  WHAT THIS REPORT DOES NOT CONTAIN, verified against its own List of Tables
+  (which runs only 4.1 to 4.11): there is no unemployment-by-district table and
+  no LFPR-by-sex table. Those breakdowns exist as FIGURES only -- including the
+  single district item, "Figure 6.5: Outside the labour force rate by District"
+  -- and figures are not scraped. The male/female unemployment rows in the
+  trend table are the one sex split available in tabular form, and they are
+  captured.
+
+  THE QUARTERLY BULLETIN IS NOT COLLECTED. Rwanda publishes quarterly (fieldwork
+  February, May, August, November) but the quarterly release is an infographic
+  panel with no table at all, and its disaggregations are chart images.
+
+  KNOWN UPGRADE: NISR attaches an Excel annex to each quarterly release ("File
+  Data in Ms Excel", ~308 KB). That file is the right long-run source and would
+  move Rwanda to Tier 2, but every quarter node returns HTTP 500 to a non-browser
+  client, so its href could not be captured. Worth retrying from a real client.
+
+  CROSS-CHECK (2025 column): unemployment 12.4%; LFPR 63.8%; EPR 55.9%;
+  youth unemployment 14.7%; time-related underemployment 36.1%; combined
+  labour underutilisation 56.0%; informal employment 91.8%; female
+  unemployment 14.2% against male 10.8%.

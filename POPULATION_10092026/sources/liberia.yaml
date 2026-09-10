@@ -1,0 +1,27 @@
+country: Liberia
+iso3: LBR
+indicator: Population
+tier: 2
+source_type: excel
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+publication_code: 2022 PHC
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# LISGIS publishes a clean county-level population workbook from the 2022 census.
+discover:
+  method: static_url
+  url: "https://www.lisgis.gov.lr/admin_area/uploads/population/county_population.xlsx"
+  save_as: liberia_county_population.xlsx
+
+parser: lisgis_liberia_population
+geography: Total country
+
+notes: >
+  LISGIS 2022 Population & Housing Census, population by county and sex (Total /
+  Male / Female) for the 15 counties. National "Total country" = sum of the counties
+  (5,250,187; M 2,643,979 / F 2,606,133). This clean file has no age breakdown, so
+  age_group is "Total"; the full census report PDF (documents/2022_census_report.pdf)
+  is 404 on the site — revisit for the age-sex table when it is posted. series_type
+  = census. Same LISGIS site used for Liberia GDP.

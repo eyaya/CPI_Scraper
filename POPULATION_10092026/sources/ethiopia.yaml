@@ -1,0 +1,50 @@
+country: Ethiopia
+iso3: ETH
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Ethiopian Statistical Service (ESS)
+publication_code: Projected population by region, zone and wereda
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ESS is WordPress but its REST media endpoint answers 401, so the report is taken
+# from the population-census page, which links it under /wp-content/uploads/. The
+# filename carries the projection year ('projected_population-2025-g.c.pdf'), and
+# the page also hosts older editions, so the newest year wins.
+discover:
+  method: latest_year_file
+  page_url: "https://ess.gov.et/population-census/"
+  link_contains:
+    - "projected_population"
+    - ".pdf"
+
+parser: ess_ethiopia_population
+geography: Total country
+
+notes: >
+  ESS 'Population Size by Sex, Area and Density by Region, Zone and Wereda',
+  projected to July 2025 — 829 geographies (the country, 13 regions, 71 zones and
+  726 weredas plus the Addis Ababa and Dire Dawa city administrations) x
+  male/female/total = 2,487 rows. series_type is 'projection'.
+  Each row carries NINE counts — total, urban and rural, each male/female/both —
+  and both identities are checked per row: male + female = both, and urban + rural
+  = total. ONLY THE TOTAL BLOCK IS EMITTED: urban/rural is a residence split and
+  this schema has no residence dimension, so folding it into `geography`
+  ('TIGRAY Region (Urban)') would invent places that do not exist.
+  IMPORTANT — DO NOT SUM THE REGIONS. The report lists both the legacy SNNP Region
+  and the four regions carved out of it, and the successors sum to exactly the
+  legacy row (Central Ethiopia + Sidama + South West Ethiopia + Souther Ethiopia =
+  22,922,998 = SNNP REGION), so adding all thirteen double-counts 22.9 million.
+  Excluding SNNP, the regions plus the two city administrations plus 'SPECIAL
+  ENUMERATION AREAS' (147,000) reproduce the published national total of
+  111,652,998 exactly. Both rows are kept because both are published; the overlap
+  is a property of Ethiopia's 2020s regional reorganisation, not a parse error.
+  Geography labels keep the source's own suffix ('… Region', '… Zone',
+  '…-Wereda'), which is what preserves the administrative level in a flat
+  `geography` column. Regions and zones print their NAME on a line above a generic
+  'Region Total' / 'Zone Total' row, so the name is carried forward; a footnote
+  marker ('*', '**') may be appended to either.
+  A locality name that repeats is kept only once, since the flat geography column
+  cannot distinguish two same-named weredas in different zones.

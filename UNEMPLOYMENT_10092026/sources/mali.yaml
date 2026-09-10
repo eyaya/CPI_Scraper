@@ -1,0 +1,65 @@
+country: Mali
+iso3: MLI
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: Bulletin des indicateurs du marché du travail
+frequency: ad_hoc
+expect_topics: 6
+
+# --- discover ---
+# INSTAT serves files from a Laravel file-manager tree at
+# /laravel-filemanager/files/shares/<bucket>/<slug>_<bucket>.pdf.
+# The publications listing is scraped rather than the filename templated: a
+# probe of bulletin-ind-travail2025_pub.pdf returns 404, so the year pattern
+# does not hold forward.
+# SCRAPE THE BULLETIN'S OWN PAGE, not /fr/publications. The publications index
+# is category-driven and renders its catalogue client-side, so a server-side
+# fetch of it contains no bulletin link at all -- which is what "no link
+# matching ['bulletin-ind-travail', '.pdf']" was reporting. INSTAT gives each
+# publication a stable slug page, and that page carries the real file link
+# into the Laravel file-manager tree.
+discover:
+  method: page_scrape
+  page_url: "https://www.instat-mali.org/fr/publications/bulletin-des-indicateurs-du-travail"
+  link_contains:
+    - "bulletin-ind-travail"
+    - ".pdf"
+
+parser: mali_pdf
+geography: Total country
+
+notes: >
+  INSTAT Mali, Bulletin sur les indicateurs du marché du travail.
+
+  THIS BULLETIN CONTAINS NO TABLES. Confirmed across three reads: eleven
+  numbered `Figure` captions and zero `Tableau`. Every breakdown by sexe, âge,
+  éducation and région is a BAR CHART whose data labels do not extract reliably
+  -- three attempts returned mutually contradictory category sets and values,
+  so they are deliberately not scraped.
+
+  WHAT IS CAPTURED is the national summary box "Résumé du marché du travail
+  pour le Mali": nine label/value lines, one national column, no
+  disaggregation. It is captured precisely because it is arithmetically
+  self-verifying where the chart labels are not:
+  6 748 249 + 163 777 = 6 912 026; 6 912 026 / 11 851 516 = 58,3%;
+  163 777 / 6 912 026 = 2,4%.
+
+  REFERENCE YEAR TRAP -- this resolves an apparent contradiction. The bulletin
+  is titled and published 2024, but its figures describe 2021-2022, from the
+  2022 labour-force survey ("Les résultats de l'enquête sur la main-d'œuvre
+  menée en 2022 au Mali"). INSTAT's June-2025 press note defending 3,5% for
+  2024 is therefore measuring a DIFFERENT reference year, not contradicting
+  this 2,4%. The period is pinned to 2022 and `reference_period` records the
+  2021-2022 range so the two can never be conflated downstream.
+
+  There is no urban/rural breakdown in this bulletin at all; the geographic cut
+  is by région, and only as a chart.
+
+  FR conventions: comma decimals, space thousands.
+
+  CROSS-CHECK: population en âge de travailler 11 851 516; main-d'oeuvre
+  6 912 026; en emploi 6 748 249; chômage 163 777; hors main-d'oeuvre
+  4 939 489; main-d'oeuvre potentielle 220 003; taux de participation 58,3%;
+  taux d'emploi 56,9%; taux de chômage 2,4%.

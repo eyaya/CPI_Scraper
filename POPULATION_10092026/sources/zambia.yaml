@@ -1,0 +1,45 @@
+country: Zambia
+iso3: ZMB
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats)
+publication_code: National Population Projections 2023-2047
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ZamStats links the projections report from its population-and-social-statistics
+# page, under the usual WordPress /wp-content/uploads/ path. The page carries many
+# other census products, so the link is matched on this report's own name.
+discover:
+  method: page_scrape
+  page_url: "https://www.zamstats.gov.zm/population-and-social-statistics/"
+  link_contains:
+    - "national-projections"
+    - ".pdf"
+
+parser: zamstats_population
+geography: Total country
+
+notes: >
+  ZamStats national population projections (medium variant), Table 1: 'Projected
+  Mid-year Population by Province, Sex and year of projection' — Zambia plus its
+  ten provinces, male/female/total, for the six years the table prints (2023, 2030,
+  2035, 2040, 2045, 2047) = 198 rows. The provinces sum exactly to the published
+  national total in every year, and every province block is checked against
+  male + female = total. series_type is 'projection'; the province name is printed
+  only on each block's 'Total' row and carried forward onto its Male/Female rows.
+  Tier-3 quirk: a second table (variant projections by year) is printed to the
+  RIGHT of Table 1, so its rows interleave with Table 1's in the text layer — the
+  parser keeps only the words left of the page's table gutter.
+  DELIBERATELY NOT READ, and the reason Zambia has no age detail here: Table A1
+  ('Total Population by Sex, Age (5 Year Age Groups) and Year of Projection') would
+  add 5-year age bands across all 25 years, but it is printed as three stacked
+  residence sections — Zambia, Rural, Urban — whose labels sit in a merged cell
+  that is absent from the text layer and is not rotated text either. The sections
+  can only be told apart by arithmetic (Rural + Urban = Zambia), which would risk
+  publishing a rural subtotal as the national population, so the age breakdown is
+  left until a source states its own geography.
+  Deferred: the 2022 Census National Analytical Report on the same page, which
+  would add an observed 'census' series alongside this projection.

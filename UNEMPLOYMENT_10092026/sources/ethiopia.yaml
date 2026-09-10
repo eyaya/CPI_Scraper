@@ -1,0 +1,57 @@
+country: Ethiopia
+iso3: ETH
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Ethiopian Statistical Service (ESS)
+publication_code: LMS
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 4
+
+# --- discover ---
+# ESS runs WordPress with a Download Manager plugin whose landing pages hide the
+# file behind a `?wpdmdl=<id>` route, so we target the /wp-content/uploads/
+# path directly. NOTE the upload folder (2024/09) reflects a SITE MIGRATION,
+# not the publication date -- do not infer a period from the path.
+#
+# ess.gov.et is the live domain; statsethiopia.gov.et is stale.
+discover:
+  method: static_url
+  url: "https://ess.gov.et/wp-content/uploads/2024/09/Final-2021-LABOUR-FORCE-AND-MIGRATION-SURVEY_Key-finding-Report-.17AUG2021.pdf"
+  save_as: ethiopia_lms_2021.pdf
+
+parser: ethiopia_pdf
+geography: Total country
+
+notes: >
+  ESS Labour Force and Migration Survey 2021, Summary Table 3 -- economically
+  active, employed and unemployed counts plus the unemployment rate, by region,
+  by sex and by urban/rural. Every region is emitted as its own `geography`.
+
+  WORKING-AGE BASE IS 10+, not 15+. ESS's own caption says so: "(Age 10 years
+  and above)". Ethiopian rates are not comparable with a 15+ series and the
+  base travels on every row.
+
+  TIGRAY IS EXCLUDED from the 2021 round -- "The 2021 LMS fully covered all the
+  sedentary as well as the pastoralist areas of the country, except Tigray
+  Region". It has no row in Summary Table 3 at all. This is a coverage gap in
+  the source, not a parser failure, and any national figure carries it.
+
+  SIDAMA did not exist as a region before 2020 (it was part of SNNP), so in the
+  four-period comparison table its earlier columns are blank at the row HEAD
+  while Tigray's are blank at the row TAIL. The layout reads from the end of
+  each line, which handles the former; the latter simply yields too few numbers
+  and is skipped rather than misaligned.
+
+  Printed typo preserved: the caption reads "Economically Activity Persons".
+
+  CADENCE: a national LFS roughly every 8-12 years (1999, 2005, 2013, 2021).
+  The annual Urban Employment Unemployment Survey (UEUS) appears suspended
+  after its February 2022 round; its 2022 key-findings PDF is at
+  .../2024/09/2022_1st-Round-UEUS-Key-Findings.pdf and is a candidate for a
+  second, urban-only descriptor.
+
+  CROSS-CHECK (Country total, February 2021): economically active 45,245,760;
+  employed 41,637,071; unemployed 3,608,688; unemployment 8.0% (M 5.0 /
+  F 11.7); urban 17.9% against rural 5.2%; Addis Ababa 22.1%; Dire Dawa 15.9%.

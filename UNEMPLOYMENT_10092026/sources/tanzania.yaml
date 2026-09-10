@@ -1,0 +1,59 @@
+country: Tanzania
+iso3: TZA
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS Tanzania)
+publication_code: ILFS
+frequency: annual
+expect_topics: 3
+
+# --- discover ---
+# NBS files sit at /uploads/statistics/documents/en-<unix_epoch>-<Title>.pdf.
+# The epoch is the UPLOAD timestamp, so it sorts newest-last, but it is NOT
+# monotonic with the reference year (ILFS 2025 = 1784654737 uploaded Jul 2026;
+# ILFS 2024 = 1762517636). The labour topic page lists releases newest-first,
+# so the first matching link is the current one.
+#
+# Filenames contain literal spaces and must be percent-encoded on download —
+# core/fetch handles that.
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.go.tz/statistics/topic/labour-and-employment-report"
+  link_contains:
+    - "ILFS"
+    - ".pdf"
+
+parser: tanzania_pdf
+geography: Total country
+
+notes: >
+  NBS Tanzania Integrated Labour Force Survey, now published annually (it was
+  previously ad hoc). Three single-topic tables — 3.1 participation rate, 3.2
+  employment-to-population ratio, 4.1 unemployment rate — each with a
+  THREE-LEVEL header: year (previous | current) x area (Tanzania Mainland |
+  Zanzibar | United Republic of Tanzania) x sex (M | F | T), eighteen numeric
+  columns. Only the current year's nine are captured; the previous year is a
+  restatement the prior run already holds.
+
+  Zanzibar and the Mainland are emitted as separate `geography` values
+  alongside the union — all three are published, none is derived.
+
+  DEFINITIONAL TRAP recorded but not collected: the report distinguishes the
+  INFORMAL SECTOR (28.2% of employment) from the INFORMAL ECONOMY (95.7%).
+  They have different denominators and are trivially conflated; neither is
+  captured here rather than capturing the wrong one.
+
+  DEFERRED (published, not yet collected): LU1–LU4 (Fig 4.2), time-related
+  underemployment (Table 4.5), disability-disaggregated rates, income, hours,
+  child labour, and the Table 3.3 status-in-employment breakdown. The layout's
+  row set covers geography, education and age bands.
+
+  Rows also include a disability panel whose sub-panels each carry their own
+  "Total" row; the layout takes the first "Total" per table, which is the
+  geographic one.
+
+  CROSS-CHECK (ILFS 2025, URT Total): LFPR 75.9%; EPR 71.4%; unemployment
+  5.9% (M 4.7 / F 7.4). Identity: (75.9 − 71.4) / 75.9 = 5.9 ✓.
+  Dar es Salaam unemployment 9.3% (female 14.0); Zanzibar total 7.3%;
+  youth 15-24 9.3%; youth 15-35 7.5%.

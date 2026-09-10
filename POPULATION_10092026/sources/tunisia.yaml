@@ -1,0 +1,42 @@
+country: Tunisia
+iso3: TUN
+indicator: Population
+tier: 2
+source_type: html
+agency: Institut National de la Statistique (INS)
+publication_code: INS Statistiques démographiques
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# The INS demography page server-renders its tables into the HTML (the same shape
+# the Tunisian CPI source relies on), so the page IS the data file: one static URL,
+# no API and no download to hunt for.
+discover:
+  method: static_url
+  url: "http://www.ins.tn/statistiques/111"
+  save_as: Tunisia_population.html
+
+parser: ins_tunisia_population
+geography: Total country
+
+notes: >
+  Mid-year ('1er Juillet') population estimates, 2016–2024: the national total, the
+  national breakdown by five-year age band, and the breakdown across Tunisie's 24
+  governorates — 373 rows over 25 geographies and 17 age bands. series_type is
+  'estimate' (intercensal estimates, not the RGPH count) and every row is
+  sex = total, since INS gives no sex split in these tables.
+  RECONCILIATION: for 2024 both breakdowns sum exactly to the published national
+  total. Earlier years fall short on the age breakdown only because INS publishes
+  '--' for the 00-04 band in several years (2016, 2017, 2019, 2020, 2023); those
+  cells are skipped rather than zero-filled, so the age bands legitimately do not
+  sum to the total in those years. The governorate columns reconcile throughout
+  (2016 differs by 6 persons, INS's own rounding).
+  DELIBERATELY NOT EMITTED: the third table on the page, 'Population au 1er
+  janvier' (2021–2026). It is the same country and years on a DIFFERENT reference
+  date, so emitting it would put two values under one schema key; the schema
+  defines `period` as mid-year, so the January basis is left out rather than
+  spliced onto the July one. That is why the series stops at 2024 even though INS
+  shows 2025 and 2026 figures on the January basis.
+  Deferred: the RGPH 2024 census tables (a 'census' series with a sex split), which
+  INS publishes separately.

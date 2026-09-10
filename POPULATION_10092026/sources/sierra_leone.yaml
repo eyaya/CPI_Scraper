@@ -1,0 +1,32 @@
+country: Sierra Leone
+iso3: SLE
+indicator: Population
+tier: 2
+source_type: docx
+agency: Statistics Sierra Leone (Stats SL)
+publication_code: PHC 2015
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# Stats SL publishes the 2015 Population and Housing Census chiefdom data as a Word
+# document (16 districts / 5 regions). We read the authoritative national row.
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/2020/sierraleone_-2015_population_census_data_for_16_districts_5_regions.docx"
+  save_as: sierraleone_2015_census_districts.docx
+
+parser: statssl_population
+geography: Total country
+
+notes: >
+  Stats SL 2015 Population and Housing Census. National total 7,092,113
+  (M 3,490,978 / F 3,601,135; Male+Female=Total exactly), read from the document's
+  authoritative "SIERRA LEONE" row. RELAXED-GRANULARITY entry: national by sex only.
+  The docx also lists chiefdom rows (REGION|DISTRICT|CHIEFDOM|MALE|FEMALE|TOTAL) but
+  coverage is incomplete (~132 chiefdoms sum to only 4.93M) and its region subtotals
+  mix old 4-region and new 5-region (incl. North-West) boundaries, so sub-national
+  detail does NOT reconcile and is deliberately left out (not shipped). series_type =
+  census 2015. Deferred: national age×sex (in final-results_-2015_population_and_
+  housing_census.pdf, but a jumbled two-column layout) and the 2021 MTPHC (its
+  preliminary report is spatial-only; revisit for final thematic age-sex reports).

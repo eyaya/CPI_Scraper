@@ -1,0 +1,50 @@
+country: South_Africa
+iso3: ZAF
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Statistics South Africa (Stats SA)
+publication_code: Report 03-10-08
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+
+# --- discover ---
+# USE http://, NOT https://. Stats SA answers this path over plain HTTP but
+# returns repeated 504s and 403s over HTTPS through its Incapsula WAF — the
+# reverse of the usual situation, and confirmed on repeated attempts.
+#
+# There is only ever ONE edition: the filename pattern is
+# Report-03-10-08<YYYY>.pdf and a probe of ...082016.pdf returns 404.
+discover:
+  method: static_url
+  url: "http://www.statssa.gov.za/publications/Report-03-10-08/Report-03-10-082014.pdf"
+  save_as: south_africa_sampi_2014.pdf
+
+parser: south_africa_mpi
+geography: Total country
+
+notes: >
+  Stats SA "The South African MPI: Creating a multidimensional poverty index
+  using census data" (Report 03-10-08, April 2014), covering Census 2001 and
+  Census 2011.
+
+  NATIONAL measure, published under its own name SAMPI: 4 dimensions — Health,
+  Education, Standard of Living and ECONOMIC ACTIVITY — 11 indicators,
+  k = 33.3%. Weights: Health 1/4 (child mortality alone), Education 1/8 each,
+  Standard of Living 1/28 across seven indicators, Economic Activity 1/4
+  (all adults 15-64 unemployed).
+
+  UNIT OF ANALYSIS IS THE HOUSEHOLD, not the person — one of only three such
+  measures collected (with Guinea and Djibouti). An H over households is not the
+  same quantity as an H over people, and the schema records which.
+
+  NO SUCCESSOR EXISTS. A 2024 Stats SA conference presentation cites a SAMPI
+  2016 headcount of 7.0% and says Stats SA is "exploring the option of updating
+  SAMPI with survey data instead of Census data" — but no 2016 report and no
+  Census-2022 SAMPI has been published. Do not chase one.
+
+  CROSS-CHECK: 2001 national 17.9 / 43.9 / 0.08; 2011 national 8.0 / 42.3 / 0.03.
+  Provinces 2011: Eastern Cape 14.4 / 41.9 / 0.06; KwaZulu-Natal 10.9 / 42.0 /
+  0.05; Gauteng 4.8 / 43.8 / 0.02; Western Cape 3.6 / 42.6 / 0.02.
+  Unemployment's contribution to SAMPI rose to 39.8% by 2011.

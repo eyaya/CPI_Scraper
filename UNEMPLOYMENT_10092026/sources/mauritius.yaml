@@ -1,0 +1,56 @@
+country: Mauritius
+iso3: MUS
+indicator: Unemployment
+tier: 2
+source_type: excel
+agency: Statistics Mauritius (Ministry of Finance)
+publication_code: CMPHS
+frequency: quarterly
+expect_topics: 3
+
+# --- discover (two hops) ---
+# The Labour subject page links each release's landing page
+# (/Pages/Statistics/ESI/Labour/Labour/LF_Emp_Unemp_<n>Qtr<YY>.aspx), which in
+# turn hosts the workbook under /Documents/Statistics/ESI/<YYYY>/EI<issue>/.
+#
+# NEITHER the EI<issue> number NOR the trailing _<DDMMYY> publication stamp is
+# derivable — both must be scraped. File pattern:
+# LF_Emp_Unemp_{1..4}Qtr{YY}_{DDMMYY}.xlsx (annual: LF_Emp_Unemp_Yr{YY}_...).
+#
+# DO NOT confuse with SEE_{Mon}{YY}_*.xlsx — the Survey of Employment and
+# Earnings is establishment-based and is a different universe.
+discover:
+  method: two_hop_scrape
+  index_url: "https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/Labour/SB_Labour.aspx"
+  page_link_contains:
+    - "LF_Emp_Unemp"
+  file_link_contains:
+    - "LF_Emp_Unemp"
+    - ".xlsx"
+
+parser: mauritius_excel
+geography: Total country
+
+notes: >
+  Statistics Mauritius, Continuous Multi-Purpose Household Survey (CMPHS)
+  labour tables. The strongest source in Central Africa and the islands:
+  quarterly, current, and published as a workbook rather than a report PDF.
+
+  WORKING-AGE BASE IS 16+, not 15+. Comparing a Mauritius rate against a 15+
+  rate without saying so is a real error, so the base travels on every row.
+
+  NO URBAN/RURAL AND NO REGIONAL BREAKDOWN is published in this release —
+  the sex and age dimensions are the only disaggregations available.
+
+  A historical workbook covering 1990-2024
+  (HS_Labour_Yr90-Yr24_<DDMMYY>.xls, on the same subject page) is the natural
+  back-series extension and is not yet collected.
+
+  UNVERIFIED DETAIL: the workbook's internal sheet names could not be read
+  before delivery, so the layout scans every sheet and locates the period
+  header row and label column by structure. Narrow `sheet_contains` in
+  parsers/excel_layouts.py after the first successful run.
+
+  CROSS-CHECK (Q1 2026): unemployment rate 5.7% (M 4.3 / F 7.5);
+  labour force 587,000; employment 553,700; unemployment 33,300;
+  activity rate 59.2%.

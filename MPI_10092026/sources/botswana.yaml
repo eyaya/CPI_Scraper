@@ -1,0 +1,57 @@
+country: Botswana
+iso3: BWA
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Statistics Botswana (Office of the President)
+publication_code: Pilot National MPI 2021
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 5
+
+# --- discover ---
+# Note the TWO path variants seen for this file, with and without
+# /publications/. The one below is the form that resolves; literal spaces are
+# percent-encoded.
+discover:
+  method: static_url
+  url: "https://www.statsbots.org.bw/sites/default/files/Pilot%20National%20Multidimensional%20Poverty%20Index%20Report%202021.pdf"
+  save_as: botswana_pilot_mpi_2021.pdf
+
+parser: botswana_mpi
+geography: Total country
+
+notes: >
+  Statistics Botswana "Pilot National Multidimensional Poverty Index for
+  Botswana", from the BMTHS 2015/16.
+
+  NATIONAL measure: 4 dimensions — Education 1/5, Health 1/5, SOCIAL INCLUSION
+  1/5, Living Standards 2/5 (note the unequal weights) — 15 indicators, k = 40%.
+
+  THE RICHEST METRIC SET COLLECTED. Botswana is the only African NSO publishing
+  incidence, intensity, M0, VULNERABLE and SEVERE poverty together, and all five
+  are captured.
+
+  THIS TABLE IS TRANSPOSED relative to every other MPI layout here: the ROWS are
+  metrics and the COLUMNS are settlement strata. Writing it as if it had the
+  usual shape would produce five copies of one number.
+
+  BOTSWANA'S STRATA ARE NOT A BINARY: Cities/Towns, Urban Villages and Rural
+  Areas are three distinct categories, so the two urban ones keep their own
+  labels rather than collapsing into "urban".
+
+  "PILOT" IS IN THE TITLE — treat the figures as provisional and watch for a
+  non-pilot successor.
+
+  One source oddity to verify when parsing: electricity appears under both the
+  Health and Living Standards indicator lists in the printed methodology (15
+  named slots with one apparent duplication).
+
+  Also published and not yet captured: censored headcount ratios (Food Security
+  19.1%, Assets 18.9%, Computer Usage 18.8%), indicator contributions (the top
+  five make up 64.6% of the national MPI), and the monetary/MPI overlap.
+
+  CROSS-CHECK (National | Cities/Towns | Urban Villages | Rural Areas):
+  H 20.84 / 5.34 / 14.05 / 37.48; A 51.09 / 47.64 / 49.98 / 51.85;
+  MPI 0.106 / 0.025 / 0.070 / 0.194; Vulnerable 15.94 / 7.97 / 16.85 / 19.15;
+  Severe 3.39 / 0.45 / 2.07 / 6.57.

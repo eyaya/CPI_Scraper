@@ -1,0 +1,57 @@
+country: Mali
+iso3: MLI
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: IPM-Mali 2023
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+
+# --- discover ---
+# INSTAT serves files from a Laravel file-manager tree,
+# /laravel-filemanager/files/shares/<bucket>/<slug>_<bucket>.pdf, where the
+# bucket is `pub` (publications) or `eq` (enquêtes).
+#
+# WATCH THE FILENAME: it contains "ophi-pnud" because OPHI and UNDP gave
+# technical support. This is an INSTAT publication on the INSTAT domain — a
+# filename-based aggregator filter would wrongly reject it. Filter on HOST,
+# never on filename.
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/rapport-indice-pauvrete-multidimensionnelle-ophi-pnud_pub.pdf"
+  save_as: mali_ipm_2023.pdf
+
+parser: mali_mpi
+geography: Total country
+
+notes: >
+  INSTAT "Rapport de l'Indice de Pauvreté Multidimensionnelle au Mali
+  (IPM-Mali, 2023)" — the cleanest and most parser-friendly MPI document of the
+  whole sweep.
+
+  NATIONAL measure: 5 dimensions (Éducation, Santé, Hygiène de vie et
+  assainissement, Conditions de vie, Emploi), 19 indicators, equal weights,
+  **k = 60% — the HIGHEST cutoff of any national MPI collected here.** A
+  validator assuming the global 33.3% would mislabel every Malian row.
+
+  COLUMN ORDER: `Population % | IPM | H (%) | A (%)` — the index comes SECOND,
+  before the incidence. The population-share column is a weight, not a poverty
+  metric, and is skipped.
+
+  COVERAGE CAVEAT: the survey excludes nomadic, semi-nomadic, displaced and
+  institutional populations. That bounds what the national figure means.
+
+  Also published and not yet captured: 95% confidence intervals on the headline
+  triple, uncensored deprivation rates, and indicator contributions (top three:
+  années de scolarisation 13,6%, assurance maladie 9,6%, emploi vulnérable
+  9,1%; highest uncensored deprivation is no household health insurance, 93,1%).
+
+  An older INSTAT study exists — "La pauvreté à plusieurs dimensions au Mali"
+  (2016-17, .../shares/eq/rap-ind16-17_eq.pdf) — on a different methodology. It
+  is not a continuation of this series and is not collected.
+
+  CROSS-CHECK: national IPM 0,323 (CI 0,310-0,337); H 46,6 (44,7-48,5);
+  A 69,4 (69,0-69,7). Rural 0,379 / 54,4 / 69,5; Bamako 0,083 / 12,6 / 65,8;
+  Ménaka 0,767 / 93,4 / 82,1.

@@ -1,0 +1,85 @@
+country: Ghana
+iso3: GHA
+indicator: Unemployment
+tier: 1                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+publication_code: AHIES
+frequency: quarterly
+verify_ssl: false
+expect_topics: 5
+
+# --- API (PxWeb / JSON-stat2), multi-table ---
+# The ONLY machine-readable NSO labour source found anywhere in Africa. GSS runs
+# the Annual Household Income and Expenditure Survey (AHIES) as a CONTINUOUS
+# quarterly survey and exposes its labour tables through the same PxWeb backend
+# as Ghana GDP / Population / census_characteristics.
+#
+# Two tables are taken: the economic-activity STATUS counts (which give the
+# working-age population, labour force, employed, unemployed and outside-the-
+# labour-force levels) and the published unemployment RATE. Variable codes and
+# the exact spelling of every "total" value were verified against the live API
+# metadata: Date, Region, Locality, Education, Sex, Age; totals are spelled
+# "All Ages", "All Locality Types", "All Educational Levels", "Both Sexes".
+#
+# NOTE the database id contains SPACES AND PARENTHESES and must be
+# percent-encoded exactly as written below.
+api:
+  tables:
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Annual%20Household%20Income%20and%20Expenditure%20Survey%20(AHIES)/data_econact.px"
+      save_as: ghana_econact.json
+      topic_map:
+        Total: working_age_population
+        Labour force: labour_force
+        Employed: employed
+        Unemployed: unemployed
+        Outside labour force: outside_labour_force
+      dimensions:
+        Economic_Activity: ["*"]
+        Date: ["*"]
+        Region: &regions ["Ghana", "Western", "Central", "Greater Accra",
+          "Volta", "Eastern", "Ashanti", "Western North", "Ahafo", "Bono",
+          "Bono East", "Oti", "Northern", "Savannah", "North East", "Upper East",
+          "Upper West"]
+        Locality: ["All Locality Types", "Urban", "Rural"]
+        Education: ["All Educational Levels"]
+        Sex: ["*"]
+        Age: ["All Ages"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Annual%20Household%20Income%20and%20Expenditure%20Survey%20(AHIES)/unemploy.px"
+      save_as: ghana_unemployment_rate.json
+      topic: unemployment_rate
+      definition: strict
+      series_label: Unemployment rate
+      dimensions:
+        Date: ["*"]
+        Region: *regions
+        Locality: ["All Locality Types", "Urban", "Rural"]
+        Education: ["All Educational Levels"]
+        Sex: ["*"]
+        Age: ["All Ages"]
+
+parser: ghana_pxweb_unemployment
+geography: Total country
+
+notes: >
+  GSS StatsBank AHIES labour tables, quarterly, Ghana + 16 regions, national /
+  urban / rural, both sexes + male + female, all education levels, all ages.
+  Emitted exactly as published, including GSS's own "Total" rows.
+
+  KNOWN LAG: StatsBank was last refreshed 2024-03-18 and carries 2022Q1..2023Q3.
+  GSS has since published quarterly labour bulletins through Q3 2025 (13.0%
+  unemployment) but ONLY through its new SPA publications portal
+  (gssweb.statsghana.gov.gh), whose /api/ namespace is disallowed by robots.txt
+  and could not be enumerated. So this descriptor is current for the API and
+  behind for the country. Re-check StatsBank for a refresh before assuming the
+  series has stalled.
+
+  DEFERRED (published by GSS, not yet collected): neet.px, informality.px,
+  inactivity.px, vulnerable.px, emp_status.px, industry.px, occupa.px,
+  mean_earnings.px, med_earnings.px, managerial.px. The NEET table publishes
+  COUNTS (Total / NOT IN NEET / NEET), not a rate, and the schema has no NEET
+  count topic — adding one is a deliberate decision, not a quiet default, so it
+  is left out rather than derived.
+
+  Ghana's census-based economic-activity cross-tabs (PHC 2021) live separately
+  in indicators/labour/, which is a different survey and a different shape.

@@ -1,0 +1,44 @@
+country: Madagascar
+iso3: MDG
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Madagascar)
+publication_code: MICS6-2018 snapshot IPM
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_MICS6-2018_snapshotIPM.pdf"
+  save_as: madagascar_ipm_mics6.pdf
+
+parser: madagascar_mpi
+geography: Total country
+
+notes: >
+  INSTAT "MICS6-2018 | Pauvreté multidimensionnelle à Madagascar".
+
+  NATIONAL measure: 3 dimensions each at 1/3 — Santé, Éducation, Conditions de
+  vie — 14 indicators, k = 33,3%. It is a national adaptation, not the global
+  MPI: it adds reproductive health and TWO LEARNING-QUALITY indicators (writing
+  and mathematics) and splits housing from crowding. Its 0,386 / 70,3 / 54,9
+  triple is close to but not identical to Madagascar's global MPI — another
+  reason the tag matters.
+
+  The measure comes from MICS6, not the EPM.
+
+  A FOUR-PAGE SNAPSHOT, not a full report. Only the national headline triple is
+  captured. The 23-region detail is published as a CHOROPLETH, and map labels
+  are not scraped here for the same reason chart labels are not scraped anywhere
+  in this collector — the numbers come out without reliable category
+  attribution.
+
+  DO NOT CONFUSE with two look-alikes that are aggregator publications and are
+  excluded: UNDP's "ANALYSE DE LA PAUVRETE MULTIDIMENSIONNELLE À MADAGASCAR"
+  (files.acquia.undp.org/.../PUB2021_Rapport_IPM.pdf) and UNICEF's child-MPI
+  study. The INSTAT snapshot is the NSO-domain artefact.
+
+  CROSS-CHECK: H 70,3; A 54,9; IPM 0,386. Regional range Analamanga 44,3%
+  (lowest) to Androy ≈90% (highest).

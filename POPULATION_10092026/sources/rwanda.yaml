@@ -1,0 +1,28 @@
+country: Rwanda
+iso3: RWA
+indicator: Population
+tier: 2
+source_type: excel
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: RPHC5 2022
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# NISR's 5th census (RPHC5 2022) Population Projections thematic report workbook;
+# Table 3 is the mid-year 2022 population by five-year age group and sex.
+discover:
+  method: static_url
+  url: "https://www.statistics.gov.rw/sites/default/files/documents/2025-02/Population_Projections%202022%20Thematic%20Report.xls"
+  save_as: rwanda_rphc5_projections.xls
+
+parser: nisr_rwanda_population
+geography: Total country
+
+notes: >
+  NISR RPHC5 2022 mid-year population (as of 1 July 2022) by five-year age group and
+  sex (Table 3 of the Population Projections thematic report). National total
+  13,206,728 (M 6,410,074 / F 6,796,654); the 17 age bands sum to it. Values are the
+  projection model's fractional persons, kept as published (series_type = estimate).
+  The workbook also has 2022-2052 projection tables (Tables 10-12) and urban/rural
+  age-sex (deferred). NISR site was intermittently down in earlier passes; now up.

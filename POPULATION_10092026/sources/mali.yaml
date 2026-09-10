@@ -1,0 +1,46 @@
+country: Mali
+iso3: MLI
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+publication_code: RGPH-5 2022
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSTAT's RGPH publications page lists the whole RGPH-5 report set under
+# /laravel-filemanager/files/shares/rgph/. We take the 'état et structure de la
+# population' volume, which carries the age and region tables.
+discover:
+  method: page_scrape
+  page_url: "https://www.instat-mali.org/fr/publications/recensement-general-de-la-population-et-de-lhabitat-rgph"
+  link_contains:
+    - "rapport-etat-structure-population"
+    - ".pdf"
+  save_as: mali_rgph5_etat_structure.pdf
+
+parser: instat_mali_population
+geography: Total country
+
+notes: >
+  RGPH-5, Mali's fifth census, enumerated 2022. Two tables are read: Tableau 2.3
+  gives the resident population by region and sex (Mali's 20 regions plus Bamako),
+  and Tableau 3.1 gives it by five-year age band and sex — 168 rows. Both
+  reconcile to the published national total of 22,395,489 (the region column is 1
+  person out, INSTAT's own rounding; the age bands are exact).
+  The published RM (rapport de masculinité — males per 100 females) is emitted as
+  the schema's `sex_ratio`, read as the second decimal on each row and only when it
+  falls in a plausible 50–200 range. The other two decimals, demographic weight and
+  % female, are shares of a total this schema does not model per row and are
+  dropped.
+  Parser notes: both tables have the SAME row shape, so one reader serves both and
+  the caption decides whether a label is a region or an age band. Tableau 3.1 SPANS
+  A PAGE BREAK — its first three bands sit under the caption on one page and the
+  rest continue on the next — so the parser tracks which table it is inside across
+  pages rather than reading page by page. French space thousands separators are
+  rebuilt from word x-gaps and every row is checked against
+  masculin + féminin = ensemble.
+  Deferred: the rest of the RGPH-5 set on the same page (mortality, fertility,
+  matrimonial status, economic characteristics), several of which map to schema
+  measures, and 'repvila-rgph5' — the village-level population repertory.

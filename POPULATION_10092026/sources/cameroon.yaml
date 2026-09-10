@@ -1,0 +1,45 @@
+country: Cameroon
+iso3: CMR
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: Projections démographiques 2016-2025
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ins-cameroun.cm is WordPress and its media REST endpoint is open, so the report
+# is found by searching it rather than scraping a page. The file carries no month
+# in its name, so `wp_media_named` (match by name, order by the API's own upload
+# date) rather than `wp_media_latest`.
+discover:
+  method: wp_media_named
+  api_url: "https://ins-cameroun.cm/wp-json/wp/v2/media?search=demograph&per_page=50&orderby=date&order=desc"
+  name_contains: "Projections-demographiques"
+  save_as: cameroon_projections.pdf
+
+parser: ins_cameroun_population
+geography: Total country
+
+notes: >
+  INS demographic projections 2016–2025, section II.1, one table per geography:
+  Cameroon plus its ten regions, with Yaoundé and Douala reported separately (and
+  their regions correspondingly given as 'Centre (sans Yaoundé)' and 'Littoral
+  (sans Douala)') — 13 geographies x 10 years x male/female/total = 390 rows.
+  series_type is 'projection'; age_group is 'Total' (this report carries no age
+  breakdown, its age detail being health-programme target groups rather than a
+  population pyramid).
+  TWO TRAPS this parser exists to handle, both silent:
+  (1) The SEX COLUMN ORDER IS NOT CONSTANT — the national table lists 'Masculin
+  Féminin', every regional table lists 'Féminin Masculin'. The header of each
+  table is therefore read to bind columns to sexes; assuming a fixed order would
+  swap male and female for every region, and no total check would catch it because
+  male + female = total either way.
+  (2) The year label is typeset ~2.5 pt BELOW its own numbers while consecutive
+  rows are ~17 pt apart, so grouping words into rows by rounding their y-coordinate
+  into fixed buckets splits some rows and not others — the parser clusters rows
+  sequentially by vertical distance instead. This cost 282 of the 390 rows before a
+  per-geography year count exposed it.
+  French space thousands separators are rebuilt from word x-gaps, and every row is
+  validated against male + female = les deux sexes.

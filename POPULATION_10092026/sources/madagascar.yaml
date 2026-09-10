@@ -1,0 +1,29 @@
+country: Madagascar
+iso3: MDG
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+publication_code: RGPH-3 2018
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSTAT's RGPH-3 2018 Global Results (Tome 1); Tableau 69 gives population by
+# age group and residence (urban / rural), summed here to the national total.
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_RGPH3-Definitif-ResultatsGlogaux-Tome1_17-2021.pdf"
+  save_as: madagascar_rgph3_tome1.pdf
+
+parser: instat_madagascar_population
+geography: Total country
+
+notes: >
+  INSTAT Madagascar RGPH-3 2018 national population by five-year age group and sex
+  (Tableau 69 = urban + rural; the national figure is their sum). Total 25,674,196
+  (M 12,658,945 / F 13,015,251); the age bands sum to 25,654,489, the ~19.7k residual
+  being age-not-stated (kept as published). Tier-3: the table interleaves French
+  space-grouped counts with comma-decimal percentages, so counts are recovered by a
+  token walk (comma tokens delimit counts). series_type = census. Deferred: the
+  urban/rural split itself and the province tables.

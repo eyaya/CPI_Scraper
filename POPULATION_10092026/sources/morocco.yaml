@@ -1,0 +1,34 @@
+country: Morocco
+iso3: MAR
+indicator: Population
+tier: 2
+source_type: excel
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: Projections 2014-2050
+frequency: annual
+verify_ssl: true
+
+# --- discover ---
+# HCP publishes "Projections de la population totale du Maroc par age simple et sexe
+# 2014-2050" as a Google Sheet (linked from hcp.ma Structure-de-la-population). We
+# fetch the sheet's xlsx export. (The RGPH 2024 census results portal
+# resultats2024.rgphapps.ma is a separate SPA; this projection workbook is the clean
+# tabular source.)
+discover:
+  method: static_url
+  url: "https://docs.google.com/spreadsheets/d/1sKkeOf6CfVxonniuk-DP4qk7R_nHVx4qsk24bPFiA-w/export?format=xlsx&gid=45139027"
+  save_as: morocco_hcp_agesex_2014_2050.xlsx
+
+parser: hcp_morocco_population
+geography: Total country
+
+notes: >
+  HCP Morocco national population by SINGLE-YEAR age (0-79, 80+) and sex, per year
+  2014-2050 (37 years, 9,102 rows). Totals: 2014 = 33,769,512 (M 16,825,793 /
+  F 16,943,719); 2024 = 37,369,652; 2050 = 43,561,789. For every year Male+Female=
+  Total and the single-year ages sum EXACTLY to the annual total. series_type =
+  projection (HCP projection based on RGPH 2014). Sheet "Population totale": row0 =
+  year x3, row1 = Masculin/Feminin/Total, col0 = age. Sub-national and the RGPH 2024
+  census results (resultats2024.rgphapps.ma SPA; hcp.ma "Population legale" region
+  tables) are deferred. HCP is Morocco's official NSO; Google Sheets is only its
+  hosting mechanism (not an aggregator).

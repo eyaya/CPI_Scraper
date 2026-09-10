@@ -1,0 +1,54 @@
+country: Namibia
+iso3: NAM
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Namibia Statistics Agency (NSA)
+publication_code: PHC 2023 Labour Force Report
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 6
+
+# --- discover (two hops) ---
+# NSA runs WordPress: the labour-force-survey document category lists each
+# release, and each release is a /document/<slug>/ landing page that hosts the
+# actual PDF under /wp-content/uploads/<YYYY>/<MM>/. The date stamp lives in
+# the upload path, not the filename.
+discover:
+  method: two_hop_scrape
+  index_url: "https://nsa.org.na/document-category/labour-force-survey/"
+  page_link_contains:
+    - "/document/"
+  file_link_contains:
+    - "wp-content/uploads"
+    - ".pdf"
+
+parser: namibia_pdf
+geography: Total country
+
+notes: >
+  NSA labour force report, Table 0.1 "Selected Key Indicators of the Labour
+  Market by Urban/Rural and Sex". Columns: Total | Male | Female | Urban |
+  Rural — note residence is URBAN THEN RURAL here, the opposite of Zambia.
+
+  MIXED UNITS WITH NO UNITS COLUMN: the first seven rows are absolute persons
+  and the last four are percentages, and they look structurally identical. This
+  is the highest-risk table in the collector for a naive positional parser; the
+  layout keys each row to its own topic so the measure is never inferred from
+  position.
+
+  The broad measure is CRUPLF — Combined Rate of Unemployment and Potential
+  Labour Force — printed in the table as the bare acronym and captured with
+  `definition: broad`.
+
+  CENSUS, NOT A SURVEY: the current numbers come from the 2023 Population and
+  Housing Census (reference night 24 September 2023), because NSA has run no
+  labour force survey since 2018 (rounds: 2013, 2014, 2016, 2018, then a gap).
+  The NHIES 2025/26 now in the field is not an LFS. So the reference period is
+  a point in time, not a collection window, and the cadence is multi-year — a
+  monthly scheduled run will find nothing new for years at a time.
+
+  CROSS-CHECK (2023, Total): working-age 15+ 1,876,122; employed 546,805;
+  unemployed 320,442; labour force 867,247; potential labour force 341,931;
+  LFPR 46.2%; EPR 29.1%; unemployment 36.9% (M 34.6 / F 39.6 / Urban 36.4 /
+  Rural 38.0); CRUPLF 54.8%.

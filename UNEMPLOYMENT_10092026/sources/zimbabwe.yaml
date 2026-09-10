@@ -1,0 +1,71 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Zimbabwe National Statistics Agency (ZIMSTAT)
+publication_code: QLFS
+frequency: quarterly
+expect_topics: 6
+
+# --- discover ---
+# ZIMSTAT runs WordPress and files sit under /wp-content/uploads/Macro/
+# Labor-force/ — note the AMERICAN spelling "Labor-force" in the path while the
+# site text says "Labour". Newer files add a year subfolder
+# (…/2025/Q2_2025_QLFS_Report.pdf); older ones sit flat with quite different
+# naming (2024_Third_Quarter_QLFS_Report.pdf, QLFS_SecondQter2022.pdf).
+# Naming is inconsistent across years, so the listing page is scraped rather
+# than a filename templated.
+# `qlfs_report` IS LOAD-BEARING, not decoration. /Labor-force/ is ZIMSTAT's
+# whole labour directory, and the first PDF it lists is currently
+# "Thematic Report on Education_310726.pdf" -- so matching on the folder alone
+# downloaded an EDUCATION report and handed it to the QLFS layout. It failed
+# loudly here only because the layout matched nothing; a report that happened
+# to share a row label would have produced plausible numbers from the wrong
+# publication. The same folder also holds Time Use Survey reports, an
+# Employment Index, opening remarks, child labour reports, and a PRESENTATION
+# deck beside every QLFS -- hence "report", which the decks
+# ("..._QLFS_PRESENTATION_...") do not carry.
+discover:
+  method: page_scrape
+  page_url: "https://zimstat.co.zw/labour-statistic/"
+  link_contains:
+    - "labor-force"
+    - "qlfs_report"
+    - ".pdf"
+
+parser: zimbabwe_pdf
+geography: Total country
+
+notes: >
+  ZIMSTAT Quarterly Labour Force Survey, "Table 1: Key findings".
+
+  The header is two-level — Indicator | <quarter> {Number | Percent} — and MANY
+  CELLS ARE DELIBERATELY BLANK: a rate row carries no Number, a stock row
+  carries no Percent, and the expanded-unemployment block carries Percent only.
+  A fixed positional map would shift every value in those rows, so the layout
+  declares the column set per row and per block instead.
+
+  BOTH DEFINITIONS ARE PUBLISHED and both are captured. Strict (official) is
+  the block headed "Unemployment"; broad is "Expanded/Relaxed Unemployment",
+  formula stated in the report as
+  (unemployed + potential labour force) / (labour force + potential labour
+  force). Q2 2025: 20.7% strict against 37.1% broad. The two blocks repeat the
+  SAME row labels ("National (16 years and above)", "Youth (15-24 years)"), so
+  they are separated by block context, not by regex.
+
+  WORKING-AGE BASE IS 16+ ("Working Age Population refers to persons aged 16
+  and above") while the youth bands are 15-24 and 15-35. Not comparable with a
+  15+ rate without saying so.
+
+  NO FIELDWORK DATES ANYWHERE: preface, introduction, methodology and executive
+  summary were all checked and none states a collection window. The period is
+  therefore read from the table's own quarter header / the cover title.
+
+  PUBLICATION IS IRREGULAR: released quarters are Q3 2021, Q4 2021, Q2 2022,
+  Q1 2024, Q3 2024, Q2 2025. The gaps are real, not scraping failures.
+
+  CROSS-CHECK (Q2 2025): working-age 16+ 8,539,402; labour force 4,020,125;
+  employed 3,186,598; LFPR 47.1%; EPR 37.3%; unemployed 833,527 / 20.7%;
+  expanded 37.1%; youth 15-24 39.3% (expanded 58.2%); youth 15-35 28.9%
+  (expanded 46.1%); NEET 15-24 47.6%; NEET 15-35 49.2%.

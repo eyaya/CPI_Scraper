@@ -1,0 +1,44 @@
+country: Cabo_Verde
+iso3: CPV
+indicator: Population
+tier: 2
+source_type: excel
+agency: Instituto Nacional de Estatística (INE)
+publication_code: Projeções Demográficas 2010-2040
+frequency: annual
+
+# --- discover ---
+# Same open .NET backend the CPI source uses: /Indicator and /Statistic answer 401
+# but the paginated /Publication does not, and attachments come from a second hop
+# through /GenericFile/GetFile. Theme 21 is 'População e Condições de Vida';
+# dissemination type 10 ('Principais Quadros') is the data workbook. The
+# publication carries TWO workbooks uploaded in the same second — by age group and
+# by single year of age — so `file_contains` picks the one this parser reads
+# rather than leaving it to a timestamp tie-break.
+discover:
+  method: ine_cv_publication_file
+  api_base: "https://bdmi.ine.cv/site_deploy_api/api"
+  file_base: "https://bdmi.ine.cv/site_deploy_api"
+  code_theme: 21              # População e Condições de Vida
+  publication_type: 10        # Principais Quadros
+  title_contains: "Projeções demográficas"
+  extension: ".xlsx"
+  file_contains: "PROJEÇAO_POPULAÇAO_CV"   # the age-group workbook
+
+parser: ine_caboverde_population
+geography: Total country
+
+notes: >
+  INE demographic projections 2010–2040 by concelho, five-year age group and sex.
+  One workbook = 23 sheets ('CABO VERDE' plus the 22 concelhos), each holding three
+  stacked blocks (POPULAÇÃO TOTAL / HOMENS / MULHERES), each block a GRUPO ETÁRIO
+  header row of the 31 projection years followed by 'Total' and the 19 age bands
+  0-4 … 90+. That yields 42,780 rows: 23 geographies x 3 sexes x 20 bands x 31
+  years, with male + female reconciling to the published total exactly.
+  series_type is 'projection' throughout — the whole file is INE's projection, 2010
+  included (the base year is projected onto the 2010 census rather than observed),
+  so tagging the early years 'census' would misstate them. Concelho names and age
+  bands are kept as published; the 'CABO VERDE' sheet maps to 'Total country'.
+  Deferred: the companion 'Idade_Simples' workbook — the same projection by single
+  year of age, three times the size for the same series — and the RGPH-2020 census
+  tables, which would add an observed 'census' series alongside this projection.

@@ -1,0 +1,46 @@
+country: Benin
+iso3: BEN
+indicator: Population
+tier: 2
+source_type: excel
+agency: Institut National de la Statistique et de la Démographie (INStaD)
+publication_code: Statistiques démographiques (RGPH 1-4)
+frequency: annual
+
+# --- discover ---
+# INStaD's demographic-statistics page links the workbook its demographic PDFs are
+# extracted from — the Excel is the better source, so we take it directly. NOTE
+# https://instad.bj/statistiques (no sub-path) redirects endlessly; the
+# '/statistiques/statistiques-demographiques' sub-path is fine.
+discover:
+  method: page_scrape
+  page_url: "https://instad.bj/statistiques/statistiques-demographiques"
+  link_contains:
+    - "demographiques/population"
+    - ".xlsx"
+  save_as: benin_statistiques_demographiques.xlsx
+
+parser: instad_benin_population
+geography: Total country
+
+notes: >
+  INStaD 'STATISTIQUES DEMOGRAPHIQUES' workbook. Two sheets are read: STRUCTURE
+  gives population by sex for Benin, its 12 departments and its communes across
+  ALL FOUR censuses at once (RGPH1 1979, RGPH2 1992, RGPH3 2002, RGPH4 2013), and
+  DENSITE gives the published density for the same geographies and censuses as the
+  schema's `density` measure — 1,497 rows over 109 geographies. series_type is
+  'census' throughout; INStaD labels the 2013 column 'Résultats provisoires' and it
+  is kept as published.
+  NOTE THE COLUMN ORDER: this source lists Total, Masculin, Féminin — the total
+  FIRST, unlike most sources, which is why the parser binds sexes from the sheet's
+  own header row instead of assuming a position. Rows are checked against
+  masculin + féminin = total.
+  NOT READ, deliberately: the EFFECT_POP sheet mixes census counts (1979, 1992,
+  2002) with modelled annual values (2003 onward, carrying decimals) in a single
+  row without marking which is which, so separating them into `census` and
+  `projection` would mean inferring INStaD's method rather than reading it. The
+  ACCR_POP, FECON, MORTA, MIGRAT, MENAGE and POP_ACTIVE sheets are likewise
+  deferred — several map to schema measures (growth_rate, fertility_rate) and are
+  a worthwhile later addition.
+  Deferred source: rgph5.instad.bj, the dedicated RGPH-5 site, which currently
+  publishes no data files.

@@ -1,0 +1,55 @@
+country: Uganda
+iso3: UGA
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Uganda Bureau of Statistics (UBOS)
+publication_code: LMS 2025
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 2
+
+# --- discover ---
+# UBOS publications live at /wp-content/uploads/publications/<MM>_<YYYY><Title>.pdf
+# -- a zero-padded month and four-digit year with NO separator, so "05_2026..."
+# is May 2026 and the prefix sorts correctly.
+#
+# www.ubos.org serves an INCOMPLETE TLS CHAIN and fails intermittently; the
+# descriptor sets verify_ssl false and the harness retries the run.
+discover:
+  method: static_url
+  url: "https://www.ubos.org/wp-content/uploads/publications/04_2026Presentation_on_the_Labour_Market_Survey_2025_Report_Findings_16th_April_2026.pdf"
+  save_as: uganda_lms_2025_findings.pdf
+
+parser: uganda_pdf
+geography: Total country
+
+notes: >
+  UBOS Labour Market Survey 2025. A DELIBERATELY NARROW CAPTURE: only the two
+  genuine summary tables in the findings deck are parsed -- slide 56
+  (International classification) and slide 57 (National classification) -- each
+  carrying two indicators.
+
+  WHY SO LITTLE: every other headline indicator in the deck is a BAR CHART, not
+  a table. Chart text extracts as a title, then the data labels, then the
+  y-axis tick sequence (0, 10, 20 … 100), then the legend — and a parser that
+  takes "the numbers after the caption" ingests the axis scale as data. Those
+  slides are not scraped. See the README's "what this collector will not do".
+
+  WHAT IT DOES CAPTURE IS THE POINT: UBOS publishes the same indicators on TWO
+  WORKING-AGE DEFINITIONS side by side -- the ILO 15+ and the National
+  Employment Policy 2011's 14-64 -- with two matching youth bands, 15-24 and
+  18-30. Unemployment reads 12.2% on one base and 12.4% on the other; youth
+  unemployment 17.9% against 16.2%. Reporting either without its base is wrong,
+  and this descriptor exists mainly so both are recorded correctly.
+
+  THE MAIN REPORT IS NOT REACHED. It exists at
+  .../publications/05_2026Labour_Market_Survey_Report_y2025.pdf and carries the
+  full table set, but every fetch during this build died on the TLS chain (nine
+  attempts). It is the obvious upgrade once downloaded from a real client.
+
+  Cadence is ad hoc: NLFS 2016/17, NLFS 2021, LMS 2025. Not quarterly.
+
+  CROSS-CHECK: ILO 15+ unemployment 12.2%, youth 15-24 17.9%, informal
+  employment excluding agriculture 87.6% and 95.1%. National 14-64
+  unemployment 12.4%, youth 18-30 16.2%, informal 87.6% and 91.5%.

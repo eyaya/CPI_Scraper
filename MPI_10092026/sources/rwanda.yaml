@@ -1,0 +1,51 @@
+country: Rwanda
+iso3: RWA
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: EICV7 Thematic Report - Multidimensional Poverty
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+
+# --- discover ---
+# PIN THE APEX DOMAIN: www.statistics.gov.rw serves a certificate with a
+# HOSTNAME MISMATCH and fails TLS outright; statistics.gov.rw works.
+#
+# Files sit at /sites/default/files/documents/<YYYY-MM>/, where the folder is
+# the PUBLICATION month, not the reference period. EICV7 outputs are split
+# across 2025-04 and 2025-07, so folder enumeration must span both.
+discover:
+  method: static_url
+  url: "https://statistics.gov.rw/sites/default/files/documents/2025-07/EICV7_Multidimensional_Poverty_Thematic_Report.pdf"
+  save_as: rwanda_eicv7_mpi.pdf
+
+parser: rwanda_mpi
+geography: Total country
+
+notes: >
+  NISR "Multidimensional Poverty — Thematic Report — EICV7", from fieldwork
+  October 2023 to October 2024.
+
+  NATIONAL measure: 4 dimensions each weighted 1/4 — Education, Health, Basic
+  Services, Living Standards — 13 indicators, k = 33.3%.
+
+  METHODOLOGY BREAK, which the report itself flags: EICV5 used k = 40%, EICV7
+  uses 33.3%, with an expanded asset list and adjusted education age ranges. DO
+  NOT chain EICV5 and EICV7 values into a trend.
+
+  NOT COLLECTED, and why:
+  - the EICV5 (2018) edition, Rwanda's first MPI — its publication page is at
+    statistics.gov.rw/publication/eicv5thematic-reportmultidimensional-poverty-indexmpi
+    but the direct PDF href must be scraped from that page and could not be
+    resolved before delivery;
+  - the EICV5 Multidimensional CHILD Poverty Report — that is MODA (5 dimensions,
+    cutoff "deprived in at least 3"), a different family of measure, not an
+    Alkire-Foster MPI;
+  - the RPHC5 Non-Monetary Poverty thematic report (2022 census) — deprivation
+    mapping, not the EICV MPI.
+
+  CROSS-CHECK: National 30.5 / 45.0 / 0.136; Urban 15.0 / 44.0 / 0.065;
+  Rural 37.0 / 45.0 / 0.164; City of Kigali 12.4 / 43.0 / 0.053;
+  Southern 35.2 / 45.0 / 0.158; Eastern 34.4 / 45.5 / 0.157.

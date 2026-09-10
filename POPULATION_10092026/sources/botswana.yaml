@@ -1,0 +1,32 @@
+country: Botswana
+iso3: BWA
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Statistics Botswana (Statsbots)
+publication_code: 2022 PHC Analytical Report Vol 1
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# The 2022 Population & Housing Census "Analytical Report Volume 1 - Demographic"
+# (Table 5.4) gives population by age group, citizenship and sex. Statsbots blocks
+# bare clients, so impersonate a browser TLS fingerprint.
+discover:
+  method: static_url
+  url: "https://www.statsbots.org.bw/sites/default/files/census_documents/Botswana%20Population%20%26%20Housing%20Census%202022%20Analytical%20Report%20Volume%201-Demographic%20and%20Social%20Characteristics%2CRegistration%2C%20Youth%20and%20Elderly%2CEducation.pdf"
+  impersonate: chrome124
+  save_as: botswana_phc2022_vol1.pdf
+
+parser: statsbots_population
+geography: Total country
+
+notes: >
+  Statistics Botswana 2022 census population by age group and sex (Table 5.4 of
+  Analytical Report Volume 1). We take the TOTAL male/female columns (= Batswana +
+  Non-Batswana + Not-Stated citizenship). National total 2,359,609; the 21 five-year
+  age bands plus the "Not stated" age row sum to it exactly. series_type = census.
+  Statsbots requires browser impersonation (blocks bare requests). Deferred: the
+  citizenship breakdown and district-level tables. NOTE: an older "Population
+  Distribution, Structure, Density" report in the same folder is 2011-census data
+  (total 2,024,904) — not this.

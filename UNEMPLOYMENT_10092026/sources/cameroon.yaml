@@ -1,0 +1,60 @@
+country: Cameroon
+iso3: CMR
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Cameroun)
+publication_code: EESI3
+frequency: ad_hoc
+expect_topics: 4
+
+# --- discover ---
+# INS Cameroun runs a WordPress taxonomy site (the old statistics-cameroon.org
+# is dead). Files sit at /wp-content/uploads/<YYYY>/<MM>/ where the YYYY/MM is
+# the RE-UPLOAD date (2025/07), not the publication date (Nov 2023) — do not
+# infer a period from the path.
+#
+# The dépliant is used rather than the main report because the main report
+# exceeds 30 MB and its headline numbers are identical; the dépliant carries
+# the full ICLS-19 panel with every disaggregation.
+discover:
+  method: static_url
+  url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/EESI3_Depliant_Emploi_FR_28_09_2023-2.pdf"
+
+parser: cameroon_pdf
+geography: Total country
+
+notes: >
+  INS Cameroun, Troisième Enquête sur l'Emploi et le Secteur Informel (EESI3),
+  dépliant "Quelques indicateurs du marché du travail".
+  Columns: Douala | Yaoundé | Urbain | Rural | Ensemble.
+
+  TWO FRAMEWORKS ARE PRINTED SIDE BY SIDE and the leaflet EXPLICITLY FORBIDS
+  comparing them: "Les indicateurs de ce tableau sont calculés suivant l'ancien
+  cadre conceptuel et ne sont pas à comparer avec les autres indicateurs de ce
+  dépliant". Only the NEW (ICLS-19) panel is captured. The same indicator and
+  year genuinely differ between the two — BIT unemployment 2021 reads 5,3% on
+  the old framework against SU1 6,1% on the new — so mixing them would be
+  fabricating a discontinuity.
+
+  BOTH DEFINITIONS on the new framework are captured: "au sens du BIT" (strict)
+  and "élargi", which additionally counts discouraged jobseekers ("chômeurs
+  découragés"). SU2/SU3/SU4 are captured as underemployment and labour
+  underutilisation, all tagged broad.
+
+  WORKING-AGE BASE IS 14+: data were collected from 10 ans ou plus, but INS
+  publishes indicators on "le groupe d'âge légal d'entrée sur le marché du
+  travail au Cameroun (14 ans)". Child-labour indicators use 10-17 and are not
+  collected here.
+
+  FR conventions: comma decimals, space thousands. Two extraction hazards seen
+  in this leaflet and handled: a lost leading zero (",4" printed for "0,4") and
+  the digit inside "(SU1)" being read as data — the layout reads numbers from
+  the end of each line.
+
+  Cadence is ~6-12 years (EESI1 2005, EESI2 2010, EESI3 2022). No quarterly or
+  annual labour series exists.
+
+  CROSS-CHECK (Ensemble): taux de main-d'oeuvre 54,2%; chômage BIT (SU1) 6,1%;
+  SU2 23,0%; SU3 10,0%; SU4 26,3%. Douala SU1 15,4%; Yaoundé 11,7%;
+  urbain 9,4%; rural 1,6%.
