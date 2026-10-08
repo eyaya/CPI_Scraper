@@ -1,0 +1,47 @@
+country: DR_Congo
+iso3: COD
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS RDC)
+publication_code: Annuaire statistique 2015 de la RDC, section 1.3 Situation démographique
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ins-rdc.org answers a Cloudflare 403 to every client; the new ins.gouv.cd
+# lists no yearbook. The ONLY copy is the Wayback Machine's `id_` capture of
+# INS's own file -- original bytes, an unchanged archive of the NSO's
+# publication, NOT an aggregator (the labour/GDP DRC precedent). Use the
+# 2017-10-21 capture: it is complete (36.8 MB, 584 pages); the 2021-10-25 and
+# 2021-12-22 captures are truncated at 1 MB and 9 MB. The archive rate-limits
+# plain requests (429), hence the browser fingerprints and long timeout.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20171021163944id_/http://www.ins-rdc.org/sites/default/files/Annuaire%20statistique%202015%20Web.pdf"
+  save_as: INS_RDC_Annuaire_statistique_2015.pdf
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 900
+
+parser: ins_drc_population
+geography: Total country
+
+notes: >
+  Official 2015 population ESTIMATES (no census since 1984; series_type
+  estimate): the 26 provinces and RDC in persons (Tableau 1.29), and the
+  national and each province's population by 5-year age group x sex in
+  thousands (Tableaux 1.30-1.56; unit thousand_persons, as printed).
+
+  PUBLISHED INCONSISTENCY PINNED: 1.29's provinces sum to 86 025 000 against
+  the printed RDC 85 026 000; the RDC figure is the one the national age table
+  adds up to. Kongo Central's printed male shares sum to 103.12 (shares not
+  collected).
+
+  NOT READ: Tableaux 2.1-2.7 (2010-2015 by province) -- a second rotated copy
+  of each table is interleaved into the text layer past the first page.
+
+  TWO-UP PAGES: from page 97 the PDF is a spread repeating the previous table
+  on the left; the parser crops each such page to its own table.
+
+  CROSS-CHECK: RDC 85 026 000; Kinshasa 11 575 000; national 0-4 males 8 271
+  thousand; Kongo-Central 0-4 males 572; Kasaï 0-4 females 255.

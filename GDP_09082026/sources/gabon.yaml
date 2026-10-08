@@ -1,0 +1,46 @@
+country: Gabon
+iso3: GAB
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Direction Générale de la Statistique (DGS, now INSTAT Gabon)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSTAT publishes no national accounts online today: its "Comptes nationaux"
+# page reads "en attente de contenu" (Wayback capture 2025-03-19), the annual-
+# publications page is in maintenance, and the Annuaires 2020/2022 carry no
+# accounts tables. The DGS "Comptes rapides" 2006-2010 PDFs are IMAGE-only.
+# The Annuaire statistique 2004-2008 -- the DGS's own yearbook, with a text
+# layer -- survives as a Wayback `id_` capture (original bytes) of the DGS's
+# old host stat-gabon.org: the DR Congo / Congo / Benin / Sudan route.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20120305180609id_/http://www.stat-gabon.org/documents/PDF/Donnees%20stat/Compteannuaire/Annu0408.pdf"
+  save_as: "Annuaire_statistique_Gabon_2004-2008.pdf"
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 300
+
+parser: gabon_dgs_gdp
+geography: National
+
+notes: >
+  DGS Annuaire statistique 2004-2008, chapter V.1: resources and uses at
+  current prices (V.1.1.1, credited "DGSEE et DGE") and at constant 2001
+  prices (V.1.1.2, DGS), contributions to growth and real GDP growth
+  (V.1.1.3), value added by branch at current prices (V.1.2.1, DGS), and GDP
+  per head in FCFA and USD (V.1.3.2). The credit line travels on every row.
+
+  PUBLISHED INCONSISTENCY KEPT AND PINNED: GDP 2004/2005 is 4 097,5 / 4 989,3
+  in V.1.1.1 but 3 868,1 / 4 715,8 in V.1.2.1 (2006-2008 agree).
+
+  NOT USED: the 2001-2007 Annuaire (older edition; its 2002-2007 constant
+  series is the Ministry's on a 1991 base, flagged non-comparable by the
+  Annuaire itself); Comptes rapides 2006-2010 (image-only); BEAC / Ministry of
+  Economy tables (not needed while the NSO's own text exists -- and they are
+  the fallback only when they reprint DGS figures unchanged and credited).
+
+  CROSS-CHECK: GDP current 2008 7 032,8 milliard FCFA; real GDP 2008 4 087,1;
+  pétrole brut value added 2008 3 728,0; GDP per head 2008 4 878,5 thousand
+  FCFA / 9 805 USD.

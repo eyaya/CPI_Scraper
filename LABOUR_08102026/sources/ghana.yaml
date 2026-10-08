@@ -1,0 +1,95 @@
+country: Ghana
+iso3: GHA
+indicator: Labour
+tier: 1
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+publication_code: PHC 2021
+frequency: annual
+verify_ssl: false
+
+# --- API (PxWeb / JSON-stat2), multi-table ---
+# Economic-activity tables from PHC 2021: the activity-status distribution
+# (employed / unemployed / not economically active) of the 15+ population, the
+# composition of the employed (employment status, industry, occupation, sector).
+# THE UNEMPLOYMENT RATE TABLE MOVED to the `unemployment` indicator, which
+# carries the strict/broad definition and the working-age base that a rate needs;
+# this indicator holds composition only.
+# Ghana + 16 regions, all-localities total,
+# both sexes + male + female, all education levels. Districts, rural/urban and the
+# age breakdown are deferred. NOTE: econact's age total is coded "Total"; the
+# other tables use "All ages".
+api:
+  tables:
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Economic Activity/econact_table.px"
+      topic: activity_status
+      save_as: ghana_activity_status.json
+      dimensions:
+        Econact: ["*"]
+        Education: ["Total"]
+        Locality: ["All Locality Types"]
+        Geographic_Area: &regions ["Ghana", "Western", "Central", "Greater Accra",
+          "Volta", "Eastern", "Ashanti", "Western North", "Ahafo", "Bono",
+          "Bono East", "Oti", "Northern", "Savannah", "North East", "Upper East",
+          "Upper West"]
+        Sex: ["*"]
+        Age: ["Total"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Economic Activity/status_table.px"
+      topic: employment_status
+      save_as: ghana_employment_status.json
+      dimensions:
+        Status: ["*"]
+        Education: ["Total"]
+        Locality: ["All Locality Types"]
+        Geographic_Area: *regions
+        Sex: ["*"]
+        Age: ["All ages"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Economic Activity/industry_table.px"
+      topic: industry
+      save_as: ghana_industry.json
+      dimensions:
+        Industry: ["*"]
+        Education: ["Total"]
+        Locality: ["All Locality Types"]
+        Geographic_Area: *regions
+        Sex: ["*"]
+        Age: ["All ages"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Economic Activity/occupation_table.px"
+      topic: occupation
+      save_as: ghana_occupation.json
+      dimensions:
+        Occupation: ["*"]
+        Education: ["Total"]
+        Locality: ["All Locality Types"]
+        Geographic_Area: *regions
+        Sex: ["*"]
+        Age: ["All ages"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Economic Activity/sector_table.px"
+      topic: sector
+      save_as: ghana_sector.json
+      dimensions:
+        Sector: ["*"]
+        Education: ["Total"]
+        Locality: ["All Locality Types"]
+        Geographic_Area: *regions
+        Sex: ["*"]
+        Age: ["All ages"]
+parser: ghana_pxweb_labour
+geography: Total country
+
+notes: >
+  Ghana GSS StatsBank PHC 2021 economic activity. Five topics in one tidy file:
+  activity_status (employed / unemployed / not economically active for the 15+
+  population), and employment_status, industry, occupation and sector of the
+  employed — all counts of persons. GSS's "Total" rows and both-sexes totals are
+  emitted as published.
+  THE UNEMPLOYMENT RATE TABLE IS NOT HERE: rates belong to the `unemployment`
+  indicator, which records whether a rate is strict or broad and on what
+  working-age base. It is collected there as Ghana's census-based regional
+  series, beside the quarterly StatsBank one.
+  Industry is ISIC Rev.4, occupation ISCO-08 and employment status ICSE-93, as
+  GSS publishes them; the scheme travels on every row in `classification`.
+  NOTE: activity_status is NESTED — "Employed" and "Unemployed" are parents of
+  their sub-categories — so do not naively sum every non-Total category. Same
+  StatsBank backend as Ghana GDP / Population / census_characteristics. Deferred:
+  districts, rural/urban, age & education breakdowns, and the child-activity tables.

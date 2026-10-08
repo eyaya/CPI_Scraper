@@ -1,0 +1,39 @@
+country: Tanzania
+iso3: TZA
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: National Bureau of Statistics (NBS)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# The NBS GDP topic page (server-rendered, same mechanism as the CPI topic) lists
+# the quarterly release 'Excel Q<n>_<year>_Eng.xlsx'; we take that link.
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.go.tz/statistics/topic/gross-domestic-product-gdp"
+  link_contains:
+    - "Excel"
+    - "Eng.xlsx"
+
+parser: tanzania_nbs_gdp
+geography: National
+
+notes: >
+  NBS Tanzania quarterly GDP release ('Excel Q<n>_<year>_Eng.xlsx'), one sheet
+  'TABLES 1-4' with four vertically-stacked, TRANSPOSED tables (economic activities
+  across the columns, periods down the rows — annual figures then quarterly): GDP by
+  economic activity at 2015 prices (TZS million, constant), the same as % growth,
+  at current prices (TZS million), and current-price % shares. 19 activities plus
+  the aggregates 'All industry at basic prices' (GVA), 'Taxes on products' and 'GDP
+  at market prices'. Annual + quarterly 2014-2025, base year 2015. GOTCHAS: the
+  workbook's font maps capital P->Q ('GDQ at market Qrices', 'Qublic') — restored on
+  the labels; the Year appears only on the first row of each year (forward-filled);
+  a blank Quarter = an annual row, 1-4 = a quarter; opened read-only. Verified:
+  Agriculture 2024 constant = 37,677,354.6 TZS million; GDP at market prices 2024 =
+  156.6tn constant / ~205tn current TZS (matches Tanzania's GDP). NBS is a
+  server-rendered jQuery site (NOT a SPA) — the correct topic slug is
+  'gross-domestic-product-gdp' (wrong slugs return an empty 40KB fallback). The
+  older 'URT Quarterly GDP Tables base 2019.xls' (legacy binary .xls) and the
+  Kiswahili/highlights PDFs are left aside. Everything as published; nothing derived.

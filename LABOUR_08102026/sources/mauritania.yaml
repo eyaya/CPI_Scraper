@@ -1,0 +1,52 @@
+country: Mauritania
+iso3: MRT
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Economique (ANSADE)
+publication_code: ENESI 2017 + RGPH 2013 Volume 3
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# ansade.mr is a single-page app. Its catalogue is a JSON API:
+#   https://admin.ansade.mr/wp-json/ansade/v1/publications/?lang=fr
+# (531 items: title, date, `file.url`, and the PDF's full text in
+# `pdf_content` for recent items). Both documents are one-off rounds re-hosted
+# under /wp-content/uploads/2026/01/ during the site migration, so they are
+# pinned; the API is where a newer ENESI or a RGPH-5 economic volume would
+# appear (search titles for "ENESI" / "Caractéristiques ... économiques").
+# The server reset curl_cffi and plain downloads intermittently during
+# discovery (2026-09-29); a full-file fetch via the harness succeeded with a
+# long timeout.
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/01/ENESI-2017.pdf"
+  save_as: ENESI-2017.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Volume3_Caracteristiques-socioculturelles_RGPH__fr.pdf"
+    save_as: RGPH2013_Volume3_Caracteristiques-socioculturelles.pdf
+
+parser: mauritania_labour
+geography: Total country
+
+notes: >
+  ENESI 2017, annexe 4, Tableau A4.1: employed by 24 branches x sex, counts
+  (734 277). RGPH 2013 Volume 3, chapter 9: Tableau 9.25 branch x sex, 9.26
+  branch x milieu (Urbain / Rural / Nomade -> locality "other"), 9.27 statut
+  dans l'emploi x sex, counts (610 425). Both on ANSADE's 14-64 working-age
+  definition. National classification throughout (no scheme named). Both
+  publications print independently rounded weighted counts, so sums are held
+  to their totals within rounding.
+
+  NOT COLLECTED: ENESI A4.2-A4.5 (age / education / wilaya distributions --
+  no topic) and its UPI module; 9.26's Total column (repeats 9.25's, checked
+  equal); ENRE-SI 2012 Tableaux 23-24 (informal-unit module; 24 = 21, the
+  UPI distribution); ENTE 2025-26 quarterly notes (composition only as charts
+  with scrambled labels); RGPH-5 general report and 2024/2025 yearbooks (no
+  composition tables).
+
+  CROSS-CHECK: ENESI commerce 157 274, agriculture 129 555; census commerce
+  158 031, indépendant 326 459, salariés public 88 274.

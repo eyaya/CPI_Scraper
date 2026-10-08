@@ -15,6 +15,7 @@ pipeline against the network:
 """
 from __future__ import annotations
 import datetime as dt
+import re
 import sys
 
 import pandas as pd
@@ -126,6 +127,31 @@ def run_layout(country: str, page: str, extra_pages: list[str] | None = None):
         return P.make_parser(LAYOUTS[country])("<replay>")
     finally:
         P._pages = orig
+
+
+def unmatched(country: str, pages: list[str], only_tables: list[int] | None = None):
+    """Which row specs matched NOTHING, as a list.
+
+    `make_parser` prints its misses and carries on -- "loud but non-fatal",
+    which is right in production where a partial capture is better than none.
+    In a test it is the opposite: a fixture that exercises a table should match
+    every row spec in it, and a spec that quietly stops matching is how a
+    layout rots while the suite stays green. This re-derives the misses so a
+    test can assert on them instead of reading stderr.
+    """
+    import copy
+    cfg = copy.deepcopy(LAYOUTS[country])
+    tables = cfg.get("tables") or [cfg]
+    if only_tables is not None:
+        tables = [tables[i] for i in only_tables]
+    out = []
+    period, reference = P._resolve_period(pages, cfg)
+    for t, tbl in enumerate(tables):
+        _got, matched = P._parse_table(pages, cfg, tbl, period, reference)
+        for ri, rspec in enumerate(tbl["rows"]):
+            if ri not in matched:
+                out.append(f"table[{t}].{rspec['match']!r}")
+    return out
 
 
 def finish(df: pd.DataFrame, country: str) -> pd.DataFrame:
@@ -560,13 +586,398 @@ def test_tunisia_html_parser():
           set(df.loc[df.measure == "count", "unit"]), {"thousand_persons"})
 
 
+# ---------------------------------------------------------------------------
+# KENYA -- KNBS Quarterly Labour Force Report, 2022 Q4
+# ---------------------------------------------------------------------------
+#
+# VERBATIM from the retained kenya_qlfs_2022q4.pdf. Three pages, because the
+# trap only exists when they are read together.
+
+# Page 3. EVERY caption here is followed by dot leaders, and each one matches
+# a block heading exactly as the printed caption does.
+KENYA_LIST_OF_TABLES = """List of Tables
+Table 1: Key Labour Market Indicators ........................................................................................
+Table 2: Labour Participation Rates by Age Cohorts ...........................................................................
+Table 3: Employed and Employment to Population Ratios ................................................................. 4
+Table 4: Unemployment (strict definition) by Age Cohorts [LU1] ..................................................... 6
+Table 5: Combined rate of Unemployment and Potential Labour Force by Age Cohorts [LU3] ...... 6
+Table 6: Unemployment and Time Related Underemployment by Age Cohorts [LU2] .................... 7
+Table 7: Long Term Unemployment by Age Cohorts .......................................................................... 7
+Table 8: Youth Not in Education, Employment or Training (NEET) ................................................. 9
+Table 9a: Persons Outside the Labour force by Age Cohorts .............................................................. 9
+Table 9b: Persons Outside the Labour force1 by Age Cohorts .......................................................... 10
+Table 10: Sample Allocation for the 4th Quarter of 2022 KCHS ........................................................ 13
+List of Figures
+Figure 1: Labour Underutilization Framework ..................................................................................
+Figure 2: Quarterly Trends of Selected Key Indicators of the Labour Market ................................... 2
+iii
+"""
+
+# Page 7. TABLES 2 AND 3 SHARE THIS PAGE, with identical cohort labels, and
+# the rate column is letter-spaced ("1 6.2" for 16.2).
+KENYA_TABLES_2_3 = """Table 2: Labour Participation Rates by Age Cohorts
+Quarter 4, 2021 Quarter 3, 2022 Quarter 4, 2022 Change
+Labour Total Labour Total Labour Total Qrt4, 2022/ Qrt4, 2022/
+Age Force Population Rate Force Population Rate Force Population Rate Qrt3, 2022 Qrt4, 2021
+15-19 894,934 5,534,297 1 6.2 642,950 5,656,741 1 1.4 937,913 5,681,787 1 6.5 5.1 0.3
+20-24 2,483,730 4,635,315 5 3.6 2,379,930 4,737,443 5 0.2 2,720,443 4,758,427 5 7.2 6.9 3.6
+25-29 3,133,366 4,009,805 7 8.1 3,206,704 4,098,163 7 8.2 3,183,615 4,116,315 7 7.3 -0.9 -0.8
+30-34 3,033,896 3,716,301 8 1.6 3,211,157 3,798,173 8 4.5 3,140,882 3,814,997 8 2.3 -2.2 0.7
+35-39 2,406,613 2,757,188 8 7.3 2,534,580 2,818,175 8 9.9 2,423,637 2,830,654 8 5.6 -4.3 -1.7
+40-44 2,059,961 2,353,886 8 7.5 2,207,701 2,405,975 9 1.8 2,131,875 2,416,628 8 8.2 -3.5 0.7
+45-49 1,696,494 1,862,766 9 1.1 1,745,338 1,903,993 9 1.7 1,719,163 1,912,423 8 9.9 -1.8 -1.2
+50-54 1,249,659 1,364,572 9 1.6 1,297,443 1,394,751 9 3.0 1,295,015 1,400,927 9 2.4 -0.6 0.9
+55-59 1,014,043 1,168,554 8 6.8 1,088,300 1,194,345 9 1.1 1,071,583 1,199,634 8 9.3 -1.8 2.5
+60-64 743,736 910,252 8 1.7 798,949 930,326 8 5.9 774,040 934,446 8 2.8 -3.0 1.1
+Total 18,716,433 28,312,936 6 6.1 19,113,051 28,938,083 6 6.0 19,398,165 29,066,237 6 6.7 0.7 0.6
+Table 3: Employed and Employment to Population Ratios
+Quarter 4, 2021 Quarter 3, 2022 Quarter 4, 2022 Change
+Total Total Total Qrt4, 2022/ Qrt4, 2022/
+Age Employed Population Ratio Employed Population Ratio Employed Population Ratio Qrt3, 2022 Qrt4, 2021
+15-19 819,977 5,534,297 14.8 496,958 5,656,741 8.8 835,263 5,681,787 14.7 5.9 -0.1
+20-24 2,122,320 4,635,315 45.8 2,043,013 4,737,443 43.1 2,295,970 4,758,427 48.3 5.2 2.5
+25-29 2,803,973 4,009,805 69.9 2,993,577 4,098,163 73.0 2,997,055 4,116,315 72.8 -0.2 2.9
+30-34 2,945,150 3,716,301 79.2 3,083,752 3,798,173 81.2 3,047,035 3,814,997 79.9 -1.3 0.7
+35-39 2,277,826 2,757,188 82.6 2,472,753 2,818,175 87.7 2,369,061 2,830,654 83.7 -4.0 1.1
+40-44 2,038,108 2,353,886 86.6 2,178,907 2,405,975 90.6 2,085,360 2,416,628 86.3 -4.3 -0.3
+45-49 1,661,237 1,862,766 89.2 1,685,734 1,903,993 88.5 1,696,947 1,912,423 88.7 0.2 -0.5
+50-54 1,237,459 1,364,572 90.7 1,291,105 1,394,751 92.6 1,278,520 1,400,927 91.3 -1.3 0.6
+55-59 1,010,830 1,168,554 86.5 1,068,661 1,194,345 89.5 1,065,795 1,199,634 88.8 -0.7 2.3
+60-64 743,736 910,252 81.7 790,203 930,326 84.9 767,159 934,446 82.1 -2.8 0.4
+Total 17,660,616 28,312,936 62.4 18,104,662 28,938,083 62.6 18,438,164 29,066,237 63.4 0.8 1.0
+4
+"""
+
+# Page 10. Table 6's Total row is the OTHER half of the published LU2
+# contradiction, and Table 7 prints "-" for a zero rate, which is why it is
+# deliberately not collected.
+KENYA_TABLE_6 = """Table 6: Unemployment and Time Related Underemployment by Age Cohorts [LU2]
+Quarter 4, 2021 Quarter 3, 2022 Quarter 4, 2022 Change
+Age Employed loyed Force [LU2] Employed loyed Force [LU2] Employed loyed Force [LU2] 2022 2021
+15-19 46,562 74,957 894,934 13.6 37,567 145,992 642,950 28.5 38,479 102,650 937,913 15.0 -13.5 1.4
+20-24 146,900 361,411 2,483,730 20.5 167,170 336,916 2,379,930 21.2 169,674 424,474 2,720,443 21.8 0.6 1.3
+25-29 177,799 329,393 3,133,366 16.2 155,727 213,127 3,206,704 11.5 119,529 186,560 3,183,615 9.6 -1.9 -6.6
+30-34 184,960 88,746 3,033,896 9.0 152,073 127,405 3,211,157 8.7 164,960 93,847 3,140,882 8.2 -0.5 -0.8
+35-39 119,847 128,786 2,406,613 10.3 111,411 61,827 2,534,580 6.8 87,415 54,576 2,423,637 5.9 -0.9 -4.4
+40-44 113,818 21,853 2,059,961 6.6 123,244 28,794 2,207,701 6.9 56,115 46,515 2,131,875 4.8 -2.1 -1.8
+45-49 118,023 35,257 1,696,494 9.0 77,696 59,604 1,745,338 7.9 75,538 22,215 1,719,163 5.7 -2.2 -3.3
+50-54 84,359 12,200 1,249,659 7.7 66,923 6,338 1,297,443 5.6 31,747 16,496 1,295,015 3.7 -1.9 -4.0
+55-59 56,879 3,213 1,014,043 5.9 60,677 19,639 1,088,300 7.4 21,896 5,788 1,071,583 2.6 -4.8 -3.3
+60-64 38,596 0 743,736 5.2 28,329 8,746 798,949 4.6 15,630 6,881 774,040 2.9 -1.7 -2.3
+Total 1,087,744 1,055,816 18,716,433 11.5 980,817 1,008,389 19,113,051 10.4 780,983 960,001 19,398,165 9.0 -1.4 -2.5
+7
+"""
+
+
+def test_kenya_list_of_tables_does_not_open_a_block():
+    """THE TRAP THAT COST A CYCLE, and the reason this test exists.
+
+    Every spec selects its own page AND the List of Tables, whose dot-leader
+    entry matches a block heading just as the printed caption does. Block
+    context is not reset between pages, so the block opened on page 3 was
+    still open when page 7 was reached and Table 3's spec swallowed Table 2's
+    rows: employment came out as 19,398,165 (the labour force) and the
+    employment ratio as 66.7 (the participation rate).
+
+    Every value was real, in range, correctly typed and in the WRONG SERIES.
+    Nothing downstream could have seen it, which is why both guards -- skip
+    the contents pages, and require the caption NOT to be followed by dot
+    leaders -- are asserted here against the two pages together.
+
+    ON MUTATION-CHECKING THIS TEST, so a future reader does not mistake a
+    healthy result for a dead test: THE TWO GUARDS ARE REDUNDANT BY DESIGN,
+    and removing EITHER ONE leaves this test green, correctly -- the survivor
+    still keeps the contents page from opening a block. Only removing BOTH
+    reproduces the corruption, and then this test fails on all four
+    assertions below ("got 19398165.0, want 18438164.0"). That redundancy is
+    deliberate: per the layout module, one guard silently not applying is
+    exactly how this shipped the first time.
+    """
+    df = finish(run_layout("kenya", KENYA_LIST_OF_TABLES,
+                           [KENYA_TABLES_2_3]), "Kenya")
+    q4 = dict(period="2022-Q4", age_group="Total")
+
+    # Table 2's Total row.
+    check("KE labour force Q4",
+          pick(df, "labour_force", definition="strict", **q4), 19398165.0)
+    check("KE participation Q4",
+          pick(df, "labour_force_participation_rate", **q4), 66.7)
+    # Table 3's Total row -- and these are the two that went wrong.
+    check("KE employed Q4", pick(df, "employed", **q4), 18438164.0)
+    check("KE employment ratio Q4",
+          pick(df, "employment_to_population_ratio", **q4), 63.4)
+
+    # The corruption, stated explicitly: employment must NOT be the labour
+    # force, and the ratio must NOT be the participation rate.
+    check("KE employment is not the labour force",
+          pick(df, "employed", **q4) == 19398165.0, False)
+    check("KE ratio is not the participation rate",
+          pick(df, "employment_to_population_ratio", **q4) == 66.7, False)
+
+
+def test_kenya_cohorts_and_quarter_columns():
+    """Ten cohorts x three quarters, with the two back quarters existing in no
+    other source the collector reads, and a letter-spaced rate column."""
+    df = finish(run_layout("kenya", KENYA_TABLES_2_3), "Kenya")
+
+    check("KE periods", sorted(set(df.period)),
+          ["2021-Q4", "2022-Q3", "2022-Q4"])
+    check("KE cohorts", len(set(df.age_group)), 11)      # ten bands + Total
+    check("KE base", set(df.working_age_base), {"15-64"})
+
+    # A cohort row, in each of the three quarters.
+    check("KE 15-19 labour force Q4 2022",
+          pick(df, "labour_force", definition="strict", age_group="15-19",
+               period="2022-Q4"), 937913.0)
+    check("KE 15-19 labour force Q4 2021",
+          pick(df, "labour_force", definition="strict", age_group="15-19",
+               period="2021-Q4"), 894934.0)
+    check("KE 20-24 employed Q3 2022",
+          pick(df, "employed", age_group="20-24", period="2022-Q3"), 2043013.0)
+
+    # DESPACING: the rate column prints "1 6.2" for 16.2 and "6 6.7" for 66.7.
+    check("KE 15-19 participation despaced",
+          pick(df, "labour_force_participation_rate", age_group="15-19",
+               period="2022-Q4"), 16.5)
+    check("KE 25-29 participation despaced",
+          pick(df, "labour_force_participation_rate", age_group="25-29",
+               period="2022-Q4"), 77.3)
+    # "15-19" must not have been read as the numbers 15 and -19.
+    check("KE label digits not data", -19.0 in set(df.value), False)
+
+    # The two derived Change columns are not data.
+    check("KE change columns skipped", 5.1 in set(df.value), False)
+
+
+def test_kenya_lu2_contradiction_is_preserved():
+    """THE REPORT CONTRADICTS ITSELF AND BOTH FIGURES STAND.
+
+    Table 1 gives LU2 for Q4 2022 as 18.6; Table 6 and the report's own prose
+    give 9.0. Table 1's companion count is exactly twice what its footnote
+    defines, so that figure looks doubled -- but picking a winner would be
+    correcting the NSO. The two tables label the row differently, and
+    `series_label` is part of the merge key, so both survive and stay
+    distinguishable.
+    """
+    df = finish(run_layout("kenya", KENYA_TABLE_6), "Kenya")
+    lu2 = df[(df.series_label == "Under - Utilization [LU2]") &
+             (df.age_group == "Total")]
+    check("KE LU2 from Table 6, Q4 2022",
+          lu2[lu2.period == "2022-Q4"].value.tolist(), [9.0])
+    check("KE LU2 from Table 6, Q3 2022",
+          lu2[lu2.period == "2022-Q3"].value.tolist(), [10.4])
+    check("KE LU2 labelled distinctly",
+          "Under - Utilization [LU2]" in set(df.series_label), True)
+    # Table 6's own unemployed/labour-force columns belong to Tables 4 and 2;
+    # re-emitting them here would be one figure under one key from two pages.
+    check("KE Table 6 emits only the rate",
+          set(df.topic), {"labour_underutilisation_rate"})
+
+
+def test_kenya_backfill_dates_each_file_from_its_name():
+    """THE PERIOD COMES FROM THE FILENAME, AND A FILE THAT CANNOT BE DATED
+    MUST RAISE.
+
+    This series cannot be dated from its own text: the 2020-2021 issues carry
+    no "for the period" sentence, and 2019 Q4 prints "September to December
+    2019" for October-December -- KNBS's own typo, which `parse_period` reads
+    as 2019-Q3. A pattern that silently failed would leave the layout's pinned
+    2022-Q4 in place and publish an entire file under the wrong quarter.
+    """
+    from indicators.unemployment.parsers import kenya_unemployment as K
+
+    for name, want in (("kenya_qlfs_2020q1.pdf", (2020, 1)),
+                       ("kenya_qlfs_2021q1.pdf", (2021, 1)),
+                       ("Quarterly-Labour-Force-Report-2020-Quarter-3.pdf", (2020, 3)),
+                       ("kenya_qlfs_2022q4.pdf", (2022, 4))):
+        check(f"quarter from {name!r}", K._quarter_from_name(name), want)
+
+    for bad in ("kenya_qlfs.pdf", "labour-report.pdf", "kenya_2022.pdf"):
+        try:
+            K._quarter_from_name(bad)
+            FAILURES.append(f"undatable filename {bad!r} did not raise")
+        except ValueError:
+            pass
+
+    # The three column groups follow from the report's own quarter, in the
+    # (year-ago, previous, current) order every issue prints.
+    check("quarters for 2022 Q4", [p for p, _ in K._quarters_for(2022, 4)],
+          ["2021-Q4", "2022-Q3", "2022-Q4"])
+    check("quarters for 2020 Q1", [p for p, _ in K._quarters_for(2020, 1)],
+          ["2019-Q1", "2019-Q4", "2020-Q1"])
+    check("quarters for 2021 Q1", [p for p, _ in K._quarters_for(2021, 1)],
+          ["2020-Q1", "2020-Q4", "2021-Q1"])
+
+    # ... and a rebuilt layout carries them through to its columns.
+    cfg = K._layout_for(2020, 1)
+    check("rebuilt layout period", cfg["period"], "2020-Q1")
+    t2 = next(t for t in cfg["tables"]
+              if t.get("blocks") and t["blocks"][0]["id"] == "t2")
+    check("rebuilt column periods",
+          sorted({c["period"] for c in t2["columns"] if not c.get("skip")}),
+          ["2019-Q1", "2019-Q4", "2020-Q1"])
+
+
+def test_kenya_captions_survive_knbs_renaming():
+    """KNBS RENAMED TWO TABLES MID-SERIES, and the tokens must not care.
+
+    Table 5 is "Unemployment (under relaxed definition) ... [LU3]" in 2020
+    Q1-Q2 and "Combined rate of Unemployment and Potential Labour Force ...
+    [LU3]" from 2020 Q3. Table 6 is hyphenated ("Time Related Under-employment")
+    in every issue except 2022 Q4. A token written for one vintage silently
+    drops that table from the others.
+    """
+    from indicators.unemployment.parsers import LAYOUTS
+    tbls = {t["blocks"][0]["id"]: t for t in LAYOUTS["kenya"]["tables"]
+            if t.get("blocks")}
+
+    headings = {
+        "t5": ["Table 5: Unemployment (under relaxed definition) by Age Cohorts [LU3]",
+               "Table 5: Combined rate of Unemployment and Potential Labour Force by Age Cohorts [LU3]"],
+        "t6": ["Table 6: Unemployment and Time Related Under-employment by Age Cohorts [LU2]",
+               "Table 6: Unemployment and Time Related Underemployment by Age Cohorts [LU2]"],
+    }
+    for tid, lines in headings.items():
+        token = tbls[tid]["page_contains"][0]
+        rx = tbls[tid]["blocks"][0]["match"]
+        for line in lines:
+            check(f"{tid} page token vs {line[:34]!r}", token in line.lower(), True)
+            check(f"{tid} block regex vs {line[:34]!r}",
+                  bool(re.search(rx, line, re.I)), True)
+
+
+def test_no_row_spec_goes_unmatched():
+    """A SPEC THAT MATCHES NOTHING IS HOW A LAYOUT ROTS QUIETLY.
+
+    The parser prints its misses and carries on, which is right in production.
+    Here it is not: each fixture below is the page its table is printed on, so
+    every row spec in that table must fire. This is the check that would have
+    caught a renamed label or a changed caption before a run shipped a
+    half-empty table.
+    """
+    for country, pages, tables, label in (
+        ("kenya", [KENYA_TABLES_2_3], [1, 2], "Kenya tables 2 and 3"),
+        ("namibia", [NAMIBIA_PAGE], None, "Namibia table 0.1"),
+        ("zambia", [ZAMBIA_PAGE], None, "Zambia summary"),
+        ("rwanda", [RWANDA_PAGE], None, "Rwanda trends"),
+    ):
+        missed = unmatched(country, pages, tables)
+        check(f"no unmatched specs -- {label}", missed, [])
+
+
+# ---------------------------------------------------------------------------
+# Angola -- a headline repeated across two workbooks that disagree slightly
+# ---------------------------------------------------------------------------
+def _angola_books(repeat_rate: float) -> tuple[str, str]:
+    """A SERIES and a QUADROS workbook in INE's layout, one quarter (2025 IV
+    trim, new basis). Values VERBATIM from INE; `repeat_rate` is what the
+    QUADROS 'Taxa de desemprego' sheet prints for the national row."""
+    import os
+    import tempfile
+    import openpyxl
+    d = tempfile.mkdtemp()
+    hdr = [[None, 2025], [None, "IV trim"]]
+
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "PRINCIPAIS INDICADORES IEA "
+    for r in [["Indicadores sobre emprego e desemprego"]] + hdr + [
+            ["População com 15 ou mais anos", 22424975],
+            ["Taxa de desemprego", 20.210575970751428]]:
+        ws.append(r)
+    series = os.path.join(d, "3.SERIES CRONOLOGICAS_IEA (NOVA).xlsx")
+    wb.save(series)
+
+    wb = openpyxl.Workbook()
+    wb.remove(wb.active)
+    for sheet, val in (("Taxa da força de trabalho", 49.598919062340094),
+                       ("Taxa de emprego", 39.58376631412075),
+                       ("Taxa de emprego informal", 78.5573514295602),
+                       ("Taxa de desemprego", repeat_rate)):
+        ws = wb.create_sheet(sheet)
+        for r in [[sheet]] + hdr + [["Angola", val], ["Sexo", None],
+                                    ["Homens", 18.42]]:
+            ws.append(r)
+    quadros = os.path.join(d, "4.QUADROS COMPLEMETARES_IEA (NOVA).xlsx")
+    wb.save(quadros)
+    return series, quadros
+
+
+def test_angola_repeated_headline():
+    """INE repeats the headline in the complementary workbook; the repeat is a
+    CHECK, never a second row. Its published 0,02-point gap (20,192 against
+    20,211) is tolerated with the series value kept; a gap beyond 0,1 raises."""
+    from indicators.unemployment.parsers import angola_ine_workbooks as A
+    series, quadros = _angola_books(20.19151)
+    rows = A._series(series, A.SURVEY_NEW)
+    head = {(r["topic"], r["period"], r["age_group"], r["working_age_base"]):
+            r["value"] for r in rows}
+    cuts = A._rates(quadros, A.SURVEY_NEW, head)
+    ur = [r for r in rows + cuts if r["topic"] == "unemployment_rate"
+          and r["sex"] == "total"]
+    check("ao one national rate", len(ur), 1)
+    check("ao series value kept", round(ur[0]["value"], 3), 20.211)
+    check("ao male cut kept",
+          [r["value"] for r in cuts if r["topic"] == "unemployment_rate"],
+          [18.42])
+
+    _, far = _angola_books(21.5)
+    try:
+        A._rates(far, A.SURVEY_NEW, head)
+        FAILURES.append("ao: a 1,3-point disagreement passed the repeat check")
+    except ValueError:
+        pass
+
+
+# ---------------------------------------------------------------------------
+# Liberia -- Table 3.1 read by position, proved by its own arithmetic
+# ---------------------------------------------------------------------------
+def test_liberia_positional_rows_are_proved():
+    """The LISGIS copy wraps labels so badly that Table 3.1 is read by row
+    POSITION. That is only safe because the mapping is checked: a slipped row
+    must break LF = E + U or LU1 = U/LF and raise. The Total column is used
+    (verbatim), padded to 17 columns."""
+    from indicators.unemployment.parsers import liberia_unemployment as L
+    total = {"wap": 2355060, "lf": 615549, "emp": 538902, "unemp": 76647,
+             "olf": 1739511, "inf_n": 467318, "form_n": 71584,
+             "employees_n": 161633, "self_n": 361644, "lu_n": 178144,
+             "lu_unemp": 76647, "tru_n": 59775, "plf_n": 41722, "lfpr": 26.1,
+             "epr": 22.9, "tru": 9.7, "inf_pct": 86.7, "form_pct": 13.3,
+             "employees_pct": 30.0, "self_pct": 67.1, "lu1": 12.5,
+             "lu2": 22.2, "lu3": 18.0, "lu4": 27.1}
+    good = [[float(total[k])] * 17 for k in L._SEQ]
+    orig = L._table_3_1_lines
+    try:
+        L._table_3_1_lines = lambda path: [r[:] for r in good]
+        df = L.parse_positional("stub.pdf")
+        check("lr LU1", df[(df.series_label == "LU1: Unemployment rate")].value.iloc[0], 12.5)
+        slipped = [r[:] for r in good]
+        slipped[2], slipped[3] = slipped[3], slipped[2]     # employed <-> unemployed
+        L._table_3_1_lines = lambda path: slipped
+        try:
+            L.parse_positional("stub.pdf")
+            FAILURES.append("lr: a swapped employed/unemployed row was not caught")
+        except ValueError:
+            pass
+    finally:
+        L._table_3_1_lines = orig
+
+
 def main() -> int:
     for fn in (test_numbers, test_periods, test_namibia, test_zambia,
                test_nigeria, test_ghana_pxweb, test_niger_blocks,
                test_liberia_wide, test_botswana_typos_and_bases,
                test_rwanda_period_columns, test_tunisia_html_parser,
+               test_kenya_list_of_tables_does_not_open_a_block,
+               test_kenya_cohorts_and_quarter_columns,
+               test_kenya_lu2_contradiction_is_preserved,
+               test_kenya_backfill_dates_each_file_from_its_name,
+               test_kenya_captions_survive_knbs_renaming,
+               test_no_row_spec_goes_unmatched,
                test_validator_rejects_garbage,
-               test_no_silent_undated_output):
+               test_no_silent_undated_output,
+               test_angola_repeated_headline,
+               test_liberia_positional_rows_are_proved):
         try:
             fn()
         except Exception as e:            # a crash is a failure too

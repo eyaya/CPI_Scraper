@@ -1,0 +1,49 @@
+country: Zambia
+iso3: ZMB
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Zambia Statistics Agency (ZamStats)
+frequency: quarterly
+verify_ssl: false            # ZamStats serves an incomplete TLS certificate chain
+
+# --- discover ---
+# ZamStats is WordPress: its media API lists every upload. The quarterly GDP
+# workbook is "QGDP_Q<n>_<YYYY>_Zambia.xlsx" (earlier: QGDP_Q4_2024.xlsx,
+# Quarterly-GDP_Q2_2024.xlsx); `wp_media_named` takes the newest by upload
+# date, and the extension filter skips the release's PNG/JPG charts. Each
+# release carries the whole series from 2010 Q1.
+discover:
+  method: wp_media_named
+  api_url: "https://www.zamstats.gov.zm/wp-json/wp/v2/media?search=QGDP&per_page=100"
+  name_contains: "QGDP"
+  extension: ".xlsx"
+
+# The annual workbook adds the expenditure and income approaches and the
+# annual production accounts. Re-uploaded with each quarterly release under
+# /wp-content/uploads/<YYYY>/<MM>/ (2026/04, 2026/07, 2026/09 so far) --
+# pinned to the newest; the media API's "Final-Annual_GDP" search lists them.
+extra_urls:
+  - url: "https://www.zamstats.gov.zm/wp-content/uploads/2026/09/Final-Annual_GDP_2025_Zambia.xlsx"
+
+parser: zambia_zamstats_gdp
+geography: National
+
+notes: >
+  ZamStats national accounts, rebased to 2010 (base year stated in the GDP
+  Benchmark Estimates Summary Report). Quarterly 2010 Q1 onward: production
+  approach, levels at current and constant 2010 prices (ZMW million), GVA,
+  taxes less subsidies, GDP and 30 activities (codes AA..S kept as
+  series_code). Annual 2010 onward: production accounts (output, intermediate
+  consumption, GVA, taxes, subsidies, activities) at current and constant
+  prices; expenditure approach and income approach at current prices.
+
+  Nothing is derived. Identities checked every run; three published
+  inconsistencies kept and pinned: the 2025 expenditure total (785,900.7) is
+  an older vintage than production GDP (797,706.8); 2022 production GDP is
+  183.8 below the expenditure and income totals, which agree; 2019 final
+  consumption is printed 215.6 above its components.
+
+  CROSS-CHECK: GDP 2025 797,706.8 current / 177,485.7 constant; 2026 Q2 GDP
+  47,744.3 constant; 2025 compensation of employees 140,180.5; mining of metal
+  ores 2024 Q4 27,067.3 current.

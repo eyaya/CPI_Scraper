@@ -1,0 +1,51 @@
+country: Equatorial_Guinea
+iso3: GNQ
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estadística de Guinea Ecuatorial (INEGE)
+publication_code: ENH2 informe definitivo (noviembre 2024)
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# INEGE moved to inege.org (inege.gq no longer resolves) and sits behind
+# Cloudflare: HTML routes answer 403, but files under /wp-content/uploads/ are
+# served to a browser TLS fingerprint -- the same profile list the CPI
+# descriptor uses (all three passed, 2026-09-29). ENH2 is a one-off round, so
+# the report is pinned.
+discover:
+  method: static_url
+  url: "https://inege.org/wp-content/uploads/2024/12/Informe-Definitivo-de-la-ENH2.pdf"
+  save_as: Informe-Definitivo-de-la-ENH2.pdf
+  impersonate:
+    - chrome124
+    - firefox133
+    - safari17_0
+
+parser: equatorial_guinea_labour
+geography: Total country
+
+notes: >
+  INEGE II Encuesta Nacional de Hogares (household survey, 16 Aug 2022 - 14
+  Aug 2023), Capítulo V "Empleo". WORKING-AGE BASE 18-64 -- the legal working
+  age (Ley 10/2012); the report presents nothing outside it.
+
+  COLLECTED, each by nation / región / zona / sexo / provincia: Tabla 46 OF/OI
+  (formal vs informal shares of the employed -> formality); Tabla 47 tipo de
+  ocupación (independiente, empleado privado/público, destajista, familiar,
+  doméstico, empresario, cooperativa -> employment_status, a status/sector
+  hybrid, National); Tabla 49 occupation groups I-IX + Otro, named from the
+  table's own footnote 33 (ISCO-08 major groups in CIUO wording, but no scheme
+  is named -> National). Tabla 48: Ocupados count per branch only (21
+  ISIC-shaped branches, National) -- its % columns split each branch by
+  region/zone/sex, i.e. row percentages.
+
+  NOT COLLECTED: Ocupados levels by group (unemployment's territory); T46's
+  rates, hours and social-security columns; T50 (education, row %); T51
+  (contract type, employees only).
+
+  "-" is an empty cell, not zero.
+
+  CROSS-CHECK: employed 18-64 496.965; independiente 46,8; empleado público
+  12,5; agricultura 155.913; group VI 28,3; informal 83,0.

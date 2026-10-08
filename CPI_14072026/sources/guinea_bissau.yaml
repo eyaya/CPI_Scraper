@@ -1,0 +1,44 @@
+country: Guinea_Bissau
+iso3: GNB
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE)
+frequency: monthly
+
+# --- discover ---
+# stat-guinebissau.com is a hand-built static site with no CMS, API or series
+# listing: each monthly note is a PDF dropped into 'Menu_principal/Pubicações/
+# IHPC/<year>/' (the folder misspelling is the site's own) and linked from the
+# home page's publications strip; relatorios.html still links the older issues.
+# Filenames are inconsistently cased and separated, so we pick the newest by the
+# Portuguese month + year in the name rather than by link order.
+discover:
+  method: ine_gb_ihpc
+  page_urls:
+    - "https://www.stat-guinebissau.com/"
+    - "https://www.stat-guinebissau.com/Menu_principal/Pubicações/relatorios.html"
+
+parser: guinea_bissau_ine
+geography: National
+expect_divisions: 14          # INDICE GLOBAL + 13 COICOP-2018 divisions
+
+notes: >
+  Harmonised CPI (INHPC), the WAEMU/UEMOA methodology shared with Senegal, Benin,
+  Mali, …, rebased to 2023 = 100 with the January 2025 issue (weights from EHCVM
+  2021; 745 products, 3 489 outlets, 21 310 price quotes a month; national, urban
+  and rural, collected in Bissau, Gabú, Bafatá and Cacheu). 'Tabela 1' is a
+  spreadsheet object pasted into the note with per-glyph letter spacing, so its
+  text layer is column-major and scrambled — the parser rebuilds the table from
+  glyph geometry (row bands by `top`, cells by x-gap, columns by the header
+  anchors) instead of reading lines. Each note carries five index columns (the
+  same month a year earlier, then m-3 … m), so one PDF yields several periods; the
+  variation columns are for the report month only, and we emit index +
+  inflation_mom (/1mês) + inflation_yoy (/12meses). The /3meses variation has no
+  measure in the CPI schema and is dropped. Portuguese labels kept as published.
+  CAVEAT — publication has stalled: the January 2025 note is still the newest one
+  INE links (checked September 2026), so a run collects 2024-01 and 2024-10..
+  2025-01. Issues up to July 2024 are the OLD series (base 2014 = 100, COICOP-1999
+  with explicit codes and a cleanly ordered text layer): a different layout, so
+  back-filling the pre-rebase history would need its own parser and would not
+  splice onto the 2023 base anyway.

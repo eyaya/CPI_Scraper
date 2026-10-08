@@ -14,7 +14,7 @@ verify_ssl: false
 discover:
   method: insbu_latest
   api_url: "https://api.insbu.bi/api/publications"
-  title_contains: "Indice des Prix à la Consommation"
+  title_contains: "Bulletin mensuel des prix"   # INSBU folded the IPC note into this bulletin
   save_as: INSBU_IPC_Burundi.pdf
 
 parser: burundi_insbu

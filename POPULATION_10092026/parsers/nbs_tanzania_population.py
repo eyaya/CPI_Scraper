@@ -15,6 +15,8 @@ import re
 import pdfplumber
 import pandas as pd
 
+from . import nbs_tanzania_projection
+
 _HEADER = "Number and Percentage Distribution of Population by Sex and Five-Year Age"
 _AGE_RE = re.compile(r"^(Total|\d{1,2}[–—�-]\d{1,2}|\d{1,2}\+)$")
 _NUM_RE = re.compile(r"^\d[\d,]*(?:\.\d+)?$")
@@ -74,7 +76,17 @@ def _parse_regions(text: str) -> list[dict]:
     return rows
 
 
-def parse(local_path: str) -> pd.DataFrame:
+def parse(local_path: str, extras: list[str] | None = None) -> pd.DataFrame:
+    base = _parse_census(local_path)
+    proj = []
+    for p in extras or []:
+        # the National Population Projection Report 2023-2050 -- see
+        # nbs_tanzania_projection for its two-tables-per-page trap
+        proj += nbs_tanzania_projection.parse_projection(p)
+    return pd.concat([base, pd.DataFrame(proj)], ignore_index=True) if proj else base
+
+
+def _parse_census(local_path: str) -> pd.DataFrame:
     with pdfplumber.open(local_path) as pdf:
         nat = _find_page(pdf, "Table 3. 1", "; Tanzania,", 55, 75)
         reg = _find_page(pdf, "Table 2. 2", "by Place of Residence and Region", 45, 60)

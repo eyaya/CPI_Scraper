@@ -1,0 +1,46 @@
+country: Djibouti
+iso3: DJI
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut de la Statistique de Djibouti (INSTAD)
+publication_code: RGPH-3 2024, Tome 3 Caractéristiques économiques de la population
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# Same route as the population descriptor: instad.dj is a Nuxt SPA whose files
+# come from a Heroku backend, GET /fichiers/RGPH/<year> -> records whose imgUrl
+# is a Firebase Storage PDF. The RGPH category holds every census volume, so
+# the economic-characteristics tome is picked by title. (Listed under 2025, the
+# publication year; the census itself is May 2024.)
+discover:
+  method: instad_dj_ipc
+  api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
+  categorie: "RGPH"
+  title_contains: "Caractéristiques économiques de la population"
+  save_as: dj_rgph3_caracteristiques_economiques.pdf
+
+parser: djibouti_labour
+geography: Total country
+
+notes: >
+  RGPH-3 (May 2024) Tome 3, chapter 3: Tableau n°8 occupation major groups
+  (counts and %, including the printed "Aucune profession" 33,6%) and Tableau
+  n°12 formal / informal sector by region, milieu, sex, age group and
+  education. Base 15+ (182 164 employed).
+
+  NOT COLLECTED, AND WHY: Tableau n°13 (branch) totals 127 526, not the
+  182 164 employed it names, while the volume's own missing-value audit
+  (Tableau n°2) reports no missing activity codes -- population unknown.
+  Tableau n°15 (primaire / secondaire / tertiaire) prints secondaire 8,8% for
+  all employed, against ~15,8% implied by n°13's branches -- the two conflict.
+  n°11 duplicates n°12's sex rows. n°14 is row %.
+
+  OTHER INSTAD SOURCES, REJECTED: Annuaire statistique chapter 2.3 counts
+  EMPLOYEES by branch (2.3.5, employee universe) and CNSS registrations
+  (administrative). The quarterly EDST 2025 notes give composition only as
+  charts with jumbled labels (not re-examined here).
+
+  CROSS-CHECK: professions intellectuelles 20 397 (11,2%); ensemble 182 164;
+  secteur informel 49,1 (Obock 68,7).

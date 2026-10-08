@@ -1,0 +1,44 @@
+country: Chad
+iso3: TCD
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique, des Études Économiques et Démographiques (INSEED)
+publication_code: ECOSIT4 Rapport général
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# inseed.ssn-tchad.td is a SPA over a Node API. `/api/publications?limit=1000`
+# lists every publication with `titre` and `fichier.url` (a path on the same
+# host). ECOSIT4 is a one-off survey round, so the file is pinned; the
+# uploaded name is a timestamp, not a slug, and does not change once posted.
+# A future ECOSIT5 or EHCVM report would be found by searching that listing.
+discover:
+  method: static_url
+  url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1767705826725-13895961.pdf"
+  save_as: tchad_ecosit4_rapport_general.pdf
+
+parser: chad_labour
+geography: Total country
+
+notes: >
+  INSEED ECOSIT4 Rapport général (April 2021), chapter 7 "Emploi". A HOUSEHOLD
+  consumption and informal-sector survey with an employment section, collected
+  July-September 2018 and January-April 2019 -- the right universe, though not
+  a dedicated LFS. Base 15+, national only.
+
+  COLLECTED: Tableau 7.06 catégorie socioprofessionnelle (employment_status,
+  National -- a hybrid of status and employee skill level), 7.07 eleven
+  branches of activity (industry, National), 7.08 branche institutionnelle,
+  counts and % (sector).
+
+  NOT COLLECTED: the "% femmes" columns (row percentages); 7.08's mean years
+  of study; 7.10 hours by category (row percentages, and several rows are
+  printed copies of other rows -- Masculin = Ensemble urbain, Féminin = Rural);
+  7.01-7.05 and 7.11-7.25 (rates, `unemployment`'s territory).
+
+  NO NOMENCLATURE NAMED anywhere in the report (CITI / CITP / NAEMA absent).
+
+  CROSS-CHECK: indépendant 58,1; aide familial/apprenti 34,7; agriculture
+  72,1; commerce 8,1; entreprise privée 5 471 217 (96,4%); ensemble 5 674 675.

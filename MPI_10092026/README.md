@@ -65,8 +65,25 @@ reasons — see `PENDING.md`.
 
 ## Coverage
 
-**14 live descriptors, 14 countries**, plus 4 in `sources_blocked/` — kept
-whole, so that restoring one is a file move rather than a rewrite.
+**19 live descriptors, 17 countries, 6,428 rows** (2026-10-07), plus 3 in
+`sources_blocked/` (Egypt, Morocco, Somalia) — kept whole, so that restoring
+one is a file move rather than a rewrite. Ghana and Sierra Leone each carry
+two separately named measures that must never be chained.
+
+**The 2026-10-07 round** added Senegal (OPCV/ANSD national IPM, ESPS-II 2011,
+k = 32, 5 dims / 25 ind., 14 regions with CIs), Mauritania (IPM-M, EPCV 2019,
+from ANSADE's text-layer yearbook — the scanned brief is still not OCR'd),
+Djibouti (INSTAD RGPH-3 2024 census IPM; only H is published), Ghana's 2020
+report (GLSS7, from a Wayback copy of GSS's own URL — the old layout had read
+a sex-share column as national H) and Sierra Leone 2023 (DHS 2019, on
+statistics.sl). Depth: Nigeria 39 → 2,833 rows (37 states, 109 senatorial
+districts, the child MPI as its own measure), Rwanda's EICV3-5 "Second Report"
+measure, Uganda's 2022 UNHS edition, Ghana by education. Verified against
+printed pages: Seychelles, Sierra Leone 2019, South Africa. Verified negatives
+added to PENDING.md: Côte d'Ivoire, Comoros, Gabon, Algeria, DR Congo (its
+Enquête 1-2-3 "conditions de vie" count is unweighted — not an MPI).
+
+The table below is the original fourteen; see each descriptor for the rest.
 
 The blocked four were each demoted on evidence from a real run, not on a
 guess:

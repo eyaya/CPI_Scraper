@@ -1,0 +1,57 @@
+country: Comoros
+iso3: COM
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED Comores)
+publication_code: EEIC 2021 report; RGPH 2017 Caractéristiques économiques; EESIC 2013 phase 1
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# INSEED publishes survey reports through its NADA catalogue, not the CMS the
+# CPI descriptor queries: nada.inseed-comores.org/index.php/catalog/<id>/
+# related-materials lists each study's files, served at .../download/<n>
+# (a bare number, hence `save_as`). inseed.km is no longer the NSO.
+#   catalog 10 = EEIC 2021 (download 107 = analysis report; 102-106 are
+#                questionnaires), catalog 8 = RGPH 2017 (65 = economic
+#                characteristics), catalog 5 = EESIC 2013 phase 1 (47 = report).
+# The EEIC downloads reset or returned empty files on 2026-09-29 morning and
+# came through in full that evening -- retry before concluding a file is gone.
+# A newer labour survey would appear as a new catalog id.
+discover:
+  method: static_url
+  url: "https://www.nada.inseed-comores.org/index.php/catalog/10/download/107"
+  save_as: comoros_eeic2021_rapport.pdf
+
+extra_urls:
+  - url: "https://www.nada.inseed-comores.org/index.php/catalog/8/download/65"
+    save_as: comoros_rgph2017_caracteristiques_economiques.pdf
+  - url: "https://www.nada.inseed-comores.org/index.php/catalog/5/download/47"
+    save_as: comoros_eesic2013_phase1_emploi.pdf
+
+parser: comoros_labour
+geography: Total country
+
+notes: >
+  EEIC 2021 (household phase 1): employed persons by status (5), branch (7
+  groups) and occupation (7 groups), counts by sex and milieu -- 220 890
+  employed, base 14-64 -- plus the formal/informal and production-unit splits
+  of all employment by sex (Tableaux 2-3, "Total" column only). RGPH 2017
+  (15+): status by sex within urbain / rural / Comores (T3.2), 17 branches by
+  milieu x sex (T3.5), occupational groups by sex and milieu (T3.7, headed
+  "CSP" but occupational). EESIC 2013: institutional sector by island, milieu
+  and sex (T26), subtotals not collected.
+
+  EEIC COUNTS are re-split under M+F=T and U+R=T (a cell breaks across lines,
+  "145" / "758"); its "'000" row labels are wrong -- the counts are persons.
+
+  NOT COLLECTED: RGPH T3.3 (the broad sectors of T3.5's own headings); "%
+  Femmes" and Effectif rows; EESIC T16 "Bilan de l'emploi" (implausible as
+  printed -- formal units' jobs 97,4% informal, all employment 0,6% formal vs
+  13,0% in 2021); EEIC per-branch and hors-agriculture columns (row % /
+  restricted universe) and phase-2 UPI results.
+
+  CROSS-CHECK: EEIC employed 220 890, employés rémunérés 77 373, informal
+  employment 87,0%; RGPH indépendants 51,7, agriculture/élevage 31,59;
+  EESIC administration publique 14,9.

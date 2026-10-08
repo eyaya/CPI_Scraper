@@ -1,0 +1,48 @@
+country: Sao_Tome_and_Principe
+iso3: STP
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE São Tomé e Príncipe)
+publication_code: Projecções Demográficas 2012-2035 (base IV RGPH 2012)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ine.st's "Dados Localidade e Projecções" category (76) links the report at a
+# working /phocadownload/userupload/ path -- the earlier rejection tested the
+# demography category's stale preview paths, which 404. Same Phoca route as the
+# labour and unemployment descriptors (ine.st times out intermittently).
+discover:
+  method: page_scrape
+  page_url: "https://www.ine.st/index.php/publicacao/documentos/category/76-dados-localidade-projecoes?limit=0"
+  link_contains:
+    - "phocadownload/userupload"
+    # NOT "Projec": the folder name (DADOS_LOCALIDADE_PROJECOES) matches it,
+    # and so does the localities volume beside the projections.
+    - "2012-2035"
+    - ".pdf"
+  save_as: stp_projeccoes_demograficas_2012_2035.pdf
+  download_timeout: 300
+
+parser: ine_saotome_population
+geography: Total country
+
+notes: >
+  INE projections 2012-2035: national five-year age group x sex (II.04/04a,
+  projection); districts + RAP by sex (III.38: RGPH 2001 and 2012 = census,
+  2013-2035 = projection); each district by five-year age group x sex
+  (III.39-45). Checks: M + F = T, bands = Total, districts = national, district
+  age tables = III.38.
+
+  WITHHELD: fourteen district-years whose age tables contradict III.38 --
+  Mé-Zóchi 2018, 2020, 2021 (incl. a 0-4 row printing males as 408) and Lobata
+  2018-2028 (columns shifted one year; its "2028" repeats 2026). Their III.38
+  totals are still collected. Pinned: the parse raises if the set changes.
+  Mé-Zóchi's header mistypes 2023 as "203" (repaired only between 2022/2024).
+
+  ALSO ON ine.st: the 2024 RGPH results (category 241) -- "Resultado_VRGPH
+  2024.pdf", not yet laid out.
+
+  CROSS-CHECK: 2012 178,739 (88,867 M / 89,872 F); 2035 284,293; 2001 census
+  137,599; Água Grande 2012 census 69,454.

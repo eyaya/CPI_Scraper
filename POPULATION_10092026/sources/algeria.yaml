@@ -1,0 +1,43 @@
+country: Algeria
+iso3: DZA
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Office National des Statistiques (ONS)
+publication_code: Rétrospective Statistique 1962-2020, Chapitre I Démographie
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ons.dz/rgph2020 (the census page) answers HTTP 500, which is why Algeria was
+# on the rejected list. The Rétrospective publishes one PDF per chapter, each
+# on its own SPIP article (2848 introduction, 2849 démographie, 2850 emploi --
+# labour and unemployment read 2850); the chapter-1 link is matched by name.
+discover:
+  method: page_scrape
+  page_url: "https://www.ons.dz/spip.php?article2849"
+  link_contains:
+    - "CH1_Demographie"
+    - ".pdf"
+  save_as: CH1_Demographie1962_2020Fr.pdf
+
+parser: ons_algeria_population
+geography: Total country
+
+notes: >
+  ONS Rétrospective 1962-2020, chapter 1: mid-year estimates by sex 1970-2019
+  (T41) and by age x sex 1999-2019 (T54-T74), both in THOUSANDS; censuses
+  1966 / 1977 / 1987 / 1998 by age x sex (T42-T45), by wilaya x sex 1987 /
+  1998 / 2008 (T46-T48), and density by wilaya at the five censuses (T76).
+
+  UNIVERSES DIFFER (all residents 1966; 1977/1987 exclude foreigners and
+  population comptée à part and are 1/10 and 1/30 samples; wilaya tables
+  count ordinary + collective households, without nomads). The wilaya tables'
+  "Algérie" row is emitted only for 2008, where it is the only national count.
+
+  Every space-grouped row is split under its own identity (M + F = T, blocks
+  summing); published off-by-ones are tolerated where documented and one
+  failing row (2002, 80+: 129 + 125 = 244) is pinned as printed.
+
+  CROSS-CHECK: census 1966 12 096 347; 1987 22 881 508; 2008 34 080 030;
+  estimate 2019 43 424 thousand; Alger 2008 2 988 145.

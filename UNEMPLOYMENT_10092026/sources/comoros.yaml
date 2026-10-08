@@ -1,0 +1,54 @@
+country: Comoros
+iso3: COM
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED Comores)
+publication_code: EEIC 2021 report; RGPH 2017 Caractéristiques économiques; EESIC 2013 phase 1
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 8
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/comoros.yaml -- the same three documents;
+# `labour` reads their composition tables, this indicator their headline
+# series. INSEED serves survey reports through its NADA catalogue
+# (nada.inseed-comores.org/index.php/catalog/<id>/download/<n>; inseed.km is no
+# longer the NSO): catalog 10 = EEIC 2021 (download 107 = analysis report),
+# catalog 8 = RGPH 2017 (65 = economic characteristics), catalog 5 = EESIC 2013
+# phase 1 (47 = report). The EEIC downloads reset or returned empty files on
+# 2026-09-29 morning and came through in full that evening -- retry before
+# concluding a file is gone. A newer labour survey would appear as a new
+# catalog id.
+discover:
+  method: static_url
+  url: "https://www.nada.inseed-comores.org/index.php/catalog/10/download/107"
+  save_as: comoros_eeic2021_rapport.pdf
+
+extra_urls:
+  - url: "https://www.nada.inseed-comores.org/index.php/catalog/8/download/65"
+    save_as: comoros_rgph2017_caracteristiques_economiques.pdf
+  - url: "https://www.nada.inseed-comores.org/index.php/catalog/5/download/47"
+    save_as: comoros_eesic2013_phase1_emploi.pdf
+
+parser: comoros_unemployment
+geography: Total country
+
+notes: >
+  EEIC 2021 key-indicators panel (base 14-64; youth 15-34): working-age
+  population, labour force, employed, LFPR, EPR, LU1 (strict), LU2-LU4
+  (broad), youth LU1/LU4/LFPR/EPR, NEET count, informal employment outside
+  agriculture -- by sex and milieu. RGPH 2017: net activity by island, milieu,
+  age; Tableau 3.1 counts and taux d'occupation by island (15-64); employment
+  rate by education (base not stated); "taux de chômage global" by milieu,
+  island, education (15+). EESIC 2013: employed / BIT unemployed / discouraged
+  / broad labour force counts by island, milieu, sex and age; EPR; NEET 15-35;
+  time-related underemployment (base not stated -- see the parser).
+
+  NOT COLLECTED: the census's "primaire"/"secondaire" unemployment components
+  (they sum to the global rate); EEIC's unexplained second "Population
+  active" (162 506); EESIC Tableau 13's "%" (denominator unknown); the census
+  taux brut d'activité (over total population).
+
+  CROSS-CHECK: EEIC LU1 6,5, LU3 23,5, LFPR 47,9, youth LU1 12,8; RGPH chômage
+  global 22,13, net activity 58,7; EESIC chômeurs BIT 15 379, EPR 40,8.

@@ -1,0 +1,62 @@
+country: Congo
+iso3: COG
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS, formerly CNSEE)
+publication_code: ECOM 2005 Profil de pauvreté + EESIC 2009 phase-1 indicators
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# INS's rebuilt site (ins-congo.cg; listing API
+# /backend/api/publications/list.php?per_page=50&page=N, 135 items, checked
+# 2026-10-01) hosts no household employment report: every yearbook labour
+# chapter (2005, 2007, 2010, 2012, 2014, 2018) is civil-service, job-seeker or
+# "secteur moderne" registers -- administrative data, not collected.
+#
+# The household reports were published on the old CNSEE site (cnsee.org, now
+# dead). The ONLY reachable copies are the Wayback Machine captures of CNSEE's
+# own files. The `id_` form returns the ORIGINAL BYTES -- no banner, no
+# rewriting -- so this is the NSO's publication unchanged, not an aggregator
+# (the DR Congo precedent). Replace with INS URLs if INS ever re-hosts them.
+# Plain `requests` fetched both files in full (2026-10-01); the impersonation
+# list is a fallback for the 429s web.archive.org sometimes returns.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20060617195633id_/http://www.cnsee.org/Donnees/Enquete/PDF/ECOM.pdf"
+  save_as: CNSEE_ECOM_2005_Profil_pauvrete.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://web.archive.org/web/20111114123304id_/http://www.cnsee.org/pdf/IndicateurPhase1-09.pdf"
+    save_as: CNSEE_EESIC_2009_IndicateurPhase1.pdf
+
+parser: congo_labour
+geography: Total country
+
+notes: >
+  ECOM 2005 (national household survey, June-August 2005), "Profil de
+  pauvreté au Congo en 2005", Tableaux 4.1.2 (4 branches -> industry) and
+  4.1.3 (6 CSP -> employment_status), the Ensemble columns only: employed 15+
+  (base 15+) and all employed (base 10+). EESIC 2009 phase-1 indicator sheet:
+  secteur institutionnel (-> formality), CSP and secteur d'activité, for
+  Brazzaville, Pointe-Noire and "Urbain Congo" -- the survey covered the two
+  cities only, so nothing from it is national. All National groupings.
+
+  GUARDS: each ECOM Ensemble lies between its Pauvre / Non pauvre values; EESIC
+  "Urbain Congo" is one pooled weighting of the two cities for every row
+  (Brazzaville ~0,62); every distribution sums to 100.
+
+  PREVIOUSLY BLOCKED (2026-09-29): the 2018/2012 yearbooks were administrative,
+  EHCVM-C 2022 had no composition tables, "Femmes et hommes au Congo 2024" is
+  charts only with values away from their labels. Re-checked 2026-10-01: the
+  2014, 2010, 2007 and 2005 yearbooks are reachable now and also hold only
+  administrative employment tables. Not usable: ECOM 4.1.1 (only poverty-status
+  columns), EESIC 2012 urban tables (rates and job-seekers only), the full
+  EESIC 2009 phase-1 report (Phase1_09.pdf truncated in every capture), "Pauvreté
+  et travail" (an author's calculation), RGPH 2007 volumes (demographic only).
+
+  CROSS-CHECK: ECOM 15+ agriculture 35,4, propre compte 71,1. EESIC urban
+  public et para public 23,9, informel non agricole 70,2, cadres 22,3.

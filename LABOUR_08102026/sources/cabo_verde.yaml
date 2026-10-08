@@ -1,0 +1,57 @@
+country: Cabo_Verde
+iso3: CPV
+indicator: Labour
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Instituto Nacional de Estatística (INE)
+publication_code: IMC Estatísticas do Mercado de Trabalho, Principais Quadros
+frequency: annual
+verify_ssl: false            # bdmi.ine.cv serves a self-signed chain
+
+# --- discover ---
+# Same backend and method as cpi/ and population/: the paginated /Publication
+# route is open while /Indicator, /Statistic and /Search answer 401. Theme 24
+# lists the labour-market releases; dissemination type 10 ('Principais
+# Quadros') is the workbook. Titles run "Estatísticas do Mercado de Trabalho,
+# IMC 2025", "... IMC 2024", "... IMC 2022 CORRIGIDO"; the newest by
+# date_created wins, so each annual round is picked up without editing this.
+# (The type-2 PDF report of the same name shows composition only as image
+# charts and is not used.)
+discover:
+  method: ine_cv_publication_file
+  api_base: "https://bdmi.ine.cv/site_deploy_api/api"
+  file_base: "https://bdmi.ine.cv/site_deploy_api"
+  code_theme: 24              # Mercado de trabalho
+  publication_type: 10        # Principais Quadros (the series workbook)
+  title_contains: "Mercado de Trabalho"
+  extension: ".xlsx"
+  save_as: cv_imc_mercado_trabalho_quadros.xlsx
+
+parser: cabo_verde_labour
+geography: Total country
+
+notes: >
+  INE IMC (continuous household survey, two semesters a year), base 15+. The
+  series sheets reprint every round since 2011, so one workbook carries the
+  full history: branch (TAB_9/29/30), occupation (10/31/32), broad sector
+  (11/28), situação na profissão (12/33) and informal employment (14/38), by
+  residence and (percentages) by sex; 2024 and 2025 also by semester. 2025-only
+  sheets add concelho, sex and age cuts (54, 55, 56, 57, 63, 65).
+
+  THE 13th/19th ICLS BREAK (2020 -> 2022; no 2021 round) is carried in
+  `survey`, so the series never chains across it.
+
+  PUBLISHED DEFECTS, detected structurally and announced on every run (so a
+  correction by INE is picked up): TAB_31's Urbano/Rural blocks for 2011-2018
+  are copies of the national block; TAB_28's rural 2024 column sums to 46,39.
+  Neither is collected. TAB_30/32's national blocks disagree with TAB_29/31
+  (and with the counts) in three cells and are not read. TAB_38's annual 2025
+  informal share is the mean of the semester shares, TAB_65's is the annual
+  ratio -- both published; the series keeps TAB_38's.
+
+  CLASSIFICATION National throughout: no scheme is named against these tables
+  (CITP-08 appears only on the managers tables 36/73, not read).
+
+  CROSS-CHECK (2025): employed 213 166,07; construção 27 122,91; profissões
+  elementares 51 315,70; setor empresarial privado 97 810,89; emprego
+  informal 97 288,64. 2011: employed 178 571,37.

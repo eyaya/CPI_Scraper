@@ -1,0 +1,49 @@
+country: Cabo_Verde
+iso3: CPV
+indicator: Unemployment
+tier: 2
+source_type: excel
+agency: Instituto Nacional de Estatística (INE)
+publication_code: IMC Estatísticas do Mercado de Trabalho, Principais Quadros
+frequency: annual
+verify_ssl: false            # bdmi.ine.cv serves a self-signed chain
+expect_topics: 10
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/cabo_verde.yaml: the same workbook. The
+# paginated /Publication route is open while /Indicator, /Statistic and
+# /Search answer 401; theme 24 lists the labour-market releases, type 10
+# ('Principais Quadros') is the workbook, and the newest by date wins, so each
+# annual round is picked up without editing this. labour/ reads the
+# composition sheets, this indicator the headline series -- no sheet twice.
+discover:
+  method: ine_cv_publication_file
+  api_base: "https://bdmi.ine.cv/site_deploy_api/api"
+  file_base: "https://bdmi.ine.cv/site_deploy_api"
+  code_theme: 24              # Mercado de trabalho
+  publication_type: 10        # Principais Quadros (the series workbook)
+  title_contains: "Mercado de Trabalho"
+  extension: ".xlsx"
+  save_as: cv_imc_mercado_trabalho_quadros.xlsx
+
+parser: cabo_verde_unemployment
+geography: Total country
+
+notes: >
+  INE IMC (continuous household survey; two semesters a year from 2024), base
+  15+. The Evolução sheets carry 2011-2020, 2022-2023 and 2024-2025 (H1, H2,
+  annual): working-age population, labour force, employed, unemployed (15+,
+  15-24, 15-35), inactive, participation, employment, underemployment and
+  unemployment rates, youth unemployment (15-24, 15-35), NEET, by residence,
+  22 concelhos, sex, age and education; plus 2025 sex x age cross-tables and
+  the labour underutilisation rate (2022-2025).
+
+  13th / 19th ICLS: 2022 is printed on BOTH bases (employed 211 580 vs
+  190 579). The basis is in `survey` and `series_label` on every row; never
+  chain across it.
+
+  NOT COLLECTED: informal employment (labour/'s `formality`), inactivity
+  rates, underemployed/NEET/underutilised counts (no topic).
+
+  CROSS-CHECK: unemployment 12.25 (2011), 8.75 / 10.95 (2022, 13ª / 19ª),
+  6.19 (2025); youth 15-24 15.43 (2025); underutilisation 34.8 (2022).

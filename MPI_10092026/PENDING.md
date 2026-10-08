@@ -1,5 +1,12 @@
 # MPI — what is not in `sources/`, and why
 
+> **Re-probed 2026-10-07.** Resolved and now in `sources/`: **Ghana report**
+> (GLSS7 edition — Wayback `id_` capture of GSS's own file), **Sierra Leone
+> 2023 update** (now on statistics.sl itself), and **Djibouti** (a NEW
+> census-based IPM, RGPH-3 2024 Thématique 16, on INSTAD's own backend — the
+> 2012-2017 report below is still UNDP-only). Re-verified, still not
+> collectable: Namibia, Malawi, Egypt, Sudan (details in their rows).
+
 Four kinds of entry, kept apart on purpose:
 
 1. **NSO-authored, but not NSO-hosted** — a real national MPI produced by the
@@ -27,11 +34,11 @@ Four kinds of entry, kept apart on purpose:
 
 | Country | Measure | Methodology | Where it actually is | Note |
 |---|---|---|---|---|
-| **Namibia** | Namibia MPI Report 2021 (NSA + NPC) | 3 dims, 11 ind., k = 30; NHIES 2015/16 | mppn.org, unicef.org | `nsa.org.na` was rebuilt around the 2023 census and the 2021 MPI did not survive the move. Re-probe `nsa.org.na/?s=multidimensional` and unlinked `/wp-content/uploads/2021/` paths. National H 43.3 / A 44.0 / M0 0.191. |
-| **Malawi** | Second Malawi MPI Report (Nov 2022) | 4 dims, 13 ind., k = 38; IHS5 2019/20 | not on `cms.nsomalawi.mw` | The whole publications catalogue was paged — all 5 pages, 64 entries. The only poverty items are IHS5 and IHS6, both **monetary**. |
-| **Djibouti** | IPM Djibouti 2012-2017, Rapport Final (INSD + MASS) | 5 dims, 14 ind., k = 33.33, **household**; EDAM-IS 2012 & 2017 | UNDP CDN (`files.acquia.undp.org`) | `instad.dj` renders client-side and returned empty bodies. **Do not conclude it is absent** — re-probe INSTAD's publications section with the pipeline's own fetcher. |
-| **Sudan** | Sudan Report: Multidimensional Poverty Survey 2023 (CBS) | 3 dims, 14 ind., k = 25 | OPHI only | `cbs.gov.sd` **fails at DNS — the domain is gone.** Qualifies on authorship, fails on hosting, with no host to wait for. |
-| **Sierra Leone (2023 edition)** | MPI 2023 update | — | UNDP / OPHI only | The **2019** edition is on `statistics.sl` and *is* collected. Only the 2023 update is off-host. |
+| **Namibia** | Namibia MPI Report 2021 (NSA + NPC) | 3 dims, 11 ind., k = 30; NHIES 2015/16 | mppn.org, unicef.org | `nsa.org.na` was rebuilt around the 2023 census and the 2021 MPI did not survive the move. **2026-10-07:** site search for "multidimensional" lists only the 2008 poverty review, child poverty 2009-10 and NHIES 2015/16 key poverty indicators; the WordPress media API has nothing; Wayback CDX of `nsa.org.na/wp-content/uploads/2021/`, `/2022/` and the old `/files/downloads/` holds no MPI file. National H 43.3 / A 44.0 / M0 0.191. |
+| **Malawi** | Second Malawi MPI Report (Nov 2022) | 4 dims, 13 ind., k = 38; IHS5 2019/20 | not on `cms.nsomalawi.mw` | The whole publications catalogue was paged — all 5 pages, now 65 entries (`/api/web/publications`, re-paged 2026-10-07). The only poverty items are IHS5 and IHS6, both **monetary**; the Statistical Yearbook 2023 has no MPI. **Lead:** the IHS6 Cross-Section Report (June 2026) lists "create the MPI and the Child MPI" among the survey's objectives — watch IHS6 record 138 for an MPI media file. |
+| **Djibouti** | IPM Djibouti 2012-2017, Rapport Final (INSD + MASS) | 5 dims, 14 ind., k = 33.33, **household**; EDAM-IS 2012 & 2017 | UNDP CDN (`files.acquia.undp.org`) | **2026-10-07:** INSTAD's backend categories were enumerated (from the site's JS: Rapports, Sociale, Méthodes, RGPH, SNDS, …) and this 2012-2017 report is not among them. But RGPH holds a NEWER, census-based IPM (Thématique 16, Nov 2025), now collected as `sources/djibouti.yaml` — a different measure (3 dims, 3 ind., person), never to be chained to this one. |
+| **Sudan** | Sudan Report: Multidimensional Poverty Survey 2023 (CBS) | 3 dims, 14 ind., k = 25 | OPHI only | `cbs.gov.sd` **fails at DNS — the domain is gone.** **2026-10-07:** the Wayback CDX of `cbs.gov.sd` (5,077 URLs) holds only `POVERTY 2009.pdf` and the NHBPS food-security/poverty report (2019) — no MPS. |
+| ~~Sierra Leone (2023 edition)~~ | MPI 2023 update (DHS 2019) | 5 dims, 14 ind., k = 40 | **now on statistics.sl** | **RESOLVED 2026-10-07:** linked from Stats SL's home page (`/images/StatisticsSL/Documents/undp_sl_multidimentsional_poverty_index_2023.pdf`) and collected as `sources/sierra_leone_2023.yaml`. |
 | **Ghana (quarterly series)** | 2024 Q1 – 2025 Q3 MPI Report | 4 dims, 13 ind., k = 33.3; AHIES + QLFS | `sdgsghana.gov.gh` | GSS-authored but off the GSS domain. Also a **methodology break** from both collected Ghana editions (3 dims/12 ind and 3 dims/13 ind) — do not build a time series across them. |
 | **Eswatini** | CSO national MPI, branded "OFFICIAL STATISTICS" | 3 dims, 9 ind., k = 33; EHIES 2017 | an OPHI-hosted **slide deck** | No CSO report exists — the only artefact is a conference presentation. Structurally near-identical to the global MPI, which makes it exactly the kind of measure that gets mislabelled. **Recommend not ingesting** until CSO publishes a report. |
 | **Ethiopia** | Multidimensional Child Deprivation in Ethiopia (CSA + UNICEF, 2018) | child deprivation, not an MPI | unicef.org | CSA is a genuine co-author. Ethiopia's official poverty analysis sits with the Ministry of Planning, not the NSO. |
@@ -45,18 +52,48 @@ These are the next descriptors to write. Each has a resolved URL.
 
 | Country | File | Blocker | What to check |
 |---|---|---|---|
-| **Senegal** | `ansd.sn/sites/default/files/2022-11/Rapport_IPM%202011_VSF.pdf` | ANSD is robots-disallowed and has a broken TLS chain — a WebFetch artefact only; `verify=False` + Chrome UA gets through | Whether this is an adopted national MPI or an ANSD analytical study (Senegal is absent from OPHI's national-MPI directory). Also whether the EHCVM 2021-22 final report carries an IPM chapter. |
-| **Cabo Verde** | `ine.cv/wp-content/uploads/2024/06/medindo-a-pobreza-multidimencional.pdf` | `ine.cv` serves a JS shell (WAF/SPA rewrite) to plain fetchers | Methodology entirely. Press coverage puts the first measurement at **17.2% in 2015**, likely IDRF 2015. |
-| **Mauritania** | `ansade.mr/wp-content/uploads/2023/03/VF-policy-brief.pdf` | **Scanned PDF — no text layer.** The parser correctly refuses it | Needs OCR, or a different ANSADE file. Note the working host is `admin.ansade.mr` for the catalogue. |
-| **Côte d'Ivoire** | `anstat.ci/assets/projet/ehcvm2021.pdf` | 403 to WebFetch | Whether the EHCVM 2021-22 poverty profile contains an IPM chapter. Assessment: Côte d'Ivoire probably has **no** national MPI — it is absent from OPHI's directory and no launch event surfaced. One targeted fetch settles it. |
-| **Algeria** | — | `www.ons.dz` broken TLS chain, could not be fetched at all | Whether ONS publishes anything multidimensional. Nothing surfaced in search; the site was never actually read. |
-| **Gabon** | `instatgabon.org/uploads/folder_1/EGEP/PROFIL-DE-PAUVRETE-FINAL.pdf` | 302s to `new.instatgabon.org/fr` — deep links swallowed by a migration redirect | The Profil de Pauvreté 2017 is monetary as far as is known; re-locate it on the new site. |
-| **Comoros** | `Principaux_resultats_de_l_enquete_sur_la_pauvrete_2024...pdf` (EHCVM 2024) | Strapi media base URL unresolved — both candidate paths 404 | Metadata confirmed via `inseed-comores.org/backend/api/publications`; only the file path is missing. Content reads as monetary incidence. |
-| **DR Congo** | — | `ins.gouv.cd/publications` is a client-side listing | Also try `insrdc.cd` and `ins-rdc.org`. |
 | **Central African Republic** | — | 470-publication catalogue, no MPI found | ICASEES has an EHCVM living-conditions report and a poverty assessment roadmap; neither is an MPI. |
 | **São Tomé & Príncipe** | — | PhocaDownload category 52 (`economia`) is **empty** | No poverty category exists on the site at all. |
 
 ---
+
+**Resolved 2026-10-07** — the eight other rows of this table were settled by
+opening each document:
+
+* **Senegal → collected** (`sources/senegal.yaml`). The ANSD file is the
+  OPCV's *rapport national de présentation de l'IPM* (ESPS-II 2011), led by
+  ANSD's Director-General: 5 dimensions / 25 indicators, k = 32%. A national
+  measure, cover marked *version provisoire*.
+* **Mauritania → collected** (`sources/mauritania.yaml`) from a DIFFERENT
+  ANSADE file: the IPM-M tables (H, A, IPM with CIs; national, urban/rural,
+  13 wilayas, two age groups) are reprinted with a text layer in ANSADE's
+  *Annuaire des Statistiques Sociodémographiques 2024*, Tableaux 6.7-6.9. The
+  scanned brief is still not OCR'd; only its methodology parameters (4 dims /
+  19 indicators, person) were read by eye from it, and say so.
+* **Cabo Verde → not collectable, and correctly so.** Both INE-CV documents
+  (bdmi API, publication 3368: "Medindo a pobreza multidimensional" and the
+  2026 World Bank *Poverty Assessment* filed with it) call the measure a
+  PROPOSAL (12 indicators, 3 dimensions, k = 1/3, IDRF 2015). Its only
+  incidence (17,2%) is in prose, the deprivation rates are a chart, and
+  intensity is stated as future work. Re-check when INE computes it on IDRF
+  IV.
+* **Côte d'Ivoire → verified negative.** The EHCVM 2021 poverty profile
+  (Wayback id_ of anstat.ci/assets/projet/ehcvm2021.pdf, 148 pp) is monetary
+  plus subjective poverty; the global MPI appears only in its literature
+  review (p.121).
+* **Comoros → verified negative.** INSEED's EHCVM 2020 and 2024 results notes
+  (NADA catalogue 9 and 15) are monetary. The MPI in the *Rapport d'évaluation
+  de la pauvreté et de l'équité* (NADA 9, download 95) is authored by a World
+  Bank team (13 indicators including consumption, cutoff 30%) — hosted by
+  INSEED but not an INSEED measure.
+* **Gabon → verified negative.** INSTAT's 2023 poverty notes (Wayback of
+  instatgabon.org/wp-content/uploads/2023/10/) are monetary, from EGEP-II 2017.
+* **Algeria → verified negative.** ons.dz is readable now; its search finds no
+  poverty publication at all, only the 2011 consumption-expenditure survey.
+* **DR Congo → verified negative.** INS's Enquête 1-2-3 2012 "pauvreté non
+  monétaire ou de conditions de vie" is an UNWEIGHTED count of 17 housing and
+  asset items with a cutoff (8) chosen to reproduce the monetary rate, and
+  only its incidence is published — a living-conditions measure, not an MPI.
 
 ## 2b. Fetched, but the numbers are not text — `sources_blocked/`
 
@@ -68,8 +105,8 @@ visible in one place.
 |---|---|---|---|
 | **Morocco** | `hcp.ma/file/244249/` — 263 pages, **307 MB** | It is a **map atlas**. A scan of every page for a line carrying six or more numbers returns eleven, and ten of those are sentences. The regional and provincial IPM figures are inside the map plates as images. HCP's October 2025 per-region volumes (e.g. `hcp.ma/file/245986/`, 1.3 MB / 14 pages) were checked as a lighter alternative and have the same shape — prose around chart images. | OCR over the plates, or HCP publishing the underlying table. |
 | **Somalia** | `nbs.gov.so/.../Multidimensional-Poverty-Index-MPI-2024.pdf`, 15.8 MB | Tables 3.1–3.3 — national, urban/rural/nomadic, and all 17 regions — are **raster images**. pdfplumber sees their captions and no rows. Every headline figure exists only in the executive summary's prose, which names four of the seventeen regions. | OCR, or SNBS republishing with a text layer. |
-| **Ghana** (`ghana_report`) | nothing — the old `/gssmain/fileUpload/pressrelease/` path 404s | GSS rebuilt on Next.js. Its catalogue **still lists** the report (`{"id":"BD50","title":"Multidimensional Poverty Ghana Report","year":2020,…}`) but with `"fileUrl":"#"` — and `"#"` for every other entry too. The site itself says it has no file. Ghana's census MPI (`sources/ghana.yaml`) is unaffected and runs green. | GSS attaching the documents. |
-| **Egypt** | nothing — DNS NXDOMAIN | `censusinfo.capmas.gov.eg` no longer resolves; the main CAPMAS site is a JavaScript application exposing no path to the report. | CAPMAS restoring the host. |
+| ~~Ghana~~ (`ghana_report`) | **RESOLVED 2026-10-07:** the Wayback Machine holds an `id_` capture (2022-07-12) of GSS's own file; restored to `sources/ghana_report.yaml`, its layout rewritten against the printed pages (the old one read Table 3.5's male population share, 71.0, as national H). Previously: nothing — the old `/gssmain/fileUpload/pressrelease/` path 404s | GSS rebuilt on Next.js. Its catalogue **still lists** the report (`{"id":"BD50","title":"Multidimensional Poverty Ghana Report","year":2020,…}`) but with `"fileUrl":"#"` — and `"#"` for every other entry too. The site itself says it has no file. Ghana's census MPI (`sources/ghana.yaml`) is unaffected and runs green. | GSS attaching the documents. |
+| **Egypt** | **2026-10-07:** the Wayback capture of the download (catalogue 1906, file 6861) is the 10-page ARABIC ESCWA policy brief; its figures are chart data labels and prose (national M0 0.077, rural 0.103, urban 0.042) with the category labels as garbled right-to-left text — the Somalia case. The English technical paper has no capture; CAPMAS's main API answered HTTP 500.30 all day. Previously: nothing — DNS NXDOMAIN | `censusinfo.capmas.gov.eg` no longer resolves; the main CAPMAS site is a JavaScript application exposing no path to the report. | CAPMAS restoring the host. |
 
 Morocco and Somalia raise the same policy question and it has not been decided:
 **does an OCR'd figure still count as "exactly as published"** for this
@@ -84,7 +121,7 @@ wearing the appearance of a full table.
 Checked directly, with the source read where the site allowed it. Do not
 re-search these without new information.
 
-**Tanzania** (NBS/OCGS — monetary only: basic-needs and food poverty lines) ·
+**Côte d'Ivoire**, **Comoros**, **Gabon**, **Algeria**, **DR Congo** (each opened 2026-10-07; see §2) · **Tanzania** (NBS/OCGS — monetary only: basic-needs and food poverty lines) ·
 **Kenya** (KNBS — the 2025 *Brighter Futures* child-poverty report is
 multidimensional in spirit but is not an Alkire–Foster MPI) ·
 **Burundi** (ISTEEBU/INSBU — EICVMB 2019-20 has monetary, subjective and
@@ -105,7 +142,7 @@ and the price index only) ·
 **Libya** (BSC — nothing in English or Arabic; the only Libya MPI artefacts are
 UNDP HDR profiles).
 
-**Equatorial Guinea is the one live forward lead.** INEGE held a
+**Equatorial Guinea is the one live forward lead** (re-checked 2026-10-07: the ENH2 final report has no multidimensional measure in 184 pages, and inege.org lists no *Perfil de Pobreza Multidimensional* yet). INEGE held a
 multidimensional-poverty measurement workshop on 15 May 2024 (`inege.org/?p=5576`)
 with UNECA, the World Bank and UNDP, and has stated it will produce a *Perfil de
 Pobreza Multidimensional* from its second national household survey. Worth a

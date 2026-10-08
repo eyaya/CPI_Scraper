@@ -1,0 +1,60 @@
+country: Angola
+iso3: AGO
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Instituto Nacional de Estatística (INE Angola)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# INE's files are not hyperlinks: each is an onclick that POSTs `filepath` to
+# /Diretorios/Download, and folder links carry per-session tokens, so the tree
+# is walked by FOLDER NAME (the route labour/unemployment use for the IEA).
+# Economia e Finanças > Contas Nacionais > Trimestral holds one workbook,
+# "CONTAS_NACIONAIS_TRIMESTRAIS (n).xlsx"; the "(n)" suffix changes with each
+# upload, so the file is matched by name stem.
+discover:
+  method: ine_ao_directory_files
+  index_url: "https://www.ine.gov.ao/Publicacoes/Todas"
+  dirs:
+    - "Economia e Finanças"
+    - "Contas Nacionais"
+    - "Trimestral"
+  files:
+    - ["CONTAS_NACIONAIS_TRIMESTRAIS"]
+
+  # The ANNUAL workbook adds the expenditure and income approaches (Quadro
+  # 1.3) and previous-year-price GDP with real growth (Q1.1). It sits in a
+  # different folder, so it is resolved as an `extra_group` by the same folder
+  # walk (core/run.py) and handed to the parser as an extra, which recognises
+  # it by its sheet names.
+  extra_groups:
+    - dirs: ["Economia e Finanças", "Contas Nacionais", "Anual"]
+      files:
+        - ["CONTAS NACIONAIS ANUAIS"]
+
+parser: angola_ine_gdp
+geography: National
+
+notes: >
+  INE Angola Contas Nacionais Trimestrais 2002 onward, production approach by
+  16 activities + taxes on products, subsidies (-) and GDP: chained volume
+  measures SA and NSA (Kz million, reference year not stated), q/q SA growth,
+  y/y growth (volume and current prices), contributions to growth (SA and
+  NSA), current-price levels and shares of nominal GDP; quarterly plus the
+  annual "Total" rows. Q8-Q11 (year-to-date and rolling accumulations) and
+  Q1/Q15 (oil/non-oil and sector regroupings) are not read.
+
+  TRAP: each annual "Total" row sits ABOVE its year's quarters. Totals are
+  dated to the year below them and, on level sheets, asserted equal to the sum
+  of that year's quarters. A year still in progress (2026 over two quarters)
+  is year-to-date, not annual, and its Total is dropped.
+
+  Placeholder zeros (growth in quarters with no prior period) are skipped.
+  Growth rates of "Subsídios (-)" are left out (near-zero base, values to
+  1.5e7 %); its levels and contributions are kept.
+
+  CROSS-CHECK: current GDP 2002 = 753 573.72 Kz million (= annual Q1.1);
+  2002 Q1 chained volume NSA 1 540 753.94; 2003 volume growth 3.49 (Q1.1: 3.5);
+  2003 nominal growth 101.39; agriculture 8.47% of nominal GDP in 2002.

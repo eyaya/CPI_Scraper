@@ -21,6 +21,12 @@ discover:
   url: "https://statistics.gov.rw/sites/default/files/documents/2025-07/EICV7_Multidimensional_Poverty_Thematic_Report.pdf"
   save_as: rwanda_eicv7_mpi.pdf
 
+# The EICV5 thematic report ("The Second Rwanda Multidimensional Poverty
+# Report") on NISR's EICV5 page: the k = 40% measure for EICV3/4/5.
+extra_urls:
+  - url: "https://statistics.gov.rw/sites/default/files/documents/2025-01/EICV5_Thematic%20Report_Multidimensional%20Poverty%20Index.pdf"
+    save_as: rwanda_eicv5_mpi_second_report.pdf
+
 parser: rwanda_mpi
 geography: Total country
 
@@ -36,10 +42,11 @@ notes: >
   NOT chain EICV5 and EICV7 values into a trend.
 
   NOT COLLECTED, and why:
-  - the EICV5 (2018) edition, Rwanda's first MPI — its publication page is at
-    statistics.gov.rw/publication/eicv5thematic-reportmultidimensional-poverty-indexmpi
-    but the direct PDF href must be scraped from that page and could not be
-    resolved before delivery;
+  - (COLLECTED SINCE 2026-10-07) the EICV5 thematic report, "The Second
+    Rwanda Multidimensional Poverty Report", as its own measure: k = 40%,
+    4 dimensions, 14 indicators, restated for EICV3 (2010/11), EICV4 (2013/14)
+    and EICV5 (2016/17) -- Tables B 5 (area, province) and B 6 (quintile).
+    Comparable across those three rounds; NOT with EICV7.
   - the EICV5 Multidimensional CHILD Poverty Report — that is MODA (5 dimensions,
     cutoff "deprived in at least 3"), a different family of measure, not an
     Alkire-Foster MPI;

@@ -1,0 +1,57 @@
+country: Chad
+iso3: TCD
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique, des Études Économiques et Démographiques (INSEED)
+publication_code: Annuaire Statistique National du Tchad (chapitre Population)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# inseed.ssn-tchad.td is a SPA over a Node API: /api/publications?limit=1000
+# lists every publication with `titre` and `fichier.url`. The yearbooks are
+# titled "ANNUAIRE STATISTIQUE NATIONAL DU TCHAD_<YYYY>" (no MM-YYYY stamp, so
+# `inseed_tchad_latest` does not apply) and the uploaded names are timestamps.
+# Pinned: the newest edition as the primary, the earlier ones as extras -- add
+# each new edition here (the parser reads every file, oldest first, newest
+# wins on any year two editions share).
+discover:
+  method: static_url
+  url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1772547132053-547718258.pdf"
+  save_as: inseed_annuaire_2024.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1772547246873-925091775.pdf"
+    save_as: inseed_annuaire_2023.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1772547974001-563643640.pdf"
+    save_as: inseed_annuaire_2022.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1771487125740-46734224.pdf"
+    save_as: inseed_annuaire_2021.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1771487021709-430560559.pdf"
+    save_as: inseed_annuaire_2019-2020.pdf
+
+parser: inseed_chad_population
+geography: Total country
+
+notes: >
+  Official projections from the RGPH2 (2009) census, as reprinted in five
+  yearbook editions (2019-20 to 2024): national population by sex and by milieu
+  (Urbain / Rural), 5-year age groups x sex for the nation, the urban and the
+  rural population, and 23 provinces x sex (2019-2021, the editions that print
+  them). series_type projection. Years 2019-2024; newest edition wins.
+
+  PUBLISHED INCONSISTENCIES KEPT: in the 2019-20 and 2021 editions the age-band
+  tables' Totals are below the headline Tableau 3 for the same year (national
+  2020: 16 063 434 vs 16 244 513), so the headline totals are emitted and the
+  band tables' Total rows are not; Urbain + Rural misses the 2020 total by one
+  person. Band labels "05-sept"/"oct-14" (Excel date artefacts, 2021) and
+  "4-9" (misprint, 2022) are mapped back to 5-9 / 10-14 by position. Single-year
+  age tables NOT read: their sex headers contradict their data between editions.
+
+  Urbain / Rural are milieu strata carried as geography; they overlap the
+  national total and the provinces -- do not sum them together.
+
+  CROSS-CHECK: 2024 total 18 675 547, urban 4 836 967; 2023 0-4 3 512 072;
+  2020 Batha 689 835; 2019 total 15 692 969.

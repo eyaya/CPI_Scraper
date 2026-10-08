@@ -1,0 +1,55 @@
+country: Equatorial_Guinea
+iso3: GNQ
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estadística de Guinea Ecuatorial (INEGE)
+publication_code: ENH2 informe definitivo (noviembre 2024) + Anuario Estadístico 2023
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 4
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/equatorial_guinea.yaml -- the same ENH2
+# report; labour/ reads Tablas 46-49 for composition, this reads Tabla 46's
+# four headline rates. INEGE moved to inege.org (inege.gq no longer resolves)
+# and sits behind Cloudflare: HTML routes answer 403, but /wp-content/uploads/
+# files are served to a browser TLS fingerprint. `impersonate` (and the
+# timeout) now apply to `extra_urls` as well.
+#
+# EXTRA: the Anuario Estadístico 2023 (path recovered from the Wayback CDX
+# index of inege.gq, still served by inege.org), whose Tabla 88 reprints the
+# EPAFE 2015 labour force survey's rates -- the only other round. Earlier
+# yearbooks (2017-2022) reprint the same 2015 table and add no period. INEGE's
+# WordPress media API is disabled (404), so newer uploads are found from the
+# CDX index or the site's own links.
+discover:
+  method: static_url
+  url: "https://inege.org/wp-content/uploads/2024/12/Informe-Definitivo-de-la-ENH2.pdf"
+  save_as: Informe-Definitivo-de-la-ENH2.pdf
+  impersonate:
+    - chrome124
+    - firefox133
+    - safari17_0
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://inege.org/wp-content/uploads/2023/12/ANUARIO-ESTADI%CC%81STICO-2023.pdf"
+    save_as: Anuario-Estadistico-GE-2023.pdf
+
+parser: equatorial_guinea_unemployment
+geography: Total country
+
+notes: >
+  ENH2 2022-23 (household survey, base 18-64): Tabla 46 PA (participation),
+  TO (employment ratio), TD (unemployment), TS (underemployment) by nation,
+  region, zone, sex and province. EPAFE 2015 (labour force survey, base 16+,
+  via the Anuario 2023 Tabla 88): activity, employment and unemployment rates
+  by sex and zone. Different surveys and bases -- never chain them.
+
+  NOT COLLECTED: Tabla 46's total-population and PET% columns, mean hours,
+  formal/informal (labour/'s), social-security cover; Tabla 52 (distribution
+  of the unemployed by education); EPAFE nationality rows.
+
+  CROSS-CHECK: ENH2 PA 72,0, TO 62,1, TD 13,7, TS 5,6; EPAFE 2015 actividad
+  60,2, empleo 50,6, paro 15,9.

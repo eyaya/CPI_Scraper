@@ -1,0 +1,57 @@
+country: Mali
+iso3: MLI
+indicator: Labour
+tier: 2
+source_type: xlsx
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: EMOP tableaux (tab-emop<YY>pas<N>_eq.xlsx)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSTAT's EMOP page lists every passage's table workbook, NEWEST FIRST, as
+# /laravel-filemanager/files/shares/eq/tab-emop<YY>pas<N>_eq.xlsx. The
+# employment module is fielded April-June -- passage 2 from 2021 -- so the
+# first "pas2" link is the current reading. Earlier years are pinned as
+# extras (merge-on-write keeps them anyway). 2020's module ran in PASSAGE 1
+# (April-June 2020); 2020 passage 2 has no employment chapter.
+# NOT the bulletin `unemployment/` reads: that one draws these cuts as charts.
+discover:
+  method: page_scrape
+  page_url: "https://www.instat-mali.org/fr/publications/enquete-modulaire-et-permanente-aupres-des-menages-emop"
+  link_contains:
+    - "tab-emop"
+    - "pas2"
+    - ".xlsx"
+
+extra_urls:
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/eq/tab-emop24pas2_eq.xlsx"
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/eq/tab-emop23pas2_eq.xlsx"
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/eq/tab-emop22pas2_eq.xlsx"
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/eq/tab-emop21pas2_eq.xlsx"
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/eq/tab-emop20pas1_eq.xlsx"
+
+parser: mali_labour
+geography: Total country
+
+notes: >
+  INSTAT EMOP (continuous household survey), chapter 4 "Emploi": Tab4.5
+  secteur d'activité (Primaire / Industrie / Commerce / Service -> industry)
+  and Tab4.6 statut salarial (-> employment_status), each by region, milieu
+  (Urbain with Bamako / Autres villes sub-strata, Rural), sex and education.
+  Base 15+. National groupings, no nomenclature named. Dated YYYY-Q2 (the
+  April-June module), one reading a year.
+
+  PUBLISHED DEFECTS: 2023 Tab4.5's Ensemble row copies the Rural row digit for
+  digit and is dropped (re-verified every run); an Ensemble outside its own
+  male/female range raises. 2022 Tab4.5's source line says "EMOP 2021" -- the
+  year is taken from the file name and checked against the workbook's source
+  lines by majority. Tab4.9 (trend digest) is not read: its 2023 column
+  carries the copied rows.
+
+  REGIONS AS PRINTED: 9 to 2021, 11 in 2022-23, 20 from 2024, and spellings
+  vary (Taoudénit / Taoudenit / Taoudenni). Kidal, Ménaka, Nara, Douentza and
+  Bandiagara are partial-coverage (Infos sheet: under 50-60% of clusters).
+
+  CROSS-CHECK (Ensemble): 2025 primaire 58,65, salariés 10,69; 2021 primaire
+  68,26; 2020 primaire 63,3, salariés 9,8.

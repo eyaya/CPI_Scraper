@@ -43,6 +43,18 @@ discover:
   file_link_contains:
     - "download"
   save_as: nigeria_nlfs.pdf
+  download_timeout: 300        # the annual report is large; applies to extras
+
+# THE NLFS ANNUAL REPORT 2023 (the file labour/ reads), read by
+# parsers/nigeria_nlfs_annual.py: Tables 6, 7, 12, 15 and the 148 state annex
+# tables -- every state's headline by sex, residence, education and age, with
+# Tables 5/8/11/13/16 and Figure 5 used as cross-checks. A fixed /pdfuploads/
+# name: the e-library's download ids return the wrong files.
+# NLFS_Q1_2024_Report.pdf is also on /pdfuploads/ but prints a different
+# headline layout; not wired in this pass.
+extra_urls:
+  - url: "https://www.nigerianstat.gov.ng/pdfuploads/Annual_Nigerian_Labour_Force_Survey_Report.pdf"
+    save_as: nigeria_nlfs_annual_2023.pdf
 
 parser: nigeria_pdf
 geography: Total country

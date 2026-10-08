@@ -1,0 +1,32 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Institut National de la Statistique et de la Démographie (INSD)
+frequency: quarterly
+
+# --- discover ---
+# INSD lists the quarterly national-accounts workbooks (Cnt<year>T<n>.xlsx) on its
+# quarterly national-accounts page; we take the newest by the YYYYT<n> stamp.
+discover:
+  method: latest_quarter_file
+  page_url: "https://www.insd.bf/fr/statistiques/statistiques-economiques/compte-nationaux/trimestriels"
+  link_contains:
+    - "cnt"
+    - ".xlsx"
+
+parser: burkina_insd_gdp
+geography: National
+
+notes: >
+  INSD Burkina Faso quarterly national accounts (Excel). GDP by branch of activity
+  (production approach), quarterly from 2015T1 (+ the base-year 2015 annual
+  column). Rich multi-sheet workbook: value levels at current prices and constant
+  chained-volume (base 2015), the implicit deflator (2015=100), branch shares of
+  GDP, and QoQ & YoY growth — each in gross (o…) and seasonally-adjusted (d…)
+  variants. Branch codes (A, A1, A1.1 …) are kept as series_code; the PIB total
+  row is the aggregate. Growth and share cells are percent-formatted (fractions);
+  the parser reads the number format and records the displayed percentage. Units
+  billion XOF (FCFA). Verified: PIB current 2024 = 14.0tn FCFA, real GDP growth
+  2024 = 5.9%. Everything as published; nothing derived.

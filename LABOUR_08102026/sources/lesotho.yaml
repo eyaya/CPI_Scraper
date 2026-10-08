@@ -1,0 +1,55 @@
+country: Lesotho
+iso3: LSO
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Bureau of Statistics Lesotho (BOS)
+publication_code: Lesotho Labour Force Survey (LFS) 2024 and 2019
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# bos.gov.ls builds its publication list in the BROWSER from a JavaScript array
+# inside publications.htm ("catalogueData"), so no crawler sees a link -- which
+# is why earlier sessions found only policy PDFs and recorded Lesotho as having
+# no data files. The array lists every report under
+# /Bos_Reports/Copy%20of%20Demography/, each a ZIP holding one PDF. Static URLs
+# taken from that array. The primary ZIP is unzipped by the harness
+# (inner_suffix); the parser unzips the extras itself.
+discover:
+  method: static_url
+  url: "https://www.bos.gov.ls/Bos_Reports/Copy%20of%20Demography/2024_Labour_Force_Survey_Report.zip"
+  save_as: 2024_Labour_Force_Survey_Report.zip
+  inner_suffix: ".pdf"
+
+extra_urls:
+  - url: "https://www.bos.gov.ls/Bos_Reports/Copy%20of%20Demography/2019_Lesotho_LFS_report.zip"
+    save_as: 2019_Lesotho_LFS_report.zip
+  - url: "https://www.bos.gov.ls/Bos_Reports/Copy%20of%20Demography/2019_Lesotho_LFS_Tables.zip"
+    save_as: 2019_Lesotho_LFS_Tables.zip
+
+parser: lesotho_labour
+geography: Total country
+
+notes: >
+  BOS LFS 2024 report (occupation ISCO-08 and industry ISIC Rev.4 by sex and by
+  settlement type; status on ICSE-18-A by sex; ICSE-93 status counts) and LFS
+  2019 (report: industry and occupation by sex, counts + %; statistical tables:
+  status by sex and formal/informal sector by sex, counts). Base 15+.
+
+  NOT COLLECTED: the "sector" tables (2019 report 4.10, 2024 report 4.11) --
+  their totals are EMPLOYEES, not the employed; row-percentage blocks of 2024
+  Table 4.14; employment levels by sex/settlement (unemployment's territory);
+  the 2019 occupation/industry-by-status cross-tabs (row totals wrap onto their
+  own lines; the report carries the same distributions cleanly).
+
+  PUBLISHED INCONSISTENCIES KEPT: 2019 industry "Not Stated" total 2,043
+  against 2,034 elsewhere; employees 393,367 (T4.5) vs 393,650 (T4.13).
+
+  ALSO FOUND: the same JS array lists Quarterly GDP reports under
+  /Bos_Reports/Copy%20of%20Economics/ (QGDP_Final_Report_1st_Quarter 2026.zip
+  and publication tables) -- Lesotho GDP was recorded as having no file.
+
+  CROSS-CHECK: 2024 elementary occupations 42.4%; households as employers
+  16.2%; permanent employees 27.4%; employees 399,423 of 549,722. 2019
+  manufacturing female 44,988; informal sector 413,922 of 521,445.

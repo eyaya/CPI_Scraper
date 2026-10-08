@@ -10,13 +10,24 @@ verify_ssl: false
 expect_metrics: 3
 
 # --- discover ---
-# Joomla Phoca downloads. The working form is the SHORT one,
-# /downloads/<docId>-<slug>/download — not the <catId>/<docId> two-level form.
-# MPI sits in category 81 under parent 34 (Social Statistics); newest = highest
-# doc id (629 -> 678 -> 839).
+# NBS Seychelles serves documents through edocman as
+# /downloads/<docId>-<slug>/download, and RENUMBERS doc ids (the same pattern
+# the CPI and unemployment descriptors handle with `largest_id_link`). So the
+# report is FOUND, not pinned: the 2019 folder of the MPI category
+# (34 Social Statistics > 81 Multidimensional Poverty Index > 96 2019) is read,
+# and the link whose slug names the 2019 report, with the highest id, is taken
+# -- a re-upload wins over the copy it replaces. The 2019 folder, not the
+# category root: the category root lists only year folders, and this parser's
+# layout is the 2019 report's. The 2018 folder holds the pilot (Q4 2018), a
+# different edition.
+# (2026-10-07: the fixed-id URL 404'd in a health run, then served the PDF
+# again -- 3,620,533 bytes either way. Discovery by slug survives both.)
 discover:
-  method: static_url
-  url: "https://www.nbs.gov.sc/downloads/839-multidimensional-poverty-index-report-2019/download"
+  method: largest_id_link
+  page_url: "https://www.nbs.gov.sc/downloads/34-social-statistics/81-multidimensional-poverty-index/96-2019"
+  link_contains:
+    - "multidimensional-poverty-index-report-2019"
+    - "/download"
   save_as: seychelles_mpi_2019.pdf
 
 parser: seychelles_mpi

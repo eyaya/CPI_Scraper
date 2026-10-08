@@ -1,0 +1,46 @@
+country: Burundi
+iso3: BDI
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Burundi (INSBU, formerly ISTEEBU)
+publication_code: Annuaire statistique du Burundi, chapitre I Population (RGPHAE 2024 + censuses 1979, 1990, 2008)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# insbu.bi is a SPA over a Laravel API (api.insbu.bi/api/publications, newest
+# first) -- the route the CPI, GDP and labour descriptors use. The yearbook is
+# type_publication "as", titled "ANNUAIRE STATISTIQUE DU BURUNDI ÉDITION <YYYY>".
+# The README once rejected Burundi for population (only a 1987 DHS and census
+# notices in the API); the 2024 edition now carries the RGPHAE 2024 results.
+discover:
+  method: insbu_latest
+  api_url: "https://api.insbu.bi/api/publications"
+  title_contains: "ANNUAIRE STATISTIQUE DU BURUNDI"
+  download_timeout: 300
+
+parser: insbu_burundi_population
+geography: Total country
+
+notes: >
+  RGPHAE 2024 census (series_type census, period 2024): total population by
+  the five provinces x sex (Tableau 1.01), ordinary-household population by
+  milieu x sex (1.02) and by age group x sex (1.08); and the 1979, 1990 and 2008
+  censuses by 5-year age group x sex with their totals (1.09).
+
+  TWO UNIVERSES: the national/provincial totals count the TOTAL population
+  (12 332 788); the age and milieu tables count ORDINARY HOUSEHOLDS
+  (12 220 934), so the 2024 age bands do not sum to the national total.
+  Communes not read (a commune "GITEGA" shares the province's name).
+
+  PUBLISHED DEFECTS: commune Kiganda prints 68 276 + 80 246 = 149 522 (1 000
+  too many; not emitted, its total still balances its province); Tableau 1.09's
+  2024 column misprints three female cells and its 1990 wide groups do not add
+  up -- 2024 is read from 1.08 and only 1979-2008 bands from 1.09, which sum
+  exactly to each census total.
+
+  Milieu carried as geography "Urbain" / "Rural" (overlaps the national total).
+
+  CROSS-CHECK: 2024 total 12 332 788 (M 5 901 069); Buhumuza 2 052 261; urban
+  2 990 466; 0-4 2 041 065; 2008 total 8 053 574; 1979 0-4 697 580.

@@ -1,0 +1,38 @@
+country: Burundi
+iso3: BDI
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Burundi (INSBU, formerly ISTEEBU)
+publication_code: Annuaire statistique du Burundi (chapitre VI Emploi)
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# insbu.bi is a SPA over a Laravel API (api.insbu.bi/api/publications, newest
+# first) -- the same route the CPI and GDP descriptors use. The yearbook is
+# type_publication "as", titled "ANNUAIRE STATISTIQUE DU BURUNDI ÉDITION <YYYY>".
+discover:
+  method: insbu_latest
+  api_url: "https://api.insbu.bi/api/publications"
+  title_contains: "ANNUAIRE STATISTIQUE DU BURUNDI"
+
+parser: burundi_labour
+geography: Total country
+
+notes: >
+  Tableau 6.01, employed population by status in employment (employeurs,
+  salariés, indépendants, apprentis, aides familiaux), counts, under the years
+  INSBU heads the columns with: 2010, 2013 (ECVMB 2013-2014), 2017 (ERCVMB
+  2017), 2020 (EICVMB 2019-2020). Four separate household surveys, carried in
+  `survey`; the 2010 column's source is not stated. Base not stated.
+
+  NOT COLLECTED: Tableaux 6.02-6.08 -- INSS social-security registers and
+  civil-service staff counts (administrative, the Kenya trap). The EICVMB
+  2019-20 employment report's Tableau 7 (institutional sector by sex) was
+  considered and left out: its text calls the values a share of the
+  working-age population while they sum to 100 across sectors, so the
+  denominator is ambiguous.
+
+  CROSS-CHECK: salariés 717 117 and total 4 883 049 (2020); total 3 165 560
+  (2010).

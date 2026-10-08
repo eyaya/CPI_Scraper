@@ -1,0 +1,40 @@
+country: Comoros
+iso3: COM
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: json
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED Comores)
+frequency: monthly
+
+# --- discover ---
+# inseed-comores.org is a Next.js SPA over a Strapi CMS, proxied at /backend. The
+# monthly bulletin is a CMS record rather than a PDF, so there is no file to hunt
+# for: this one query IS the discovery — newest IHPC publication first, with its
+# paragraphs (which carry Tableau 1) populated. Strapi's filter/sort keeps the URL
+# stable, so `static_url` is enough.
+discover:
+  method: static_url
+  url: "https://www.inseed-comores.org/backend/api/publications?filters[publicationSlug][$contains]=ihpc&sort=parutionDate:desc&pagination[pageSize]=1&populate[paragraphs][populate]=*"
+  save_as: comoros_ihpc_latest.json    # the URL carries no filename
+
+parser: comoros_inseed
+geography: Moroni
+expect_divisions: 13          # INDICE GLOBAL + 12 COICOP-1999 functions
+
+notes: >
+  IHPC, base 100 : 2011. NOTE THE GEOGRAPHY — the basket covers MORONI (the
+  capital), not the whole country; INSEED titles it 'Indice harmonisé des prix à la
+  consommation de Moroni'. Publication lag is ~1.5 months. 'Tableau 1' gives, per
+  COICOP-1999 function + INDICE GLOBAL, five dated index columns and 1-/3-/12-month
+  variations; the index columns are NOT contiguous (they run m-12, m-3, m-2, m-1, m)
+  but each is individually dated, so the parser reads the period off each column
+  header and takes the report month as the newest. We emit index for all five dated
+  months + MoM/YoY for the report month; the 3-month variation is dropped as
+  derivable. Sub-items are bulleted '❖' but the marker is NOT a usable filter —
+  '❖ Boissons alcoolisées et tabac' is function 02, so rows are matched on known
+  function labels instead. The base year is read from the Tableau 1 title so a
+  rebase is picked up automatically.
+  Not used, but available in the same CMS record: `graphics[].datafile.url`
+  (/backend/uploads/*.csv) publishes an all-items index series back to 2021 plus
+  MoM/YoY history. Wiring it in would need a second fetch, which would break the
+  parsers-are-offline rule that `scrape_local.py` relies on.

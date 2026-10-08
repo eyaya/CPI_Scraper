@@ -78,4 +78,20 @@ LAYOUTS["nigeria"] = {
 
 
 LAYOUT = LAYOUTS['nigeria']
-parse = make_parser(LAYOUT)
+_bulletin = make_parser(LAYOUT)
+
+
+def parse(path: str, extras: list[str] | None = None):
+    """The newest quarterly bulletin, plus the 2023 annual report (an extra,
+    read by `nigeria_nlfs_annual`: state-level headline tables). They date
+    themselves differently (YYYY-Qn vs 2023), so no merge key is shared."""
+    import os
+    import pandas as pd
+    from . import nigeria_nlfs_annual
+    frames = [_bulletin(path)]
+    for p in extras or []:
+        if "annual" in os.path.basename(p).lower():
+            frames.append(nigeria_nlfs_annual.parse(p))
+        else:
+            frames.append(_bulletin(p))
+    return pd.concat(frames, ignore_index=True)

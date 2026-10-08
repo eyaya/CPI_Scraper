@@ -1,0 +1,46 @@
+country: DR_Congo
+iso3: COD
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS-RDC)
+publication_code: Enquête 1-2-3 2011-2012, Rapport global (2014)
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# INS-RDC's own site (ins-rdc.org) answers a Cloudflare 403 to every client,
+# and the rebuilt ins.gouv.cd lists three items, none of them this report. The
+# ONLY reachable copy is the Wayback Machine capture of INS's own file
+# (2015-08-21). The `id_` form of the URL returns the ORIGINAL BYTES -- no
+# archive banner, no rewriting -- so this is INS's publication unchanged, not
+# an aggregator. Replace with an INS URL if the NSO ever serves it again.
+#
+# web.archive.org answers `requests` with 429 but serves a browser TLS
+# fingerprint (and curl) normally; both profiles below returned the identical
+# 3,414,763-byte file (2026-09-29).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20150821012651id_/http://www.ins-rdc.org/sites/default/files/Rapport%20enquete%20123.pdf"
+  save_as: INS_RDC_Enquete_123_2012_Rapport_global.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: drc_labour
+geography: Total country
+
+notes: >
+  Enquête 1-2-3 2011-2012, Phase 1 (household employment), chapter 5:
+  Tableau I.5.4 institutional sector (Administration / Parapublic / Privé
+  formel / Informel non agricole / Informel agricole -> formality) and
+  Tableau I.5.6 CSP (-> employment_status, National), each by Kinshasa /
+  urban without Kinshasa / rural / RDC. Base 10+. Phase 2 (UPI) excluded.
+
+  NOT COLLECTED: I.5.4's activity-sector block -- its RDC column cannot be a
+  weighted average of its own area columns (Industrie 4,4 nationally vs 14,6 /
+  13,9 / 4,5), while the institutional and CSP blocks fit one set of weights
+  exactly (Kinshasa ~8% of the employed, as the report says). I.5.5
+  (characteristics by sector) and I.5.6's rates.
+
+  CROSS-CHECK (RDC): informel agricole 59,7; administration 5,7 (Kinshasa
+  15,4); indépendants 62,7; aides familiaux 20,2.

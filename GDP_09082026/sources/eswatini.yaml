@@ -1,0 +1,51 @@
+country: Eswatini
+iso3: SWZ
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Central Statistical Office (CSO), Kingdom of Eswatini
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# The CSO publishes on gov.sz (/images/planningministry/...), which timed out
+# on every attempt (2026-09-29 .. 2026-10-01), and eswatinistats.org.sz never
+# answers. The Wayback Machine holds `id_` captures (the ORIGINAL bytes) of the
+# CSO's own files, found with the CDX API (url=gov.sz/*, filter original:.*GDP.*)
+# -- the route DR Congo, Congo, Benin and Sudan already use. Not an aggregator.
+# When gov.sz answers again, point `url` at
+#   https://www.gov.sz/images/planningministry/QGDP%20Tables%202013Q1-2025Q4.xls
+# (and its successor: the CSO renames the file as quarters are added).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20260517200913id_/https://www.gov.sz/images/planningministry/QGDP%20Tables%202013Q1-2025Q4.xls"
+  save_as: "QGDP Tables 2013Q1-2025Q4.xls"
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://web.archive.org/web/20250823231109id_/https://www.gov.sz/images/planningministry/Eswatini%20Rebased%20GDP%20Report%202023%20final.pdf"
+    save_as: "Eswatini Rebased GDP Report 2023 final.pdf"
+
+parser: eswatini_cso_gdp
+geography: National
+
+notes: >
+  CSO quarterly GDP tables 2013 Q1 - 2025 Q4 (production approach, 29
+  activities + sectors, current and constant 2019 prices, SA GDP, shares,
+  y/y growth, contributions) and the Rebased GDP Report 2023 annexes (annual
+  2013-2023, production A1.1-A1.5 and expenditure A2.1-A2.5, incl. implicit
+  deflators). Base year 2019 (rebased from 2011).
+
+  Percent cells in the workbook are fractions under a % format; the published
+  percent is emitted. A2.4's header lists 2013-2023 over ten values (2014-2023)
+  -- alignment proved from A2.2 every run. The quarterly (2026) and annual
+  (2025) vintages are not reconciled with each other.
+
+  CHECKED AND NOT USED: the Central Bank of Eswatini's Annual Economic Review
+  2024-25 (GDP only in charts and prose); older CSO GDP bulletins 2021-2024
+  (superseded by the rebased workbook); "GDP Projections" files (forecasts by
+  the Ministry, not CSO accounts).
+
+  CROSS-CHECK: GDP 2025 Q4 current 25 170.0 E million (SA 23 565.9); annual
+  GDP 2023 current 84 964 / constant 70 126; growth 2023 3.4%.

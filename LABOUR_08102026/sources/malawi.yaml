@@ -1,0 +1,25 @@
+country: Malawi
+iso3: MWI
+indicator: Labour
+tier: 2
+source_type: excel
+agency: National Statistical Office (NSO)
+publication_code: 2018 MPHC Series D
+frequency: annual
+verify_ssl: false
+
+discover:
+  method: static_url
+  url: "https://cms.nsomalawi.mw/api/download/280/Series-D.-Economic-Tables.xlsx"
+  save_as: malawi_2018_series_d.xlsx
+
+parser: malawi_nso_labour
+geography: Total country
+
+notes: >
+  Malawi NSO 2018 census economic activity (Series D tables). Three topics:
+  activity status (Table D1 — of the 15-64 population, the economically active and
+  the employed, by sex), industry (Table D7) and occupation (Table D9) of the
+  employed. National level. Adds a 2nd country to labour (with Ghana), with industry
+  and occupation aligning to Ghana's topics. Deferred: the urban/rural and
+  age-group tables (D2-D6, D8) and the derived unemployment rate.

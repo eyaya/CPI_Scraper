@@ -1,0 +1,43 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL), with UNDP and OPHI
+publication_code: Multidimensional Poverty in Sierra Leone 2023 (National MPI, DHS 2019)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 9
+
+# --- discover ---
+# On Stats SL's own domain, linked from its home page (found 2026-10-07). The
+# file name begins "undp_" and the cover is UNDP-branded, but the report is
+# the SECOND OFFICIAL National MPI, "produced in collaboration with Statistics
+# Sierra Leone", and it is hosted by the NSO -- the rule this collector
+# applies. Until now it was known only from UNDP/OPHI copies (PENDING.md).
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/StatisticsSL/Documents/undp_sl_multidimentsional_poverty_index_2023.pdf"
+  save_as: sierra_leone_mpi_2023.pdf
+  download_timeout: 300
+
+parser: sierra_leone_2023_mpi
+geography: Total country
+
+notes: >
+  SAME MEASURE as the 2019 edition (sierra_leone.yaml): 5 dimensions,
+  14 indicators, k = 40%, household identification / person analysis, so the
+  same measure_name; this edition adds the 2019 year (DHS 2019). Tables 3
+  (national, rural/urban), 4 (regions), 5 (16 districts, post-2017 boundaries
+  incl. Falaba and Karene), 6 (age group), 7 (education of the head), each with
+  95% confidence intervals.
+
+  Table 9's 2017 columns are a RE-ESTIMATE on the report's comparable
+  2017-2019 measure and differ from the 2019 edition's published 2017 figures;
+  they carry their own measure_name so the two 2017 estimates never collide.
+
+  NOT READ: Table 8 (household size, no topic), Figure 17 (sex of head, chart).
+
+  CROSS-CHECK: national 0.322 (0.309-0.335), H 58.0, A 55.5; Rural H 79.8;
+  Pujehun 0.500; Western Area Urban 0.059; 0-14 H 63.6; 2017 comparable
+  Northern 0.420.

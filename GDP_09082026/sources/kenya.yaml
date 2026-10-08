@@ -1,0 +1,34 @@
+country: Kenya
+iso3: KEN
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+frequency: quarterly
+verify_ssl: false            # KNBS serves an incomplete TLS certificate chain
+
+# --- discover ---
+# KNBS lists the quarterly GDP report PDFs newest-first on its quarterly-GDP page;
+# we scrape the first 'Quarterly-Gross-Domestic-Product … .pdf' link.
+discover:
+  method: page_scrape
+  page_url: "https://www.knbs.or.ke/quarterly-gdp/"
+  link_contains:
+    - "Quarterly-Gross-Domestic-Product"
+    - ".pdf"
+
+parser: kenya_knbs_gdp
+geography: National
+
+notes: >
+  KNBS Quarterly GDP report (Tier 3 PDF). The statistical-annex tables are rendered
+  MIRROR-REVERSED (every token stored right-to-left); the parser reverses each
+  token, then reads the by-activity grid where each year-column cell packs that
+  year's quarters (visual Q1..Q4, which the whole-cell reversal flips to Qn..Q1, so
+  the newest partial year's single value is Q1). Tables: 1 current prices, 2
+  constant 2016 prices, 3 growth rates (real). Production/by-activity approach
+  (Agriculture … plus All Industries at basic prices, Taxes on products, FISIM,
+  GDP at market prices, and the seasonally-adjusted GDP series); no expenditure
+  approach in this report. Units KES million (levels) / percent (growth). Verified:
+  nominal GDP-at-market 2024 = KSh 16.23tn, real (constant 2016) = KSh 10.9tn,
+  real growth 2024-Q4 = 5.4%. Everything as published; nothing derived.

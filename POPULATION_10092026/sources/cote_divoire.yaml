@@ -1,0 +1,47 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique (ANStat, formerly INS)
+publication_code: RGPH 2021 Tome 1 (Etat et structure) + RGPH 2014 Rapport global d'analyse
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# anstat.ci answers every client with a Cloudflare interactive challenge (as for
+# labour, unemployment and GDP), so both reports are the Wayback Machine's `id_`
+# captures -- the original bytes of the PDFs ANStat itself published, not an
+# aggregator copy. Found with the CDX API on anstat.ci / ins.ci:
+#   RGPH 2021 Tome 1: /assets/publications/files/rgpg_tom1.pdf (ANStat, July 2025)
+#   RGPH 2014 report: /assets/projet/RGPH_2014.pdf (INS, February 2017)
+# The archive answers plain `requests` with 429 at times; browser fingerprints
+# fetch the same bytes. When anstat.ci becomes reachable, point at the live files.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20250723231504id_/https://www.anstat.ci/assets/publications/files/rgpg_tom1.pdf"
+  save_as: ANStat_RGPH2021_Tome1_Etat_structure.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 600
+
+extra_urls:
+  - url: "https://web.archive.org/web/20260505080909id_/https://www.anstat.ci/assets/projet/RGPH_2014.pdf"
+    save_as: INS_RGPH2014_Rapport_global.pdf
+
+parser: anstat_civ_population
+geography: Total country
+
+notes: >
+  RGPH 2021 (census): Tableau 2.7 districts and regions (counts; region share
+  and sex ratio), Tableau 3.2 five-year ages by sex (+ sex ratio, "Non déclaré"
+  kept). RGPH 2014: Tableau 2.3 regions and autonomous districts (counts +
+  share), Tableau 2.7 ages by sex (+ sex ratio).
+
+  DISTRICTS (2021) ARE SUMS OF THEIR REGIONS, each asserted; they carry
+  "(district)" in the name and only their count -- their printed "poids" is not
+  the district's weight (Bas-Sassandra 3,1 vs 9,1). Never add the two levels.
+
+  PUBLISHED: the 2021 units sum to 29 389 152 against a national 29 389 150
+  (pinned); Tableau 3.2 has 1-person residues between sexes and total (kept).
+
+  CROSS-CHECK: 2021 29 389 150 (RM 109,3), Abidjan 6 321 017; 2014 22 671 331.

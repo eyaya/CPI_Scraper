@@ -1,50 +1,115 @@
-"""Parser for the Banque Centrale du Congo (DRC) annual CPI workbook (Tier 2, PARTIAL).
+"""Parser for the BCC (DR Congo) price-statistics page (Tier 2, HTML payload).
 
-The DRC's national statistics institute (INS-RDC) is not reachable, so we fall back
-to the central bank (BCC), whose 'ipc_annuel_bcc.xlsx' publishes the national
-all-items CPI as an **annual** series: one row per year with the price index
-(base 2012 = 100) and the year-on-year inflation ('taux en glissement annuel').
+CENTRAL-BANK FALLBACK: the NSO (INS-RDC) is WAF-blocked, so the CPI comes from
+the Banque Centrale du Congo, which republishes INS's series and credits it
+('Institut National de la Statistique'). BCC's 2026 site rebuild replaced the old
+`ipc_annuel_bcc.xlsx` workbook (now 404) with a Next.js data explorer whose
+series are SERVER-RENDERED into the page: the React flight payload, pushed in
+`self.__next_f.push([1,"…"])` chunks, carries a `series` array of metadata and a
+`periods` array of
 
-This is a documented PARTIAL capture: national all-items only, ANNUAL frequency,
-and it ends in 2020 (the file has not been updated since). Annual figures are dated
-to year-end (YYYY-12) to fit the monthly period schema; frequency is 'annual'. The
-COICOP-division breakdown is not published in this file.
+    {"period": "2026-08", "frequency": "monthly",
+     "values": {"inflation--indice-global": 506.47, …}}
+
+so no API call and no scraping of rendered HTML is needed — we join the chunks,
+JSON-unescape them and read the two arrays straight out.
+
+The page mixes MONTHLY and WEEKLY frequencies in one `periods` array. Only three
+series are monthly — the all-items index, its month-on-month rate and its
+year-on-year rate — and those are what we emit, keyed to COICOP 00. The twelve
+COICOP functions BCC also publishes are WEEKLY percentage series (period keys
+like '2026-08-S3'), which the CPI schema's monthly `period` cannot express
+without aggregating them, so they are left out rather than re-estimated; the same
+goes for the weekly national/Kinshasa indices and the cumulative rates.
+
+Neither BCC nor INS states the index base on this page, so `base_period` is left
+blank rather than guessed.
 """
 from __future__ import annotations
+import json
 import re
 import pandas as pd
 
-_BASE_PERIOD = "2012 = 100"
+_GEOGRAPHY = "National"
+_ALL_ITEMS = "Indice global"
+_PERIOD = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
+_BLOB = re.compile(
+    r'self\.__next_f\.push\(\[1,\s*("(?:[^"\\]|\\.)*")\]\)', re.S)
+# series id -> (measure, unit) for the monthly series we emit
+_SERIES = {
+    "inflation--indice-global": ("index", "Index"),
+    "inflation--inflation-mensuelle": ("inflation_mom", "percent"),
+    "inflation--glissement-annuel": ("inflation_yoy", "percent"),
+}
 
 
-def parse(xlsx_path: str) -> pd.DataFrame:
-    df = pd.ExcelFile(xlsx_path).parse("Prix  Annuel (2)", header=None)
-    # locate the header row ('ANNEE' + 'Indice des prix') then read year rows
-    hdr = next((r for r in range(df.shape[0])
-                if "annee" in str(df.iloc[r, 0]).strip().lower()), None)
-    if hdr is None:
-        raise ValueError("DRC BCC: 'ANNEE' header row not found")
+def _flight_text(html: str) -> str:
+    """The page's React flight payload, chunks joined and JSON-unescaped."""
+    blobs = _BLOB.findall(html)
+    if not blobs:
+        raise ValueError("BCC: no Next.js flight payload in the page")
+    return "".join(json.loads(b) for b in blobs)
+
+
+def _array_after(text: str, key: str):
+    """Parse the JSON array that follows `"<key>":` , by bracket matching (the
+    payload is one long line, so a regex would have to be balanced anyway)."""
+    i = text.find(f'"{key}":[')
+    if i < 0:
+        raise ValueError(f"BCC: '{key}' array not found in the payload")
+    start = text.index("[", i)
+    depth, in_str, esc = 0, False, False
+    for j in range(start, len(text)):
+        c = text[j]
+        if in_str:
+            if esc:
+                esc = False
+            elif c == "\\":
+                esc = True
+            elif c == '"':
+                in_str = False
+            continue
+        if c == '"':
+            in_str = True
+        elif c == "[":
+            depth += 1
+        elif c == "]":
+            depth -= 1
+            if depth == 0:
+                return json.loads(text[start:j + 1])
+    raise ValueError(f"BCC: '{key}' array is unterminated")
+
+
+def parse(html_path: str) -> pd.DataFrame:
+    with open(html_path, "r", encoding="utf-8", errors="replace") as fh:
+        text = _flight_text(fh.read())
+
+    labels = {s["id"]: (s.get("labelFr") or s.get("labelEn") or "")
+              for s in _array_after(text, "series") if s.get("id")}
+    periods = _array_after(text, "periods")
 
     records = []
-    for r in range(hdr + 1, df.shape[0]):
-        yr = str(df.iloc[r, 0]).strip()
-        if not re.fullmatch(r"(19|20)\d\d", yr):
-            continue
-        period = f"{yr}-12"                        # annual value, dated to year-end
-        idx = df.iloc[r, 1]                        # Indice des prix (base 2012=100)
-        if pd.notna(idx) and isinstance(idx, (int, float)) and idx >= 1:
-            records.append(("00", "All items", period, "index", round(float(idx), 4),
-                            "Index", _BASE_PERIOD))
-        yoy = df.iloc[r, 5]                        # taux en glissement annuel (YoY %)
-        if pd.notna(yoy) and isinstance(yoy, (int, float)):
-            records.append(("00", "All items", period, "inflation_yoy", round(float(yoy), 4),
-                            "percent", ""))
+    for entry in periods:
+        period = str(entry.get("period") or "")
+        if entry.get("frequency") != "monthly" or not _PERIOD.match(period):
+            continue                       # weekly rows ('2026-08-S3') are skipped
+        for sid, value in (entry.get("values") or {}).items():
+            spec = _SERIES.get(sid)
+            if spec is None or value is None:
+                continue
+            measure, unit = spec
+            records.append(("00", labels.get(sid) or _ALL_ITEMS, period, measure,
+                            round(float(value), 4), unit, ""))
 
-    if not records:
-        raise ValueError("DRC BCC: no annual rows parsed")
+    got = {r[3] for r in records}
+    if "index" not in got:
+        raise ValueError(f"BCC: no monthly index series found (measures: {sorted(got)})")
+
     out = pd.DataFrame.from_records(
-        records, columns=["coicop_code", "coicop_label", "period", "measure",
-                          "value", "unit", "base_period"])
-    out["geography"] = "National"
-    out["frequency"] = "annual"
-    return out
+        records,
+        columns=["coicop_code", "coicop_label", "period", "measure", "value",
+                 "unit", "base_period"])
+    out["coicop_label"] = _ALL_ITEMS
+    out["geography"] = _GEOGRAPHY
+    out["frequency"] = "monthly"
+    return out.drop_duplicates(["coicop_code", "period", "measure"])

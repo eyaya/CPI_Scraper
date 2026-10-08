@@ -1,0 +1,46 @@
+country: Gabon
+iso3: GAB
+indicator: CPI
+tier: 1                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: json
+agency: Direction Générale de la Statistique (DGS)
+frequency: monthly
+
+# --- discover ---
+# DGS runs a purpose-built IHPC portal at ihpc.instatgabon.org, fed by a plain
+# JSON API — no file to hunt for, so the queries ARE the discovery. NOTE the old
+# dgstat.ga host is dead; instatgabon.org is the live site and this subdomain the
+# live data. /api/publications is broken server-side (ENOENT on the Rapports
+# folder), so the bulletins are not a usable route.
+discover:
+  method: static_url
+  url: "https://ihpc.instatgabon.org/api/ipch/series?limit=5000"
+  save_as: gabon_ihpc_series.json        # the URL carries no filename
+
+# The division and regional breakdowns are separate endpoints, retained beside
+# the series and handed to the parser.
+extra_urls:
+  - url: "https://ihpc.instatgabon.org/api/ipch/functions"
+    save_as: gabon_ihpc_functions.json
+  - url: "https://ihpc.instatgabon.org/api/ipch/regions-history?limit=500"
+    save_as: gabon_ihpc_regions_history.json
+
+parser: gabon_instat
+geography: National
+expect_divisions: 13          # Indice global + 12 COICOP-1999 functions
+
+notes: >
+  Harmonised CPI (IHPC) on the CEMAC methodology, base 2018 = 100 (the API states
+  it as BASE_2018_100), basket from the EGEP household survey. Gabon is the only
+  CPI source served by a real API: `/api/ipch/series` returns the national
+  all-items index with its 1-month and 12-month variations for every month from
+  January 2019, so the headline series arrives complete in one call.
+  ASYMMETRIC DEPTH, by the API's design: `/api/ipch/functions` returns the LATEST
+  month only for the twelve COICOP functions (it ignores a `period` argument), so
+  division history accumulates one month per run, and `/api/ipch/regions-history`
+  covers only the handful of months the portal keeps for Libreville, Port-Gentil,
+  'autres urbains' and rural (index only, no variations). Variations are taken as
+  published, never derived; nulls in the first months of the series are skipped.
+  The portal also exposes average product prices by zone (`/api/prices/…`) and the
+  secondary nomenclatures (`/api/ipch/secondary`), for later. French labels kept
+  as published.

@@ -1,118 +1,141 @@
-# africa-stats-collector
+# CPI — Africa CPI Collector
 
-Collect indicators published by African National Statistics Offices (NSOs) into
-one **tidy, structured** data file per country/indicator — starting with **CPI
-(inflation)**, one country at a time.
+Harvests **Consumer Price Index** and inflation from African National Statistics
+Offices (NSOs) into one tidy, long-format dataset, captured **exactly as each NSO
+publishes it** — native classifications and full historical series, with no
+estimation, imputation or omission.
 
-For each country we pick the **most robust source available**, in this order:
+**Status:** 52 of 54 countries collected. The two outstanding are **Eswatini**
+(eswatinistats.org.sz resolves but the host has not answered; no central-bank or
+government mirror carries the CPI, and the legacy swazistats.org.sz domain is gone)
+and **Eritrea** (no national statistics office or central bank site exists online —
+only aggregators carry Eritrean inflation, and those are excluded as sources).
+See the progress report for the full picture:
 
-1. **Tier 1** — official API / SDMX endpoint
-2. **Tier 2** — structured file download (CSV / Excel)
-3. **Tier 3** — PDF / DOC scrape + table extraction
+**Collector health (full `--all` run, 7 Sep 2026):** 52 descriptors, 49 collecting.
+Three sources cannot be fetched, each for a reason outside this code:
 
-Only fall to a lower tier when the higher one doesn't exist. Each country is a
-small, self-contained unit: a **descriptor** (`sources/<country>.yaml`) + a
-**parser** (`collector/parsers/<agency>.py`). The shared pipeline handles the
-rest, and one country breaking never stops the others.
+- **Cote d'Ivoire** — anstat.ci sits behind a Cloudflare JS challenge that refuses
+  every TLS fingerprint, the published files included.
+- **Liberia** — LISGIS is rebuilding its site. The old content (`/pricestats.php`
+  and `/admin_area/…`) now 404s, and the placeholder page links only to an
+  aggregator portal, which this project excludes as a source. Nothing of LISGIS's
+  own is currently served; the May 2026 output already collected is retained.
+- **Central African Republic** — ICASEES' site appears COMPROMISED. Its edocman
+  download route returns an empty body to a browser user-agent, but serves a
+  cloaked Japanese e-commerce spam page (~425 KB) to any user-agent containing
+  'bot' — the signature of an SEO-spam injection, not a bulletin. Do not try to
+  work around it. Its July 2025 bulletin is the newest ICASEES published and that
+  month is already in `out/`; the descriptor is left pointing at the legitimate
+  route so collection resumes if the site is cleaned up.
+
+Their existing outputs are intact — the harness writes only on success.
+
+**Outputs accumulate.** A run MERGES into `out/<country>_cpi.csv` rather than
+replacing it: keyed on `coicop_code + geography + period + measure`, the rows a run
+produces win and rows it did not produce are kept. This is what makes the "history
+accumulates across monthly runs" note in many descriptors true — most NSOs publish
+one month per document, so without it each run would discard everything collected
+before. It also protects against a source that loses its own back-issues: when INS
+Congo's 2026 site rebuild dropped March–May 2026, the merge kept those months and
+added the new February 2026 one. Revisions still propagate, because a rerun of the
+same period overwrites its own rows, and `source_url` / `source_file` /
+`extracted_at` are per-row, so mixed provenance stays auditable (Kenya's file
+carries the CBK headline series back to 2005 alongside KNBS's current-month
+divisions). Where a merge splices index levels across a rebase, the run says so.
+
+- `Africa_CPI_Collector_Progress_Report.docx` — narrative (work done, challenges, outstanding)
+- `Africa_CPI_Collector_Progress_Report.xlsx` — 4 sheets (Executive Summary, Country Status, Challenges & Remedies, Outstanding & Next Steps)
 
 ## Layout
 
 ```
-sources/          one YAML descriptor per country/indicator
-collector/
-  run.py          orchestrator: discover -> download -> extract -> parse
-                  -> normalise -> validate -> write CSV (API sources skip
-                  discover/download and fetch data directly)
-  discover.py     resolve the current file URL (page_scrape | probe_monthly |
-                  latest_dated | latest_dated_pdf | catalog_latest)
-  fetch.py        download + unzip helpers
-  pxweb.py        Tier-1 PxWeb JSON API client (e.g. Ghana StatsBank)
-  parsers/        one parse() per source layout, registered in __init__.py
-  schema.py       canonical tidy columns + validation (fail loud on garbage)
-  coicop.py       COICOP 2018 division reference
-source_data/      RETAINED raw NSO files as published (PDF/Excel/Word/zip),
-                  one folder per country — a first-class deliverable
-out/              tidy CSV output, one per country/indicator
+indicators/cpi/
+├── pipeline.py          # entry point: wires the CPI CONFIG into the shared core
+├── schema.py            # COLUMNS (long format) + validate()
+├── coicop.py            # COICOP division vocabulary / helpers
+├── sources/             # one <country>.yaml descriptor per country
+├── parsers/             # one parser per country (registered in parsers/__init__.py)
+├── source_data/         # retained raw published files (audit trail)
+├── out/                 # tidy <country>_cpi.csv outputs
+└── Africa_CPI_Collector_Progress_Report.{docx,xlsx}
 ```
-
-Every run keeps **two** things per country: the original published source
-document(s) under `source_data/<Country>/`, and the structured tidy CSV under
-`out/`. The raw files are retained for auditability and so downstream users can
-trace any value back to the primary NSO document.
 
 ## Run
 
 ```bash
-pip install -r requirements.txt
-python -m collector.run south_africa    # one country
-python -m collector.run --all           # every descriptor
+# online (discover → download → parse → validate → write)
+python -m indicators.cpi.pipeline <country>
+python -m indicators.cpi.pipeline --all
+
+# offline (parse an already-downloaded file with the same extraction path)
+python scrape_local.py --indicator cpi <country> <path-to-file>
+python scrape_local.py --indicator cpi --dir <folder>
 ```
 
-Output columns (tidy long format):
+## Schema (tidy long format)
 
+Keyed by **coicop_code · coicop_label · geography · period**, plus identity/provenance
+columns. Each NSO's own nomenclature (e.g. Algeria's 8-group scheme) is captured
+as-is rather than forced into COICOP; `period` is `YYYY-MM` for the monthly series.
+
+## Tests
+
+```bash
+PYTHONUTF8=1 py -W ignore -m indicators.cpi.tests.check_registry   # descriptors resolve
+PYTHONUTF8=1 py -W ignore -m indicators.cpi.tests.test_offline     # rules + validator + corpus
 ```
-country, iso3, indicator, coicop_code, coicop_label, geography,
-period (YYYY-MM), measure, value, unit, base_period, frequency,
-source_type, source_url, source_file, extracted_at
-```
 
-`measure` records what `value` is, because NSOs publish different things:
-`index` (a level, e.g. Stats SA / Nigeria) or `inflation_yoy` / `inflation_mom`
-(% changes — all many PDF-only NSOs like Kenya publish by division).
+**This suite is shaped differently from `labour`'s and `unemployment`'s, on
+purpose.** Those read most countries through one declarative engine, so a
+fixture per trap exercises rules shared by a dozen layouts. CPI has **53
+bespoke parsers and no shared engine** — replaying 52 fixtures would test 52
+things once each and still miss what binds the corpus together. So it checks:
 
-## Countries
+| | |
+|---|---|
+| `coicop.code_for_label` | the one shared rule set every parser can reach — all-items in its many wordings, the twelve divisions, and the non-divisions that must return `None` |
+| `schema.validate` | malformed periods, unknown measures, non-numeric values, and `expect_divisions` firing |
+| **all 52 outputs at once** | merge-key uniqueness, well-formed codes and periods, and an all-items series per country |
+| KNBS Kenya | one per-country replay of Table 1, verbatim |
 
-| Country | Tier | Source | Status |
-|---------|------|--------|--------|
-| South Africa (Stats SA, P0141) | 2 (Excel) | CPI (COICOP) index time series, Jan 2008– | ✅ done — index |
-| Nigeria (NBS, catalog 154) | 2 (Excel in monthly zip) | CPI index 'Table2', national, Jan 2023– (2024 rebase) | ✅ done — index |
-| Kenya (KNBS) | 3 (PDF) | Monthly press release Table 1 — inflation % by division | ✅ done — rates |
-| Rwanda (NISR) | 3 (PDF) | 'Annex 3: All Rwanda' index by division (base Feb 2014) | ✅ done — index |
-| Ghana (GSS StatsBank) | 1 (API) | PxWeb cpi.px — index + YoY + MoM, COICOP-2018, 1998– | ✅ done — index+rates |
-| Egypt (CAPMAS) | 2 (Excel via site API) | Monthly CPI bulletin 'Table 1' — index+MoM+YoY by division for Urban/Rural/Total (base 2018/19). CBE note = Tier-3 fallback (urban+core) | ✅ done — index+rates |
-| Uganda (UBOS) | 2 (Excel) | 'Division' sheet — index+YoY+MoM wide series (Jul 2017–, base 2016/17) by COICOP-2018 division (national) + 10 urban centres | ✅ done — index+rates |
-| Morocco (HCP) | 2 (Excel / Google Sheets) | IPC index wide series (2017–, base 2017) by COICOP-1999 division + general; general in a 2nd sheet via extra_urls | ✅ done — index |
-| Senegal (ANSD) | 2 (Excel) | IHPC (WAEMU) — index wide series (1998–, base 2023) by COICOP-2018 division + Global (All items) | ✅ done — index |
-| Benin (INStaD) | 2 (Excel) | IHPC (WAEMU) connected series (1998–2024, base 2023); shares the `waemu_ihpc` parser with Senegal | ✅ done — index |
-| Togo (INSEED) | 3 (PDF) | IHPC (WAEMU) monthly note — index+MoM+YoY by COICOP-2018 division + Global (base 2023) | ✅ done — index+rates |
-| Burkina Faso (INSD) | 2 (Excel .xlsx/.xls) | IHPC (WAEMU) note 'Tableau 1' — index+MoM+YoY by COICOP-2018 division + Global (base 2023) | ✅ done — index+rates |
-| Namibia (NSA) | 2 (Excel) | CPI Excel Tables 'Tab 2/3/4' — index+MoM+YoY wide series (2002–, base Dec 2012) by COICOP-1999 division | ✅ done — index+rates |
-| Mali (INSTAT) | 3 (PDF) | IHPC (WAEMU) monthly note — index by COICOP-2018 division + INDICE NATIONAL (base 2023) | ✅ done — index |
-| Niger (INS) | 3 (PDF) | IHPC (WAEMU) monthly note — index+MoM+YoY by COICOP-2018 division + Indice global (base 2023) | ✅ done — index+rates |
-| Mauritius (Statistics Mauritius) | 3 (PDF) | Monthly CPI note 'Division' table — index (2 months) by COICOP-2018 division + All Divisions (base 2023) | ✅ done — index |
-| Zambia (ZamStats) | 3 (PDF) | 'The Monthly' bulletin 'Table 1.2' — index wide series (2022–) by COICOP-1999 division + All items | ✅ done — index |
-| Tanzania (NBS) | 3 (PDF) | NCPI release 'Main Groups' — index (3 months) by COICOP-2018 division + All items (base 2020) | ✅ done — index |
-| Botswana (Statistics Botswana) | 3 (PDF) | CPI report 'Table 3' — index (5 months) by COICOP-1999 group + All items (base Dec 2018) | ✅ done — index |
-| Tunisia (INS) | 2 (HTML) | IPC HTML table — index by COICOP-1999 group + Ensemble, rolling recent months (base 2015) | ✅ done — index |
-| Cameroon (INS) | 3 (PDF) | CEMAC IHPC note 'Tableau 2' — index+MoM+YoY by COICOP function + INDICE GENERAL (base 2022); positional extraction | ✅ done — index+rates |
-| Algeria (ONS) | 3 (PDF) | IPC note — index+MoM+YoY by **native 8-group** nomenclature + Ensemble (base 2001); NOT COICOP, captured as reported | ✅ done — index+rates |
-| Sierra Leone (Stats SL) | 3 (PDF) | 'Table 1' CPI press release — index+MoM+YoY by COICOP-1999 division + All items (base Dec 2021) | ✅ done — index+rates |
-| Lesotho (BOS) | 3 (PDF) | 'Table 1' monthly CPI report — index+MoM+YoY by COICOP-1999 division + Overall CPI (base Average 2022) | ✅ done — index+rates |
-| Guinea (INS) | 3 (PDF) | INHPC note 'Tableau 2' — index+MoM+YoY by COICOP-1999 function + INDICE GLOBAL (UEMOA method, base 2019) | ✅ done — index+rates |
-| Madagascar (INSTAT) | 2 (Excel behind SPA) | NIPC 'IPC' sheet — index wide series (2016–, base 2016) by COICOP-1999 FONCTION + Ensemble; two-hop discovery through the monthly NIPC page | ✅ done — index |
-| Seychelles (NBS) | 2 (Excel) | 'CPI_Series' time series — index wide series (2007–, base 2014) by COICOP-1999 division + All items | ✅ done — index |
-| Malawi (NSO) | 2 (Excel via CMS API) | 'Stats Flash' — index by COICOP-1999 division + All items (base Dec 2021), National/Urban/Rural + all-items MoM; discovered via the Nuxt SPA's headless CMS API | ✅ done — index+rates |
-| Congo (INS) | 3 (PDF) | CEMAC INHPC bulletin 'Tableau 1.1' — index+MoM+YoY by COICOP-1999 function + INDICE GLOBAL (base 2018); discovered via the WordPress Download-Monitor wpdmdl link | ✅ done — index+rates |
-| Central African Republic (ICASEES) | 3 (PDF) | CEMAC IHPC bulletin — index+MoM+YoY by COICOP-1999 function + INDICE NATIONAL (base 2019); discovered via the Joomla Edocman /download route | ✅ done — index+rates |
-| Angola (INE) | 2 (Excel behind SPA) | Time-series DB — national all-items YoY inflation series (2015–); .xlsx path regexed from inline JS. No COICOP breakdown in this DB | ✅ done — rate (all-items YoY) |
-| Zimbabwe (ZimStat) | 2 (Excel via WP API) | Weighted (blended) CPI 'CPI 2' sheet — index wide series (2024-04–, base Apr 2024) by COICOP-1999 division + All Items; newest workbook found via the WordPress REST API | ✅ done — index |
-| Liberia (LISGIS) | 3 (PDF) | Monthly CPI Newsletter 'Table 1' — national all-items index+MoM+YoY 13-month series (base Dec 2005). By-division figures are chart-only | ✅ done — index+rates (all-items) |
-| Mauritania (ANSADE) | 3 (PDF) | Monthly INPC note 'Tableau 2' — index+MoM+YoY by COICOP-1999 function + Indice général; note PDF found via the SPA's WordPress media API | ✅ done — index+rates |
-| Chad (INSEED) | 3 (PDF) | CEMAC INHPC bulletin 'Tableau 2' — index+MoM+YoY by COICOP-1999 function (Roman I–XII) + INDICE GLOBAL (base 2022); found via the SPA's Node /api/publications feed | ✅ done — index+rates |
-| Côte d'Ivoire (ANStat) | 3 (PDF) | UEMOA IHPC bulletin — index+MoM+YoY by **COICOP-2018** division (01–13) + INDICE GLOBAL (base 2023); PDF resolved from the SPA search API via the thumbnail id | ✅ done — index+rates |
-| DR Congo (BCC) | 2 (Excel) | ⚠️ PARTIAL — national all-items **annual** index (base 2012) + YoY, 1992–2020 (INS-RDC WAF-blocked; BCC fallback) | ⚠️ partial — annual all-items |
-| Ethiopia (ESS) | 3 (PDF) | ⚠️ PARTIAL — national all-items (General) YoY+MoM 13-month series; EFY dates mapped to Gregorian. Divisions are chart-only | ⚠️ partial — all-items rates |
-| Burundi (INSBU) | 3 (PDF) | Monthly IPC 'Tableau 1' — index+MoM+YoY by COICOP-1999 function + Ensemble (base 2016/2017); found via the Laravel /api/publications (ISTEEBU→INSBU rebrand) | ✅ done — index+rates |
-| Libya (CBL) | 3 (PDF) | Central-bank fallback — CBL republishes the Census & Statistics Dept. CPI: wide monthly index by COICOP-1999 group + Overall (2024–, base 2024) + overall YoY | ✅ done — index+rate |
-| Mozambique (BM) | 2 (Excel) | Central-bank fallback — BM republishes INE's CPI 'Quadro 8': wide monthly index (2016–, base 2023) by COICOP-1999 division + Total (INE Liferay is gated) | ✅ done — index |
+**Two things worth knowing before editing it.**
+
+*The index ceiling is deliberately loose.* It exists to catch parse garbage (a
+weight column read as an index), not to cap reality — Sudan's CPI passes
+630,000 on its 2007 = 100 base and is a real published figure. Tightening it to
+a tidy 100,000 would reject a whole country's series, and a test pins that.
+
+*`"All items less food and energy"` currently maps to `00`.* The rule comments
+say `startswith` prevents it; it does not. This is **latent, not live**: only
+four parsers call `code_for_label`, and no output in the corpus carries a
+core/less/excl label — but KNBS Kenya publishes a Core and Non-Core section, so
+the day a parser reads it, core inflation would be filed as the headline
+series. `test_core_inflation_is_a_known_sharp_edge` pins both halves: the
+current behaviour, and that the corpus stays clean of it. If the rule is
+tightened, change that test deliberately rather than deleting it.
+
+**It is mutation-checked.** Breaking the transport rule, letting non-divisions
+through, disabling any of the three validator guards, leaking Kenya's weight
+column into its values, removing the parser's 14-division floor, or injecting a
+duplicate merge key into a real output each turns the suite red on the
+assertion written for it — the weight leak surfacing as
+`KE all-items mom: got [100.0], want [0.4]`.
+
+## Principles
+
+- **As reported** — ugly-but-real values kept; ambiguous figures left out, never guessed.
+- **No aggregators** — IMF, World Bank, Knoema, Trading Economics re-estimate or
+  harmonise and are excluded as sources.
+- **As classified** — native division schemes captured as published, not remapped.
+- **All periods** — full historical series emitted where published.
+- **Auditable** — the raw source file is retained under `source_data/` for every country.
 
 ## Adding a country
 
-1. Investigate the NSO: does it have an API (tier 1), a structured file
-   (tier 2), or only PDFs (tier 3)?
-2. Write `sources/<country>.yaml` (copy an existing one).
-3. Write a `parse(local_path)` in `collector/parsers/`, register it in
-   `parsers/__init__.py`. It returns a DataFrame with at least:
-   `coicop_code, coicop_label, geography, period, value, unit, base_period,
-   frequency`. `run.py` fills in the identity/provenance columns.
-4. `python -m collector.run <country>` — validation will flag bad output.
+1. Drop a `sources/<country>.yaml` descriptor (source URL, parser name, identity cols).
+2. Add `parsers/<country>.py` and register it in `parsers/__init__.py`.
+3. Run `python -m indicators.cpi.pipeline <country>` and check `out/<country>_cpi.csv`.
+
+The shared discovery/download/validation/output harness lives in `core/`; this folder
+only holds what is CPI-specific.

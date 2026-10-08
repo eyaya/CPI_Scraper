@@ -1,0 +1,41 @@
+country: DR_Congo
+iso3: COD
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS RDC)
+publication_code: Enquête 1-2-3 2012, Rapport global (Partie I, emploi)
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 3
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/drc.yaml. ins-rdc.org answers a
+# Cloudflare 403 to every client and the new ins.gouv.cd lists three items;
+# the only reachable copy is the Wayback `id_` capture of INS's own PDF
+# (original bytes, not an aggregator). The archive sometimes 429s `requests`.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20150821012651id_/http://www.ins-rdc.org/sites/default/files/Rapport%20enquete%20123.pdf"
+  save_as: INS_RDC_Enquete_123_2012_Rapport_global.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: drc_unemployment
+geography: Total country
+
+notes: >
+  Enquête 1-2-3 2012, phase 1 (household employment). Tableau I.6.1:
+  unemployment by age x stratum in three definitions -- BIT (strict), "au
+  sens large" (broad) and "doublement élargi" (broad, no availability test),
+  base 10+. Tableaux I.2 bis and I.5.18: activity rates 10+ and 15+ by sex x
+  stratum -- the SAME table printed twice with last-digit differences, both
+  kept by series_label. Tableau I.5.2: the 2004-2005 round's activity rates as
+  republished (period 2005). Tableau I.6.8: time-related underemployment
+  (<45 h and <35 h) by sex x stratum.
+
+  NOT COLLECTED: sous-emploi invisible (income-based) and global (folds it
+  in); activity by household position and ICT access; Phase 2/3.
+
+  CROSS-CHECK: BIT 4,5 (Kinshasa 18,8); au sens large 8,0; doublement élargi
+  17,7; activité 15+ 67,5 (2012), 71,6 (2004-05).

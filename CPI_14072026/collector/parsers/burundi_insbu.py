@@ -44,19 +44,32 @@ _NUM = re.compile(r"-?\d+,\d+")
 _CODE = re.compile(r"^(\d{1,2})(?:\s|$)")
 
 
+_LEAD_PAGES = 20      # the IPC section sits at the front of the price bulletin
+
+
 def _period(text: str) -> str | None:
-    m = re.search(r"mois de\s+([a-zûéà]+)\s+(20\d\d)", text.lower()) \
-        or re.search(r"\ben\s+([a-zûéà]+)\s+(20\d\d)", text.lower())
-    if m and m.group(1) in _FR:
-        return f"{m.group(2)}-{_FR[m.group(1)]}"
-    return None
+    """The report month: the LATEST '<mois> <année>' named in the leading pages.
+
+    INSBU moved the IPC note inside its 118-page 'Bulletin mensuel des prix', which
+    opens with a contents list and compares against earlier months and years — so
+    the first date in the document is not the report month (the July 2026 issue's
+    is 'juillet 2025'). The newest date named is, and taking the max also survives
+    the wording changing between issues."""
+    best = None
+    for mon, year in re.findall(r"([a-zûéèà]+)\s+(20\d\d)", text.lower()):
+        if mon not in _FR:
+            continue
+        key = (year, _FR[mon])
+        if best is None or key > best:
+            best = key
+    return f"{best[0]}-{best[1]}" if best else None
 
 
 def parse(pdf_path: str) -> pd.DataFrame:
     with pdfplumber.open(pdf_path) as pdf:
         pages = [p.extract_text() or "" for p in pdf.pages]
     text = "\n".join(pages)
-    period = _period(text)
+    period = _period("\n".join(pages[:_LEAD_PAGES]))
     if not period:
         raise ValueError("Burundi IPC: report month not found")
     table = next((t for t in pages

@@ -1,0 +1,63 @@
+country: Mauritania
+iso3: MRT
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Économique (ANSADE)
+publication_code: ENTE quarterly notes (2025 Q1-Q4); ENESI 2017
+frequency: quarterly
+verify_ssl: false
+expect_topics: 5
+
+# --- discover ---
+# ansade.mr is a single-page app; its catalogue is the WordPress API
+#   https://admin.ansade.mr/wp-json/ansade/v1/publications/?lang=fr
+# (531 items, each with title, date and file.url). The quarterly notes are
+# titled "Note trimestrielle de l'Enquête Nationale Trimestrielle sur l'Emploi
+# <n>ème trimestre <YYYY>" -- or, for 2025 Q4, "Enquête Nationale Trimestrielle
+# sur l'Emploi (ENTE) 4ème trimestre 2025". The "Résultats clés" fact sheets
+# listed beside them are charts only and are NOT used.
+#
+# THE FILES ANSWER 404 TO PLAIN `requests` and serve normally to a browser
+# fingerprint (checked 2026-10-01 for all nine ENTE files), hence
+# `impersonate`, which the harness applies to `extra_urls` too.
+#
+# PINNED, NOT YET DISCOVERED. No existing method reads this API. A new one --
+# `ansade_latest_ente`: GET the API, keep items whose title contains
+# "Enquête Nationale Trimestrielle sur l" and a "<n>(er|ème) trimestre <YYYY>"
+# stamp but NOT "Résultats clés", take the newest (year, quarter), return its
+# file.url -- would make this a live quarterly series; until it exists, add
+# each new note here as it appears (2026 Q1's full note is not yet posted;
+# only its fact sheet is). Merge-on-write keeps the quarters already collected.
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/06/Enquete-Nationale-Trimestrielle-sur-lEmploi-ENTE-4eme-trimestre-2025.pdf"
+  save_as: Enquete-Nationale-Trimestrielle-sur-lEmploi-ENTE-4eme-trimestre-2025.pdf
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 900   # ANSADE throttles: 4.8 MB in 300 s on 2026-10-01
+
+extra_urls:
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/02/ENTE_T32025_FR_vf.pdf"
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/ENTE_T22025_FR.pdf"
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/ENTE_T12025_FR.pdf"
+  # ENESI 2017 -- the same file labour/sources/mauritania.yaml retains.
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/ENESI-2017.pdf"
+    save_as: ENESI-2017.pdf
+
+parser: mauritania_unemployment
+geography: Total country
+
+notes: >
+  ENTE (household LFS, 21st ICLS, base 14-64): Annexes 4-9 of each quarterly
+  note -- LFPR, EPR, SU1 (strict), SU2 (broad, underemployment_rate), SU3 and
+  SU4 (broad) -- by sex, age (14-35 / 36-64), education, milieu and the seven
+  sampling zones (locality_label), current quarter and the same quarter a year
+  earlier: 2024-Q1 to 2025-Q4. ENESI 2017 annexes 2-8: working-age
+  population, labour force, employed, unemployed, outside the labour force
+  (counts) and the unemployment rate, by age, sex, milieu, education, wilaya.
+
+  "Nouakchot" (as some annexes print it) is recorded as "Nouakchott", the
+  same sampling zone. ENESI A4.3 is a printed copy of A4.2 and is not read.
+
+  CROSS-CHECK: ENTE 2025-Q4 SU1 13,12, LFPR 50,01, SU4 32,86; 2025-Q1 LFPR
+  50,19; ENESI 2017 unemployment 11,8, labour force 832 638.

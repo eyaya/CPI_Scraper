@@ -1,0 +1,58 @@
+country: Ghana
+iso3: GHA
+indicator: GDP
+tier: 1                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+frequency: quarterly         # annual + quarterly both captured; parser sets per row
+verify_ssl: false
+
+# --- API (PxWeb / JSON-stat2), multi-table ---
+# GSS StatsBank publishes GDP under Macroeconomic Indicators/Real Sector (GDP) as
+# four PxWeb tables: production & expenditure approach, annual & quarterly. Each
+# has dims Year|Quarter x GDP_Series (price basis + measure + seasonal) x Variable
+# (sector / expenditure component / aggregate). No income approach is published.
+# We select all values and retain each raw json-stat2 response.
+api:
+  tables:
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Macroeconomic Indicators/Real Sector (GDP)/Annual GDP/agdp_p_p.px"
+      approach: production
+      save_as: Ghana_GDP_annual_production.json
+      dimensions:
+        Year: ["*"]
+        GDP_Series: ["*"]
+        Variable: ["*"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Macroeconomic Indicators/Real Sector (GDP)/Annual GDP/agdp_e_px.px"
+      approach: expenditure
+      save_as: Ghana_GDP_annual_expenditure.json
+      dimensions:
+        Year: ["*"]
+        GDP_Series: ["*"]
+        Variable: ["*"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Macroeconomic Indicators/Real Sector (GDP)/Quarterly GDP/qgdp_p_px.px"
+      approach: production
+      save_as: Ghana_GDP_quarterly_production.json
+      dimensions:
+        Quarter: ["*"]
+        GDP_Series: ["*"]
+        Variable: ["*"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Macroeconomic Indicators/Real Sector (GDP)/Quarterly GDP/qgdp_e_px.px"
+      approach: expenditure
+      save_as: Ghana_GDP_quarterly_expenditure.json
+      dimensions:
+        Quarter: ["*"]
+        GDP_Series: ["*"]
+        Variable: ["*"]
+
+parser: ghana_pxweb_gdp
+geography: National
+
+notes: >
+  GSS StatsBank (PxWeb, Tier 1). Four GDP tables (production/expenditure x
+  annual/quarterly). GDP_Series encodes nominal (current) & real (constant 2013)
+  levels, YoY & QoQ real growth, GDP shares, contributions to growth, and
+  seasonally-adjusted levels/growth (quarterly); Variable is the sector /
+  expenditure component / aggregate, and also carries per-capita GDP & GNI. All
+  values are as published by GSS — nothing derived. Levels are in GHS (Overall GDP
+  2024 ≈ GHS 1.18tn), per-capita in GHS per person, growth/shares in %,
+  contributions in percentage points. No income approach published.

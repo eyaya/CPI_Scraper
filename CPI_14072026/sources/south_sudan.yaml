@@ -1,0 +1,40 @@
+country: South_Sudan
+iso3: SSD
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+frequency: monthly
+
+# --- discover ---
+# NBS links every monthly release from one CPI page, as a relative href under
+# /assets/images/. Filenames are inconsistent across issues ('CPI for May-2025.pdf',
+# 'CPI for Mar 2025.pdf', 'SS CPI  JAN_2025.pdf', 'CPI_Dec_2024_Press_Release.pdf')
+# and the page is not in date order, so we pick the newest by the month + year in
+# the filename. The .xlsm/.xlsx workbooks alongside the 2023 releases belong to the
+# superseded base and are excluded by the '.pdf' term.
+discover:
+  method: latest_named_month_link
+  page_url: "https://www.nbs.gov.ss/statistics/Consumer_Price_Index.php"
+  link_contains:
+    - "cpi"
+    - ".pdf"
+
+parser: south_sudan_nbs
+geography: National
+expect_divisions: 12          # All items + the 11 divisions NBS actually publishes
+
+notes: >
+  CPI rebased to base prices of August 2024 (Aug-24 = 100, captioned 'Base:
+  2024/25=100'), UNCOICOP 2018, weights from the World Bank 2021/22 Household
+  Budget Survey, 104 goods and services priced in the ten state capitals. The
+  release discloses three tables and we take all of them: Table 1 is the all-items
+  index and monthly inflation for EVERY month back to the base month (so one
+  release carries the whole series of this base), Table 2 is MoM % by division for
+  the two most recent months only, and Table 3 is MoM % for the ten state capitals,
+  emitted as `geography` rows beside the national ones. PARTIAL by construction:
+  NBS publishes no index levels and no year-on-year by division, and although the
+  release says '13 COICOP', Table 2 lists only 11 — restaurants/accommodation (11)
+  and insurance/financial services (12) are absent — so those are simply not
+  emitted. Publication is irregular: April 2025 was skipped and May 2025 is still
+  the newest issue on the site (checked September 2026).

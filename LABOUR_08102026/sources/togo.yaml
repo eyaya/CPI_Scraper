@@ -1,0 +1,47 @@
+country: Togo
+iso3: TGO
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED Togo)
+publication_code: ERI-ESI 2017 Rapport Global TOGO
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# INSEED's "Rapports d'analyse" page (https://inseed.tg/rapports-danalyse/)
+# lists the ERI-ESI 2017 volumes as WordPress Download Manager ids: 2611 =
+# "Rapport Global TOGO - (ERI-ESI) 2017" (the one read here), 2608 = synthèse,
+# 2605 = UEMOA regional synthesis. A one-off survey round, so the id is pinned.
+# The host is slow and has reset connections to curl_cffi and to earlier
+# attempts ("connection closed"); plain requests fetched the full 7 MB file.
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/2611/"
+  save_as: togo_eriesi_2017_rapport_global.pdf
+  download_timeout: 300
+
+parser: togo_labour
+geography: Total country
+
+notes: >
+  ERI-ESI 2017, chapter 5 (household employment survey). Tableau 5.26:
+  employed by institutional sector (initiative privée, autres acteurs,
+  administration publique, entreprise publique et parapublique, ménage
+  employeur) by sex, milieu, six regions and Togo -> sector. Tableau 5.32:
+  employed by CITP major group, counts and proportions -> occupation. Printed
+  aggregates (secteur privé / public; the four skill levels of 5.32) are
+  verified sums and not collected. Base 15+.
+
+  NOT COLLECTED: 5.10 Bilan de l'emploi -- its total (513 042) is ~22% of the
+  2 272 230 employed, a population the table never states; 5.30 (informal
+  employment only); 5.35/5.39 (row %); chapters 9-14 (UPI module).
+
+  CITP named without a revision -> National.
+
+  OTHER TOGO LEADS, examined 2026-09-29: QUIBB 2015 final report (id 2637)
+  downloaded but NOT examined for tables; RGPH-5 (2022) has only population booklets so
+  far; EHCVM-3 is in the field (recruitment notices only).
+
+  CROSS-CHECK: initiative privée 68,3; administration publique 4,5;
+  agriculteurs 690 294 (30,4%); total employed 2 272 230.

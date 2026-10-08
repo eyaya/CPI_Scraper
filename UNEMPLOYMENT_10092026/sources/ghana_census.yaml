@@ -1,0 +1,55 @@
+country: Ghana
+iso3: GHA
+indicator: Unemployment
+tier: 1
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+publication_code: PHC 2021
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 1
+
+# --- API (PxWeb / JSON-stat2) ---
+# GHANA'S SECOND SERIES, AND NOT A CONTINUATION OF THE FIRST. `ghana.yaml`
+# collects the AHIES continuous quarterly survey; this collects the 2021
+# Population and Housing Census. Different instrument, different periodicity,
+# one observation. They must never be chained into a single series.
+#
+# This table was previously collected by the `labour` indicator, where it sat
+# among cross-tabs of employment composition as the only rate — with no
+# strict/broad definition and no working-age base recorded, which is to say
+# uninterpretable. Rates belong here.
+#
+# The census table's dimensions differ from AHIES's: `Geographic_Area` rather
+# than `Region`, and no `Date` at all, since a census has one reference period.
+# That is why it has its own reader rather than the AHIES one.
+api:
+  tables:
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/PHC 2021 StatsBank/Economic Activity/Unemployment_table_2.px"
+      save_as: ghana_phc2021_unemployment_rate.json
+      # Declared here rather than assumed in the parser: a rate table has no
+      # characteristic variable to infer a topic from, so the descriptor has to
+      # say what it is. `check_registry` enforces that.
+      topic: unemployment_rate
+      dimensions:
+        Education: ["Total"]
+        Locality: ["All Locality Types"]
+        Geographic_Area: ["Ghana", "Western", "Central", "Greater Accra",
+          "Volta", "Eastern", "Ashanti", "Western North", "Ahafo", "Bono",
+          "Bono East", "Oti", "Northern", "Savannah", "North East", "Upper East",
+          "Upper West"]
+        Sex: ["*"]
+        Age: ["All ages"]
+
+parser: ghana_census_unemployment
+geography: Total country
+
+notes: >
+  GSS StatsBank, PHC 2021 economic activity: the published unemployment rate of
+  the population aged 15 and over, for Ghana and its 16 regions, by sex.
+  ONE definition only. The census publishes a single ILO-standard rate with no
+  relaxed or expanded variant, so every row is tagged `strict` rather than left
+  unqualified — the absence of a broad measure is a fact about the source.
+  Deferred, and available on the same table: districts, the rural/urban split,
+  and the age and education breakdowns. All are dimensions of this table rather
+  than separate publications, so adding them is a descriptor change.

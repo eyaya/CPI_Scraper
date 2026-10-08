@@ -1,0 +1,55 @@
+country: Djibouti
+iso3: DJI
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut de la Statistique de Djibouti (INSTAD)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSTAD publishes NO separate national-accounts release: the front end's own
+# list of document categories (read from its Nuxt bundle, 2026-10-01) has no
+# "Comptes nationaux" / PIB category, and probes of the obvious names return
+# nothing. The accounts are chapter 7.2 of the Annuaire statistique, served
+# like the CPI bulletin: GET <api_base>/fichiers/<categorie>/<year> answers
+# with the edition's Firebase Storage URL. `instad_dj_ipc` asks for the
+# current year and walks back to the newest edition (the 2026 edition is not
+# yet posted; 2025 is). Editions exist for 2017, 2018 and 2020-2025 (the 2020
+# file is a dead Firebase link, 404).
+discover:
+  method: instad_dj_ipc
+  api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
+  categorie: "Annuaire statistique"
+  lookback_years: 3
+
+# The 2024 edition carries 2014-2017, which the 2025 edition no longer prints.
+# The parser takes every year, the NEWER edition winning each year both print.
+extra_urls:
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2024%2FAnnuaire_Statistique_E2024_VF.pdf?alt=media&token=8b8ff01b-c4da-4737-a11d-6e84c87ff00c"
+    save_as: Annuaire_Statistique_E2024_VF.pdf
+
+parser: djibouti_instad_gdp
+geography: National
+
+notes: >
+  INSTAD Annuaire statistique, chapter 7.2 "Comptes nationaux": production
+  (primaire / secondaire / tertiaire and 23 branches, valeur ajoutée totale,
+  impôts nets, PIB) and emplois (consommation finale by sector, investissement
+  = FBCF + variations des stocks split hors zone franche / zone franche,
+  exportations nettes, PIB), at current prices and at 2013 prices, FDJ
+  millions; plus the real GDP growth rate. Annual 2014-2024: 2018-2024 from
+  the 2025 edition (2018-2022 définitif, 2023-2024 provisoire), 2014-2017 from
+  the 2024 edition. The two editions are DIFFERENT VINTAGES (2018 PIB 515 333
+  in 2024, 517 784 in 2025); `category_group` names the edition on every row.
+
+  Identities are checked every run. Kept and pinned: the 2024 edition's
+  constant-price production table does not add up in 2015-2017 (PIB vs VA +
+  impôts nets) and its two sides disagree for 2015 (417 942 vs 453 387).
+  "958,9363853" (ISBLSM 2015, 2024 edition) collected as printed.
+
+  NOT COLLECTED: other chapters of the yearbook. The quarterly EDST notes are
+  labour-market surveys, not accounts.
+
+  CROSS-CHECK: PIB 2024 737 924 (courant), 662 943 (prix de 2013), growth
+  7,0%; 2014 courant 393 595.

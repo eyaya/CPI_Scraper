@@ -1,0 +1,38 @@
+country: Sudan
+iso3: SDN
+indicator: Population
+tier: 2
+source_type: excel
+agency: Central Bureau of Statistics (CBS Sudan)
+publication_code: 5th Sudan Population and Housing Census 2008, Population tables (P01, P02, P04)
+frequency: annual            # a census count for the 2008 reference year
+verify_ssl: false
+
+# --- discover ---
+# cbs.gov.sd no longer resolves. The census-tables ZIP is a Wayback `id_` copy
+# of CBS's OWN file (original bytes, not an aggregator) -- the same URL that
+# labour/ and unemployment/ read as an extra. The archive answers plain
+# requests with 429 at times; a browser fingerprint gets it, and the 36 MB file
+# needs a long timeout.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20110911id_/http://www.cbs.gov.sd/Census%20_Tables.zip"
+  save_as: CBS_Sudan_Census2008_Tables.zip
+  # The parser reads several workbooks (P01, P02, P04) straight from the ZIP.
+  unzip: false
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 600
+
+parser: cbs_sudan_population
+geography: Total country
+
+notes: >
+  2008 census (pre-secession). Collected for TODAY'S Sudan only: P02's North
+  block as the national total (5-year age x sex), and the 15 northern states
+  from P01 (5-year) and P04 (single years). All-Sudan, South and the ten
+  southern states are not read. Excludes institutional, homeless and night
+  traveller populations. M + F = T held to +-1 (weighted counts rounded
+  independently); northern states sum to the North block.
+
+  CROSS-CHECK: North 30 504 166 (M 15 413 282 / F 15 090 883); Khartoum
+  5 181 186; Northern state 686 098.

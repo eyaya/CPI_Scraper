@@ -8,13 +8,18 @@ frequency: monthly
 
 # --- discover ---
 # INSTAT posts the monthly IHPC note as 'ihpc<MMYY>_pub.pdf', newest-first, on its
-# IHPC publications page. We scrape the first such link (newest month).
+# IHPC publications page. We scrape the first such link (newest month) — but only
+# after checking it resolves: INSTAT advertises issues it has not actually uploaded
+# (July 2026's 'ihpc0726_pub.pdf' is linked and 404s while June's is fine), so
+# `require_ok` walks on to the newest link that really serves a file.
 discover:
   method: page_scrape
   page_url: "https://www.instat-mali.org/fr/publications/indice-harmonise-des-prix-a-la-consommation-ihpc"
   link_contains:
     - "ihpc"
     - "_pub.pdf"
+  require_ok: true            # INSTAT links notes it has not uploaded (see notes)
+  lookback: 6
 
 parser: mali_instat_ihpc
 geography: National

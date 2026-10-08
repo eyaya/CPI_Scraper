@@ -1,0 +1,58 @@
+country: Angola
+iso3: AGO
+indicator: Labour
+tier: 2
+source_type: excel
+agency: Instituto Nacional de Estatística (INE Angola)
+publication_code: IEA — Quadros complementares (13ª CIET and 19ª-21ª CIET)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# INE's files are NOT hyperlinks: each is an onclick that POSTs `filepath` to
+# /Diretorios/Download (see unemployment/sources_blocked/angola.yaml, which
+# first mapped this). The folder links carry per-session tokens, so the tree is
+# walked by folder NAME and each file matched by name. Two workbooks, one per
+# METHODOLOGY -- the first is the primary source, the second arrives as an
+# extra. Each pattern must match exactly one file.
+discover:
+  method: ine_ao_directory_files
+  index_url: "https://www.ine.gov.ao/Publicacoes/Todas"
+  dirs:
+    - "População e Sociedade"
+    - "Emprego em Angola"
+  files:
+    - ["QUADROS", "ANTIGA"]     # 13ª CIET, 2019 Q2 - 2025 Q3
+    - ["QUADROS", "NOVA"]       # 19ª-21ª CIET, 2025 Q4 onwards
+
+parser: angola_labour
+geography: Total country
+
+notes: >
+  INE Angola, Inquérito sobre o Emprego em Angola (IEA), "Quadros
+  complementares" workbooks, one per methodology. OLD (13ª CIET, 2019 Q2 -
+  2025 Q3, quarterly + annual): shares of the employed by ten national branch
+  groups (`industry`) and by twelve "situações perante o emprego"
+  (`employment_status`, a national mix of employer type and status); plus
+  Quadro 9 (2025 Q3) counts in the sector informal/formal by urban/rural
+  (`formality`) and by branch (`industry` counts). NEW (19ª-21ª CIET, 2025 Q4
+  onwards): 21 branches (`industry`) and six employer types (`sector` --
+  institutional units, though INE heads the block as the old one).
+
+  NEVER CHAIN THE TWO: 13th-ICLS employed was 14,3 million in 2025 Q3, the new
+  basis 8,9 million in 2025 Q4. `survey` names the basis on every row.
+
+  NOT COLLECTED: the employment/informality RATES by residence, sex and age
+  (unemployment's territory); the new workbook's "Taxa de emprego informal por
+  actividade económica" (branch shares of INFORMAL employment only -- a
+  different universe, the Kenya trap); the 2020 Anual column of the old sector
+  block, whose values sit against the wrong labels (Agricultura 1,33 where every
+  2020 quarter reads 55-59) -- excluded by name and re-checked each run.
+
+  KEPT AS PUBLISHED: 2024 I trim sums to 104,57 and 2024 Anual to 101,07 in
+  both old blocks (a uniform inflation, pinned in the parser).
+
+  Base 15+. CROSS-CHECK: old 2025 Q3 Agricultura 41,25%, Comércio 22,25%;
+  Quadro 9 informal 11 053 485 / formal 3 279 197 / total 14 332 681; new 2026
+  Q2 Agricultura, silvicultura e pesca 25,96%, Empresa privada (não agrícola)
+  63,63%.

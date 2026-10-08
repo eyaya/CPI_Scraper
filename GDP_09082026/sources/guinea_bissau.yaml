@@ -1,0 +1,51 @@
+country: Guinea_Bissau
+iso3: GNB
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Instituto Nacional de Estatística da Guiné-Bissau (INE)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INE's "Estatísticas > Contas Nacionais" page is empty ("estamos em
+# atualização do site", checked 2026-10-01); the national-accounts PDFs are
+# listed on the publications page Menu_principal/Pubicações/relatorios.html
+# (the "Pubicações" misspelling is the site's own). The newest synthesis there
+# is the 2020 one (series 2011-2020). The host flaps for hours at a time --
+# retry before concluding it is down. Switch `url` when a newer synthesis is
+# listed (e.g. "Síntese das Contas Nacionais ... 2021").
+discover:
+  method: static_url
+  url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Contas_nacionais/S%C3%ADntese_das_Contas_Nacionais_da_Guin%C3%A9_Bissau_2020.pdf"
+  save_as: INE_GB_Sintese_Contas_Nacionais_2020.pdf
+  download_timeout: 300
+
+parser: guinea_bissau_ine_gdp
+geography: National
+
+notes: >
+  INE Guiné-Bissau, Síntese das Contas Nacionais 2020 (SCN 2008, base 2015),
+  Anexo 1, annual 2011-2020 (sector contributions from 2010): GDP by the
+  production approach, by expenditure, and value added by sector/branch, at
+  current prices and in chained volume (FCFA million), volume growth,
+  deflators (2015 = 100) and contributions to volume growth.
+
+  TRAPS: thousands separators change inside a row ("513.511" then "841 370");
+  a row with fewer values than year headers is refused, never shifted
+  (Aquisição líquida de objetos de valor; the chain-linking discrepancy rows);
+  a value-less row no longer fuses its label into the next row's; "Bens" /
+  "Serviços" are qualified with Exportações / Importações.
+
+  2015 CONTRIBUTIONS REFUSED: Table 3.7's 2015 column sums to -100 against
+  volume growth of 6.1% (the rebase year). Contributions are kept only where
+  they add up to PIB growth. Identities checked every year at current prices
+  (VAB + taxes = PIB; C + GCF + NX = PIB; production PIB = expenditure PIB).
+
+  NOT READ: deflator growth tables (x.5), structure tables (2.6 prints nine
+  values under ten year headers), the 2019 synthesis (older vintage of the
+  same years), contas_2016 / TCEI2017.
+
+  CROSS-CHECK: PIB current 2011 545 270, 2020 894 367 FCFA million; volume
+  2020 795 321; volume growth 2015 6.1%, 2020 -1.4%; deflator 2020 112.5;
+  agriculture VAB 2020 229 639.

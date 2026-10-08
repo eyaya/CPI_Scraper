@@ -1,0 +1,42 @@
+country: Sudan
+iso3: SDN
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Central Bank of Sudan (CBOS)   # CBS (the NSO) has no reachable site; CBOS republishes its CPI
+
+# The series is monthly; the review that carries it is published half-yearly.
+frequency: monthly
+
+# --- discover ---
+# CBOS is a Drupal site: the 'Economic and Financial Statistic Review' listing
+# (publication type 44) is newest-first, each row linking a detail page that hosts
+# the PDF. Two hops, no date parsing needed.
+discover:
+  method: two_hop_scrape
+  index_url: "https://cbos.gov.sd/en/periodicals-publications?field_publication_type_tid_i18n=44"
+  page_link_contains:
+    - "/en/content/"
+    - "statistic"
+  file_link_contains:
+    - ".pdf"
+    - "rview"
+
+parser: sudan_cbos
+geography: National
+expect_divisions: 1           # PARTIAL: all-items only, no COICOP breakdown
+
+notes: >
+  CENTRAL-BANK FALLBACK, and PARTIAL. Sudan's NSO — the Central Bureau of
+  Statistics — has no reachable website (cbs.gov.sd does not resolve), so the CPI
+  comes from Table No. (20) of the Central Bank of Sudan's bilingual 'Economic &
+  Financial Statistics Review', which republishes CBS's own series unchanged and
+  credits it ('Source: Central Bureau of Statistics') rather than re-estimating
+  it — the same sanctioned route as DR Congo (BCC) and Libya (CBL). Base year
+  2007 = 100. ALL ITEMS ONLY: the review carries no COICOP breakdown, and no
+  month-on-month rate; its 'Inflation Rate%' is year on year (December 2024's
+  187.8 % is exactly 375,310.5 over 130,391.1), so it is emitted as
+  `inflation_yoy`. One edition yields the December of each earlier year plus every
+  month of the years it covers — 28 periods in the Jan–Dec 2025 review, which is
+  the newest edition (the review is half-yearly, so the series lags). Hyperinflation
+  puts the index past 630,000, which is a real published value, not a parse error.

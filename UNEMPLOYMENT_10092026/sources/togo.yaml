@@ -1,0 +1,32 @@
+country: Togo
+iso3: TGO
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED Togo)
+publication_code: ERI-ESI 2017 Rapport global
+frequency: ad_hoc
+expect_topics: 7
+verify_ssl: false
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/togo.yaml: the same ERI-ESI 2017 report
+# (INSEED download id 2611). Labour reads its chapter-5 composition tables;
+# this indicator reads the recap and Tableaux 5.4 / 5.15.
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/2611/"
+  save_as: togo_eriesi_2017_rapport_global.pdf
+  download_timeout: 300
+
+parser: togo_unemployment
+geography: Total country
+
+notes: >
+  ERI-ESI 2017 (AFRISTAT template, base 15+): recap "Principaux indicateurs de
+  l'emploi" (BIT, SU2, SU4 by Lomé / autres urbains / urbain / rural / Togo,
+  sex and 15-34 / 35+), Tableau 5.4 (SU1-SU4 and the labour force by sex, age,
+  education, milieu, region), Tableau 5.15 (employment-to-population ratio,
+  NEET 15-24 / 15-35, employed). Overlapping cells are checked equal.
+  NEET cells of the AGE rows are refused (INSEED fills the 15-24 column on the
+  25-34 row). CROSS-CHECK: chômage BIT 3,9; SU4 26,8; ratio emploi 60,7.

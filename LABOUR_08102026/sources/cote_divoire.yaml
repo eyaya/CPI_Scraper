@@ -1,0 +1,61 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique / Agence Nationale de la Statistique (ANStat)
+publication_code: Profil de pauvreté 2021 (EHCVM 2021), chapitre 4 Emploi
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# ANSTAT IS BEHIND A CLOUDFLARE INTERACTIVE CHALLENGE (first seen 2026-09-24,
+# rechecked 2026-10-01): every anstat.ci URL -- home page, the
+# searchPublicationByCritere endpoint cpi/ and gdp/ use, direct
+# /assets/... PDF paths, and centredecalcul.anstat.ci (where the ENE 2019
+# report sits) -- answers HTTP 403 "Just a moment..." to plain requests and to
+# curl_cffi chrome124 / safari17_0 / firefox133 alike. A managed JS challenge,
+# so no request-level workaround exists.
+#
+# THE ONLY COPY IS THE WAYBACK MACHINE'S CAPTURE OF ANSTAT'S OWN FILE
+# (/assets/projet/ehcvm2021.pdf, captured 2026-03-27), fetched in its `id_`
+# form, which returns the original bytes unchanged. That is an archive of the
+# NSO's publication, not an aggregator -- the DR Congo precedent. The Wayback
+# host refuses plain `requests` (429), so a browser fingerprint is used.
+#
+# WHEN ANSTAT IS REACHABLE AGAIN: switch to method anstat_ci_publication
+# (search_url https://anstat.ci/publication/searchPublicationByCritere,
+# file_base https://anstat.ci/assets/publications/files, title_contains
+# "EMPLOI") and look for the ENE (Enquête Nationale sur l'Emploi) report's
+# Tableau captions first -- it was never reached, so nothing is known about
+# whether it prints composition as tables.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20260327133040id_/https://www.anstat.ci/assets/projet/ehcvm2021.pdf"
+  save_as: ANStat_EHCVM2021_profil_pauvrete.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: cote_divoire_labour
+geography: Total country
+
+notes: >
+  EHCVM 2021 (household survey, collected November 2021 - July 2022), chapter
+  4: Tableau 4-4, informal / formal employment by sex, age group, education
+  and residence (Abidjan / autres villes / rural), counts and shares, employed
+  aged 16+ (the legal minimum working age). Informality as the report
+  operationalises it: no social protection, paid leave or sick leave.
+
+  UNIVERSE CHECKED: the Total (9 199 529) is the report's own "population en
+  emploi" (Tableau 4-3); sex, age and residence groups sum to it. PUBLISHED
+  GAP KEPT: education levels sum 335 short (9 199 194), pinned in the parser.
+
+  NOT COLLECTED: group Effectifs (levels); Tableau 4-5 (wage-employment
+  rates); Graphique 4-1 (sector shares -- chart labels interleaved with the
+  axis and a second chart). RGPH 2014 report (also archived) refused: T4.16's
+  total is not the employed, T4.17's is the whole 15+ population with 43,5%
+  "non spécifié", T4.18's employed-by-branch column sums to 99,5 with no
+  stated base.
+
+  CROSS-CHECK: informal 91,6% (8 427 186); women 94,3%; Abidjan 81,9%;
+  supérieur 60,8% formal.

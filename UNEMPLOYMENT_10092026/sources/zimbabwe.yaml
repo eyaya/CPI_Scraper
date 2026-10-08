@@ -27,12 +27,22 @@ expect_topics: 6
 # deck beside every QLFS -- hence "report", which the decks
 # ("..._QLFS_PRESENTATION_...") do not carry.
 discover:
+  download_timeout: 300        # the 2019 report is 9 MB on a slow host
   method: page_scrape
   page_url: "https://zimstat.co.zw/labour-statistic/"
   link_contains:
     - "labor-force"
     - "qlfs_report"
     - ".pdf"
+
+# THE 2019 LFCLS ANNUAL REPORT (the file labour/ reads), read by
+# parsers/zimbabwe_lfcls.py: Table 3.6b (LFPR) and 4.2 (EPR) by age group,
+# area and sex, base 15+, every count pair split under its own printed rate.
+# QLFS BACK ISSUES (Q3 2021 - Q3 2024 on the same listing) are NOT added:
+# their key-findings layouts were not verified in this pass.
+extra_urls:
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Labor-force/Labour-Force-Report-2019.pdf"
+    save_as: Labour-Force-Report-2019.pdf
 
 parser: zimbabwe_pdf
 geography: Total country

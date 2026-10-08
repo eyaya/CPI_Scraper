@@ -1,0 +1,51 @@
+country: Guinea
+iso3: GIN
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Guinée)
+publication_code: RGPH-3 2014 -- Etat et structure de la population + Perspectives démographiques 2014-2040
+frequency: annual
+verify_ssl: false            # stat-guinee.org serves an incomplete TLS certificate chain
+
+# --- discover ---
+# Both volumes are listed on INS's survey-reports page
+#   https://www.stat-guinee.org/index.php/publications-ins/rapports-d-enquetes
+# under /images/Documents/Publications/INS/rapports_enquetes/RGPH3/ (the same
+# folder `labour/` and `mpi/` read). One census round, fixed files: pinned.
+# The RGPH-4 (2024) results are so far only a preliminary report with
+# overlapping analytical bands (see README) -- switch when the detailed RGPH-4
+# volumes appear on that page.
+discover:
+  method: static_url
+  url: "https://www.stat-guinee.org/images/Documents/Publications/INS/rapports_enquetes/RGPH3/RGPH3_etat_structure.pdf"
+  save_as: RGPH3_etat_structure.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/rapports_enquetes/RGPH3/RGPH3_perspectives_demographiques.pdf"
+    save_as: RGPH3_perspectives_demographiques.pdf
+
+parser: guinea_ins_population
+geography: Total country
+
+notes: >
+  CENSUS 2014 (series_type census): préfectures by sex + sex ratio (A.05),
+  national five-year age groups by sex + sex ratio (A.08), each region by age
+  and sex (A.09-A.16, Ensemble columns). PROJECTIONS 2014-2040 (series_type
+  projection, 1 July): national age groups by sex (Tableaux 14-19), regions and
+  préfectures by sex (Tableaux 30-38).
+
+  GEOGRAPHY NAMES CARRY THEIR LEVEL ("Région de Boké" / "Préfecture de Boké")
+  because six regions share a préfecture's name. Regions sum their préfectures;
+  never add the two levels. The projections spell préfectures without accents
+  (Boke, Labe) as printed, the census with them (Boké, Labé).
+
+  PUBLISHED DEFECTS: the projections are rounded sex by sex (male + female
+  misses the total by 1 in places; kept as printed). Tableau 31's Guinée and
+  Région de Kankan rows print overlapping glyphs for 2017-2018 and are refused,
+  not reconstructed. Tableau 38's national 2038-2040 values are letter-spaced
+  ("1 0 078 611") and are rejoined under a narrow rule the arithmetic confirms.
+
+  CROSS-CHECK: census 10 523 261 (5 084 306 M / 5 438 955 F), regions summing
+  exactly to it; projection 2019 12 218 357, 2040 20 687 892.

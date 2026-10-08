@@ -24,15 +24,101 @@ discover:
   method: static_url
   url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/Quarterly-Labour-Force-Report-2022-Quarter-4.pdf"
   save_as: kenya_qlfs_2022q4.pdf
+  download_timeout: 300        # KNBS is slow; applies to the extras too
+
+# --- backfill (DONE 2026-10-01) -------------------------------------------
+# The five text-layer issues from 2020 Q1 to 2021 Q1 are read as extras, by
+# `parsers/kenya_qlfs_issues.py` (PyMuPDF, cell by cell), each dated from its
+# own file name. That takes the series from 3 quarters to 12 (2019 Q1 - 2022
+# Q4, less 2021 Q2-Q3 and 2022 Q1-Q2).
+#
+# WHY A SECOND READER, AND WHY THIS ONE IS SAFE. An earlier backfill through
+# the engine was withdrawn: pdfplumber letter-spaces these issues' digits
+# ("7 93,017", "5 ,177,385", "- 8 .1") and prints "-" for an empty cell, so
+# values slid one column left and 428 merge keys disagreed between issues --
+# population figures published as `employed`. PyMuPDF returns every cell whole
+# and keeps "-" in its column position, and every cohort row must satisfy its
+# own arithmetic (rate = 100 x numerator / denominator, per quarter) or the
+# issue raises. Across the five issues 728 of the 752 overlapping merge keys
+# now agree exactly; the other 24 are published revisions (2019 Q4 youth NEET
+# restated from 13.3% to 17.8% by the 2020 Q4 issue; small 2020 Q1 revisions in
+# the 2021 Q1 issue; 1-2 person rounding between Table 1 and the cohort
+# totals), and the newest issue wins.
+#
+# ONE TABLE SKIPPED: 2020 Q1's Table 3 prints its rows with no age labels in
+# the text layer; read by order it would be a guess. Only 2019 Q1's
+# employed-by-cohort figures are lost (the other quarters are restated).
+#
+# STILL NOT READ:
+#   * 2021 Q2-Q4 and 2022 Q1-Q3 are SCANNED IMAGES -- zero text characters.
+#     They need OCR, which this collector does not do.
+#   * 2019 Q1-Q4 are a different report (four caption vintages, Table 5 =
+#     long-term unemployment, Table 1 one quarter column). Their quarters are
+#     nonetheless all present here, as the year-ago / previous columns of the
+#     2020 issues.
+extra_urls:
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/Quarterly-Labour-Force-Report-2020-Quarter-1.pdf"
+    save_as: kenya_qlfs_2020q1.pdf
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/Quarterly-Labour-Force-Report-2020-Quarter-2.pdf"
+    save_as: kenya_qlfs_2020q2.pdf
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/Quarterly-Labour-Force-Report-2020-Quarter-3.pdf"
+    save_as: kenya_qlfs_2020q3.pdf
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/Quarterly-Labour-Force-Report-2020-Quarter-4.pdf"
+    save_as: kenya_qlfs_2020q4.pdf
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/Quarterly-Labour-Force-Report-2021-Quarter-1.pdf"
+    save_as: kenya_qlfs_2021q1.pdf
+  # A DIFFERENT SURVEY, read by parsers/kenya_kihbs.py: the 2015/16 KIHBS
+  # Labour Force Basic Report (the same file labour/ retains). Tables 3.3, 3.6
+  # and 3.17 -- the 2016 headline by age, sex and residence, in thousands.
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/2015-2016-Kenya-Integrated-Household-Budget-Survey-Labour-Force-Basic-Report.pdf"
+    save_as: kenya_kihbs_2015_16_labour_force_basic_report.pdf
 
 parser: kenya_pdf
 geography: Total country
 
 notes: >
-  KNBS Quarterly Labour Force Report. Table shape: Indicator, then the
-  year-ago quarter, the previous quarter and the current quarter. Only the
-  current quarter's column is captured -- the other two are restatements the
-  earlier reports already carry.
+  KNBS Quarterly Labour Force Report, read in full: Table 1's national
+  headline PLUS the age-cohort tables (2, 3, 4, 5, 6, 8, 9a, 9b), which repeat
+  every one of those series for TEN COHORTS (15-19 ... 60-64) and for THREE
+  QUARTERS side by side.
+
+  ALL THREE QUARTERS ARE TAKEN, and that is a change from the original
+  descriptor, which took only the current column on the grounds that the others
+  were "restatements the earlier reports already carry". They are not carried:
+  KNBS archived the QLFS after 2022 Q4 and this descriptor fetches that single
+  file, so Q4 2021 and Q3 2022 exist in no other source the collector reads.
+  Each column group carries its own `period`.
+
+  EACH SERIES COMES FROM ONE TABLE ONLY. Total population repeats in six of
+  these tables and labour force in five; re-emitting them would be the same
+  figure under the same merge key from a different page. Population and labour
+  force come from Table 2, extended labour force from Table 5.
+
+  THE REPORT CONTRADICTS ITSELF ON LU2, and both figures are kept. Table 1
+  prints 11.5 / 10.6 / 18.6; Table 6 and the report's own prose give 11.5 /
+  10.4 / 9.0 ("LU2 ... increased to 9.0 per cent in the fourth quarter").
+  Table 1's companion count (3,481,968) is exactly twice the 1,740,984 its own
+  footnote defines, so its Q4 figure looks doubled -- but choosing between them
+  would be correcting the NSO. The two tables label it differently ("Labour
+  Under Utilization (LU2)" against "Under - Utilization [LU2]") and
+  `series_label` is part of the merge key, so both survive and stay apart.
+
+  DEFERRED: Table 7 (long-term unemployment by cohort) prints "-" for a zero
+  rate, so two of its rows carry ten numbers where the layout expects eleven.
+  The engine skips a short row rather than shifting it, which is safe but would
+  silently drop the 50-54 and 60-64 cohorts, so the table is left until it can
+  be read with a dash-aware column map. Table 1's national figure is captured.
+
+  NOT COLLECTED because the vocabulary has no home for them: Table 6's
+  time-related underemployed COUNT and Tables 9a/9b's "Prop." column (there is
+  no underemployed-count or inactivity-rate topic).
+
+  BLOCK SCOPING IS LOAD-BEARING HERE. Tables 2 and 3 share page 7, 4 and 5
+  share page 9, 8 and 9a share page 12, all with identical "15-19 ..." row
+  labels. Blocks keyed on each caption separate them -- and the caption
+  patterns exclude dot leaders, because the List of Tables entry matches
+  otherwise and a block opened there stays open into the next page, which made
+  Table 3 read Table 2's rows and publish the labour force as employment.
 
   WORKING-AGE BASE IS 15-64, a closed upper bound (as in Sierra Leone), not the
   usual open-ended 15+.
@@ -53,6 +139,9 @@ notes: >
   collecting now and will supersede the QLFS. Nothing is published yet; watch
   knbs.or.ke/2026-kenya-integrated-labour-force-survey-ilfs/ and add a new
   descriptor when results appear rather than stretching this one.
+
+  CROSS-CHECK, BACK ISSUES: 2020 Q2 (the first COVID quarter) LU1 10.4%,
+  LU3 22.6%, EPR 57.7%; 2020 Q1 LU1 5.2%, LFPR 67.9%.
 
   CROSS-CHECK (2022 Q4, October-December 2022): population 15-64 29,066,237;
   labour force 19,398,165; employed 18,438,164; LFPR 66.7%; EPR 63.4%;

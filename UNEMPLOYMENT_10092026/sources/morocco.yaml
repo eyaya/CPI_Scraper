@@ -57,3 +57,10 @@ notes: >
   43,5%; population active en chômage 1 621 mille; taux de chômage 13,0%
   (Masculin 10,8 / Féminin 20,5 / Urbain 16,4 / Rural 6,6).
   Verified: 1052 + 569 = 1621 and 1621 / 12488 = 13,0.
+
+  TABLEAU 11 (added 2026-10-01, `morocco_quarterly`): the report's four
+  quarters (2025-Q1..Q4) for National, Urbain and Rural -- activity,
+  employment, underemployment and unemployment rates (by sex, age band,
+  diploma) and the levels in thousands. Its "Année" column repeats Tableaux
+  2/3 and is not read. Space thousands are split on the rule that a group
+  starts with one or two digits ("662 635 651" is three values).

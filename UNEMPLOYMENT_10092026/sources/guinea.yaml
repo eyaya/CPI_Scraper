@@ -1,0 +1,31 @@
+country: Guinea
+iso3: GIN
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique de Guinée (INS)
+publication_code: ENESIG 2018/2019 rapport global
+frequency: ad_hoc
+expect_topics: 4
+verify_ssl: false
+
+# --- discover ---
+# Listed on https://www.stat-guinee.org/index.php/publications-ins/91-rapports-d-enquetes
+# (under "autre enquete"). URL TRAP: the file name has a DOUBLE SPACE before
+# "(17-02-2020)"; it is encoded here exactly as published. Not labour's
+# documents: neither the RGPH-3 economic volume nor EHCVM prints these rates.
+discover:
+  method: static_url
+  url: "https://www.stat-guinee.org/images/Documents/Publications/INS/rapports_enquetes/autre%20enquete/RAPPORT%20GLOBAL%20ENESIG1%20CONS%20%20(17-02-2020)_VF%20(2).pdf"
+  save_as: ENESIG_2018_2019_rapport_global.pdf
+  download_timeout: 300
+
+parser: guinea_unemployment
+geography: Total country
+
+notes: >
+  ENESIG 2018/2019 (household LFS, 15+, Jan-Mar 2019): Tableaux 5.2
+  participation, 6.1 taux d'emploi, 6.12 chômage, 6.15 chômage des jeunes
+  15-35, each by urban/rural x sex, region and age. SU table 6.21 refused (its
+  15-24 SU-4 is below its SU-2). Ignore the quarterly BTSMT (registry data).
+  CROSS-CHECK: chômage 4,8 (Conakry 14,1); jeunes 7,2; participation 54,2.

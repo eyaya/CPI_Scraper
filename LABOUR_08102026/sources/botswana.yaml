@@ -1,0 +1,55 @@
+country: Botswana
+iso3: BWA
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Statistics Botswana
+publication_code: QMTS Labour Force Module
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# THE SAME REPORT THE `unemployment` INDICATOR COLLECTS, read for a different
+# purpose: that one takes Table 1.0's headline rates, this one takes the
+# composition of employment. Each opens only its own tables.
+#
+# Reused verbatim from unemployment/sources/botswana.yaml, including its
+# warning: "labour force module" is load-bearing. The labour page lists the
+# BMTHS 2024/25 brief first, a DIFFERENT survey that must not be read as a
+# newer QMTS quarter.
+discover:
+  method: page_scrape
+  page_url: "https://www.statsbots.org.bw/publication-by-sector/labour"
+  link_contains:
+    - "quarterly"
+    - "labour force module"
+    - ".pdf"
+
+parser: botswana_labour
+geography: Total country
+
+notes: >
+  Statistics Botswana QMTS Labour Force Module. Occupation (1.5a counts, 1.5b
+  percentages, BOSCO), employer sector (1.6a), industry (1.7a), status in
+  employment by sex (M9), and the published totals of informal sector
+  employment (ISE1), informal employment (IE1), formal sector employment
+  (1.11a) and formal employment (1.21), by sex. The trend tables 1.5b, 1.6b and
+  1.7b add Q4 2020 / Q4 2021 / Q4 2022 / Q3 2023 totals, dated from their own
+  headers.
+
+  NO INTERNATIONAL SCHEME IS NAMED except via BOSCO for occupation; every
+  category is tagged National.
+
+  PRINTED ERROR: Table 1.6b's Q4 2022 percentage column repeats Q4 2021's in
+  every row; those percentages are not collected (the counts are).
+
+  THE FOUR FORMALITY TOTALS ARE DIFFERENT UNIVERSES (informal sector excludes
+  household employers; informal employment covers employees only) and do not
+  sum to total employment.
+
+  The QMTS series appears to have stopped after Q1 2024; see the unemployment
+  descriptor on the BMTHS level break.
+
+  Deferred, in the same report: occupation/industry by district and stratum,
+  hours by industry (M8), earnings (AE1-AE3, 1.14-1.15), and the formality x
+  industry/occupation cross-tabs, which need a second category column.

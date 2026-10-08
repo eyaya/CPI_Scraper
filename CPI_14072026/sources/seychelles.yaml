@@ -8,10 +8,12 @@ frequency: monthly
 verify_ssl: false
 
 # --- discover ---
-# NBS links the latest 'Consumer Price Index Time Series <Month> <Year>' .xlsx
-# from its home page; latest_dated picks the newest dated link.
+# NBS links its CPI time-series workbook from the home page, but the link no
+# longer carries a date — each re-upload is a new '/downloads/<id>-consumer-price-
+# index-time-series[-N]/download' whose slug stays the same and whose id rises, so
+# the newest edition is the largest id (1992 supersedes 1980).
 discover:
-  method: latest_dated
+  method: largest_id_link
   page_url: "https://www.nbs.gov.sc/"
   link_contains:
     - "consumer-price-index-time-series"

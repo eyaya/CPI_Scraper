@@ -1,0 +1,77 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: ENB-ESI 2023
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# REUSED VERBATIM from unemployment/sources/burkina_faso.yaml, including its
+# hard-won finding: every link on the INSD listing page is captioned
+# "Telecharger", so the FILENAME is the only usable selector. Matching "emploi"
+# alone takes the recurring ENSE bulletin, which must NOT be used here either
+# (see notes).
+discover:
+  method: page_scrape
+  page_url: "https://www.insd.bf/fr/statistiques-sociales/statistiques-sur-le-travail-et-l-emploi"
+  link_contains:
+    - "note_synth"
+    - "secteurinformel"
+    - ".pdf"
+  save_as: burkina_enbesi_note.pdf
+
+parser: burkina_faso_labour
+geography: Total country
+
+notes: >
+  INSD, Note synthétique de l'ENB-ESI 2023. This indicator takes ONE cut:
+  Figure 4, "Répartition des emplois selon la branche d'activité (%)" — sixteen
+  branches of economic activity as shares of employment of those aged 16+.
+
+  NO OVERLAP WITH `unemployment`, which reads Tableau 2 of this same note for
+  the participation, employment, unemployment and underutilisation rates by
+  region. A figure has exactly one home.
+
+  WHY READING A "FIGURE" IS LEGITIMATE HERE, WHEN ZIMBABWE'S CHARTS ARE
+  REFUSED. ZIMSTAT's figures carry no category values anywhere in the PDF, so
+  the only way to get a number is to measure the rendered bars — inventing
+  precision the NSO never published. INSD prints every category and its value
+  as TEXT data labels ("Agriculture, sylviculture, pêche 31,4"), so these are
+  published figures that exist in the file. Corroborated by the report's own
+  arithmetic: the sixteen shares sum to 99,9, and the three largest are
+  repeated in the narrative on the preceding page.
+
+  THE X-AXIS IS NOT A CATEGORY: the block ends with "0 5 10 15 20 25 30 35",
+  which is skipped for carrying eight values where one is expected, not by
+  being named.
+
+  NOT COLLECTED: Tableau 5 (main d'œuvre des UPI by branch) is the
+  INFORMAL-SECTOR module and its shares are of informal employment only —
+  Commerce 39,4% against Figure 4's total-economy 24,4% for the same year.
+  Filing that under `industry` would put shares of one universe under the same
+  merge key as shares of another, the trap that blocks Kenya and that leaves
+  Benin, Niger and Guinea-Bissau uncollected. Tableau 4 counts production
+  UNITS, not people. Figure 1 (activity status) has no values in its text
+  layer at all.
+
+  NO NOMENCLATURE IS NAMED: NAEMA, NOPEMA, CITI, ISIC, CITP and the word
+  "nomenclature" appear ZERO times in the note's 36 pages, so every category is
+  National despite the branches being recognisably ISIC Rev.4 sections in
+  French.
+
+  WORKING-AGE BASE IS 16+, not 15+ — unusual for West Africa, shared with
+  INSD's ENSE bulletins, and travelling on every row.
+
+  PERIOD IS 2023, the collection window (January–April 2023), not the 2024
+  publication date on the cover. Benchmark survey, not a live series: per the
+  `unemployment` descriptor, INSD's fresher ENSE bulletin must NOT be
+  substituted, because its numbers exist only as chart data labels that drop
+  trailing zeros and carry no category names.
+
+  CROSS-CHECK (% of employment, 16+): agriculture, sylviculture, pêche 31,4;
+  commerce 24,4; activités de fabrication 16,4; activités extractives 4,1;
+  enseignement 3,5; transports et entreposage 2,5; activités d'administration
+  publique 1,1. Sixteen branches summing to 99,9; total employed 5 239 416.

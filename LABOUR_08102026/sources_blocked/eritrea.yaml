@@ -1,0 +1,9 @@
+# =====================================================================
+# BLOCKED -- no NSO or central-bank site exists. Every .gov.er host is
+# NXDOMAIN (as recorded for CPI); only aggregators carry Eritrean labour
+# figures, and they are excluded.
+# =====================================================================
+country: Eritrea
+iso3: ERI
+indicator: Labour
+blocked_reason: no national statistics website exists

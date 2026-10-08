@@ -1,0 +1,38 @@
+country: Ethiopia
+iso3: ETH
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: National Bank of Ethiopia (NBE) / Ministry of Planning and Development
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# The Ethiopian Statistical Service (ess.gov.et) does not publish GDP (it runs the
+# surveys); GDP is compiled by the Ministry of Planning and published in the NBE
+# Annual Report. We take the report PDF (update the URL each fiscal year; the newest
+# is linked from nbe.gov.et/annual-report/).
+discover:
+  method: static_url
+  url: "https://nbe.gov.et/wp-content/uploads/2026/07/Annual-Report-2024-2025.pdf"
+  save_as: "NBE_Annual_Report_2024-2025.pdf"
+
+parser: ethiopia_nbe_gdp
+geography: National
+
+notes: >
+  National Bank of Ethiopia Annual Report, 'Table 1.1: Sectoral Contributions to
+  GDP and GDP Growth' (real terms, billions of Birr, base 2015/16; source Ministry
+  of Planning and Development). By Ethiopian fiscal year 2017/18-2024/25 (labelled
+  here by the START year, e.g. 2017/18 -> 2017): real value added by Agriculture /
+  Industry / Services (level, constant), Total and Real GDP (aggregate), Growth in
+  Real GDP (%), GDP per capita (USD, nominal), and sector Shares in GDP (%). Parser
+  finds the table page by caption; a sector line is a level (>100 bn Birr) or a
+  share (<100 %) by magnitude, which sidesteps the mis-positioned 'Share in GDP'
+  label and wrapped labels ('Real GDP', 'Per capita GDP'). Verified: Agriculture +
+  Industry + Services - FISIM (28.2) = Real GDP 2,842.3 bn Birr (2024/25); real
+  growth 9.2%; per-capita fell to US$1,144 on the birr devaluation. Only 3 broad
+  sectors (no detailed activities), annual only, no expenditure/income approach.
+  The sub-sector table (1.2) and nominal-GDP tables are a later pass; ess.gov.et
+  (statistics service) has no GDP. NOTE: the report PDF is ~51 MB. Everything as
+  published; nothing derived.

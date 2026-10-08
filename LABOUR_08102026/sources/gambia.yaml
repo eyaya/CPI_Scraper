@@ -1,0 +1,63 @@
+country: Gambia
+iso3: GMB
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Gambia Bureau of Statistics (GBoS)
+publication_code: Gambia Labour Force Survey (GLFS) findings reports
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# GBoS data portal (same as Gambia CPI/GDP/population). Each GLFS round has its
+# own download category (/downloads/165-glfs-2026-q1-, /161-glfs-2025-q1-,
+# /132-glfs-2023-q1-, /131-the-2018-glfs) and files are served at
+# /downloads-file/<id>-<slug> -- the FULL SLUG is required (the bare id returns
+# an empty body), so these are static URLs copied from the category pages.
+# Only the REPORTS are fetched: the same categories hold the microdata, which
+# this collector never downloads or retains.
+# The portal is SLOW (about three minutes per report); be patient.
+# The 2025 findings report (/downloads-file/621-...) is not fetched: its
+# Tables 4.1/4.2 are reprinted, identically, in the 2026 report.
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/627-the-gambia-labour-force-survey-findings-report"
+  save_as: gambia_glfs_2026.pdf
+
+extra_urls:
+  - url: "https://www.gbosdata.org/downloads-file/480-2022-23-gambia-labour-force-survey-report-glfs"
+    save_as: gambia_glfs_2022_23.pdf
+  - url: "https://www.gbosdata.org/downloads-file/479-the-2018-gambia-labour-force-survey-glfs-2018-"
+    save_as: gambia_glfs_2018.pdf
+
+parser: gambia_labour
+geography: Total country
+
+notes: >
+  GBoS Gambia Labour Force Survey, four rounds from three reports. 2026
+  findings report Tables 4.1 (ISIC Rev.4 sections) and 4.2 (ISCO-08 by sex),
+  each carrying GLFS 2025 (Q1) and GLFS 2026 (Q1). GLFS 2022-23 (GBoS: "2023
+  (Q1)") Tables 5.1 status (ICSE-93) by sex and residence, 5.2 branch (count +
+  %), 5.3 occupation by sex (count + %). GLFS 2018 Tables 5.8/5.9 industry by
+  sex and area (%), 5.11 status by sex (counts). Base 15+ except 2018, 15-64.
+
+  NEW ROUND EACH Q1: when GBoS publishes a GLFS 2027 report, point `url` at it
+  (its category page lists it) -- it will reprint 2026 beside 2027, and the
+  merge keeps every earlier round.
+
+  NOT COLLECTED: the ICSE-18 status, institutional-sector and broad-sector
+  FIGURES of 2025/2026 (images, no values in the text layer); Table 5.2's
+  informal/formal split and its interleaved last two rows (extraterritorial
+  and Total); 2018 Tables 5.4/5.5 (row percentages) and 5.12 (stratum label
+  printed below its numbers); Figure 5.2 (2022-23 sector chart, legend order
+  does not match value order).
+
+  PUBLISHED GAP, KEPT: in 2022-23 Tables 5.2 and 5.3 the categories sum to
+  562 737 against a printed total of 563 395 -- the same 658 in both, most
+  likely persons with no stated branch/occupation counted only in the total.
+  Small-sample markers (* <25, ( ) 25-49 unweighted cases) are GBoS's; the
+  figures are collected, the markers are not carried.
+
+  CROSS-CHECK: 2026 Q1 trade 25.6%, construction 13.8%, agriculture 17.8%;
+  service and sales workers 33.7%. 2022-23 employees 34.6%; trade 147 887
+  (26.2%); total employed 563 395. 2018 employees 209 472 of 431 168.

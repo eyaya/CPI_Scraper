@@ -1,0 +1,64 @@
+country: Somalia
+iso3: SOM
+indicator: Labour
+tier: 3                      # discovery is Tier 1 (WordPress REST); payload is a PDF
+source_type: pdf
+agency: Somali National Bureau of Statistics (SNBS)
+publication_code: SLFS 2019
+frequency: ad_hoc
+
+# --- discover ---
+# THE SAME REPORT THE `unemployment` INDICATOR COLLECTS (Table 1.1 there,
+# Tables 4.3-4.7 here). Reused verbatim from unemployment/sources/somalia.yaml,
+# including its two findings: SNBS's WordPress media REST endpoint is the only
+# reliable machine-readable discovery route in the East Africa group, and
+# `wp_media_named` is required because `wp_media_latest` orders by a MONTH NAME
+# in the filename, which a one-off survey report does not carry.
+#
+# TRAP, verified: "Labour-Force-Survey-Reports-2021.pdf" is NOT a 2021 survey —
+# it is the same 2019 survey published in September 2021. There is exactly one
+# Somali LFS, which is why the period is pinned in the layout.
+discover:
+  method: wp_media_named
+  api_url: "https://nbs.gov.so/wp-json/wp/v2/media?search=labour&per_page=100"
+  name_contains: "labour"
+  save_as: somalia_lfs_2019.pdf
+
+parser: somalia_labour
+geography: Total country
+
+notes: >
+  SNBS Somali Labour Force Survey 2019: broad economic sector (4.3), branch of
+  economic activity (4.4, 22 branches), occupation in detail (4.5, 42 groups)
+  and by major group and sex (4.6), and unit of production (4.7).
+
+  COVERAGE CAVEAT, MATERIAL AND PERMANENT: the survey excludes the nomadic and
+  pastoralist population and non-liberated areas. These are not national
+  estimates in the sense the other countries' are. One round only, and no
+  repeat has been announced — a scheduled run will keep re-collecting 2019.
+
+  LABELS ARE TRUNCATED IN THE REPORT ITSELF, clipped by SNBS's table export at
+  about 38 characters, mid-word ("Technicians and assoc", "Production and
+  specialized services ma"). They are collected exactly as printed; completing
+  them would be publishing text the NSO did not.
+
+  NO SCHEME IS RECORDED, and it is a close call: ISIC and ISCO appear in the
+  abbreviation list and are defined generically in the back glossary, but never
+  against a table and never with a revision — while Table 4.4's branches are
+  ISIC Rev.4's sections verbatim and 4.5/4.6 are ISCO-08 groups. A glossary
+  entry is not a statement that a table used that standard, so the rows say
+  National. The evidence is recorded in parsers/somalia_labour.py so the call
+  can be revisited deliberately.
+
+  TABLE 4.3's TOTAL IS NOT COLLECTED: it is Table 4.4's Total (955,820) under
+  the same topic, category and measure, so the two would be one merge key.
+
+  Counts in Table 4.5 carry decimals (35,068.01 persons) because SNBS published
+  weighted estimates unrounded; they are emitted as printed.
+
+  THE REPORT'S TOTALS DISAGREE ACROSS TABLES and both are kept as published:
+  industry (4.4) and unit of production (4.7) total 955,820 employed persons —
+  the figure `unemployment` also collects from Table 1.1 — while the occupation
+  tables total 1,028,709 (4.6's 710,930 male + 317,779 female reconcile to that
+  exactly). The 72,889 difference is SNBS's own; reconciling it here would mean
+  publishing a number the report does not contain.

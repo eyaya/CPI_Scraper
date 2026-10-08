@@ -1,0 +1,31 @@
+country: Mali
+iso3: MLI
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# INSTAT lists the quarterly PIB notes (pibmali<q>t<yy>_pub.pdf) on its GDP
+# publications page; we take the newest by the '<q>t<yy>' quarter stamp.
+discover:
+  method: latest_quarter_file
+  page_url: "https://www.instat-mali.org/fr/publications/produit-interieur-brut-pib-"
+  link_contains:
+    - "pibmali"
+    - ".pdf"
+
+parser: mali_instat_gdp
+geography: National
+
+notes: >
+  INSTAT Mali quarterly PIB note (PDF, French). GDP by branch of activity
+  (production) and by expenditure component ('optique de dépenses'), each at
+  current prices and in chained-volume constant prices; quarterly. We emit the
+  value LEVELS (the note carries the recent ~9 quarters; history accumulates
+  across notes). French number format. Units billion XOF (FCFA). Internally
+  consistent (current > constant, implicit deflator ~120). The 'taux de
+  croissance' growth tables are left for a later pass. Everything as published;
+  nothing derived.

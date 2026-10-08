@@ -1,0 +1,46 @@
+country: Madagascar
+iso3: MDG
+indicator: Labour
+tier: 3
+source_type: xls
+agency: Institut National de la Statistique (INSTAT Madagascar)
+publication_code: ENEMPSI 2012 Tome 1 + RGPH-3 2018 Caractéristiques économiques
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# Both files are linked from INSTAT's own pages under /documents/upload/main/:
+#   ENEMPSI: https://www.instat.mg/statistiques/enquetes-et-recensements/item/enquete-nationale-sur-lemploi-et-le-secteur-informel-enempsi
+#   RGPH-3:  the census thematic reports (Oct 2021)
+# No newer ENEMPSI exists on the site; both are one-off rounds, so pinned.
+# The RGPH-3 filename carries a literal space ("INSTAT-RGPH3_ Caracteristiques...").
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_ENEMPSI2012_Tome1_11-2013.xls"
+  save_as: INSTAT_ENEMPSI2012_Tome1_11-2013.xls
+
+extra_urls:
+  - url: "https://www.instat.mg/documents/upload/main/INSTAT-RGPH3_%20CaracteristiquesEconomiquesdelaPopulation.pdf"
+    save_as: INSTAT-RGPH3_CaracteristiquesEconomiques.pdf
+
+parser: madagascar_labour
+geography: Total country
+
+notes: >
+  ENEMPSI 2012 Tome 1, sheet "structure emplois": secteur institutionnel
+  (-> formality), CSP (-> employment_status, National) and 12 branches
+  (-> industry, National) by milieu, sex, region and age -- Tableaux 20, 22-25,
+  28, 30, 31, 33, 34, 37, 39-42. Base 5+ (the tables have a "5 à 9 ans" row).
+  Row-% tables (21, 29, 32, 38) and two-dimension cross-tabs (26, 27, 35, 36,
+  43, 44) not taken; 43/44 print a branch Ensemble that disagrees with 37-42.
+
+  RGPH-3 2018: Tableau 5.7 (21 NOMAC branches, rotated page, read by PyMuPDF
+  word positions) and 5.8 (situation dans l'occupation), by milieu x sex.
+  Base 15-59. 5.8's caption says "15-19 ans"; its own counts (9 644 559 valid
+  + 94 332 missing = 9 738 891) are the 15-59 employed. NOMAC, not CITI (CITI
+  was the 1993 census's scheme) -> National. 5.7's Effectif row is misprinted
+  (urban 709 676 for 1 709 676) and not collected.
+
+  CROSS-CHECK: ENEMPSI informel agricole 75.172; aide familiale 45.946;
+  Analamanga informel hors agriculture 40.87. RGPH-3 agriculture 73,5
+  (urbain 22,4 / rural 84,3); indépendant 80,5; salarié privé 7,4.

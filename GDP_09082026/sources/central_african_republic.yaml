@@ -1,0 +1,48 @@
+country: Central African Republic
+iso3: CAF
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Institut Centrafricain des Statistiques et des Etudes Economiques et Sociales (ICASEES)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ICASEES lists its publications at
+#   https://icasees.org/index.php/publications/liste-des-publications?layout=columns&start=0
+# (paging by 50). The rebased national accounts (base 2019, SCN 2008) were
+# posted in 2026 as a dataset and a report under /publications/tableau-de-bord/.
+# Both are pinned: the dataset slug names its own vintage ("paru en 2026").
+discover:
+  method: static_url
+  url: "https://icasees.org/index.php/publications/tableau-de-bord/jeux-de-donnees-des-comptes-nationaux-de-2005-2019-et-2019-2021-paru-en-2026/download"
+  save_as: "ICASEES_Comptes_nationaux_2005-2019_2019-2021.xlsx"
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://icasees.org/index.php/publications/tableau-de-bord/comptes-nationaux-definitifs-2019-2021-de-la-republique-centrafricaine/download"
+    save_as: "ICASEES_Comptes_nationaux_definitifs_2019-2021.pdf"
+
+parser: car_icasees_gdp
+geography: National
+
+notes: >
+  ICASEES Comptes nationaux définitifs 2019-2021 (base 2019, SCN 2008):
+  value added by 32 branches + sectors, taxes on products and GDP at current
+  prices (workbook sheet Donnee, milliard FCFA); and the report's Tableau 1
+  -- GDP at current and constant 2019 prices, exports, imports, FBCF, real
+  growth, deflator, GDP per head (million FCFA / FCFA).
+
+  The workbook labels its rows "millions de F CFA" while its own Dataset sheet
+  and the report say milliards; recorded as milliards, re-checked against the
+  report's GDP in millions every run.
+
+  NOT COLLECTED: the workbook's SCN 1993-era series 2005-2019 (price basis
+  stated nowhere); report Tableau 17 (contradicts Tableau 1's 2021 constant
+  GDP, mislabels its base "2005"); report Tableau 14 (FBCF contradicts
+  Tableau 1). The social accounting matrix 2020 and the experimental monthly
+  growth indicator (IMCE) are not national-accounts series.
+
+  CROSS-CHECK: GDP 2019/2020/2021 1 952,9 / 2 056,0 / 2 149,6 milliard FCFA;
+  constant 2021 2 088 958 million; real growth 2020 3,41%; deflator 2021
+  102,90.

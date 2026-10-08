@@ -1,0 +1,44 @@
+country: Gambia
+iso3: GMB
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Gambia Bureau of Statistics (GBoS)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# GBoS publishes the annual GDP workbooks on its data portal under
+# gbosdata.org/downloads/<cat>-gdp-<year>/. The download route only serves the
+# file when the FULL slug URL is used (the bare /downloads-file/<id> returns an
+# empty body). These are the latest release (gdp-2024: revised 2023 + provisional
+# 2024). Update the two URLs when GBoS posts a newer gdp-<year> category.
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/611-gross-domestic-product-by-production-approach-"
+  save_as: "GBoS_GDP_Production_Approach.xlsx"
+
+extra_urls:
+  - url: "https://www.gbosdata.org/downloads-file/566-gross-domestic-product-by-expenditure-approach"
+    save_as: "GBoS_GDP_Expenditure_Approach.xlsx"
+
+parser: gambia_gbos_gdp
+geography: National
+
+notes: >
+  GBoS annual GDP, base year 2013, two workbooks read together — production
+  (primary) and expenditure (extra). Each has five tables: current & constant
+  levels, contribution to GDP, growth, deflator. Production covers 2004-2024
+  (provisional 2024), expenditure similar. KEY SCALES (kept as published, nothing
+  derived/converted): production levels are UNSCALED dalasi (unit GMD), expenditure
+  levels are in D'000 (unit 'GMD thousand') — same GDP, different published scale.
+  Growth & contribution cells are percent-FORMATTED fractions → ×100 to the shown
+  value (unit percent / percentage points); deflator is an index (2013=100).
+  Provisional years carry a '*' in the header ('2015*') which the parser strips.
+  Verified: nominal GDP 2024 = GMD 162.9bn (matches GBoS headline 162.8bn), real
+  growth 2020 = 0.6% (COVID) and 2023 = 5.9%, GVA(basic)+taxes = GDP at market
+  price. Both a production-reference GDP row and the expenditure GDP appear in the
+  expenditure book (their ~1bn gap is the published statistical discrepancy). No
+  income approach; no quarterly (GBoS quarterly-GDP category is empty). The older
+  per-series HTML tables on the portal (2004-2021, constant only) are superseded by
+  these workbooks.

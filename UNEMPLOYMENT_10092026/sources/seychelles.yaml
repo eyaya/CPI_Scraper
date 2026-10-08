@@ -21,14 +21,37 @@ expect_topics: 4
 # — that series is payroll/establishment-based formal employment, a different
 # universe, and must never be merged with the household LFS.
 discover:
-  method: two_hop_scrape
-  index_url: "https://www.nbs.gov.sc/downloads/34-social-statistics/161-labour-force-survey"
-  page_link_contains:
-    - "-2026"
-  file_link_contains:
+  # THE NEWEST BULLETIN IN THE YEAR FOLDER, by NBS's upload id (ids rise with
+  # each upload; the same method reads NBS's CPI series). The previous
+  # two_hop_scrape took the FIRST link on the year page -- Q1 2026 even after
+  # Q2 2026 was posted. The year folder is still pinned (bump each January).
+  method: largest_id_link
+  page_url: "https://www.nbs.gov.sc/downloads/34-social-statistics/161-labour-force-survey/190-2026"
+  link_contains:
     - "labour-force-survey"
     - "download"
   save_as: seychelles_lfs_bulletin.pdf
+
+# BACK ISSUES, one per quarter NBS has posted (folders 162-2023, 163-2024,
+# 175-2025, 190-2026). Each is read for its own current quarter; merge-on-write
+# keeps them once read. Q4 2023's Table 1A predates the layout and is skipped.
+extra_urls:
+  - url: "https://www.nbs.gov.sc/downloads/1971-labour-force-survey-bulletin-q1-2026/download"
+    save_as: seychelles_lfs_2026q1.pdf
+  - url: "https://www.nbs.gov.sc/downloads/1925-labour-force-survey-quarter-4-2025/download"
+    save_as: seychelles_lfs_2025q4.pdf
+  - url: "https://www.nbs.gov.sc/downloads/1880-labour-force-survey-quarter-3-2025/download"
+    save_as: seychelles_lfs_2025q3.pdf
+  - url: "https://www.nbs.gov.sc/downloads/1844-labour-force-survey-quarter-2-2025-revised/download"
+    save_as: seychelles_lfs_2025q2_revised.pdf
+  - url: "https://www.nbs.gov.sc/downloads/1784-labour-force-survey-quarter-1-2025/download"
+    save_as: seychelles_lfs_2025q1.pdf
+  - url: "https://www.nbs.gov.sc/downloads/1726-labour-force-survey-quarter-4-2024/download"
+    save_as: seychelles_lfs_2024q4.pdf
+  - url: "https://www.nbs.gov.sc/downloads/1635-labour-force-survey-quarter-2-2024/download"
+    save_as: seychelles_lfs_2024q2.pdf
+  - url: "https://www.nbs.gov.sc/downloads/1579-labour-force-survey-quarter-4-2023/download"
+    save_as: seychelles_lfs_2023q4.pdf
 
 parser: seychelles_pdf
 geography: Total country
@@ -62,3 +85,10 @@ notes: >
   youth 15-24 unemployment 14.1 / 11.7 / 12.8; LFPR 69.8 / 66.1 / 67.8;
   EPR 67.4 / 64.0 / 65.6; NEET 24.5 / 18.5 / 21.4.
   Identity EPR = LFPR x (1 − unemployment rate) holds on every headline cell.
+
+  BACK ISSUES (added 2026-10-01): eight earlier bulletins (Q4 2023 to Q1 2026)
+  as extras, each read for its own quarter. A DATING BUG WAS FIXED ON THE WAY:
+  Q4 issues never say "for the fourth quarter", so the catalogue pattern
+  "2024/Q4" was used, which parses only as the bare year -- every Q4 issue
+  would have been dated "2024", annual. Dating now comes from the prose and is
+  checked against the catalogue number.

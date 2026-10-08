@@ -6,17 +6,30 @@ captured **exactly as each NSO publishes it**: the source's own age bands,
 geography names and series definitions, with no estimation, imputation or
 recomputation.
 
-**Status:** 36 of 54 countries, 126,359 rows. A full `--all` run collects 35 of
-the 36. The one that cannot be fetched is host-side, not code:
+**Status:** 53 of 54 countries, 197,809 rows, 1966 to 2053 (2026-10-06). Only
+Eritrea is missing (`sources_blocked/eritrea.yaml`): its government hosts
+resolve but time out, its Wayback captures are a default server page, and no
+census has ever been published.
 
-- **Liberia** — LISGIS is rebuilding its site; its old paths 404 and the
-  placeholder links only to an aggregator, which this project excludes.
+**The 2026-10-06 round added 17 countries** -- Algeria (ONS Rétrospective,
+1966-2019), Egypt (CAPMAS 2026 estimates by governorate), Libya (BSC
+Statistical Book 2024, Libyan nationals), Sudan (2008 census via Wayback,
+NORTHERN states only), Nigeria (NBS bulletins), Lesotho (projections found in
+the publications.htm JS array), Eswatini (CSO projections via Wayback),
+Mozambique (12 INE projection workbooks), São Tomé, Chad, Burundi (the 2024
+census, overturning an earlier rejection), DR Congo (2015 yearbook via
+Wayback), Equatorial Guinea, Guinea, Côte d'Ivoire (RGPH 2021 + 2014 via
+Wayback), Comoros and Mauritania (RGPH-5 2023 + projections to 2053) -- and
+DEEPENED Liberia (repaired: LISGIS's dataset API, 2022 census by county x age
+x sex), Rwanda, Tanzania and Uganda (projections to 2050, Uganda's 2024
+census), Sierra Leone (2021 mid-term census) and CAR (stable www host).
 
-**Central African Republic is intermittent.** ICASEES serves its population page
-as a ~24 KB stub with no tables on some requests and the real ~142 KB page on
-others, so this source fails and recovers between runs without anything changing
-here. It also needs `html5lib` (lxml rejects the page's markup) — see
-requirements.txt. Retry before investigating.
+Several "Sources investigated and rejected" entries below are therefore
+superseded (Algeria, Lesotho, Burundi, Mauritania, Egypt): each was a verdict
+on one document or a guessed path, as the section on site navigation warns.
+
+**Harness change:** `unzip: false` in a descriptor's `discover:` hands the
+parser the ZIP itself (CBS Sudan's census ZIP holds 200+ workbooks).
 
 Existing outputs are never lost to a failure: the harness writes only on success.
 
@@ -140,3 +153,48 @@ Recorded so they are not re-attempted without new information:
 python -m indicators.population.pipeline <country>
 python -m indicators.population.pipeline --all
 ```
+
+## Tests
+
+```bash
+PYTHONUTF8=1 py -W ignore -m indicators.population.tests.check_registry
+PYTHONUTF8=1 py -W ignore -m indicators.population.tests.test_offline
+```
+
+Population has **36 bespoke parsers and no shared engine**, but — unlike CPI and
+GDP — it publishes a **checkable arithmetic identity**, and it carries
+`series_type` inside its merge key on purpose. Both are what the suite pins:
+
+| | |
+|---|---|
+| `validate_population` | vocabularies, bare-`YYYY` periods, non-negative counts, both magnitude bounds |
+| **male + female = total** | the identity that caught Djibouti's shifted columns, as a *regression pin* |
+| **merge key** | a census and a projection for the same year and geography must not collide |
+| **all 36 outputs** | duplicate keys, vocabulary membership, period form, a national total per country |
+| Ethiopia | the overlapping geographies of *[Overlapping geographies](#overlapping-geographies--do-not-blindly-sum)*, stated in code |
+
+**The identity is a pin, not a law.** It holds 38,772 times and breaks **twice**,
+both legitimately: Kenya 2019 carries an `age_group` of *"Not stated"*, and
+Benin 2002 has the band *"80 et plus"* sitting in its geography column. Those two
+are named in `KNOWN_IDENTITY_BREAKS`, so a **new** break fails the suite while
+the published ones don't. (The Benin quirk is recorded as observed — if
+`instad_benin_population` is ever corrected, update the pin deliberately.)
+
+**Its blind spot is worth knowing:** the identity **survives a column swap**.
+INS Cameroun prints *"Masculin Féminin"* nationally and *"Féminin Masculin"*
+regionally, and male+female=total either way — the trap described under
+*Reading NSO PDFs*. Geometry catches that; arithmetic cannot. This test is
+necessary, not sufficient.
+
+**Three things measured before being asserted**, each of which would otherwise
+have produced a wrong test: only four measures are in use (`count`, `density`,
+`median_age`, `sex_ratio`), so full vocabulary coverage is not assertable; **no
+country currently carries two `series_type`s**, so the census/projection
+protection is proved on a *constructed* collision rather than the corpus; and
+`south_africa_population` has **no** `Total country` row at all (Stats SA's MYPE
+is provincial), so the national-total rule carries that explicit exception.
+
+**Mutation-checked, 8/8.** Dropping `series_type` from the merge key, disabling
+any validator guard, tightening the count ceiling below a Nigeria-scale total,
+breaking the sex identity in a real output, or injecting a duplicate key each
+turns the suite red on the assertion written for it.

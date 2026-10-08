@@ -1,0 +1,22 @@
+# =====================================================================
+# BLOCKED -- no official population statistics are reachable (checked
+# 2026-10-06).
+#
+# Live hosts: nso.gov.er, mof.gov.er and boe.gov.er resolve but every
+# connection times out (curl, 20 s connect timeout, HTTPS). shabait.com (the
+# Ministry of Information) answers, but publishes news, not statistics.
+#
+# Wayback Machine: the CDX index holds only 9 captures of nso.gov.er
+# (2017-2022) -- the home page, robots.txt, favicon and a "welcome.png" --
+# i.e. a default server page; no publication, table or file was ever
+# archived. The labour and GDP checks reached the same verdict (Bank of
+# Eritrea captures 2011-2018 are an "under construction" image).
+#
+# Eritrea has never published census results (no census since independence
+# has been released). Aggregator estimates (UN WPP, World Bank) exist but are
+# excluded by this project's rules.
+# =====================================================================
+country: Eritrea
+iso3: ERI
+indicator: Population
+blocked_reason: no reachable official statistics publisher; no archived publication

@@ -14,7 +14,10 @@ verify_ssl: false
 # national population-by-age-and-sex table for 2022 and 2023.
 discover:
   method: static_url
-  url: "https://icasees.org/index.php/actualites/rgph-4/212-projection-de-la-population-de-la-rca-par-groupe"
+  # www. host directly (2026-10-06): the bare icasees.org now answers 301 to
+  # www.icasees.org; the www page served the full table (~140 KB, 1 <table>)
+  # on 9 of 9 tries, through curl and requests alike.
+  url: "https://www.icasees.org/index.php/actualites/rgph-4/212-projection-de-la-population-de-la-rca-par-groupe"
   save_as: car_icasees_rgph4_pop_age_sex.html
 
 parser: icasees_car_population

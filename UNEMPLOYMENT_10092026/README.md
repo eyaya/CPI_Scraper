@@ -109,34 +109,86 @@ rather than a rewrite. Write a bespoke parser when a country is genuinely odd;
 
 ## 3. Country registry
 
-**26 descriptors, 26 countries, all green on a full run — 10,866 rows.**
+**54 descriptors, 53 countries — 57,248 rows, 1966 to 2026 Q2** (2026-10-01).
+Only Eritrea is missing: it has no statistics website at all.
 
 | | |
 |---|---|
-| Quarterly | Botswana, Egypt, Ghana, Kenya, Mauritius, Nigeria, Seychelles, South Africa, Tunisia, Zimbabwe |
-| Annual | Rwanda, Tanzania, Zambia |
-| Ad hoc / periodic | Benin, Burkina Faso, Cameroon, Eswatini, Ethiopia, Guinea-Bissau, Mali, Morocco, Namibia, Niger, Sierra Leone, Somalia, Uganda |
+| Quarterly | Botswana, Egypt, Ghana, Kenya, Mauritius, Nigeria, Seychelles, South Africa, Tunisia, Zimbabwe, Senegal (ENES), Mauritania (ENTE), Djibouti (EDST), Morocco |
+| Annual / per round | Rwanda, Tanzania, Zambia, Cabo Verde (IMC 2011-2025), Mali (EMOP 2020-2025), Algeria (23 LFS rounds 2000-2019, rate back to 1966), Gambia, Lesotho, Malawi |
+| Ad hoc / periodic | Benin, Burkina Faso, Cameroon, Eswatini, Ethiopia, Guinea-Bissau, Namibia, Niger, Sierra Leone, Somalia, Uganda, Angola, Liberia, Burundi, Chad, Comoros, Congo, Côte d'Ivoire, DR Congo, Central African Republic, Equatorial Guinea, Gabon, Guinea, Libya, Madagascar, Mozambique, São Tomé and Príncipe, South Sudan, Sudan, Togo |
 
 The deepest series are South Africa (2,618 rows, 74 quarters back to 2008 Q1),
 Ghana (6,426 rows) and Mauritius (204 rows over five quarters). Tanzania and
 Rwanda publish multi-year trend tables and both years/all seven are captured.
 
+### Angola — unblocked by POST support
+
+INE serves the IEA as five workbooks whose "links" POST a file path to
+`/Diretorios/Download`; `core/fetch.download(post_data=…)` and the
+`ine_ao_directory_files` discovery now fetch them (`parsers/angola_ine_workbooks.py`).
+The headline series come in three blocks (15+, the 15-24 youth cut, an 18+ base),
+the complementary workbook gives rates by residence, sex and age, and a fifth
+file gives the 18 provinces annually. **Never chain across the methodology
+break**: participation is 87-89% on the 13th-ICLS basis (to 2025 Q3) and 50-56%
+on the 19th (from 2025 Q4); `survey` names the basis on every row. The
+complementary workbook repeats headline cells and five differ by up to 0,05
+points; the series value is kept and a gap over 0,1 raises. The earlier bulletin
+layout (`angola_pdf`) is kept in case INE resumes the PDF.
+
+### Liberia — unblocked by LISGIS's rebuilt site
+
+LISGIS's placeholder site is gone; the rebuilt one is a single-page app whose
+`/api/survey-report-grid` lists each survey report with a direct download, and
+the LFS 2016-17 report sits at `/uploads/surveys/lfs-2016-2017.pdf`. The copy
+served there wraps Table 3.1's row labels across up to four lines, and line
+matching read the informal-employment COUNT as its share. So the table is
+read BY POSITION (`parse_positional`): its 17-number rows are taken in printed
+order and the mapping is proved in every column (LF = E + U, population = LF +
+outside, LU1 = U/LF, LFPR = LF/population). An offline test swaps two rows and
+must see it raise.
+
 ### Blocked — `sources_blocked/`
 
-Kept whole, so restoring one is a file move rather than a rewrite:
+None at present. Liberia and Angola, the last two, are both restored.
 
-| Country | Why | What would unblock it |
-|---|---|---|
-| **Liberia** | LISGIS's site is now a 9 KB placeholder whose only two links both point at Knoema. A **hosting** failure, not a fetching one — and aggregators are not sources | LISGIS rebuilding a document library |
-| **Angola** | INE replaced the IEA bulletin PDF with time-series **workbooks** reachable only by a `POST` to `/Diretorios/Download`; the harness downloads by GET. The route is fully mapped in the descriptor | POST support in `core/fetch`, plus a new layout — the workbooks split on a 13th-vs-19th ICLS methodology break and must not be chained |
+### The 2026-10-01 round: 28 → 53 countries
 
-### Reachable, layout pending
+Twenty-five countries were added, most from documents `labour/` had already
+retained (its parsers had skipped the rate tables as this indicator's
+territory), and the rest from NEW publications found for this purpose: Malawi's
+full LFS 2024 report (the default link is a charts-only brochure), Guinea's
+ENESIG 2018/19, Madagascar's EPM 2021-22, Mozambique's IOF 2019/20, São Tomé's
+IOF 2017 and QUIBB 2005, Equatorial Guinea's EPAFE 2015, the quarterly ENTE
+(Mauritania), EDST (Djibouti) and ENES summary boxes (Senegal), and Wayback
+`id_` copies of the NSO's own files where the host is gone (Congo, DR Congo,
+Côte d'Ivoire's ENSETE 2013, Sudan's CBS booklet and 2008 census -- NORTHERN
+Sudan only, the census predating the South's secession).
 
-Mauritania (**quarterly ENTE — still the best unclaimed source**), Malawi,
-Côte d'Ivoire, Algeria, Burundi, Madagascar, Guinea, The Gambia, Lesotho,
-Equatorial Guinea, Cabo Verde, Senegal, Togo, Comoros, Chad. Each has a proven
-route and a located file — see [PENDING.md](PENDING.md), along with the
-countries that genuinely publish no LFS.
+Depth was added to eight existing countries: Nigeria 90 → 10,316 rows (2023
+annual report, all states), Kenya 464 → 2,091 (QLFS back issues + KIHBS
+2015/16), Uganda 8 → 1,447, Mali 9 → 1,061, Botswana 51 → 656, Zimbabwe 18 →
+486, Morocco 20 → 296, Seychelles 21 → 177 -- every earlier row re-emitted
+unchanged.
+
+Each module's docstring records the published defects refused or pinned. The
+recurring kinds: ladders out of order (SU4 below SU2: Mali 2021-22, Guinea);
+copied rows/columns (Mali 2023's 65+ row, Djibouti Q2's underemployment row,
+Gambia 2025's sex columns, Mauritania A4.3); captions naming the wrong
+population (Libya Table 8 "active" = employed; Gambia 2018 "unemployment rate"
+tables that are distributions); and summary boxes disagreeing with their own
+annex (Djibouti Q4 37,7 vs 37,3).
+
+`definition` stays the NSO's own: Mozambique's "definição alternativa" (job
+search dropped) and Malawi's report-wide rate are `broad`; census concepts
+without an availability test (CAR, South Sudan) are `not_applicable`.
+
+STILL TO DO: discovery methods so Mauritania's ENTE and Djibouti's EDST notes
+update themselves (they are pinned per quarter today); Kenya's six scanned QLFS
+issues; Nigeria's Q1 2024 report layout; Tanzania/Egypt/Namibia back issues.
+ANSADE throttles hard (Mauritania `download_timeout: 900`); ine.gov.mz and
+instat-mali.org time out intermittently -- retry before concluding a source
+is broken.
 
 ---
 
@@ -243,3 +295,29 @@ Stated plainly, because they determine what the first run will do.
 
 Never loosen a regex to make a failure go away. A parser that matches the wrong
 row still produces a CSV, and nothing downstream will ever tell you.
+
+### What the offline suite covers, and two things to know before editing it
+
+Fixtures are **verbatim** from the retained PDFs. Most are excerpts of a few
+rows, which is why a run prints `no match for N row spec(s)` for Niger,
+Liberia, Botswana and Tunisia: those specs belong to rows the excerpt does not
+carry. That output is honest reporting, not rot — the parser is "loud but
+non-fatal" about a partial capture on purpose. Where a fixture IS a whole
+table (Kenya's Tables 2 and 3, Namibia, Zambia, Rwanda),
+`test_no_row_spec_goes_unmatched` asserts there are **zero** misses, which is
+what would catch a renamed label or a changed caption.
+
+**KENYA'S TRAP TEST IS REDUNDANT BY DESIGN — do not "fix" it.** Two guards stop
+the List of Tables opening a block that outlives its page: the contents pages
+are excluded, *and* a caption followed by dot leaders cannot open a block.
+Mutation-checking them one at a time shows each removal **surviving**, because
+the other still holds. Only removing BOTH reproduces the original corruption,
+and then the test fails exactly as it should:
+
+```
+KE employed Q4:        got 19398165.0, want 18438164.0   # the labour force
+KE employment ratio Q4: got 66.7,      want 63.4         # the participation rate
+```
+
+Real values, in range, correctly typed, in the wrong series — the failure mode
+no validator can see, and the reason both guards exist.

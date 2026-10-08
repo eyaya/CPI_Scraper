@@ -1,0 +1,37 @@
+country: Cameroon
+iso3: CMR
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover (two hops) ---
+# INS publishes a quarterly national-accounts analysis note; the statistics page
+# lists each release ('les-comptes-nationaux-<Ne>-trimestre-<year>'), and the note
+# page hosts the CNT PDF (Note-danalyse-CNT_T<n>_<year>.pdf). We take the first
+# (newest) such note page and its PDF.
+discover:
+  method: two_hop_scrape
+  index_url: "https://ins-cameroun.cm/statistique/"
+  page_link_contains:
+    - "comptes-nationaux"
+    - "trimestre"
+  file_link_contains:
+    - "CNT"
+    - ".pdf"
+
+parser: cameroon_ins_gdp
+geography: National
+
+notes: >
+  INS Cameroun quarterly 'Note d'analyse CNT'. The annex tables give the quarterly
+  GDP (PIB) breakdown by branch/sector (production) and by expenditure component,
+  at current prices and in chained-volume constant prices, both gross (brut) and
+  seasonally/working-day adjusted (CVS-CJO). We emit the value LEVELS (six quarters
+  per note; history accumulates across notes), in billion XAF (FCFA). Verified: PIB
+  current 2025 = 34.4tn FCFA (nominal), constant chained-volume = 26.6tn. Numbers
+  use French formatting (space thousands, comma decimal). The YoY/QoQ growth blocks
+  differ between the brut (T/T-4) and CVS-CJO (T/T-1) tables, so growth is left for
+  a later pass to avoid mislabelling. Everything as published; nothing derived.

@@ -21,6 +21,12 @@ discover:
   url: "https://www.ubos.org/wp-content/uploads/publications/04_2026Presentation_on_the_Labour_Market_Survey_2025_Report_Findings_16th_April_2026.pdf"
   save_as: uganda_lms_2025_findings.pdf
 
+# THE MAIN REPORT -- the same file labour/ reads (labour/sources/uganda.yaml).
+# Its chapter and annex rate tables carry what the deck only charts.
+extra_urls:
+  - url: "https://www.ubos.org/wp-content/uploads/publications/05_2026Labour_Market_Survey_Report_y2025.pdf"
+    save_as: uganda_lms_2025_report.pdf
+
 parser: uganda_pdf
 geography: Total country
 
@@ -53,3 +59,10 @@ notes: >
   CROSS-CHECK: ILO 15+ unemployment 12.2%, youth 15-24 17.9%, informal
   employment excluding agriculture 87.6% and 95.1%. National 14-64
   unemployment 12.4%, youth 18-30 16.2%, informal 87.6% and 91.5%.
+
+  MAIN REPORT (added 2026-10-01): EPR, LFPR, LU1-LU4 for the 15+ (chapter
+  tables 3.1, 4.1-4.7, 5.2) and the 14-64 (annex A4, "Overall" columns), youth
+  15-24 (6.3, 6.4, 6.7) and 18-30 (A6), each by location, education, age and
+  the 14 sub-regions, by sex. The two survey waves are not collected (their
+  windows straddle quarters). The four national values the deck carries are
+  checked equal and not emitted twice. Disability rows have no column.

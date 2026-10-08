@@ -20,6 +20,10 @@ discover:
 extra_urls:
   - url: "https://www.ubos.org/wp-content/uploads/publications/04_2019Projected_population_by_district_(2015-2030).xlsx"
     save_as: uganda_pop_projections_district.xlsx
+  # NPHC 2024 census, sub-county profile tables (UBOS media library, Oct 2025):
+  # Table 1 population by sex for the 147 district-level units + National.
+  - url: "https://www.ubos.org/wp-content/uploads/2025/10/NPHC-2024-Subcounty-Profiles-Excel-Tables.xlsx"
+    save_as: uganda_nphc2024_subcounty_tables.xlsx
 
 parser: ubos_population
 geography: Total country
@@ -29,6 +33,10 @@ notes: >
   sex, mid-year 2015-2050. National only; one tidy row per (age band, sex, year) as
   a projected head count. The workbook stacks 3 years per block down the sheet; the
   parser reads each year-header block and its 17 age rows. UBOS publishes male and
-  female (no combined total in this file), kept as published. Deferred: the
-  district / single-age / sub-county projection workbooks, and the newer 2025-2050
-  projections (published only as PDF).
+  female (no combined total in this file), kept as published. District all-ages
+  projections 2015-2030 come from the second workbook. The NPHC 2024 CENSUS
+  (added 2026-10-06): population by sex for the 147 district-level units and the
+  nation (45,905,417), from the sub-county profile tables -- district level only,
+  read by cell indent. Deferred: single-age / sub-county projection workbooks,
+  the 2025-2050 projections (PDF only), and the census age-sex tables (Volume 1
+  PDF).

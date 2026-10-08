@@ -78,4 +78,17 @@ LAYOUTS["uganda"] = {
 
 
 LAYOUT = LAYOUTS['uganda']
-parse = make_parser(LAYOUT)
+_deck = make_parser(LAYOUT)
+
+
+def parse(path: str, extras: list[str] | None = None):
+    """The findings deck (eight national figures), plus -- when the descriptor
+    lists it -- the LMS 2025 MAIN REPORT's rate tables by location, education,
+    age and sub-region on both working-age bases (`uganda_lms_report`)."""
+    import pandas as pd
+    from . import uganda_lms_report as R
+    frames = [_deck(path)]
+    for p in extras or []:
+        if "report" in p.lower() and p.lower().endswith(".pdf"):
+            frames.append(pd.DataFrame(R.parse_report(p)))
+    return pd.concat(frames, ignore_index=True)

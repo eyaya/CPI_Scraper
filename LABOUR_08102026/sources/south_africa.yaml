@@ -1,0 +1,63 @@
+country: South_Africa
+iso3: ZAF
+indicator: Labour
+tier: 2
+source_type: excel
+agency: Statistics South Africa (Stats SA)
+publication_code: QLFS Trends (P0211)
+frequency: quarterly
+
+# --- discover ---
+# THE SAME FILE THE `unemployment` INDICATOR COLLECTS, read for a different
+# purpose. Stats SA's QLFS Trends workbook carries both the headline status
+# series (Tables 1 and 2.x — collected there) and the composition of employment
+# (Tables 3.x — collected here). Each indicator opens only its own sheets, so
+# no figure is written twice.
+#
+# The P0211 downloads page WITHOUT an SCH parameter always renders the newest
+# release, so the current quarter's workbook is the first "QLFS Trends" .xlsx
+# link on it. The filename carries the quarter and the whole back-series to
+# 2008 is in that one file, so no month is ever hardcoded.
+#
+# Like the Stats SA CPI and GDP pages this listing sits behind Incapsula, so
+# both the page fetch and the download use a browser TLS fingerprint.
+#
+# DO NOT discover by the archive page's SCH ids: they are NOT monotonic with
+# time (Q4:2025 = 74047 but Q3:2025 = 74048, inverted). Parse the title.
+discover:
+  method: page_scrape
+  page_url: "https://www.statssa.gov.za/?page_id=1854&PPN=P0211"
+  link_contains:
+    - "QLFS Trends"
+    - ".xlsx"
+  impersonate: chrome124
+
+parser: south_africa_labour
+geography: Total country
+
+notes: >
+  Stats SA QLFS Trends, Tables 3.x — the composition of the employed, quarterly
+  from 2008 Q1, each table repeated for Both sexes / Women / Men.
+
+  Collected: industry (3.1), occupation (3.5), status in employment on BOTH
+  ICLS bases (3.6 on ICSE-93 and 3.6b on ICSE-18), and formal/informal
+  employment (3.10).
+
+  TWO STANDARDS, DELIBERATELY BOTH. Tables 3.6 and 3.6b are the same people in
+  the same quarter classified under the 19th and 20th ICLS. They are not
+  duplicates and neither supersedes the other in this dataset; the
+  `classification` column is what tells them apart, and it is part of the merge
+  key so one cannot overwrite the other.
+
+  INDUSTRY IS STATS SA'S OWN TEN-GROUP SCHEME, not ISIC. "Trade" here is not
+  ISIC Rev.4's "Wholesale and retail trade" section, so it is classified
+  National — labelling it ISIC would invite precisely the cross-country join
+  that misleads.
+
+  LEVELS ARE IN THOUSANDS, as the workbook's own header says, and are emitted
+  as thousand_persons rather than multiplied out.
+
+  Deferred, and all present in the same workbook: industry by province (3.2),
+  sector by industry (3.3), province/metro by sector (3.4), the detailed
+  ICSE-18 breakdown (3.6c), usual hours (3.7) and conditions of employment
+  (3.8a-c). Each is a descriptor change rather than new discovery work.

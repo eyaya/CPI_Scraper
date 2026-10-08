@@ -1,0 +1,62 @@
+country: Benin
+iso3: BEN
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INStaD, formerly INSAE)
+publication_code: ETVA-2014 Rapport final (transition des jeunes vers la vie active)
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# INSTAD IS DOWN FOR A REBUILD: instad.bj -- and the old insae-bj.org, which
+# now serves the same page -- answer HTTP 503 "Maintenance en cours -- une
+# nouvelle plateforme arrive prochainement" on every path (seen 2026-09-29,
+# rechecked 2026-10-01 with plain requests and chrome124 / safari17_0 /
+# firefox133 fingerprints).
+#
+# THE ONLY COPY IS THE WAYBACK MACHINE'S CAPTURE OF INSAE'S OWN FILE
+# (captured 2017-06-06), fetched in its `id_` form, which returns the original
+# bytes unchanged -- an archive of the NSO's publication, not an aggregator
+# (the DR Congo / Côte d'Ivoire precedent). The Wayback host refuses plain
+# `requests` (429), so a browser fingerprint is used.
+#
+# WHEN INSTAD RETURNS, look first for a newer household source: the ERI-ESI
+# 2017/18 report's HOUSEHOLD chapter (chapter 5 of Niger's and Togo's held
+# institutional-sector and occupation tables; Benin's retained ERI-ESI file
+# was checked only for its UPI module), EHCVM 2018/2021, and the RGPH-4 (2013)
+# economic-characteristics volume. Site gotcha: the bare /statistiques path
+# redirects endlessly while its sub-paths work.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20170606171838id_/http://insae-bj.org/?file=files/publications/Autres%20publications/rapport_analyse_etva2-Benin-2014_final.pdf"
+  save_as: INSAE_ETVA2014_rapport_final.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: benin_labour
+geography: Total country
+
+notes: >
+  ETVA-2014 (the ILO school-to-work transition survey, a HOUSEHOLD survey of
+  youth aged 15-29 drawn from the RGPH-4 frame), chapter 6: Tableau 6.1
+  status in employment (National), 6.2 branch of activity under "CITI
+  Révision 4" (ISIC Rev.4), 6.3 occupation under "CITP-08" (ISCO-08), each
+  counts and % by sex, of the 584 985 employed youth. YOUTH ONLY: age_group
+  "15-29 ans" and working_age_base "15-29" on every row.
+
+  "9 6178" in Tableau 6.3 is read as 96 178 (digits as printed, misplaced
+  space): the occupation counts then sum exactly to 584 985 and 96 178 /
+  584 985 = 16,4%, the printed share. Whitelisted in the parser.
+
+  "*" marks estimates on fewer than 30 unweighted observations (the report's
+  flag); values collected, flag recorded in the module docstring.
+
+  NOT COLLECTED: Graphique 6.1 (repeats 6.2 aggregated), 6.4 (a subset,
+  470 574), 6.5 (benefit "effectifs" larger than the youth population).
+  Other archived INSAE files checked and not usable: EMICoV synthesis (scan,
+  no text layer), EMICoV-suivi 2010 indicators (rates only), RGPH-4
+  "principaux indicateurs" and plaquettes (no composition tables).
+
+  CROSS-CHECK: indépendant 204 421 (34,9%); commerce 34,1% (women 45,5%);
+  services directs aux particuliers 24,5%; construction men 9,0%.

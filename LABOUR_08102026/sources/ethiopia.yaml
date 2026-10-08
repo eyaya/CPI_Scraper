@@ -1,0 +1,62 @@
+country: Ethiopia
+iso3: ETH
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Ethiopian Statistical Service (ESS)
+publication_code: LMS
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# THE SAME REPORT THE `unemployment` INDICATOR COLLECTS (Summary Table 3 there,
+# Summary Table 2 here). Reused verbatim from unemployment/sources/ethiopia.yaml:
+# ESS runs WordPress with a Download Manager plugin that hides files behind a
+# `?wpdmdl=<id>` route, so the /wp-content/uploads/ path is targeted directly.
+# The 2024/09 upload folder reflects a SITE MIGRATION, not the publication date
+# — do not infer a period from it. ess.gov.et is live; statsethiopia.gov.et is
+# stale.
+discover:
+  method: static_url
+  url: "https://ess.gov.et/wp-content/uploads/2024/09/Final-2021-LABOUR-FORCE-AND-MIGRATION-SURVEY_Key-finding-Report-.17AUG2021.pdf"
+  save_as: ethiopia_lms_2021.pdf
+
+parser: ethiopia_labour
+geography: Total country
+
+notes: >
+  ESS Labour Force and Migration Survey 2021, Summary Table 2 — the
+  composition of employment across FOUR survey rounds (March 1999, March 2005,
+  June 2013, February 2021) by Total / Male / Female: occupational groups,
+  industrial divisions, and employment status. Twelve numeric columns per row,
+  and the only four-round back-series here outside South Africa's QLFS.
+
+  WORKING-AGE BASE IS 10+, as ESS's own caption states. Ethiopian shares are
+  not comparable with a 15+ series without saying so.
+
+  ONE PERIOD HEADER FOR THREE STACKED BLOCKS, read from the page rather than
+  from each block's own region, with "Mar-99"/"Jun-13" mapped explicitly to
+  1999/2013 rather than left to a parser to date.
+
+  NO SCHEME IS NAMED ANYWHERE in the report, and the industry grouping is
+  plainly ESS's own ("Manufacturing, Mining, Quarrying & Constriction.", "Other
+  Service Sectors *"), so every category is National.
+
+  FOUR RUN-ON LABELS ARE REPAIRED — two pairs of categories are printed so
+  close together that the head of one lands on the row above ("Whole sale &
+  Retail Trade Other Service", leaving "Sectors *" orphaned). The VALUES are
+  correct in each case, verified against the plain-text rendering; only the
+  labels are restored to what the report prints.
+
+  ONE ROW IS DROPPED, deliberately: "Member of Small & Micro enterprise" prints
+  nine cells for twelve columns with no way to tell which rounds are missing.
+
+  TIGRAY IS EXCLUDED from the 2021 round — a coverage gap in the source that
+  any 2021 national figure carries.
+
+  Printed typos preserved as published: "Constriction." for Construction, and
+  "Whole sale" as two words.
+
+  NOT COLLECTED from the same table: mean monthly payment (Birr — the schema
+  has no currency unit), and the literacy, disability and youth unemployment
+  rates, which belong to `unemployment`.

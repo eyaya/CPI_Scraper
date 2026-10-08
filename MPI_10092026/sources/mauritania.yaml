@@ -1,0 +1,41 @@
+country: Mauritania
+iso3: MRT
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Économique (ANSADE)
+publication_code: Annuaire des Statistiques Sociodémographiques 2024, ch. 6 (IPM-M, EPCV 2019)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 9
+
+# --- discover ---
+# ANSADE's site is a SPA; its catalogue API
+# (admin.ansade.mr/wp-json/ansade/v1/publications/?lang=fr) lists this yearbook
+# as publication 13699. Files on admin.ansade.mr answer plain `requests` with
+# 404 and serve normally to a browser fingerprint; ANSADE also throttles hard,
+# so the timeout is long. The 2024 edition is PINNED: the 2025 edition drops
+# Tableaux 6.7-6.9 and garbles 6.14 (see the parser).
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Annuaire-Demographie-2.pdf"
+  save_as: ANSADE_Annuaire_Sociodemographique_2024.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 900
+
+parser: mauritania_mpi
+geography: Total country
+
+notes: >
+  IPM-M, Mauritania's national MPI (ANSADE, EPCV 2019): Alkire-Foster, 4
+  dimensions / 19 indicators, k = 38%, individual as the unit. Values from the
+  text layer of ANSADE's 2024 sociodemographic yearbook: Tableau 6.7 (national,
+  urban, rural -- IPM printed as a PERCENT), 6.8 (13 wilayas -- IPM as a 0-1
+  index), 6.9 (ages 0-4 and 5-17), each with H, A, IPM and 95% CIs.
+
+  METHODOLOGY PARAMETERS (4 dimensions, 19 indicators, unit) were read by eye
+  from ANSADE's own policy brief "Pauvreté Multidimensionnelle en Mauritanie"
+  (Nov 2022, page 6, Figure 2), which has no text layer; k = 38% is also
+  printed in the yearbook. No value is taken from the brief.
+
+  CROSS-CHECK: H 56,9%, A 56,3%, IPM 32,0%; Guidimagha IPM 0,577 (H 90,2%).

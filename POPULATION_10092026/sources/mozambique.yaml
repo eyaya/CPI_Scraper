@@ -1,0 +1,68 @@
+country: Mozambique
+iso3: MOZ
+indicator: Population
+tier: 2
+source_type: excel
+agency: Instituto Nacional de Estatística (INE Moçambique)
+publication_code: Projecções da População 2017-2050 (base IV RGPH 2017)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INE's Liferay document library, folder 92163 "Projecções da população 2017 -
+# 2050" (reached from the Censo 2017 page, NOT under Estatísticas >
+# Demográficas -- which is why Mozambique was recorded as rejected). The folder
+# page shows one entry at a time and the headless API answers 403, so the
+# twelve download paths were read off each file's view_file/<id> page
+# (92376 national; 92233..92359 provinces) and are pinned. ine.gov.mz times
+# out intermittently: retry before concluding a file is gone.
+discover:
+  method: static_url
+  url: "https://www.ine.gov.mz/documents/20119/92163/Mocambique%20publicacao.xls/950b4bd1-1e5d-3f19-5ae6-36cc90d97a76?download=true"
+  save_as: INE_MZ_Projeccoes_Mocambique.xls
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Niassa.xls/b79839b0-aa06-39a9-be90-929cbcb57d1c?download=true"
+    save_as: INE_MZ_Projeccoes_Niassa.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Cabo%20Delgado.xls/db645727-64bc-c8c1-83d9-d4c86c943c1a?download=true"
+    save_as: INE_MZ_Projeccoes_Cabo_Delgado.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Nampula.xls/29b95a15-d7eb-c094-d346-d7dc144e91b7?download=true"
+    save_as: INE_MZ_Projeccoes_Nampula.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Zambezia.xls/f4e3d16e-3bf0-a368-c79c-0d4cbb5a5d0d?download=true"
+    save_as: INE_MZ_Projeccoes_Zambezia.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Tete.xls/326d3538-2dcf-4930-175f-76e0b2c8be42?download=true"
+    save_as: INE_MZ_Projeccoes_Tete.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Manica.xls/d583a59f-2026-e4a0-bcd3-f219a2ee8109?download=true"
+    save_as: INE_MZ_Projeccoes_Manica.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Sofala.xls/a0b0445e-be95-dcba-47e8-1f1957040a22?download=true"
+    save_as: INE_MZ_Projeccoes_Sofala.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Inhambane.xls/134f3d69-8cda-ff1f-6bf1-cc667b4efdd3?download=true"
+    save_as: INE_MZ_Projeccoes_Inhambane.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Gaza.xls/c11ebe0d-5548-402e-7e4e-c7470f1e1af7?download=true"
+    save_as: INE_MZ_Projeccoes_Gaza.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Maputo%20Provincia.xls/49a7da1b-629a-8dbd-20ca-7271f0182cae?download=true"
+    save_as: INE_MZ_Projeccoes_Maputo_Provincia.xls
+  - url: "https://www.ine.gov.mz/documents/20119/92163/Maputo%20Cidade.xls/a9f6d1de-9b11-4ea1-55e5-19b22bbf6155?download=true"
+    save_as: INE_MZ_Projeccoes_Maputo_Cidade.xls
+
+parser: ine_mozambique_population
+geography: Total country
+
+notes: >
+  INE projections 2017-2050 (IV RGPH 2017 base), one workbook for the country
+  and one per province: five-year age groups 0-4 .. 80+ and Total by sex, the
+  TOTAL residence block only (no urban/rural column in this schema). The
+  "Grupos etários seleccionados" block (overlapping sums) is not collected.
+  Checked every run: bands = Total per sex, Homens + Mulheres = Total, Quadro
+  resumo = year sheets, provinces sum to the national figure.
+
+  CAPTION SLIPS HANDLED: Sofala 2050 captioned "Indicadores"; Manica 2034's
+  Total row labelled "Q19"; sheet names vary ("2017", " 2017", "Q1_2017").
+
+  NOT COLLECTED: each workbook's "Indicadores" sheet (life expectancy, infant
+  mortality, fertility by year) -- a further source for the mortality /
+  fertility indicators.
+
+  CROSS-CHECK: 2017 27,864,265; 2025 34,090,466 (= Anuário 2025 Quadro 2.1.1);
+  Niassa 2050 4,773,510.

@@ -1,0 +1,61 @@
+country: Congo
+iso3: COG
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS, formerly CNSEE)
+publication_code: ECOM 2005 Profil de pauvreté + EESIC 2009 phase-1 indicators + Tableaux Emploi 2012
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 2
+
+# --- discover ---
+# Primary and the EESIC extra REUSED VERBATIM from labour/sources/congo.yaml.
+# INS's rebuilt site (ins-congo.cg) hosts no household employment report --
+# its EHCVM 2022 report has no employment chapter, its newest report (ESUPSO
+# 2026) is a user-satisfaction survey, and every yearbook labour chapter is
+# administrative. CNSEE published the household surveys on cnsee.org (dead);
+# the Wayback `id_` captures return CNSEE's ORIGINAL BYTES (the DR Congo
+# precedent), so this is the NSO's own publication, not an aggregator.
+# `impersonate` and `download_timeout` now apply to the extras as well.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20060617195633id_/http://www.cnsee.org/Donnees/Enquete/PDF/ECOM.pdf"
+  save_as: CNSEE_ECOM_2005_Profil_pauvrete.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://web.archive.org/web/20111114123304id_/http://www.cnsee.org/pdf/IndicateurPhase1-09.pdf"
+    save_as: CNSEE_EESIC_2009_IndicateurPhase1.pdf
+  # Found through the Wayback CDX index of cnsee.org/pdf/ (2026-10-01).
+  - url: "https://web.archive.org/web/20131113143408id_/http://www.cnsee.org/pdf/TableauxEmploi2012.pdf"
+    save_as: CNSEE_TableauxEmploi2012.pdf
+
+parser: congo_unemployment
+geography: Total country
+
+notes: >
+  THREE SURVEYS, NEVER CHAINED. ECOM 2005 (national, June-August 2005),
+  Annexe 3: taux de chômage (strict -- the report's glossary states the three
+  ILO criteria) and taux d'activité 15+ by stratum; the only NATIONAL source.
+  EESIC 2009 (November 2009, Brazzaville and Pointe-Noire only): activity by
+  age/sex, BIT unemployment by age/sex, élargi, long-term share, visible
+  underemployment, informality, employment ratio. "Tableaux Emploi et Chômage
+  en milieu Urbain" (Nov-Dec 2011): BIT and élargi unemployment by town, sex,
+  age and education; activity by town and age.
+
+  PUBLISHED DEFECTS: EESIC 2009's pooled urban column lies outside its two
+  cities for male BIT unemployment (13,9 vs 13,5 / 11,5) and élargi (26,6 vs
+  28,6 / 32,1) -- those two urban cells refused, re-checked every run. The
+  2011 tables disagree in the last digit between Tab. 5, 6 and 9 -- kept,
+  told apart by series_label.
+
+  CHECKED AND NOT USABLE: RAPPORT_QUIBB_2012 (QUIBB 2011, national) -- every
+  capture of CNSEE's file is byte-identical and truncated at source (no
+  trailer or root object); EHCVM 2022 (no employment chapter); ESUPSO 2026
+  (user satisfaction); yearbooks 2005-2018 (administrative); RGPH 2007 volumes
+  on cnsee.org (demographic only).
+
+  CROSS-CHECK: ECOM 2005 chômage 19,4 (Brazzaville 32,6), activité 69,5;
+  EESIC urban BIT 16,1; 2011 urban BIT 10,0, élargi 19,7, activité 53,1.

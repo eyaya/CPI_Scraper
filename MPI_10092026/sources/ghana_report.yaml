@@ -1,0 +1,73 @@
+# =====================================================================
+# RESTORED 2026-10-07 FROM THE WAYBACK MACHINE'S COPY OF GSS'S OWN FILE.
+#
+# GSS rebuilt statsghana.gov.gh on Next.js and its catalogue still lists this
+# report ({"id":"BD50","title":"Multidimensional Poverty Ghana Report",
+# "year":2020,...}) with "fileUrl":"#" -- as it does for every entry. The old
+# path /gssmain/fileUpload/pressrelease/Multidimensional%20Poverty%20Ghana_Report.pdf
+# now 404s on GSS's host. The Internet Archive holds an `id_` capture of that
+# exact GSS URL (2022-07-12), which returns GSS's original bytes unchanged:
+# the NSO's own publication from the NSO's own former address -- not an
+# aggregator copy (OPHI/UNDP), which this indicator never uses. Same route as
+# the DR Congo, Congo, Benin and Côte d'Ivoire sources in other indicators.
+#
+# If GSS attaches the file again (a non-"#" fileUrl), point `url` at it.
+#
+# THIS IS NOT A VINTAGE OF sources/ghana.yaml. That descriptor collects the
+# GSS StatsBank PxWeb table (PHC 2021, census-based). This is the SEPARATE 2020
+# GLSS7 edition -- 3 dimensions, 12 indicators -- a different measure (its own
+# measure_name), never to be chained to the census series. See PENDING.md.
+# =====================================================================
+country: Ghana
+iso3: GHA
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Ghana Statistical Service (GSS)
+publication_code: Ghana MPI (GLSS7/MICS)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+
+# --- discover ---
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20220712201930id_/https://statsghana.gov.gh/gssmain/fileUpload/pressrelease/Multidimensional%20Poverty%20Ghana_Report.pdf"
+  save_as: ghana_mpi_report.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: ghana_report_mpi
+geography: Total country
+
+notes: >
+  GSS "Ghana's Multidimensional Poverty Index", from GLSS Round 7 (2016/2017)
+  with MICS 2011 and 2017/2018.
+
+  GHANA HAS THREE MPI PRODUCTS AND THEY ARE NOT ONE SERIES:
+    1. the StatsBank PHC 2021 API table — collected by ghana.yaml, census-based;
+    2. THIS 2020 report — 3 dimensions, 12 indicators, k = 33%, from GLSS7;
+    3. a quarterly AHIES/QLFS series (4 dimensions, 13 indicators, k = 33.3%)
+       covering 2024 Q1 to 2025 Q3, which is NOT hosted on a GSS domain — it is
+       on sdgsghana.gov.gh. GSS-authored but off-NSO-host, so it is not
+       collected here; see PENDING.md.
+  The methodology changed between (2) and (3), so they must never be chained.
+
+  NATIONAL measure. Note that 3 dimensions and k = 33% make it LOOK like the
+  global MPI, but it uses 12 indicators rather than 10 — it is a national
+  measure and is tagged as one. The schema refuses `mpi_type: global` for
+  anything that is not 3 dimensions AND 10 indicators precisely so a look-alike
+  cannot slip through.
+
+  ROWS ARE METRICS, columns `Value | 95% CI lower | 95% CI upper`. The intervals
+  are captured.
+
+  TABLES READ: 3.1 national (with vulnerable k=20-33.3% and severe k=50%),
+  3.2 rural/urban, 3.3 ecological zones, 3.4 the ten pre-2019 regions, 3.5 by
+  sex of household head -- each with 95% confidence intervals. The national
+  row is printed three times with different intervals (3.1: 0.224-0.2485;
+  3.2: 0.220-0.246; 3.3: M0 0.240, 0.220-0.250); Table 3.1's is taken.
+
+  CROSS-CHECK: MPI 0.236 (0.224-0.2485); Incidence H 45.6% (43.7-47.5);
+  Intensity A 51.7% (51-52.5); vulnerable 31.0; severe 21.4; rural H 64.6;
+  Northern H 80.8; male-headed M0 0.251, female-headed 0.199.

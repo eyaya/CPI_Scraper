@@ -36,6 +36,23 @@ from . import ess_ethiopia_population
 from . import dgs_gabon_population
 from . import instad_benin_population
 from . import instat_mali_population
+from . import ons_algeria_population
+from . import cbs_sudan_population
+from . import capmas_egypt_population
+from . import bsc_libya_population
+from . import nbs_nigeria_population
+from . import bos_lesotho_population
+from . import cso_eswatini_population
+from . import ine_mozambique_population
+from . import ine_saotome_population
+from . import inseed_chad_population
+from . import insbu_burundi_population
+from . import ins_drc_population
+from . import inege_eqguinea_population
+from . import guinea_ins_population
+from . import anstat_civ_population
+from . import inseed_comoros_population
+from . import ansade_mauritania_population
 
 REGISTRY = {
     "instat_mali_population": instat_mali_population.parse,  # INSTAT RGPH-5 2022: 20 regions + 21 age bands x sex
@@ -63,7 +80,9 @@ REGISTRY = {
     "ansd_senegal_population": ansd_senegal_population.parse,  # ANSD RGPH-5 2023 Ch1 national age x sex (Tier-3 PDF, word-gap parse)
     "niger_ins_population": niger_ins_population.parse,  # INS Niger RGPH 2012 Tableau A1 national age x sex (Tier-3 PDF)
     "gbos_gambia_population": gbos_gambia_population.parse,  # GBoS 2024 GPHC Table 13 national age x sex (Tier-3 PDF, data portal)
-    "lisgis_liberia_population": lisgis_liberia_population.parse,  # LISGIS 2022 census county x sex xlsx
+    "lisgis_liberia_population": lisgis_liberia_population.parse,
+    # the same county table from LISGIS's dataset API (site rebuilt 2026)
+    "lisgis_liberia_population_api": lisgis_liberia_population.parse_api,  # LISGIS 2022 census county x sex xlsx
     "nisr_rwanda_population": nisr_rwanda_population.parse,  # NISR RPHC5 2022 Table 3 mid-year age x sex (xls)
     "ine_angola_population": ine_angola_population.parse,  # INE Angola Censo 2024 province x sex + national + broad age (xlsx)
     "instat_madagascar_population": instat_madagascar_population.parse,  # INSTAT RGPH-3 2018 Tableau 69 national age x sex (urban+rural, Tier-3 PDF)
@@ -74,4 +93,54 @@ REGISTRY = {
     "hcp_morocco_population": hcp_morocco_population.parse,  # HCP Morocco projection single-year age x sex 2014-2050 (Tier-2 Google Sheet xlsx)
     "statssl_population": statssl_population.parse,  # Stats SL 2015 PHC national by sex (Tier-2 docx; sub-national incomplete)
     "nbs_seychelles_population": nbs_seychelles_population.parse,  # NBS Seychelles mid-year ERP single-year age x sex (Tier-3 PDF Table 3a)
+    # ONS Algeria Rétrospective 1962-2020 ch.1: mid-year estimates by sex 1970-2019
+    # and by age x sex 1999-2019 ('000s); censuses 1966/77/87/98 by age x sex,
+    # 1987/98/2008 by wilaya x sex; density by wilaya at the five censuses.
+    "ons_algeria_population": ons_algeria_population.parse,
+    # CBS Sudan 2008 census (Wayback id_ ZIP), today's Sudan only: North block
+    # (5-yr age x sex) + 15 northern states by 5-yr (P01) and single-year (P04) age.
+    "cbs_sudan_population": cbs_sudan_population.parse,
+    # CAPMAS pub.150 population estimates, 1 January of the edition year:
+    # national + 27 governorates x sex (names stated; Arabic text layer mangled).
+    "capmas_egypt_population": capmas_egypt_population.parse,
+    # BSC Libya Statistical Book 2024 (Libyan nationals): census 1984/95/2006 by sex
+    # + sex ratio; estimates 2014-23 ('000s), 2024 by 22 regions and 5-yr age x sex.
+    "bsc_libya_population": bsc_libya_population.parse,
+    # NBS Demographic Statistics Bulletins 2022/21/20: national by sex 2006-2022,
+    # 5-yr + single-year age x sex 2018-2022, 37 states 2016-2020.
+    "nbs_nigeria_population": nbs_nigeria_population.parse,
+    # BOS projections 2016-2036: national + 10 districts x 5-yr age x sex.
+    "bos_lesotho_population": bos_lesotho_population.parse,
+    # CSO projections report (Wayback id_): 2017 census by region x sex +
+    # national 5-yr age x sex 2017-2038.
+    "cso_eswatini_population": cso_eswatini_population.parse,
+    # INE projections 2017-2050, 12 xls: national + 11 provinces x 5-yr age x sex.
+    "ine_mozambique_population": ine_mozambique_population.parse,
+    # INE projections 2012-2035: national 5-yr age x sex, districts (2001/2012
+    # census + projections), district x age.
+    "ine_saotome_population": ine_saotome_population.parse,
+    # INSEED yearbooks 2019-20..2024: RGPH2 projections 2019-2024, national/urban/rural
+    # x 5-yr age x sex, 23 provinces x sex (2019-21).
+    "inseed_chad_population": inseed_chad_population.parse,
+    # INSBU Annuaire 2024: RGPHAE 2024 census (5 provinces, milieu, age x sex)
+    # + 1979/1990/2008 censuses by age x sex.
+    "insbu_burundi_population": insbu_burundi_population.parse,
+    # INS RDC Annuaire 2015 (Wayback id_): 2015 estimates, 26 provinces + national,
+    # 5-yr age x sex (thousands).
+    "ins_drc_population": ins_drc_population.parse,
+    # INEGE Anuario 2026: censuses 1983/1994/2001/2015 by region/province, 2015
+    # districts, sex shares, density.
+    "inege_eqguinea_population": inege_eqguinea_population.parse,
+    # INS Guinée RGPH-3 2014 census (préfectures, regions x age x sex) + RGPH-3
+    # projections 2014-2040 (national age x sex; regions/préfectures x sex).
+    "guinea_ins_population": guinea_ins_population.parse,
+    # ANStat Côte d'Ivoire RGPH 2021 Tome 1 + RGPH 2014 report (Wayback id_
+    # copies): districts/regions, age x sex.
+    "anstat_civ_population": anstat_civ_population.parse,
+    # INSEED Comoros RGPH 2017 État et structure: islands + préfectures x sex,
+    # age x sex by island.
+    "inseed_comoros_population": inseed_comoros_population.parse,
+    # ANSADE Mauritania RGPH-5 2023 wilayas x age x sex, censuses 1988-2023 by
+    # wilaya + growth, national projections 2023-2053.
+    "ansade_mauritania_population": ansade_mauritania_population.parse,
 }
