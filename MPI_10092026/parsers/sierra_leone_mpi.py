@@ -15,8 +15,8 @@ from .mpi_tables import make_parser
 #
 # Five dimensions, with Housing and Energy split out as their own -- distinctive.
 #
-# THE 2023 UPDATE IS NOT COLLECTABLE: it exists only on UNDP and OPHI, both
-# aggregators. The newest NSO-hosted Sierra Leone MPI is this 2019 edition.
+# THE 2023 UPDATE (DHS 2019) IS NOW ON STATS SL'S OWN DOMAIN and is collected
+# by sierra_leone_2023_mpi.py -- same measure, the next year (2026-10-07).
 #
 # EVERY ESTIMATE IS PUBLISHED WITH A 95% CONFIDENCE INTERVAL, which is why the
 # rows are so wide. Table 3 prints ten numbers per row:

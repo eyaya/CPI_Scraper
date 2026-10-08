@@ -1,0 +1,38 @@
+country: Libya
+iso3: LBY
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Bureau of Statistics and Census (BSC)
+publication_code: الكتاب الإحصائي (Statistical Book) 2024, population chapter
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# BSC is WordPress; /wp-json/wp/v2/media lists every upload, including each
+# Statistical Book edition. The edition is PINNED: `wp_media_named` flattens
+# names to ASCII, so an Arabic name_contains ("الكتاب-الإحصائي") would match
+# every file. Point `url` at the next edition when it is posted (the media
+# API, newest first, shows it). Plain requests with a browser User-Agent
+# fetch it (curl_cffi was reset by this host for labour).
+discover:
+  method: static_url
+  url: "https://bsc.ly/wp-content/uploads/2026/05/%D8%A7%D9%84%D9%83%D8%AA%D8%A7%D8%A8-%D8%A7%D9%84%D8%A5%D8%AD%D8%B5%D8%A7%D8%A6%D9%8A-2024.pdf"
+  save_as: BSC_Libya_Statistical_Book_2024.pdf
+  download_timeout: 300
+
+parser: bsc_libya_population
+geography: Total country
+
+notes: >
+  LIBYAN NATIONALS ONLY. Census 1984 / 1995 / 2006 by sex + sex ratio;
+  estimates 2014-2023 (total, thousands); estimates 2024 by 22 regions x sex
+  and by 5-year age x sex (persons). Tables found by their English captions
+  (the book is bilingual); region names are BSC's English ones. Age bands
+  printed right-to-left ("4-0") are written in reading order ("0-4"). M + F =
+  T held to +-1; regions sum to the Total row within one person per region.
+  The series' 2024 value duplicates the detailed tables and is taken from
+  them.
+
+  CROSS-CHECK: census 2006 5 298 152; estimate 2024 7 384 208 (M 3 745 587 /
+  F 3 638 621); Tripoli 1 389 416.

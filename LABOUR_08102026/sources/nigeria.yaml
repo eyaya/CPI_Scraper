@@ -1,0 +1,51 @@
+country: Nigeria
+iso3: NGA
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+publication_code: NLFS Annual Report 2023
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# NOT the `unemployment/` discover block: that one takes the newest QUARTERLY
+# NLFS bulletin from the e-library, which carries no composition tables. The
+# ANNUAL state report is a fixed file under /pdfuploads/.
+#
+# DO NOT resolve it through the e-library's /elibrary/read/<id> or
+# /download/<id> routes: they are scrambled -- the download for the entry
+# titled "Annual 2023" delivered the NLFS 2024-Q1 bulletin, and other ids
+# return fuel-price files. The /pdfuploads/ name is the reliable handle. When
+# NBS publishes a 2024 annual report, add it here (its name is not
+# predictable, so check the e-library listing by eye).
+discover:
+  method: static_url
+  url: "https://www.nigerianstat.gov.ng/pdfuploads/Annual_Nigerian_Labour_Force_Survey_Report.pdf"
+  save_as: nigeria_nlfs_annual_2023.pdf
+
+parser: nigeria_labour
+geography: Total country
+
+notes: >
+  NBS NLFS Annual Report 2023: four quarters pooled (October 2022 - November
+  2023, revised 2022 methodology) for state estimates. Base 15+.
+
+  COLLECTED: Table 8 self-employed / employees by state and sex (%); Table 17
+  informal employment and informal employment excluding agriculture by state
+  and sex (counts, with NATIONAL); Figure 9 the 20 ISIC sections and Figure 11
+  the 9 occupation major groups (national %, printed as text data labels one
+  per line -- the Burkina Faso rule, not Senegal's).
+
+  CLASSIFICATION National throughout: ISIC and ISCO are named in the text but
+  never with a revision (the Somalia call). Figure 9's labels are truncated in
+  the chart ("...repair of motor…") and kept verbatim.
+
+  NOT COLLECTED: Table 8's employment-to-population columns (unemployment's);
+  Table 9 / Figure 8 private-public split of EMPLOYEES only (Lesotho
+  precedent); Table 10 / Figure 10 row percentages; the per-state annex
+  Tables 18+ (residence / education / age depth -- a later layout).
+
+  CROSS-CHECK: agriculture 30.1% (25,341,219); trade 27.5%; services and sales
+  workers 33.8%; informal employment 77,561,393 (states sum to it exactly;
+  M + F misses the printed total by 6); Lagos employees 33.8%.

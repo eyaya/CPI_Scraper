@@ -8,13 +8,16 @@ frequency: monthly
 verify_ssl: false            # bos.gov.ls serves an incomplete TLS certificate chain
 
 # --- discover ---
-# BOS links the latest monthly 'CPI_<Month>_<Year>.pdf' from its home page.
+# BOS links the latest monthly CPI release from its home page. It is now shipped
+# ZIPPED ('CPI_<Month>_<Year>.zip') rather than as a bare PDF, so we match the
+# archive and let the harness unzip the single PDF inside it.
 discover:
   method: latest_dated
   page_url: "https://www.bos.gov.ls/"
   link_contains:
     - "cpi"
-    - ".pdf"
+    - ".zip"
+  inner_suffix: ".pdf"
 
 parser: lesotho_bos
 geography: National

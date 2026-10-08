@@ -1,0 +1,41 @@
+country: Djibouti
+iso3: DJI
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut de la Statistique de Djibouti (INSTAD)
+frequency: monthly
+
+# --- discover ---
+# instad.dj is a Nuxt SPA with no server-rendered content; its document lists come
+# from an Express backend, `GET <api_base>/fichiers/<categorie>/<year>`, whose
+# records carry a 0-based `month` and an `imgUrl` pointing at the PDF in the
+# project's Firebase Storage bucket. We take the newest month of the newest year
+# that answers.
+discover:
+  method: instad_dj_ipc
+  api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
+  categorie: "Indice des prix à la consommation"
+
+parser: djibouti_instad
+geography: National
+expect_divisions: 13          # GLOBAL + 12 COICOP-1999 functions
+
+notes: >
+  CPI (IPC) on the AFRISTAT/Phoenix methodology, base 100 en 2022 — the base
+  taken over from the 2013 base with the September 2023 issue, when the
+  geographic scope widened from Djibouti-Ville alone to three regions
+  (Djibouti-Ville, Ali-Sabieh, Tadjourah) and five communes; 520 varieties,
+  Laspeyres, weights from the 2017 household expenditure survey. 'Tableau 2' is
+  the national table: 12 COICOP-1999 functions numbered 1..12 (the number IS the
+  division code) plus a GLOBAL row, with consumption items interleaved between
+  the functions — they carry no leading number and drop out. Its column headers
+  are typeset ROTATED 90°, so the parser reads them off the char matrices rather
+  than the text layer; they give the five index columns' periods (same month a
+  year earlier, then m-3 … m), so one bulletin yields several months. We emit
+  index + inflation_mom (1 mois) + inflation_yoy (12 mois); the 3-month variation
+  and the monthly contribution have no measure in the CPI schema and are dropped,
+  as are the secondary nomenclatures of 'Tableau 3' (produits frais, énergie,
+  local/importé, durabilité) and the average prices of 'Tableau 4'. Bulletin
+  N°1 of the 2022 base is September 2023, so that is the earliest month the
+  series can reach. French labels kept as published.

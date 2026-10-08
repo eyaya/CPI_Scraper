@@ -1,0 +1,38 @@
+country: Somalia
+iso3: SOM
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Somali National Bureau of Statistics (SNBS)
+frequency: monthly
+
+# --- discover ---
+# nbs.gov.so is WordPress; the monthly CPI report is a media item. The category
+# page (/category/consumer-price-index/) links the same PDFs, but the media API
+# lists them all in one JSON call. Filenames carry an English month + year in a
+# word order that varies between issues ('May-CPI-Report-2026.pdf',
+# 'CPI-December-2025.pdf'), so we date them by name, not by upload date — two
+# issues are often uploaded on the same day.
+discover:
+  method: wp_media_latest
+  api_url: "https://nbs.gov.so/wp-json/wp/v2/media?search=CPI&per_page=100"
+  name_contains: "cpi"
+  lang: en
+
+parser: somalia_snbs
+geography: National
+expect_divisions: 14          # CPI TOTAL + 13 COICOP-2018 divisions
+
+notes: >
+  Rebased in January 2025 on the 2022 SIHBS: COICOP 2018 (13 divisions), 537 items,
+  index reference 2022, covering Mogadishu + all Federal Member States. RATES ONLY —
+  the index level appears solely as a chart (Graph 1), so no index series is
+  captured; base_period is left blank. Each report carries a rolling 3-month window
+  in four tables, keyed by caption rather than table number: 'Division level
+  annual/monthly' (COICOP divisions + CPI TOTAL, national) and 'State level
+  annual/monthly' (the six FMS as `geography`, all-items only; the state tables'
+  CPI TOTAL row repeats the national figure and is dropped). Puntland indices are
+  estimated by SNBS. The report month is the last column header, so the parser is
+  self-dating. Long division labels overrun the first value column and pdfplumber
+  merges the glyphs ('MAINTEN6A.N3C%E'), so values are read at character level from
+  the value zone with alphabetic characters dropped. Opens the Horn of Africa.

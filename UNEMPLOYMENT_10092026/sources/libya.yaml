@@ -1,0 +1,38 @@
+country: Libya
+iso3: LBY
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Bureau of Statistics and Census (BSC)
+publication_code: Labour Force Survey 2022 (نتائج مسح القوى العاملة 2022)
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 4
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/libya.yaml -- the same 53 MB report.
+# Listed on bsc.ly/our-versions/; plain requests with the project headers
+# fetches it (curl_cffi was reset by the server).
+discover:
+  method: static_url
+  url: "https://bsc.ly/wp-content/uploads/2024/02/نتائج-مسح-القوي-العاملة-2022.pdf"
+  save_as: bsc_libya_lfs_2022.pdf
+  download_timeout: 300
+
+parser: libya_unemployment
+geography: Total country
+
+notes: >
+  BSC LFS 2022, Libyan nationals aged 15+ only. Table 8: employed counts and
+  activity rates by 22 regions x sex; Table 20: unemployed counts and
+  unemployment rates by region x sex. Labels stated in Arabic from the
+  rendered pages (the text layer's font mapping is broken); rows anchored by
+  arithmetic.
+
+  Table 8's caption says "economically active" but its counts are the
+  employed: they equal the report's employed total and Table 13-a's regional
+  totals, and Table 20's rates are U / (Table 8 + U) in every cell -- checked
+  on every run.
+
+  CROSS-CHECK: unemployment 15,3 (M 13,3 / F 18,4); activity rate 49,1;
+  unemployed 354 267; employed 1 956 577.

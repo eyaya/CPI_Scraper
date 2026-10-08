@@ -1,0 +1,47 @@
+country: Liberia
+iso3: LBR
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+publication_code: LBR-LFS 2016-2017 main report
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# LISGIS REBUILT ITS SITE (seen 2026-09-25) as a single-page app over a JSON
+# API: every HTML path returns the same shell, and content comes from /api/*.
+# `/api/survey-report-grid` lists each survey report with a direct downloadUrl;
+# the LFS 2016/2017 main report is /uploads/surveys/lfs-2016-2017.pdf (the
+# 2010 LFS is /uploads/surveys/lfs-2010.pdf). `/api/publications` lists a
+# "Labour Force Survey Report 2025" with fileUrl null -- not yet uploaded;
+# re-check it, and switch `url` when a file appears.
+discover:
+  method: static_url
+  url: "https://www.lisgis.gov.lr/uploads/surveys/lfs-2016-2017.pdf"
+  save_as: lfs-2016-2017.pdf
+
+parser: liberia_labour
+geography: Total country
+
+notes: >
+  LISGIS LFS 2016-17 main report, chapter 5 (ILO template): Table 5.1 status
+  (ICSE-93) by sex, counts + %; 5.2 ISIC Rev 4 sections (letters kept); 5.3
+  ISCO-08 by sex; 5.4 employed by type of production unit (formal / informal /
+  household); 5.5 formal / informal jobs by sex and residence, counts + %.
+
+  DATA-QUALITY FLAG FROM THE REPORT ITSELF: "Not elsewhere classified" is 43.5%
+  of employment by industry and 24.1% by occupation.
+
+  Table 5.4 prints labels BELOW their numbers; word geometry mispairs them, so
+  it is read from the text layer (see the parser). Its Total duplicates 5.5's.
+
+  ALSO NOW REACHABLE through the same API: the 2022 census "work activity"
+  tables as structured datasets (/api/datasets, ids lisgis-labor-table-1..29,
+  activity status of persons 5+ by sex, locality, county) -- a Tier-1 source
+  for `activity_status`, not taken here yet. And `unemployment`'s blocked
+  Liberia descriptor can be restored: its layout reads this same report.
+
+  CROSS-CHECK: employed 538,902 (male 317,698 / female 221,204); employees
+  161,633 (30.0%); agriculture 25.3%; skilled agricultural workers 28.5%;
+  informal jobs 467,318 (86.7%); informal-sector units 231,092.

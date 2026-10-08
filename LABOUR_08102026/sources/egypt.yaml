@@ -1,0 +1,72 @@
+country: Egypt
+iso3: EGY
+indicator: Labour
+# Tier 3: the DELIVERABLE is a report PDF, even though discovery goes through
+# CAPMAS's JSON API. Tier describes the source's shape, not how the link is
+# found -- every other report PDF here is tier 3, and this read as tier 1 (API)
+# in the coverage tables.
+tier: 3
+source_type: pdf
+agency: Central Agency for Public Mobilization and Statistics (CAPMAS)
+publication_code: LFS quarterly bulletin (publication id 11)
+frequency: quarterly
+
+# --- discover ---
+# THE SAME BULLETIN THE `unemployment` INDICATOR COLLECTS (headline rates there,
+# Tables 16 and 17 here). Reused verbatim from unemployment/sources/egypt.yaml:
+# the JSON API on port 8080 returns the newest issue with `pdfUrl`/`excelUrl`;
+# id 11 is the quarterly LFS bulletin (32 is CPI, 12 the annual bulletin).
+#
+# PDF, NOT EXCEL: CAPMAS publishes in either format and the current issues are
+# PDF-only. Discovery used to fall back silently, writing a PDF to a .xlsx name;
+# that is refused now. If the workbook returns, switch `prefer` and `parser`
+# back TOGETHER — a workbook would also make the column order unambiguous
+# without geometry.
+discover:
+  method: capmas_publication
+  api_base: "https://www.capmas.gov.eg:8080"
+  publication_id: 11
+  prefer: pdf
+  save_as: egypt_lfs_quarterly.pdf
+
+parser: egypt_labour
+geography: Total country
+
+notes: >
+  CAPMAS quarterly Labour Force Survey bulletin: Table (16) occupation (9
+  groups) and Table (17) economic activity (21 ISIC-derived sections, split
+  across two pages), as percentage distributions of employed persons 15+ by
+  Male / Female / Total.
+
+  THE FIRST TRANSPOSED SOURCE HERE: categories run ACROSS the columns and each
+  row is a sex, so the layout names the categories and `label_is_sex` reads the
+  row. The table is printed right-to-left, so the columns are in REVERSE order.
+  That order was established from the page geometry — each numeric column's
+  x-centre matched to the header cell above it — and then confirmed by the
+  report's own arithmetic: each sex's 21 activity shares sum to 100.0 across
+  the two pages (male 83.7 + 16.3).
+
+  ONLY THE NATIONAL BLOCK IS COLLECTED. Both tables repeat every category by
+  geographical region in three-row blocks, but the region name is printed once
+  per block and vertically centred, landing on the middle row in some tables and
+  the first row in others. Attributing a region wrongly would be silent
+  corruption, so each scope stops at the national "Total" row. The regional
+  detail is a deliberate omission, not an oversight.
+
+  TABLE (13), EMPLOYMENT STATUS, IS NOT COLLECTED: two of its four column
+  headers cannot be read from the page ("Contributing activity", "Employed"),
+  and naming a category by guesswork is worse than omitting it.
+
+  CLASSIFICATIONS ARE NATIONAL by CAPMAS's own methodology — its 2017
+  occupational and 2021 industry classifications are "derived from" ISCO and
+  ISIC Rev.4 respectively, the same relationship Tanzania's TASCO and Namibia's
+  NASCO-96 have.
+
+  CAPMAS's own spellings are preserved ("proficinals", "agricltural",
+  "activites", "retailtrade", "gaz", "adminstration", "undifferentiatid"). The
+  single correction is "waste", which the text layer splits as "wast e" — an
+  extraction artefact rather than anything a reader would see.
+
+  QUARTERLY AND ACCUMULATING: each issue publishes one quarter, so the merge is
+  what builds the series. Poll on `publishDate`, not `releaseDate` — the API
+  distinguishes them and Q1 2026 was released in June but published in July.

@@ -1,0 +1,37 @@
+country: Sao_Tome_and_Principe
+iso3: STP
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Instituto Nacional de Estatística (INE)
+frequency: monthly
+
+# --- discover ---
+# ine.st keeps the IPC archive in a three-level Phoca Download tree: the index
+# category lists one category per year, each year one per month, each month the
+# explanatory note plus the result workbooks. Phoca's download route serves the
+# file's detail PAGE rather than the file, so the discovery walks newest year ->
+# newest month and builds the direct upload path from the note's preview link and
+# the workbook's own (accented) filename.
+discover:
+  method: ine_st_ipc
+  index_url: "https://www.ine.st/index.php/component/phocadownload/category/78-ipc-ano"
+  file_contains: "publicação1"
+
+parser: sao_tome_ine
+geography: National
+expect_divisions: 13          # IPC GERAL + 12 COICOP-1999 groups
+
+notes: >
+  CPI (IPC), base 2014 = 100, COICOP-1999 groups 01..12 plus IPC GERAL.
+  'Publicação1' is the summary workbook — one row per group, one column per month
+  of the current year plus December of the previous one, so a single file carries
+  the year to date (8 periods in the July 2026 issue) rather than one month. Its
+  'Por memória' block adds the general index's month-on-month ('Variação em
+  cadeia') and year-on-year ('Taxa inflação homóloga') rates for every month
+  shown; the year-to-date rate ('Taxa inflação acumulada') has no measure in the
+  CPI schema and is dropped, as is the legacy empty 'Base 1995' column.
+  'Publicação2' — the same months with the full sub-group detail (011.., 01101.,
+  …) — and the earlier year/month folders back to 2018, plus a 'Série temporal
+  (2005-2019)' category, would extend the history and the depth if wanted later.
+  Portuguese labels kept as published, minus the code prefix.

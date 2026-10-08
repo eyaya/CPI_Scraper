@@ -1,0 +1,42 @@
+country: Chad
+iso3: TCD
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique, des Études Économiques et Démographiques (INSEED)
+publication_code: ECOSIT4 Rapport général
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 3
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/chad.yaml. inseed.ssn-tchad.td is a SPA
+# over a Node API (/api/publications?limit=1000, `titre` + `fichier.url`);
+# ECOSIT4 is a one-off round, so the uploaded file is pinned.
+discover:
+  method: static_url
+  url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1767705826725-13895961.pdf"
+  save_as: tchad_ecosit4_rapport_general.pdf
+
+parser: chad_unemployment
+geography: Total country
+
+notes: >
+  INSEED ECOSIT4 (household consumption / informal-sector survey, July-Sept
+  2018 and Jan-Apr 2019), chapter 7. Taux d'activité 5+ and 15+ (7.01, 7.03,
+  7.04 by province x age, 7.05 by sex); chômage BIT 15-64 and 15+ by stratum,
+  sex and age (7.13, 7.14) and by province (7.15, 7.16); chômage élargi 15+
+  (7.17) and 15-64 (7.19); BIT and élargi by education (7.20) and diploma
+  (7.21); SU3 by province x milieu (7.25).
+
+  NOT COLLECTED: 7.19's BIT half (its sex rows print rural before urban, its
+  age rows urban before rural; 7.13 has the same figures cleanly); 7.24's
+  counts (main-d'oeuvre 4 346 263 is below the 4 350 913 employed the report
+  quotes, and its unemployed give 1,1% against the published 2,0%); 7.18
+  (re-presents 7.14/7.17); 7.22 sous-emploi invisible (INCOME-based, not
+  time-related -- no topic); rows of 7.15/7.16/7.20/7.21 printing fewer cells
+  than columns (a blank shifts the rest), except N'Djaména, which has no rural
+  stratum and is mapped explicitly.
+
+  CROSS-CHECK: activité 15+ 60,0; BIT 15+ 2,0 (N'Djaména 7,9); élargi 15+
+  18,5; élargi 15-64 19,1; SU3 8,6 (N'Djaména 24,9).

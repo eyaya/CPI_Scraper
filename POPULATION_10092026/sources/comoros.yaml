@@ -1,0 +1,41 @@
+country: Comoros
+iso3: COM
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED)
+publication_code: RGPH 2017 -- Rapport Analyse État et Structure de la population
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INSEED's documents live on its NADA catalogue (nada.inseed-comores.org; the
+# old inseed.km domain now belongs to Comores Telecom). The RGPH 2017 study is
+# catalogue 8; its related-materials page lists every thematic report as
+# /index.php/catalog/8/download/<n> -- "État et Structure de la population" is
+# download 68 (the same catalogue `labour/` reads download 65 from). One census
+# round, fixed id: pinned.
+discover:
+  method: static_url
+  url: "https://www.nada.inseed-comores.org/index.php/catalog/8/download/68"
+  save_as: RGPH2017_Etat_et_Structure_de_la_population.pdf
+  download_timeout: 300
+
+parser: inseed_comoros_population
+geography: Total country
+
+notes: >
+  RGPH 2017 census: Tableau 2.4 islands and préfectures by sex (counts), and
+  Tableau 3.1 five-year age groups by sex, nationally and per island (male /
+  female; no island total by age is printed).
+
+  Islands are sums of their préfectures (within 3, rounding as printed);
+  never add the two levels. Geography totals come from 2.4 only and 3.1
+  contributes age rows only, because the two tables disagree (Ndzuwani female
+  162 212 vs 162 272; national female 376 504 vs 376 503).
+
+  MISPRINT REFUSED: 2.4's NDZUWANI female 162 212 fails its own row
+  arithmetic; only that cell is dropped.
+
+  CROSS-CHECK: 758 316 (381 812 M / 376 504 F); Ngazidja 379 367; Moroni
+  121 236; 0-4 ans 103 581.

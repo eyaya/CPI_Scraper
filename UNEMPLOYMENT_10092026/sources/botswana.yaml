@@ -70,3 +70,13 @@ notes: >
   CROSS-CHECK (Q1 2024): population 15+ 1,651,820; labour force 1,041,204;
   employed 754,146; unemployed 287,059; EPR 45.7%; LFPR 63.0%; unemployment
   27.6% (M 27.2 / F 27.9); extended 32.5%; youth 15-35 38.2%; NEET 41.3%.
+
+  TREND AND BREAKDOWN TABLES (added 2026-10-01, `botswana_qmts_trends`): the
+  same report's Table 1.0 restated rounds, 2.1c (unemployment by age, eight
+  rounds Q3 2019-Q1 2024), 1.2a/1.2b (participation by age, five rounds),
+  2.1d (18+ by age), 2.2 (strata), 4.1 (NEET by age), YE2b (youth total, eight
+  rounds) and UN10 (counts by district). Every column is dated from its own
+  header. Published contradiction kept: 18+ male unemployment Q1 2024 is 27.6
+  in Table 1.0 and 26.5 in Table 2.1d (separate series_labels). YE2a/YE2b age
+  rows disagree with 2.1c and are not read. If a later issue changes these
+  tables, they are skipped with a message and Table 1.0 is still collected.

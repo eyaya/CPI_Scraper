@@ -14,6 +14,9 @@ discover:
   method: wp_media_latest
   api_url: "https://admin.ansade.mr/wp-json/wp/v2/media?search=indice&per_page=60&orderby=date&order=desc"
   name_contains: "Indice-National-des-Prix"
+  # ANSADE's published name is ~90 chars; in this deep OneDrive path the full path
+  # hits 260 (> Windows MAX_PATH) and the retained PDF won't open. Save it short.
+  save_as: mauritania_inpc.pdf
 
 parser: mauritania_ansade
 geography: National

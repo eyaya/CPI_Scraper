@@ -1,0 +1,53 @@
+country: Sudan
+iso3: SDN
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Central Bureau of Statistics (CBS Sudan)
+publication_code: '"Labor Force" statistical booklet (SLFS 2011) + 5th Population and Housing Census 2008, Economic Activity tables'
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# WAS BLOCKED (sources_blocked/sudan.yaml, retired 2026-10-01): "cbs.gov.sd
+# and its variants do not resolve (DNS) ... CBOS republishes no labour force
+# survey ... the 2011 LFS was run by the Ministry of Labour and no NSO copy
+# was located." Both halves were overtaken: the Wayback Machine's CDX API
+# (http://web.archive.org/cdx/search/cdx?url=cbs.gov.sd/*&output=json) lists
+# ~5,000 captures of CBS's own site, among them CBS's "Labor Force" booklet --
+# which republishes the 2011 LFS, run "in cooperation between the Ministry of
+# Labor and the Central Bureau of Statistics" -- and CBS's 2008 census tables.
+# Both are read from `id_` captures (CBS's original bytes), the DR Congo /
+# Congo precedent. The same two files `unemployment/sources/sudan.yaml` reads.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20190422id_/http://cbs.gov.sd/resources/uploads/files/labor%20force(1).pdf"
+  save_as: CBS_Sudan_Labor_Force_booklet_2019.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 600
+
+extra_urls:
+  - url: "https://web.archive.org/web/20110911id_/http://www.cbs.gov.sd/Census%20_Tables.zip"
+    save_as: CBS_Sudan_Census2008_Tables.zip
+
+parser: sudan_labour
+geography: Total country
+
+notes: >
+  SLFS 2011 (booklet): employed by major occupation, % by Sudan / urban /
+  rural x sex, for 10+ and 15+. Census 2008 (E2, E3, E4): industry (23
+  categories) and occupation (10 groups) of the economically active with a
+  current or previous job, and status in employment of the employed -- counts
+  for NORTHERN SUDAN ONLY (today's Sudan) and its 15 states, by residence
+  (urban / rural / nomad) and sex. The census predates the 2011 secession; its
+  All Sudan / Southern Sudan blocks are not collected.
+
+  E2/E3's universe is employed + unemployed who worked before (by current or
+  last job) -- the only industry/occupation tables the census prints -- and is
+  named in `survey`. Categories are ISIC/ISCO-shaped but no scheme is named ->
+  National.
+
+  CROSS-CHECK: SLFS 2011 (10+) skilled agricultural workers 39.6%, services &
+  sales 17.4%; census Northern Sudan employed 6 677 410 (paid employees
+  2 081 366, own-account 1 960 740); E2 total 7 083 907 = employed + 406 497
+  unemployed who worked before.

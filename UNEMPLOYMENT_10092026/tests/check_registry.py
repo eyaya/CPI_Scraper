@@ -65,8 +65,10 @@ def main() -> int:
 
         if d.get("source_type") == "api":
             api = d.get("api")
-            if not api:
-                problems.append(f"{name}: source_type api with no `api:` block")
+            # A plain JSON endpoint fetched through `discover:` is also an
+            # `api` source (see core/run.py); only neither is an error.
+            if not api and not d.get("discover"):
+                problems.append(f"{name}: source_type api with neither an `api:` nor a `discover:` block")
             for t in (api or {}).get("tables", []):
                 if not (t.get("topic") or t.get("topic_map")):
                     problems.append(

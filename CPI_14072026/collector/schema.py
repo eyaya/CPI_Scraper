@@ -35,8 +35,7 @@ MEASURES = {"index", "inflation_yoy", "inflation_mom"}
 _PERIOD_RE = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 
 
-class ValidationError(Exception):
-    pass
+from core.schema_base import ValidationError
 
 
 def validate(df: pd.DataFrame, *, expect_divisions: int | None = None) -> pd.DataFrame:
@@ -66,7 +65,10 @@ def validate(df: pd.DataFrame, *, expect_divisions: int | None = None) -> pd.Dat
         raise ValidationError(f"{n} non-numeric value(s)")
     is_index = df["measure"] == "index"
     idx_vals = vals[is_index]
-    if len(idx_vals) and not idx_vals.between(1, 100000).all():
+    # The ceiling only has to catch parse garbage (a weight column read as an
+    # index), not cap reality: hyperinflation puts Sudan's CPI past 630,000 on
+    # its 2007 = 100 base, and it is a real published value.
+    if len(idx_vals) and not idx_vals.between(1, 10_000_000).all():
         rng = (float(idx_vals.min()), float(idx_vals.max()))
         raise ValidationError(f"index value(s) out of plausible range: min/max={rng}")
     rate_vals = vals[~is_index]

@@ -201,7 +201,7 @@ def _anchors(lines, spec) -> list[tuple[float, float, float]]:
     return hits
 
 
-def parse(path: str) -> pd.DataFrame:
+def _parse_bulletin(path: str) -> pd.DataFrame:
     with pdfplumber.open(path) as pdf:
         page = pdf.pages[1] if len(pdf.pages) > 1 else pdf.pages[0]
         words = page.extract_words()
@@ -272,3 +272,19 @@ def parse(path: str) -> pd.DataFrame:
             f"Mali: published unemployment rate {rate} does not match "
             f"{unemp:,.0f}/{lf:,.0f} = {unemp / lf * 100:.2f}.")
     return df
+
+
+def parse(path: str, extras: list[str] | None = None) -> pd.DataFrame:
+    """The bulletin's national box, plus INSTAT's EMOP table workbooks when
+    the descriptor lists them as extras -- the underutilisation ladder, youth
+    and NEET by region, milieu, sex and age, one reading a year from 2020
+    (see `mali_emop_workbooks`, which also records every row it refuses)."""
+    from . import mali_emop_workbooks as W
+    frames = [_parse_bulletin(path)]
+    W.DROPPED.clear()
+    for p in extras or []:
+        if p.lower().endswith(".xlsx"):
+            frames.append(pd.DataFrame(W.parse_workbook(p)))
+    for note in W.DROPPED:
+        print(f"[mali] refused: {note}")
+    return pd.concat(frames, ignore_index=True)

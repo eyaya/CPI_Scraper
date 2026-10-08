@@ -16,13 +16,22 @@ discover:
   url: "https://www.statistics.sl/images/2020/sierraleone_-2015_population_census_data_for_16_districts_5_regions.docx"
   save_as: sierraleone_2015_census_districts.docx
 
+# 2021 Digital Mid-Term Census, final results by district (added 2026-10-06):
+# 16 districts, 5 regional totals, national total, by sex, with sex ratio.
+# Linked from the Stats SL mid-term census page.
+extra_urls:
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/Census/2021_MTPHC_Final_Results_Tables_ByDistrict.pdf"
+    save_as: sierraleone_2021_mtphc_final_by_district.pdf
+
 parser: statssl_population
 geography: Total country
 
 notes: >
   Stats SL 2015 Population and Housing Census. National total 7,092,113
   (M 3,490,978 / F 3,601,135; Male+Female=Total exactly), read from the document's
-  authoritative "SIERRA LEONE" row. RELAXED-GRANULARITY entry: national by sex only.
+  authoritative "SIERRA LEONE" row; 2015 is national by sex only. PLUS (2026-10-06) the
+  2021 Mid-Term Census: 16 districts, 5 regions, national (7,548,702) by sex and
+  sex ratio -- districts sum to regions, regions to the nation.
   The docx also lists chiefdom rows (REGION|DISTRICT|CHIEFDOM|MALE|FEMALE|TOTAL) but
   coverage is incomplete (~132 chiefdoms sum to only 4.93M) and its region subtotals
   mix old 4-region and new 5-region (incl. North-West) boundaries, so sub-national

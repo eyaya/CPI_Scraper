@@ -1,0 +1,52 @@
+country: Sao_Tome_and_Principe
+iso3: STP
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE)
+publication_code: RGPH 2012 relatório temático 5 "Actividade Económica"
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# The census thematic reports are listed on one Phoca category page. Each
+# report appears twice there: as Phoca's /documentos/file/<id> route (which
+# serves an HTML detail PAGE, not the file) and as the direct upload path
+# /phocadownload/userupload/.../5 ACTIVIDADEECONOMICA Recenseamento 2012.pdf,
+# with accents and double spaces in the folder name. "phocadownload/userupload"
+# selects the direct path; requests percent-encodes it on fetch (verified: the
+# full 2,865,192-byte PDF). ine.st stalls intermittently -- hence the longer
+# timeout.
+discover:
+  method: page_scrape
+  page_url: "https://www.ine.st/index.php/publicacao/documentos/category/72-relatorio-tematicos-recenseamento-2012?limit=0"
+  link_contains:
+    - "phocadownload/userupload"
+    - "ACTIVIDADEECONOMICA"
+    - ".pdf"
+  save_as: stp_rgph2012_actividade_economica.pdf
+  download_timeout: 300
+
+parser: sao_tome_and_principe_labour
+geography: Total country
+
+notes: >
+  RGPH 2012 thematic report 5, chapter IV "População Empregada" (employed
+  15+, 56 295 persons, May 2012). Collected: 4.5.1 sector by sex x age;
+  4.5.4 CAE-STP sections (letters as printed) by district; 4.6.1 occupation
+  groups 0-9 (CNP-STP 2012) counts and % by sex; 4.6.2 by age; 4.6.3 urban /
+  rural counts; 4.6.7 situação na profissão by district; 4.7.1 hours bands by
+  sex. CAE-STP and CNP-STP are national schemes -> National.
+
+  NOT COLLECTED: 4.5.2 (its sex columns are scrambled -- men's Commerce 0,2
+  against 14,9 overall, electricity 15,0 against 0,7); row-% tables 4.5.3,
+  4.6.4, 4.6.5, 4.6.6 and 4.6.3's % columns; Gráfico 4.6.3 (same figures as
+  4.6.7's national column).
+
+  PUBLISHED DEFECT KEPT: 4.5.4's Caué row sums to 106,1 (printed Total 106,0),
+  pinned in the parser.
+
+  No labour force survey exists; RGPH 2024 results carry no employment tables.
+
+  CROSS-CHECK: terciário 52,7; section A 23,2 (Lembá 53,2); Grupo 5 14 509
+  (25,8%); conta de outrem sem contrato 37,5; 45 horas ou mais 32,6.

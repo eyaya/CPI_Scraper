@@ -33,6 +33,10 @@ from . import sierra_leone_mpi
 from . import somalia_mpi
 from . import south_africa_mpi
 from . import uganda_mpi
+from . import senegal_mpi
+from . import mauritania_mpi
+from . import djibouti_mpi
+from . import sierra_leone_2023_mpi
 
 REGISTRY = {
     # --- Tier 1: API ------------------------------------------------------
@@ -56,6 +60,22 @@ REGISTRY = {
     "somalia_mpi": somalia_mpi.parse,
     "south_africa_mpi": south_africa_mpi.parse,
     "uganda_mpi": uganda_mpi.parse,
+    # ANSD/OPCV Senegal national IPM (ESPS-II 2011, rapport national, version
+    # provisoire 2018): 5 dims / 25 ind., k = 32%; H, A, M0 with 95% CIs for 14
+    # regions + strata; by sex, age and education of the household head.
+    "senegal_mpi": senegal_mpi.parse,
+    # ANSADE Mauritania IPM-M (EPCV 2019) from the 2024 sociodemographic yearbook
+    # T6.7-6.9 (text layer): national/urban/rural, 13 wilayas, ages 0-4 and 5-17,
+    # with CIs; 4 dims / 19 ind., k = 38% (method from ANSADE's own brief).
+    "mauritania_mpi": mauritania_mpi.parse,
+    # INSTAD Djibouti RGPH-3 2024 Thématique 16: census IPM headcount (k=1/3,
+    # 3 dims/3 ind., person) -- national, 6 régions, milieu, 20 age groups,
+    # 29 préfectures/arrondissements. Only H is published.
+    "djibouti_mpi": djibouti_mpi.parse,
+    # Stats SL 'Multidimensional Poverty in Sierra Leone 2023' (DHS 2019), on
+    # statistics.sl: national, rural/urban, regions, 16 districts, age, head's
+    # education, with CIs; 2017 comparable-measure re-estimate kept apart.
+    "sierra_leone_2023_mpi": sierra_leone_2023_mpi.parse,
 }
 
 # The per-country layouts, keyed by country, for the offline checks in

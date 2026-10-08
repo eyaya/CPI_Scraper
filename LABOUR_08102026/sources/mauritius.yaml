@@ -1,0 +1,61 @@
+country: Mauritius
+iso3: MUS
+indicator: Labour
+tier: 2
+source_type: excel
+agency: Statistics Mauritius (Ministry of Finance)
+publication_code: CMPHS
+frequency: quarterly
+
+# --- discover (two hops) ---
+# THE SAME WORKBOOK THE `unemployment` INDICATOR COLLECTS (headline rates
+# there, Tables 1/3/4/5 here). Reused verbatim from
+# unemployment/sources/mauritius.yaml, including its findings: neither the
+# EI<issue> number NOR the trailing _<DDMMYY> publication stamp is derivable,
+# so both hops are scraped and nothing is templated.
+#
+# DO NOT confuse with SEE_<Mon><YY>_*.xlsx — the Survey of Employment and
+# Earnings is establishment-based and a different universe.
+discover:
+  method: two_hop_scrape
+  index_url: "https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/Labour/SB_Labour.aspx"
+  page_link_contains:
+    - "LF_Emp_Unemp"
+  file_link_contains:
+    - "LF_Emp_Unemp"
+    - ".xlsx"
+
+parser: mauritius_labour
+geography: Total country
+
+notes: >
+  Statistics Mauritius CMPHS labour workbook: employment by status (Table 1,
+  thousands), by industry (Table 3), by occupation (Table 4) and by hours
+  worked (Table 5) — each as three sex blocks (Both sexes / Male / Female)
+  covering the last five quarters.
+
+  THE WORKBOOK IS TRANSPOSED relative to every other Excel source here:
+  periods run DOWN the rows and categories ACROSS the columns, so it needs its
+  own reader rather than `excel_wide_labour`. The sex comes from the block
+  header, the period from the row label, the category from the column.
+
+  FIVE QUARTERS PER ISSUE AND THEY ACCUMULATE: one run collects 2025 Q1 to
+  2026 Q1, and the merge carries earlier quarters forward as issues roll. A
+  quarter restated in a later issue overwrites the earlier reading, which is
+  what merging on the key is for.
+
+  WORKING-AGE BASE IS 16+, not 15+ — Statistics Mauritius surveys persons aged
+  16 and over.
+
+  CLASSIFICATIONS AS STATED: occupation is ISCO-08 (Table 4's header says so,
+  and the categories carry their major-group numbers); industry is NSIC, whose
+  footnote reads "National version of ...", so National with the section
+  letters kept in the label; status in employment names no standard, so
+  National.
+
+  NOT COLLECTED: the "% change" rows (derived from the levels above them);
+  Table 1's population, unemployed and economically active/inactive columns and
+  Tables 6-9 (labour-force levels — `unemployment`'s territory); and Table 5's
+  total and average hours, because the schema has no hours unit and inventing
+  one would be worse than omitting them. The four "% having worked for" bands
+  are collected as the `hours` topic — the first use of that topic here.

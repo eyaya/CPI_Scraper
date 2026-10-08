@@ -8,14 +8,22 @@ frequency: monthly
 verify_ssl: false            # INS serves an incomplete TLS certificate chain
 
 # --- discover ---
-# INS posts the monthly IHPC note (IHPCB2023_<Month>_<Year>_VF.pdf) and links the
-# newest from its home page. We scrape the first such link.
+# INS (WordPress rebuild, 2026) publishes the monthly IHPC note as
+# IHPCB2023_<Mois>_<Année>_VF.pdf under a stable /wp-content/uploads/ folder and
+# lists every issue on the IHPC publication page. The home page no longer links
+# the PDF directly, so we scrape that page and pick the newest by the French
+# month+year in the filename. NB the filename carries the base year (…B2023…) too,
+# so the month+year must be parsed as an adjacent pair — latest_named_month_file
+# does exactly that (unlike a bare page_scrape, which took the first link).
 discover:
-  method: page_scrape
-  page_url: "https://www.stat-niger.org/"
-  link_contains:
+  method: latest_named_month_file
+  page_url: "https://www.stat-niger.org/?pub_eco=lindice-harmonise-des-prix-a-la-consommation-ihpc"
+  lang: fr
+  url_contains:
     - "ihpcb2023"
     - ".pdf"
+  require_text: true          # skip issues published as a pure scan (see notes)
+  lookback: 6
 
 parser: niger_ins_ihpc
 geography: National
@@ -29,3 +37,9 @@ notes: >
   month is taken from the title; we emit index + inflation_mom + inflation_yoy for
   it. Weights carry thousands spaces; French labels (fixed COICOP map). A by-region
   breakdown is also in the note for later.
+  SCANNED ISSUES: INS published the July 2026 note as a pure image (5.8 MB, no text
+  layer on any page, where every other month is a ~1 MB text PDF), which no parser
+  can read. `require_text` makes discovery walk back to the newest issue that does
+  carry text — so a scanned month yields the previous month's data, logged at
+  discovery time, instead of failing the country outright. It self-heals as soon as
+  INS posts a readable issue or re-uploads the scanned one.

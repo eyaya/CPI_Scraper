@@ -1,0 +1,52 @@
+country: Malawi
+iso3: MWI
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: National Statistical Office (NSO)
+publication_code: Malawi Labour Force Survey (MLFS) 2024 report + 2018 MPHC Series D
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 8
+
+# --- discover ---
+# nsomalawi.mw is a Nuxt SPA over a Laravel CMS. /api/web/publications lists
+# "Malawi Labour Force Survey 2024" (id 126) with THREE media files: a brochure
+# (its `document` field, which `nso_malawi_publication` would return), a
+# factsheet, and the full report (media 651). Only the report has tables, so it
+# is pinned by its media id; a later MLFS will be a new publication record --
+# look for its "...Report..." media file.
+# The census workbook is the one labour/ reads (labour/sources/malawi.yaml),
+# reused verbatim as an extra.
+discover:
+  method: static_url
+  url: "https://cms.nsomalawi.mw/api/download/651/Malawi-Labor-Force-Survey-Report---2024.pdf"
+  save_as: Malawi-Labor-Force-Survey-Report-2024.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://cms.nsomalawi.mw/api/download/280/Series-D.-Economic-Tables.xlsx"
+    save_as: malawi_2018_series_d.xlsx
+
+parser: malawi_unemployment
+geography: Total country
+
+notes: >
+  MLFS 2024 (base 15-64): Table 0.1 summary counts by sex; 4.2 participation
+  (+ working-age population) and 5.1 employment ratio by sex x residence,
+  region, age, education; 6.1 unemployment rate, time-related underemployment,
+  LU2-LU4 by group; 10.3 / 10.6 NEET (15-35, 15-24); district annex 5.2, 12.4,
+  12.5, 12.12, 12.14.
+
+  THE UNEMPLOYMENT RATE IS BROAD: Table 0.1 defines the unemployed as "without
+  work and currently available to work -- broad definition used in the
+  report". Filed definition: broad.
+
+  2018 CENSUS (Series D): D1 / D2 population 15-64, labour force, employed,
+  unemployed and inactive by age / area / region / district x sex; D4
+  unemployed seeking vs not seeking work. Counts only (no rates printed; none
+  computed). The census "unemployed" includes 907 912 persons not seeking work.
+
+  CROSS-CHECK: 2024 LFPR 48,4; EPR 38,8; unemployment rate 19,7 (Blantyre
+  33,2); LU4 55,5; NEET 15-35 41,4; Lilongwe City EPR 48,0. 2018 labour force
+  6 614 065; unemployed seeking work 316 690.

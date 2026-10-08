@@ -1,0 +1,34 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Agence Nationale de la Statistique (ANStat)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# anstat.ci is a SPA; its searchPublicationByCritere endpoint lists publication
+# cards. We take the newest 'Comptes Nationaux Trimestriels' card whose PDF
+# (File_val_indicateur<id>.pdf) is actually available (the very newest card is
+# often listed before its file is uploaded).
+discover:
+  method: anstat_ci_publication
+  search_url: "https://anstat.ci/publication/searchPublicationByCritere"
+  file_base: "https://anstat.ci/assets/publications/files"
+  title_contains: "COMPTES NATIONAUX TRIMESTRIELS"
+
+parser: ci_anstat_gdp
+geography: National
+
+notes: >
+  ANStat Côte d'Ivoire quarterly national-accounts (CNT) PDF. GDP by branch of
+  activity (production approach), from two annex tables: 'PIB CVS trimestriel en
+  volume' (constant chained volume, reference 2015, seasonally adjusted) and 'PIB
+  trimestriel en valeur' (current prices, with an annual TOTAL column per year).
+  We emit the value LEVELS (8 quarters + annual totals for the current table);
+  history accumulates across quarterly notes. Two headline aggregates are
+  published: 'PIB' (market prices) and 'PIB au coût des facteurs'. Units billion
+  XOF (FCFA); French number format. Verified: PIB (market) 2024 current = 52.8tn
+  FCFA. The contribution-to-growth tables and the % variation columns are left for
+  a later pass. Everything as published; nothing derived.

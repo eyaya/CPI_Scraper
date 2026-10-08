@@ -1,0 +1,44 @@
+country: Lesotho
+iso3: LSO
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Bureau of Statistics Lesotho (BOS)
+publication_code: Lesotho Population Projections Report 2016-2036
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# bos.gov.ls builds its publication list in the BROWSER from a JavaScript array
+# inside publications.htm, so no crawler sees a link -- which is why Lesotho was
+# on the rejected list ("census.htm has only policy PDFs"). `regex_on_page`
+# reads the array directly, as the GDP and labour descriptors do. The report is
+# a ZIP holding one PDF.
+discover:
+  method: regex_on_page
+  page_url: "https://www.bos.gov.ls/publications.htm"
+  pattern: 'Bos_Reports/Copy%20of%20Demography/Lesotho_Population_Projections_Report_[^"]+?\.zip'
+  base_url: "https://www.bos.gov.ls/"
+  inner_suffix: ".pdf"
+
+parser: bos_lesotho_population
+geography: Total country
+
+notes: >
+  BOS projections, medium variant, 2016-2036: Table 5.2 national population by
+  five-year age group x sex; Table 5.6 the ten districts by five-year age group
+  x sex. Table 5.7 (district totals) checks Table 5.6. Rows held to
+  Male + Female = Both Sexes within 2 (independent rounding) and to each
+  year's printed Total.
+
+  PUBLISHED DEFECT, PINNED: Table 5.2's 2016 "70+" row prints the 70-74 band
+  (12,007 / 18,785 / 30,792 against 29,087 / 57,296 / 86,383 in 2017); the
+  2016 bands fall 55,585 short of the printed Total. That row is not collected;
+  the parse raises once BOS corrects it.
+
+  ALSO ON THE SAME CATALOGUE: the 2016 census analytical volumes (IIIA
+  Population Dynamics, IIIB Socio-economic characteristics) -- census counts
+  are not yet laid out.
+
+  CROSS-CHECK: 2016 total 2,007,201 (982,133 M / 1,025,068 F); 2036 total
+  2,271,230; Maseru 2036 716,773; Botha-Bothe 2016 118,242.

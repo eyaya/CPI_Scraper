@@ -1,0 +1,41 @@
+country: Sudan
+iso3: SDN
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Central Bank of Sudan (CBOS)   # republishes the Central Bureau of Statistics' national accounts
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# CENTRAL-BANK FALLBACK, as for Sudan's CPI: the Central Bureau of Statistics
+# (cbs.gov.sd) does not resolve, and CBOS reprints CBS's national accounts in
+# Chapter 7 of its English Annual Report, each table footed "Source: Central
+# Bureau of Statistics". The English series on
+# cbos.gov.sd/en/periodicals-publications?field_publication_type_tid_i18n=43
+# stops at the 58th report (2018), so the file is pinned. Re-check that
+# listing (and the Arabic one) for newer editions, and Wayback copies of CBS's
+# own national accounts once the Internet Archive is back.
+discover:
+  method: static_url
+  url: "https://cbos.gov.sd/sites/default/files/CBOS%20-%2058th%20Annual%20Report%202018.pdf"
+  save_as: CBOS_58th_Annual_Report_2018.pdf
+  download_timeout: 300
+
+parser: sudan_cbos_gdp
+geography: National
+
+notes: >
+  CBS GDP via CBOS Annual Report 2018, Chapter 7: Table 7-1 GDP at constant
+  1981/82 prices by activity (value, real growth, share) with the GDP deflator;
+  7-2 real growth 2014-2018; 7-3 GDP at current prices by activity (value,
+  nominal growth, share); 7-4 GDP by expenditure at current prices. Years 2017
+  (amended) and 2018 (preliminary). Republic of the Sudan, EXCLUDING South
+  Sudan. Constant-price levels are tiny (36.7 SDG million in 2018) because the
+  1981/82 base predates two redenominations -- published so.
+
+  Identities checked: sectors and sub-activities sum, consumption /
+  investment / net exports components, and the expenditure total equals GDP.
+
+  CROSS-CHECK: GDP 2018 1,176,630.0 SDG million current; real growth 2.8%;
+  deflator 32,074.0; private consumption 1,010,751.3.

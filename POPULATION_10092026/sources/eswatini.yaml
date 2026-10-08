@@ -1,0 +1,41 @@
+country: Eswatini
+iso3: SWZ
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Central Statistical Office (CSO), Eswatini
+publication_code: 2017-2038 Population Projection based on the 2017 Census (August 2020)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# The CSO's files are hosted on gov.sz, which times out on connect, and
+# eswatinistats.org.sz never answers. The Wayback Machine holds the CSO's own
+# PDF; the `id_` capture returns its original bytes (the precedent the GDP
+# descriptor uses for the CSO's national accounts). The archive answers plain
+# requests with 429 at times, hence the browser fingerprints.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20211002161429id_/http://www.gov.sz/images/Final-2017_2038-POPULATION-PROJECTIONS-1-1.pdf"
+  save_as: CSO_Eswatini_Population_Projections_2017_2038.pdf
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 300
+
+parser: cso_eswatini_population
+geography: Total country
+
+notes: >
+  CSO projections report (2017 census base): Table 2.1 -- the 2017 census
+  ENUMERATED population by region and sex (census, 2017); Table 5.2 --
+  national population by five-year age group x sex, medium variant, 2017-2038
+  (projection). Space thousands separators are split under each row's own
+  M + F = T arithmetic (unique reading required).
+
+  NOT YET READ: Table 5.6 (regions x age x sex -- rotated pages, reversed
+  text layer); Table 5.5 (regions by sex -- Manzini 2018 prints both sexes
+  "65 822" against M + F = 365 822, and its 2033 column breaks trend); the
+  full census report (gov.sz/images/planningministry/census2017.pdf, archived
+  2021-06-29, 20 MB).
+
+  CROSS-CHECK: census 2017 1 093 238 (531 111 M / 562 127 F); projection 2017
+  1 106 451; 2038 1 432 235.

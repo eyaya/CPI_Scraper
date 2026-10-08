@@ -1,0 +1,41 @@
+country: Senegal
+iso3: SEN
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD) / Observatoire de la Pauvreté et des Conditions de Vie (OPCV)
+publication_code: Rapport national de présentation de l'IPM (ESPS-II 2011), version provisoire 2018
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 9
+
+# --- discover ---
+# On ANSD's own domain. ansd.sn's TLS chain is incomplete (hence verify_ssl:
+# false) and robots-disallowed for crawlers; the pipeline's client with its
+# Chrome UA fetches it (HTTP 200, 9.0 MB, checked 2026-10-07). One national
+# report, so the file is pinned.
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2022-11/Rapport_IPM%202011_VSF.pdf"
+  save_as: ANSD_Rapport_IPM_2011.pdf
+
+parser: senegal_mpi
+geography: Total country
+
+notes: >
+  National MPI of Senegal (IPM), OPCV national presentation report, coordinated
+  by ANSD's Director-General as president of the OPCV bureau; OPHI credited for
+  technical accompaniment only. Alkire-Foster, 5 dimensions / 25 indicators,
+  k = 32%, household identification with figures over persons; ESPS-II 2011.
+  The cover says VERSION PROVISOIRE (25 Sept 2018) -- carried in `survey`.
+
+  Collected: Annexe 14 (14 regions + national: H, A, M0 with 95% CIs),
+  Tableaux 4.1/4.2 (strata H, A with CIs), M0 by stratum (Tableau 4.3 Ensemble
+  row), and Tableaux 4.3/4.4/4.6 by sex, age group and education of the
+  household head (H, A, M0 nationally; H, M0 by stratum).
+
+  Not collected: Tableau 4.5 (marital status -- no topic, and its Ensemble row
+  contradicts every other table), 4.7 (occupation -- no topic), Annexe 12
+  (rounded duplicate of Annexe 14), population shares, charts.
+
+  CROSS-CHECK: H 60,92% (58,93-62,91), A 42,50%, M0 0,26; Kolda H 86,37%.

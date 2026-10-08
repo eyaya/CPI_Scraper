@@ -1,0 +1,45 @@
+country: Rwanda
+iso3: RWA
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: LFS
+frequency: annual
+verify_ssl: false
+
+# --- discover (three levels, with backtracking) ---
+# THE SAME ANNUAL REPORT THE `unemployment` INDICATOR COLLECTS (its trend
+# matrix there, Chapter 4 here). Reused verbatim from
+# unemployment/sources/rwanda.yaml: pin the APEX domain (www. fails TLS), and
+# let chain_scrape step past a newest year that has only quarterly bulletins.
+discover:
+  method: chain_scrape
+  index_url: "https://statistics.gov.rw/data-sources/surveys/Labour-Force-Survey"
+  steps:
+    - ["labour-force-survey-20"]
+    - ["annual-report"]
+    - ["annual", ".pdf"]
+  save_as: rwanda_annual_lfs.pdf
+
+parser: rwanda_labour
+geography: Total country
+
+notes: >
+  NISR annual Labour Force Survey report, Chapter 4. Trend tables 2019-2025:
+  status in employment on ICSE-93 (4.1, thousands), occupation (4.3,
+  thousands), industry on ISIC Rev.4 (4.4 percent, 4.5 thousands) and formal /
+  informal employment by sex (4.7). Plus ICSE-18 status for the current year by
+  sex and urban/rural, persons and percent (4.2).
+
+  BOTH STATUS STANDARDS ARE PUBLISHED ON PURPOSE -- NISR adopted ICSE-18 in
+  February 2025 and keeps ICSE-93 to show the effect of the new dependent-
+  contractor category. The report does not say which ICSE-18 hierarchy.
+
+  WORKING-AGE BASE 16+. Occupation scheme not named -> National.
+
+  PUBLISHED INCONSISTENCY kept as printed: 2020 total employment is 2,661
+  thousand in 4.1/4.3 and 3,461 thousand in 4.5.
+
+  Table 4.8 (formality x production unit) is not collected: its text layer is
+  missing cells in two rows with no way to tell which.

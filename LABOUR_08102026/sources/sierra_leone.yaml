@@ -1,0 +1,47 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL)
+publication_code: PHC 2015 Thematic Report on Economic Characteristics; SLLFS 2014 report
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# Both are one-off benchmark publications at stable paths on statistics.sl
+# (listed under resources/publications and the Census 2015 page), so the
+# files are pinned. The LFS 2014 report is the same URL
+# unemployment/sources/sierra_leone.yaml fetches.
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/StatisticsSL/Documents/Census/2015/sl_2015_phc_thematic_report_on_economic_characteristics.pdf"
+  save_as: sl_2015_phc_thematic_report_on_economic_characteristics.pdf
+
+extra_urls:
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/Publications/2014/sierra_leone_labour_force_survey_report_2014-1.pdf"
+    save_as: sierra_leone_labour_force_survey_report_2014-1.pdf
+
+parser: sierra_leone_labour
+geography: Total country
+
+notes: >
+  PHC 2015 economic-characteristics report: Table 3.7 occupation by sex
+  (counts) plus its Total % column, Table 3.8 occupation by region (counts);
+  employed 15-64. Table 3.7's "% distribution" columns are shares of the GRAND
+  total (a joint sex x occupation distribution), not within-sex distributions,
+  and are not collected.
+
+  SLLFS 2014, Table 2: for each group (overall, youth 15-35, sex, education,
+  Freetown / other urban / rural, region) the distribution of the employed by
+  job type and by five sectors. The earlier "analytical report" verdict missed
+  that this one table is clean composition.
+
+  REFUSED: SLIHS 2018 Table 5.10 -- total 3,187,847 against 2,428,053 employed
+  stated in the same report, and the self-employed with/without employees
+  labels apparently swapped against Table 5.1; universe and labels cannot be
+  established from the report.
+
+  CROSS-CHECK: PHC agriculture 659,992 men / 762,029 women (58%); regional
+  totals sum to 2,454,296 = male + female. SLLFS agricultural
+  self-employment 59.2%, wage 9.5%, services 33.4%.

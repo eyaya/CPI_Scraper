@@ -1,0 +1,40 @@
+country: Uganda
+iso3: UGA
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Uganda Bureau of Statistics (UBOS)
+publication_code: Labour Market Survey (LMS) 2025 — main report
+frequency: ad_hoc
+verify_ssl: false            # www.ubos.org serves an incomplete TLS chain
+
+# --- discover ---
+# The MAIN REPORT (247 pp, 19 MB), not the findings deck that
+# unemployment/uganda.yaml reads. Its URL follows UBOS's
+# /publications/<MM>_<YYYY><Title>.pdf pattern; earlier fetches died on the TLS
+# chain, but a plain request with verification off succeeded (2026-09-25).
+discover:
+  method: static_url
+  url: "https://www.ubos.org/wp-content/uploads/publications/05_2026Labour_Market_Survey_Report_y2025.pdf"
+  save_as: uganda_lms_2025_report.pdf
+
+parser: uganda_labour
+geography: Total country
+
+notes: >
+  UBOS Labour Market Survey 2025 main report. Table 3.2 (15+) and Table A4.7
+  (14-64, the National Employment Policy base) -- employment in the main job by
+  broad sector (agriculture / industry or "production" / services), by sex,
+  rural-urban and 14 sub-regions. A4.7's two survey waves (March-May, June-August)
+  are NOT taken: they straddle quarter boundaries; its Overall column is.
+
+  CORRECTS THE EARLIER SWEEP, which saw only the findings deck and recorded
+  Uganda's sector split as a chart. The report prints it as a table.
+
+  NOT COLLECTED: chapters 7-8 "employment in formal / informal businesses"
+  (ESTABLISHMENT data -- the Kenya trap); informal-employment shares
+  (`unemployment`). No status or occupation table exists in the household
+  chapters. No scheme is named for the broad sectors -> National.
+
+  CROSS-CHECK (National): 15+ agriculture 37.1, industry 12.4, services 50.5;
+  14-64 overall 36.6 / 12.4 / 51.0; Kampala 15+ services 79.6.

@@ -1,0 +1,59 @@
+country: Sudan
+iso3: SDN
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Central Bureau of Statistics (CBS Sudan)
+publication_code: '"Labor Force" statistical booklet (SLFS 2011) + 5th Population and Housing Census 2008, Economic Activity tables'
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# cbs.gov.sd NO LONGER RESOLVES (DNS), as recorded for CPI, so both files are
+# the Wayback Machine's `id_` captures of CBS's OWN uploads -- the original
+# bytes, not a re-publication, and not an aggregator (the DR Congo / Congo
+# precedent). Found through the CDX API:
+#   http://web.archive.org/cdx/search/cdx?url=cbs.gov.sd/*&output=json
+# which lists ~5,000 captures. The booklet is CBS's /resources/uploads/files/
+# "labor force(1).pdf" (identical bytes to its Arabic-named twin); the census
+# tables are CBS's "Census _Tables.zip" (36 MB). The archive sometimes answers
+# `requests` with 429, so browser fingerprints are used, with a long timeout
+# for the ZIP.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20190422id_/http://cbs.gov.sd/resources/uploads/files/labor%20force(1).pdf"
+  save_as: CBS_Sudan_Labor_Force_booklet_2019.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 600
+
+extra_urls:
+  - url: "https://web.archive.org/web/20110911id_/http://www.cbs.gov.sd/Census%20_Tables.zip"
+    save_as: CBS_Sudan_Census2008_Tables.zip
+
+parser: sudan_unemployment
+geography: Total country
+
+notes: >
+  CBS "Labor Force" booklet: the 2011 Sudan Labour Force Survey, run by the
+  Ministry of Labour in cooperation with CBS -- economically active /
+  employed / unemployed by sex (15+, thousands), labour force 10+, labour
+  force by state and sex (10+ and 15+), economically active youth 15-24, and
+  youth unemployment rates (15-24, 15-29, 15-19, 20-24) by sex x urban/rural.
+  Unemployed = not working, looking and available in the last 7 days ->
+  strict.
+
+  Census 2008 E1 (counts; no rates published): population 10+, economically
+  active, employed, unemployed (worked before / first time), not economically
+  active -- NORTHERN SUDAN ONLY (today's Sudan) by residence (urban / rural /
+  nomad), sex and age, and the 15 northern states by residence and sex. The
+  census predates the 2011 secession; its All Sudan and Southern Sudan blocks
+  are not collected (South Sudan comes from its own NBS). The booklet's
+  "Sudan, Census 2008" figure (8 027 413) is exactly E1's Northern Sudan block.
+
+  REFUSED: the booklet's urban/rural blocks of the SLFS sex table, whose
+  labels conflict with the booklet's own youth table and every census
+  figure (see the parser); chart-only figures; the unemployment-rate
+  PROJECTIONS sheet.
+
+  CROSS-CHECK: SLFS 15+ unemployed 1,662.2 thousand of 8,972.1; youth 15-24
+  unemployment 33.8 (female 57.9); census Northern Sudan unemployed 1 350 003.

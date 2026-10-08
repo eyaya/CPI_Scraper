@@ -17,10 +17,23 @@ discover:
   url: "https://sensa.nbs.go.tz/publication/01.%20URT_Demographic_and_Socioeconomic_Profile.pdf"
   save_as: tanzania_urt_profile_2022phc.pdf
 
+# National Population Projection Report 2023-2050 (2022-census based), annex
+# tables A5/B5/C5: five-year age x sex for Tanzania, Mainland and Zanzibar,
+# every year 2023-2050 (added 2026-10-06). Listed on the NBS page
+# /statistics/subtopic/national-projections-report-2023-2050.
+extra_urls:
+  - url: "https://www.nbs.go.tz/uploads/statistics/documents/en-1764575980-National%20Projection%20Report%20%E2%80%93%202023-2050.pdf"
+    save_as: tanzania_national_projections_2023_2050.pdf
+
 parser: nbs_tanzania_population
 geography: Total country
 
 notes: >
+  PROJECTIONS (added 2026-10-06): National Population Projection Report
+  2023-2050, annex A5/B5/C5 -- Tanzania, Tanzania Mainland and Tanzania Zanzibar
+  by five-year age and sex, 2023-2050 (series_type = projection). Mainland +
+  Zanzibar = Tanzania exactly every year; the three overlap and must not be
+  summed. Two tables per page are paired with their captions by page geometry.
   Tanzania NBS 2022 Population & Housing Census, national population by five-year
   age group and sex (Table 3.1 of the URT Demographic & Socio-Economic Profile).
   Total 61,741,120 (M 30,053,130 / F 31,687,990), 18 age bands 0-4 … 85+, census

@@ -1,0 +1,45 @@
+country: South_Sudan
+iso3: SSD
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: National Bureau of Statistics (NBS South Sudan)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# nbs.gov.ss/statistics/GDP_Growth.php lists NBS's GDP press releases NEWEST
+# FIRST (2021 estimates, then 2016, then 2015), all under /assets/images/ with
+# spaces in the file names. The first match is the current release; it carries
+# the whole re-estimated series from 2008, superseding the older ones.
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.gov.ss/statistics/GDP_Growth.php"
+  link_contains:
+    - "Gross Domestic Product"
+    - ".pdf"
+  save_as: south_sudan_gdp_release.pdf
+
+parser: south_sudan_nbs_gdp
+geography: National
+
+notes: >
+  NBS "Press Release for South Sudan Gross Domestic Product (GDP) Estimates
+  for 2021" (November 2022). Expenditure approach only (NBS publishes no
+  production or income approach), annual 2008-2021: levels at current and
+  constant 2009 prices (million SSP), oil-sector value added and non-oil GDP,
+  oil shares of GDP, real growth and contributions to growth, GNI and net
+  property income (SSP and USD), and per-capita GDP / non-oil GDP / GNI (SSP
+  and USD); 2021 component shares and volume changes from Table 1.
+
+  Only the newest release is read: it revises every year from 2008, and the
+  older releases contradict their own growth tables. The growth rows have 13
+  values for 14 year columns (2009 onward), asserted from the levels each run.
+  Identities checked: consumption components, GDE, GDP = GDE + X - M, and oil
+  + non-oil = GDP, at current and constant prices.
+
+  NBS's own caveat: the last estimate with sufficient contemporary source data
+  was for 2009.
+
+  CROSS-CHECK: GDP 2021 4,245,060.8 current / 22,871.1 constant million SSP;
+  real growth 2021 -2.3%; GNI 2021 4,104,180; GDP per capita 2021 USD 733.

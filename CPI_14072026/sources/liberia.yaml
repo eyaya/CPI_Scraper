@@ -1,27 +1,39 @@
 country: Liberia
 iso3: LBR
 indicator: CPI
-tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
-source_type: pdf
+tier: 1                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: api
 agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
 frequency: monthly
 verify_ssl: false
 
 # --- discover ---
-# LISGIS lists every monthly 'CPI Newsletter' PDF on its price-statistics page;
-# the report month is in the filename, so latest_dated picks the newest.
+# REPOINTED 2026-09-27. LISGIS rebuilt its site as a single-page app over a JSON
+# API; pricestats.php (which listed the monthly CPI Newsletter PDFs) now answers
+# 200 with the app's HTML shell. The API serves the CPI as datasets built from
+# LISGIS's monthly CPI workbooks: the index by division (primary) and the
+# workbooks' published monthly/annual changes (extra). The old PDF parser
+# (`liberia_lisgis`) is kept in case the newsletters return.
 discover:
-  method: latest_dated
-  page_url: "https://www.lisgis.gov.lr/pricestats.php"
-  link_contains:
-    - "CPI_Newsletter"
-    - ".pdf"
+  method: static_url
+  url: "https://www.lisgis.gov.lr/api/datasets/cpi-division-history"
+  save_as: liberia_cpi_division_history.json
 
-parser: liberia_lisgis
+extra_urls:
+  - url: "https://www.lisgis.gov.lr/api/datasets/cpi-changes"
+    save_as: liberia_cpi_changes.json
+
+parser: liberia_lisgis_api
 geography: National
-expect_divisions: 1           # national all-items CPI series (divisions are chart-only)
+expect_divisions: 13          # all items + COICOP divisions 01-12
 
 notes: >
+  SINCE 2026-09-27 (API): the index for all items and the 12 COICOP divisions,
+  monthly from 2006-01 (Dec 2005 = 100), with the published monthly and annual
+  changes from 2018-12 -- the divisions the newsletter only charted. The API's
+  all-items index matches the newsletter to its one-decimal rounding for 12 of
+  13 overlapping months; Feb 2026 is revised (815.434 vs 815.2).
+  PREVIOUSLY (newsletter PDF):
   Monthly CPI Newsletter, base Dec 2005 = 100. 'Table 1' gives the national
   all-items CPI index + month-on-month and year-on-year rates as a 13-month
   series; we emit index + inflation_mom + inflation_yoy (code 00) for every

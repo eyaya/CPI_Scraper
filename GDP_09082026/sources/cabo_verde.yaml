@@ -1,0 +1,51 @@
+country: Cabo_Verde
+iso3: CPV
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Instituto Nacional de Estatística de Cabo Verde (INE)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# ine.cv is an Angular SPA over a .NET API (the route the CPI, labour and
+# unemployment descriptors use). Theme 26 = Contas Nacionais; publication type
+# 10 = "Principais Quadros" (the workbook). Each quarter INE posts a new
+# "Contas Nacionais Trimestrais - <n>º trimestre <YYYY>" item whose attachment
+# "CNT-1T-2007-a-<n>T-<YYYY>.xlsx" carries the whole series from 2007 Q1, so
+# the newest one is all that is needed. (Older items are titled "Quadros das
+# Contas Nacionais Trimestrais" / "PIB e componentes (trimestrais)".)
+discover:
+  method: ine_cv_publication_file
+  api_base: "https://bdmi.ine.cv/site_deploy_api/api"
+  file_base: "https://bdmi.ine.cv/site_deploy_api"
+  code_theme: 26
+  publication_type: 10
+  title_contains: "Contas Nacionais Trimestrais"
+  extension: ".xlsx"
+  file_contains: "CNT"
+  save_as: cv_contas_nacionais_trimestrais.xlsx
+
+parser: cabo_verde_ine_gdp
+geography: National
+
+notes: >
+  INE Cabo Verde quarterly national accounts workbook (Base 2015, SCN 2008),
+  2007 Q1 onward, plus INE's annualised tables 2007-2025 (2024-2025 marked "P",
+  provisional = sum of quarters). Production approach (17 branches, VA, net
+  taxes, PIB) and expenditure approach (consumption private/public,
+  investment, exports/imports of goods and services, net exports, PIB), at
+  current prices and in chained volume (reference 2015), with y/y % changes.
+
+  Identities checked at current prices every period (VA + taxes = PIB;
+  C + I + X - M = PIB). PUBLISHED GAP: three 2022 quarters where the
+  production and expenditure tables print different PIB (0.15-0.24%); both
+  kept, pinned, and any new gap raises.
+
+  NOT READ: "Contas Nacionais Anuais definitivas" (2015-2023 supply-use and
+  institutional-sector tables, a different vintage), the island-level GDP
+  workbooks, and the satellite/SAM publications.
+
+  CROSS-CHECK: PIB 2007 Q1 31 804.48 and 2026 Q2 79 292.61 CVE million
+  (current); 2025P 299 131.49; chained-volume PIB 2007 150 752.04, 2020
+  166 546.77 (COVID), 2025P 246 109.04; real growth 2025P 6.30%, 2026 Q2 8.89%.

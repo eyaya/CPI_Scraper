@@ -9,13 +9,18 @@ verify_ssl: false            # INSD serves an incomplete TLS certificate chain
 
 # --- discover ---
 # INSD publishes the monthly IHPC note as Excel (NOTE_IHPC_Base_2023_de_<MONTH>_
-# <YEAR>.xlsx / .xls) and surfaces the newest on its home page. We scrape the
-# first 'NOTE_IHPC' file link (newest month).
+# <YEAR>.xlsx / .xls). The 2026 site redesign dropped these from the home page —
+# they now live only on the price-statistics page, which is NOT in date order and
+# mixes the Excel notes with PDF ones and with the ICC (construction cost) note,
+# so we pick the newest by the French month + year in the filename and keep to the
+# Excel notes the parser reads.
 discover:
-  method: page_scrape
-  page_url: "https://www.insd.bf/"
+  method: latest_named_month_link
+  page_url: "https://www.insd.bf/fr/statistiques/statistiques-economiques/statistiques-des-prix"
+  lang: fr
   link_contains:
     - "note_ihpc"
+    - ".xls"
 
 parser: burkina_insd
 geography: National

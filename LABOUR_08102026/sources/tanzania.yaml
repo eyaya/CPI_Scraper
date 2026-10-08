@@ -1,0 +1,37 @@
+country: Tanzania
+iso3: TZA
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS Tanzania)
+publication_code: ILFS
+frequency: annual
+
+# --- discover ---
+# THE SAME REPORT THE `unemployment` INDICATOR COLLECTS (Tables 3.1, 3.2, 4.1
+# there; 3.3-3.5 here). Reused verbatim from unemployment/sources/tanzania.yaml:
+# the labour topic page lists releases newest-first, and the upload epoch in the
+# filename is not monotonic with the reference year.
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.go.tz/statistics/topic/labour-and-employment-report"
+  link_contains:
+    - "ILFS"
+    - ".pdf"
+
+parser: tanzania_labour
+geography: Total country
+
+notes: >
+  NBS Tanzania Integrated Labour Force Survey key-indicators report. Table 3.3
+  status in employment (ICSE-18 categories, hierarchy not named), 3.4 industry
+  (scheme not named), 3.5 occupation (TASCO, 2024 and 2025). All column
+  percentages, by M / F / T for Tanzania Mainland, Zanzibar and the United
+  Republic ("Total country").
+
+  Rows are rebuilt from word positions (`text_mode: words`): labels wrap over
+  up to five lines with capitalised continuations.
+
+  Deferred, same report: hours of work tables, and the informal sector vs
+  informal economy split, which the unemployment descriptor records as a
+  definitional trap (28.2% against 95.7%).

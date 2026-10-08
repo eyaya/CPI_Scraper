@@ -1,0 +1,36 @@
+country: Gabon
+iso3: GAB
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Gabon (INSTAT, formerly DGS)
+publication_code: RGPL-2013 Résultats globaux (December 2015)
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# The live host is new.instatgabon.org (dgstat.ga is dead). The census volume
+# is listed on /population under "Documents - RGPL". A one-off census report,
+# so the file is pinned.
+discover:
+  method: static_url
+  url: "https://new.instatgabon.org/uploads/folder_1/RESULTATS-GLOBAUX-RGPL2013-OK_DECEMBRE-2015-1.pdf"
+  save_as: RESULTATS-GLOBAUX-RGPL2013.pdf
+
+parser: gabon_labour
+geography: Total country
+
+notes: >
+  RGPL-2013 Résultats globaux, chapter 5.4: Tableau 71 situation dans
+  l'occupation (employment_status) and Tableau 72 secteur institutionnel
+  (sector), shares of the employed aged 16-65, by milieu and sex. Columns are
+  Gabon | Urbain | Rural | Hommes | Femmes (settled by the Effectif rows).
+
+  "Non déclaré" is 10,0% of status and 11,2% of sector (20,9% rural sector),
+  flagged by the report itself as high. Collected as published.
+
+  NOT COLLECTED: Effectif rows (levels); activity-status tables 64-70. No
+  occupation or branch table in this volume. Formal-employment bulletins
+  (payroll) and EGEP 2017 (no composition tables) considered and rejected.
+
+  CROSS-CHECK: employé rémunéré 56,4; privé 34,3; public État 19,6.

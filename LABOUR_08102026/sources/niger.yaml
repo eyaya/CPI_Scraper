@@ -1,0 +1,37 @@
+country: Niger
+iso3: NER
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Niger (INS)
+publication_code: ERI-ESI 2017 rapport final
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# REUSED VERBATIM from unemployment/sources/niger.yaml: the ERI-ESI report
+# sits at a stable WordPress path, and it is the only employment survey.
+discover:
+  method: static_url
+  url: "https://stat-niger.org/wp-content/uploads/rapport_enquete/Niger_ERI-ESI_RapportFinal.pdf"
+  save_as: niger_eriesi_2017.pdf
+
+parser: niger_labour
+geography: Total country
+
+notes: >
+  ERI-ESI 2017, chapter 5 (the household employment survey). Tableau 5.30:
+  employed by institutional sector (initiative privée, autres acteurs, APU,
+  EPP, ménage employeur) by sex, stratum, eight regions and Niger -> sector;
+  the two printed subtotals (secteur privé, secteur public) are verified sums
+  and not collected. Tableau 5.12, overall block only: employed counts by
+  sector, and the formal / informal split of all employment (8,1 / 91,9).
+
+  THE EARLIER "INFORMAL MODULE ONLY" VERDICT WAS HALF RIGHT: chapters 8-10
+  (UPI), including 9.7/9.8 whose titles say "emplois des actifs occupés" but
+  whose universe is informal units' jobs, stay excluded. Chapter 5 is not.
+
+  UNIVERSE CHECKED: 5.12's total 2 182 207 = 99,3% of the report's "Actif
+  occupé" effectif (2 197 369); 5.30's shares reproduce 5.12's counts.
+
+  CROSS-CHECK: initiative privée 68,5; APU 7,2; informal employment 91,9%.

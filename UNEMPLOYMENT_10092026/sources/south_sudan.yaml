@@ -1,0 +1,44 @@
+country: South_Sudan
+iso3: SSD
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS; then SSCCSE)
+publication_code: Southern Sudan Counts -- Tables from the 5th Sudan Population and Housing Census, 2008
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 2
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/south_sudan.yaml -- the same census
+# volume; labour/ reads its composition tables 5-3..5-8, this reads the rate
+# tables 5-1 and 5-2. NBS lists it on /surveys/Household_Surveys.php under
+# /assets/images/. The host is slow (a 90-second transfer stopped at 2.1 of
+# 3.4 MB), so allow a long timeout.
+#
+# OTHER NBS DOCUMENTS CHECKED (2026-10-01), none collectable:
+#   * National Baseline Household Survey 2009 report -- its methodology
+#     section states the LABOUR MODULE (D) "did not meet minimum quality
+#     requirements" and was withheld from tabulation;
+#   * "Key Findings Report (KFR) 2026.04.13" -- the 2025 MICS7, no labour
+#     force indicators;
+#   * the "Labor Market" statistics page -- "update in progress".
+discover:
+  method: static_url
+  url: "https://nbs.gov.ss/assets/images/South%20Sudan%20Census%20Tables.pdf"
+  save_as: South_Sudan_Census_Tables_2008.pdf
+  download_timeout: 300
+
+parser: south_sudan_unemployment
+geography: Total country
+
+notes: >
+  2008 census (Southern Sudan), Tables 5-1 (labour force participation rate)
+  and 5-2 (unemployment rate), each on the 10+ and 15+ bases, by sex,
+  urban/rural, age group, educational attainment and state; whole percent.
+  Census definition: not in work, no job to return to, actively seeking --
+  no availability test and no strict/broad label, so definition
+  `not_applicable`. Household-head blocks not collected.
+
+  CROSS-CHECK: participation 71 (10+) / 74 (15+); unemployment 14 / 12;
+  15-24 unemployment 19; Jonglei 22 / 20.

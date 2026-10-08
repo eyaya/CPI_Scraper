@@ -1,0 +1,63 @@
+country: Guinea
+iso3: GIN
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Guinée)
+publication_code: RGPH-3 Caractéristiques économiques (2014) + EHCVM 2018/19 rapport final
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# Both reports are linked from INS's "Rapports d'enquêtes" page:
+#   https://www.stat-guinee.org/index.php/publications-ins/rapports-d-enquetes
+# RGPH-3 thematic reports sit under /rapports_enquetes/RGPH3/; the EHCVM report
+# path contains a literal space ("EHCVM GUINEE"). Both are one-off rounds, so
+# they are pinned. The extra is recognised by the parser by "EHCVM" in its
+# file name -- keep it in `save_as`.
+# NOT USED: the BTSMT quarterly bulletins (AGUIPE / CNSS / fonction publique
+# registers -- administrative, the Kenya trap) and the Annuaire (rates only).
+discover:
+  method: static_url
+  url: "https://www.stat-guinee.org/images/Documents/Publications/INS/rapports_enquetes/RGPH3/RGPH3_caracteristiques_economiques.pdf"
+  save_as: RGPH3_caracteristiques_economiques.pdf
+
+extra_urls:
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/rapports_enquetes/INS_Rapport_Final_EHCVM%20GUINEE_01_03_2021.pdf"
+    save_as: INS_Rapport_Final_EHCVM_GUINEE_2018-19.pdf
+
+parser: guinea_labour
+geography: Total country
+
+notes: >
+  RGPH-3 (census, 1 March - 2 April 2014), "Caractéristiques économiques",
+  chapter 4: occupation (4.06 milieu x sex, 4.07 region, 4.10 education),
+  statut dans la profession (4.11 milieu x sex, 4.12 region, 4.13 age group,
+  4.15 education x sex with salarié public / privé), 20 branches (4.17 milieu
+  x sex, 4.19 education) and INS's three sectors (4.22). Employed persons of
+  ordinary households aged 15+ (3 415 394). Counts ("Effectif") collected as
+  Total, split under each table's arithmetic.
+
+  EHCVM 2018/19 (two waves, Jul-Oct 2018 and Apr-Jun 2019; period 2019),
+  section 10.17: institutional sector (10.21 -> sector), CSP (10.22) and 11
+  simplified branches (10.24), by region, milieu, sex, age and education.
+  Rotated headers -- column order from page geometry, confirmed by the prose.
+
+  ORDER PROOFS: census tables that print categories across the columns (4.07,
+  4.12, 4.13) carry the principal table's labels and must reproduce its
+  national distribution in their Total row, or the parse fails.
+
+  NOT COLLECTED: "% Femmes" columns/rows (row %); marital-status tables (4.08,
+  4.14 -- and 4.14's rows are shifted against their labels), welfare-quintile
+  tables (4.09, 4.16, 4.21, 4.23, EHCVM 10.23/10.25), 4.20 (status x branch),
+  EHCVM disability rows.
+
+  PUBLISHED GAP KEPT: education-level counts sum to 3 415 344 of 3 415 394
+  (22 men, 28 women with no level). EHCVM 10.21 prints no national row.
+
+  CLASSIFICATION: National throughout -- ISCO/ISIC-shaped groups, no scheme
+  named against a table; INS's sectors put artisanat in the primary sector.
+
+  CROSS-CHECK: agriculteurs 52,6; indépendant 76,4; salarié 6,2; agriculture
+  52,0; commerce 21,3; Conakry 519 388 employed. EHCVM: compte propre 74,2;
+  agriculture 40,4.

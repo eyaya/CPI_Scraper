@@ -1,0 +1,61 @@
+country: Equatorial_Guinea
+iso3: GNQ
+indicator: CPI
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Instituto Nacional de Estadística de Guinea Ecuatorial (INEGE)
+frequency: monthly
+
+# --- discover ---
+# inege.org is Cloudflare-gated: EVERY html route answers 403 (/, ?page_id=404,
+# /wp-json/, even /robots.txt), so there is no listing to scrape and no site to
+# crawl. The published PDFs under /wp-content/uploads/ are served normally — but
+# only to a browser-like TLS fingerprint, so both the probe and the download go
+# through curl_cffi (`impersonate`). A plain `requests` call is refused whatever
+# User-Agent it sends; the handshake, not the header, is what's inspected.
+# We therefore construct the URL and walk back month by month. WordPress files the
+# PDF under its UPLOAD month, normally the month after the data month, so each
+# candidate is probed at a +1 / +2 / +0 offset.
+discover:
+  method: inege_ipc_latest
+  url_template: "https://inege.org/wp-content/uploads/{pub_year}/{pub_month}/Informe__IPC_{month}_{year}.pdf"
+  # Tried in order until one isn't refused. Which fingerprints pass is NOT stable —
+  # Cloudflare scores per fingerprint, and the Chrome profiles were observed going
+  # from working to 403 within the hour while Firefox/Safari kept succeeding — so
+  # keep more than one here.
+  impersonate:
+    - chrome124
+    - firefox133
+    - safari17_0
+  lookback_months: 6
+
+parser: equatorial_guinea_inege
+geography: National
+expect_divisions: 13          # IPC general + 12 CEMAC/NCAC (COICOP-1999) functions
+
+notes: >
+  Spanish-language monthly note, base period 2008 (weights from the January 2006
+  EEH household survey), Laspeyres, computed on AFRISTAT's PHOENIX since Jan 2017.
+  Covers the national aggregate + the 5 surveyed cities (weights: Bata 39%, Malabo
+  36%, Ebibeyin 10%, Mongomo 9%, Evinayong 6%), all carried in `geography`. We take
+  two annexes — 'Índices de precios mensuales' (index) and 'Variación mensual del
+  IPC' (MoM) — matched on CAPTION TEXT, not annex number: INEGE ships two different
+  annexes both numbered 'Anexo 4'.
+  NOT captured — the 'Inflación nacional y por ciudad' annex. Despite its name it is
+  NOT year-on-year: it is the CEMAC multilateral-surveillance measure, a 12-month
+  MOVING AVERAGE (May 2026 = 2,3% national, while the same report states a true
+  interanual of 3,5%). The schema has no measure for a moving average, so it is
+  dropped rather than mislabelled as inflation_yoy. Consequence: this country has
+  NO annual measure. Adding an `inflation_ma12` measure to schema.py would let us
+  capture INEGE's own headline — worth considering, it's the figure they lead with.
+  Only one month of index per issue, so YoY can't be derived locally either.
+  Source-data quirk: individual cells are occasionally malformed in the PDF itself
+  ('-1,' with the decimal digit missing — Ropa y calzados / Nacional, May 2026).
+  Those cells are skipped, never guessed; a row must still carry one token per
+  geography or the parse fails loudly, since a dropped cell would silently shift
+  every later column onto the wrong city.
+  WITHDRAWN ISSUES: INEGE takes reports down again. The June 2026 report was
+  collected on 16 July 2026 (retained under source_data/) but by September 2026 it,
+  and July's, were gone from every upload-month/name variant, leaving May 2026 as
+  the newest served — so a run can legitimately return an OLDER month than the one
+  already on disk. That is INEGE withdrawing the file, not a discovery fault.

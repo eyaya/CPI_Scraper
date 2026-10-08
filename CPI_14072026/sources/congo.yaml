@@ -8,18 +8,26 @@ frequency: monthly
 verify_ssl: false
 
 # --- discover ---
+# INS rebuilt its site in 2026: the WordPress Download-Monitor route this source
+# used ('/statistiques-des-prix/' with /download/<slug>/ links) is gone — that path
+# now 404s — and the bulletins are plain files listed on publications.html, whose
+# names carry a French month + year in several casings
+# ('Bulletin-INHPC_Fevrier-2026_23_03_26.pdf', 'BULLETIN-INHPC_JANVIER_2026_VF-…').
+# NOTE the rebuild also LOST months: the new site's newest INHPC bulletin is
+# February 2026, while March–May 2026 had already been collected from the old site,
+# so out/congo_cpi.csv is deliberately left at its richer May 2026 vintage and this
+# descriptor will pick the newer bulletins up as INS re-uploads them.
 # ins-congo.cg is WordPress with a 'Download Monitor' plugin: the monthly INHPC
 # bulletin lives on a /download/<slug>/ landing page whose real file link carries
 # a ?wpdmdl=<id> token. We union the price + search listings, pick the newest
 # dated 'inhpc' slug, and resolve its wpdmdl link.
 discover:
-  method: wpdm_latest
-  base_url: "https://ins-congo.cg"
-  slug_contains: "inhpc"
-  index_urls:
-    - "https://ins-congo.cg/statistiques-des-prix/"
-    - "https://ins-congo.cg/?s=INHPC"
-  save_as: Bulletin_INHPC_Congo.pdf   # wpdmdl URL carries no filename; month is read from the text
+  method: latest_named_month_link
+  page_url: "https://ins-congo.cg/publications.html"
+  lang: fr
+  link_contains:
+    - "inhpc"
+    - ".pdf"
 
 parser: congo_ins
 geography: National

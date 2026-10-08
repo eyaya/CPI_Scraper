@@ -1,0 +1,54 @@
+country: Kenya
+iso3: KEN
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+publication_code: 2015/16 KIHBS Labour Force Basic Report
+frequency: ad_hoc
+verify_ssl: false            # KNBS serves an incomplete TLS certificate chain
+
+# --- discover ---
+# Found through KNBS's WordPress media API (/wp-json/wp/v2/media?search=...),
+# which lists every upload -- the site's own search page links none of these
+# reports. A one-off survey report, so the file is pinned.
+discover:
+  method: static_url
+  url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/2015-2016-Kenya-Integrated-Household-Budget-Survey-Labour-Force-Basic-Report.pdf"
+  save_as: kenya_kihbs_2015_16_labour_force_basic_report.pdf
+  download_timeout: 300
+
+parser: kenya_labour
+geography: Total country
+
+notes: >
+  WAS BLOCKED (sources_blocked/kenya.yaml, retired 2026-10-01). Collected now:
+  KIHBS 2015/16 Table 3.8 only -- usual weekly hours of the employed aged
+  15-64, eleven bands, by age cohort and sex (`hours`). It is the only
+  composition table KNBS publishes from a household survey.
+
+  WHY STILL NO INDUSTRY / OCCUPATION / STATUS FOR KENYA. The Quarterly Labour
+  Force Report (2019 Q1 - 2022 Q4, archived in one /2023/09/ folder) has ten
+  tables, all labour-force status; `unemployment` collects it. The KIHBS
+  basic report has no industry, occupation, status, sector or informality
+  table. The 2019 KPHC Volume IV and 2009 KPHC Volume II carry activity status
+  only.
+
+  THE ECONOMIC SURVEY IS REFUSED, unchanged. Its Chapter 3 "employment by
+  industry" workbook is ESTABLISHMENT and ADMINISTRATIVE data -- payroll and
+  public-sector records -- excluding the informal sector and the agricultural
+  self-employed, who are most of Kenyan employment. It would land in
+  `industry` under the same merge key as household-survey composition from
+  other countries while counting a different population. Collecting it would
+  make the corpus look more complete and be less true.
+
+  WATCH: the 2026 Integrated Labour Force Survey
+  (knbs.or.ke/2026-kenya-integrated-labour-force-survey-ilfs/ -- FAQs only as
+  of 2026-10-01). When results appear, add them as the primary source.
+
+  NOT COLLECTED from KIHBS: N column (levels); Table 3.9 (part-time/full-time
+  regrouping of the same bands); Tables 3.12/3.13 "working patterns" (no
+  topic for work arrangements).
+
+  CROSS-CHECK: 40-48 hours 27.7 (males 29.3, females 26.0); less than 15 hours
+  6.6; employed 15-64 = 17,875.7 thousand (Tables 3.8 and 3.12 agree).

@@ -1,0 +1,60 @@
+country: Sao_Tome_and_Principe
+iso3: STP
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE)
+publication_code: RGPH 2012 relatório temático 5; IOF 2017; QUIBB 2005
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 3
+
+# --- discover ---
+# PRIMARY REUSED VERBATIM from labour/sources/sao_tome_and_principe.yaml (the
+# same census report): the thematic reports are on one Phoca category page;
+# "phocadownload/userupload" selects the direct upload path rather than
+# Phoca's /documentos/file/<id> HTML detail route. ine.st stalls
+# intermittently, hence the long timeout (which now applies to extras too).
+#
+# EXTRAS: INE STP runs no labour force survey. Its "Emprego" page lists only
+# enterprise statistics (2006, 2007, 2010-2014 -- establishment data, not
+# collected). The household surveys that print labour-force tables are the
+# IOF 2017 report (category 63-inquerito-aos-orcamentos-familiares-iof) and
+# QUIBB 2005 (category 65-outros-estudos); their direct upload paths, with the
+# folders' accents percent-encoded. IOF 2010 (same category) was checked and
+# carries no labour-force table.
+discover:
+  method: page_scrape
+  page_url: "https://www.ine.st/index.php/publicacao/documentos/category/72-relatorio-tematicos-recenseamento-2012?limit=0"
+  link_contains:
+    - "phocadownload/userupload"
+    - "ACTIVIDADEECONOMICA"
+    - ".pdf"
+  save_as: stp_rgph2012_actividade_economica.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/Inqu%C3%A9ritos/Inqu%C3%A9rito%20aos%20Or%C3%A7amentos%20Familiares%20-IOF/Inquerito%20aos%20orcamentos%20familiares%202017.pdf"
+    save_as: stp_iof2017.pdf
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/Inqu%C3%A9ritos/Outros%20estudos/Questionario%20Unificado%20de%20Indicadores%20B%C3%A1sicos%20de%20Bem-Estar%20QUIBB-2005.pdf"
+    save_as: stp_quibb2005.pdf
+
+parser: sao_tome_and_principe_unemployment
+geography: Total country
+
+notes: >
+  RGPH 2012 (census, base 15+): activity counts by sex; participation,
+  employment and unemployment rates by sex x residence x age and by district
+  x age. Unemployed = no work, available and seeking -> strict.
+  IOF 2017: unemployment rate (BIT), youth unemployment (band printed only as
+  "jovens"), NEET 15-24, by sex. QUIBB 2005: active population, participation
+  and unemployment by sex, residence, domain and education.
+
+  NOT COLLECTED: IOF 2017 Tabela 20 "taxa de actividade" (identical to Tabela
+  24's employment-population ratio -- one is mislabelled, the report does not
+  say which) and Tabela 18 (employed/active youth, not an employment ratio);
+  QUIBB 5.2 (counts only "permanent" employment). RGPH 3.1.2's sex split of
+  the 15+ (54 443 + 54 879 != 104 120) -- only the total is taken.
+
+  CROSS-CHECK: RGPH unemployment 13,6 (women 19,7; Cantagalo 16,8), LFPR
+  62,6; IOF 2017 unemployment 8,9, youth 21,3; QUIBB 2005 unemployment 14,8.

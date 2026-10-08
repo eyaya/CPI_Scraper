@@ -18,6 +18,8 @@ import re
 import pandas as pd
 from openpyxl import load_workbook
 
+from . import ubos_census2024
+
 _AGE = {"0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39",
         "40-44", "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80+"}
 _YEAR_RE = re.compile(r"^(19|20)\d{2}$")
@@ -103,12 +105,19 @@ def parse(local_path: str, extras: list[str] | None = None) -> pd.DataFrame:
                             "measure": "count", "value": val, "unit": "persons",
                             "series_code": "UBOS_PROJ",
                         })
-    # optional: district-level all-ages projections from an extra workbook
+    # extras: the district projection workbook, and the NPHC 2024 census
+    # tables (recognised by their sheet layout -- see ubos_census2024)
     for ex in (extras or []):
-        out.extend(_parse_district(ex))
+        if ubos_census2024.is_census_workbook(ex):
+            out.extend(ubos_census2024.parse_census(ex))
+        else:
+            out.extend(_parse_district(ex))
 
     df = pd.DataFrame(out)
     if df.empty:
         raise ValueError("ubos_population: no rows parsed")
-    # a block boundary can re-encounter years already read; keep one row each
-    return df.drop_duplicates(["geography", "sex", "age_group", "period"])
+    # a block boundary can re-encounter years already read; keep one row each.
+    # series_type is in the key: a 2024 census row and a 2024 projection row for
+    # the same place are different figures and must both survive.
+    return df.drop_duplicates(["series_type", "geography", "sex", "age_group",
+                               "period"])

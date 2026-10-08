@@ -1,0 +1,95 @@
+# ---------------------------------------------------------------------
+# RE-PROBED 2026-10-07. The Wayback Machine has an id_ capture (2025-12-15)
+# of this exact download URL -- but it holds the 10-page ARABIC ESCWA policy
+# brief (E/ESCWA/CL2.GPID/2023/TP.8/Rev.1/Policy brief.1), not the English
+# technical paper this layout was written for. Its headline figures are chart
+# data labels and prose only, with category labels as garbled right-to-left
+# text apart from the values: not collectable (the Somalia precedent). The
+# English paper has no capture. Still blocked.
+# ---------------------------------------------------------------------
+country: Egypt
+iso3: EGY
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: CAPMAS (co-publisher, with ESCWA as lead and the ministries, UNICEF and OPHI)
+publication_code: E/ESCWA/CL2.GPID/2023/TP.8/Rev.1
+frequency: ad_hoc
+expect_metrics: 3
+
+# --- discover ---
+# CAPMAS runs TWO separate systems and this document is on the second one.
+#   1. www.capmas.gov.eg is a JavaScript SPA; its JSON API
+#      (https://www.capmas.gov.eg:8080/api/Publication/<id>) serves PERIODIC
+#      statistical bulletins — CPI is id 32, the quarterly labour force survey
+#      is 11 — and has no id for this one-off study.
+#   2. censusinfo.capmas.gov.eg is a NADA microdata catalog with a stable
+#      pattern Metadata-{ar|en}-v4.2/index.php/catalog/<study>/download/<res>.
+#      The MPI documents are attached to the HIECS 2021 study record there.
+#
+# That host's robots.txt fails DNS for a plain fetcher; the pipeline's client
+# gets through.
+discover:
+  method: static_url
+  url: "https://censusinfo.capmas.gov.eg/Metadata-ar-v4.2/index.php/catalog/1906/download/6861"
+  save_as: egypt_mpi_2024.pdf
+
+parser: egypt_mpi
+geography: Total country
+
+notes: >
+  "Multidimensional poverty in Egypt: An in-depth analysis" — the Arabic asset
+  attached to CAPMAS's HIECS 2021 catalogue record, from HIECS 2021/2022.
+
+  PROVENANCE, STATED PLAINLY: CAPMAS is a CO-PUBLISHER, not the lead author.
+  The credited institutions in printed order are ESCWA; the Ministry of
+  Planning, Economic Development and International Cooperation; the Ministry of
+  Social Solidarity; CAPMAS; UNICEF; OPHI. It is collected because it is hosted
+  on a CAPMAS domain and CAPMAS is a named author — but it is not a
+  CAPMAS-alone publication and should not be described as one.
+
+  NATIONAL measure: **7 dimensions, the most of any collected here** —
+  Education, Health, Housing, Services, Employment, SOCIAL PROTECTION and FOOD
+  SECURITY — 19 indicators, k = 2/7 = 29%.
+
+  COLUMN ORDER IS `MPI | H (%) | A (%) | population share (%)` — the index
+  FIRST, unlike almost every other report here. The population share is a weight
+  and is skipped.
+
+  Also published and not yet captured: 95% confidence intervals on all three
+  headline metrics, uncensored AND censored headcount ratios, indicator and
+  dimension contributions (Services 19.3%, Employment 18.9%), a VULNERABLE band
+  (score ≥0.14 and <0.29) and SEVERE poverty (score ≥0.43), plus breakdowns by
+  education of the household head and by wealth quintile.
+
+  Two versions circulate with different framings of k ("at least two
+  dimensions" in the brief, "29% of the 19 weighted indicators" in the full
+  report) — the same rule, 2/7. Where the brief and the report disagree on a
+  rounded value (A 36.9 against 36.5), prefer the full report.
+
+  A separate UNICEF/UN Egypt child study ("Understanding Child Multidimensional
+  Poverty in Egypt") is hosted on egypt.un.org and is out of scope.
+
+  CROSS-CHECK: National 0.077 / 21.2 / 36.5; Urban 0.042 / 11.9 / 35.1;
+  Rural 0.103 / 28.0 / 36.9; Male-headed 0.079 / 21.8 / 36.5; Female-headed
+  0.064 / 17.7 / 36.4. National CIs: H 20.2-22.3; A 36.2-36.8; MPI 0.073-0.082.
+
+# ---------------------------------------------------------------------------
+# MOVED OUT OF sources/ ON 2026-09-09, AFTER THE FIRST REAL RUN.
+#
+# `censusinfo.capmas.gov.eg` NO LONGER RESOLVES -- the collector's own run
+# failed with a DNS NXDOMAIN, not a 404, and the host does not resolve from
+# any network tried since. The main CAPMAS site (www.capmas.gov.eg, and the
+# :8080 publication API this repo's CPI descriptors use) is a JavaScript
+# application that exposes no path to this report.
+#
+# The only reachable copies of Egypt's national MPI are on OPHI, which the
+# standing sourcing rule bars. So this is the same case as Sudan and Djibouti:
+# a genuine NSO-co-authored measure with no NSO host. It is kept here, whole
+# and ready, rather than deleted -- if CAPMAS restores the subdomain or
+# publishes the report on the main site, moving this file back into sources/
+# is the entire fix.
+#
+# The layout in parsers/egypt_mpi.py is left in place for the same reason. Note
+# it has never been checked against the printed page.
+# ---------------------------------------------------------------------------

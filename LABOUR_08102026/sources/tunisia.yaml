@@ -1,0 +1,75 @@
+country: Tunisia
+iso3: TUN
+indicator: Labour
+tier: 2
+source_type: html
+agency: Institut National de la Statistique (INS Tunisie)
+publication_code: P0201
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# REUSED from unemployment/sources/tunisia.yaml, with ONE deliberate change:
+# the PRIMARY page here is /152 (population active occupée), because the
+# employment-by-activity table lives on it. `unemployment` makes /153
+# (chômage) primary and pulls /152 as an extra; neither indicator needs the
+# other's pages, so this descriptor takes only the one it reads.
+#
+# INS serves these over a certificate its own chain does not validate, hence
+# verify_ssl: false -- inherited, not a new decision.
+discover:
+  method: static_url
+  url: "https://www.ins.tn/statistiques/152"
+  save_as: tunisia_population_occupee.html
+
+parser: tunisia_labour
+geography: Total country
+
+notes: >
+  INS Tunisie, "Indicateurs de l'emploi et du chômage", quarterly. This
+  indicator takes ONE table from the theme page: "Répartition de la population
+  active occupée selon le secteur d'activité" (dataset 1786304631) — the
+  employed broken down by branch of economic activity.
+
+  NO OVERLAP WITH `unemployment`, which reads the SAME pages for the headline
+  totals by sex (population active, occupée, chômage, taux de chômage). Its
+  own descriptor lists this table under "ALSO PUBLISHED, not yet captured";
+  this is the entry that captures it. A figure has exactly one home.
+
+  WHY HTML AND NOT THE PDF — the whole reason Tunisia is collectable. INS's
+  quarterly note is a bilingual Arabic/French document whose numeric runs come
+  out of the text layer BIDI-SCRAMBLED, and differently in each table: one row
+  fully reversed, another rotated by four positions, a third with its digits
+  run together. That was proved by anchoring on the note's own narrative
+  figures, not assumed. There is no correct way to align those numbers with
+  their quarters, so the note is not parsed at all.
+
+  "SECTEUR D'ACTIVITÉ" IS A BRANCH OF ACTIVITY, so these rows carry the
+  `industry` topic, NOT `sector` — which in this schema means the INSTITUTIONAL
+  sector (public administration / public enterprises / private), the cut HCP
+  Morocco publishes. Both are "sector" in English and they are different
+  quantities.
+
+  NO NOMENCLATURE IS NAMED anywhere on the page or in the table — no NAT, CITI
+  or ISIC — and the five groups are INS's own broad aggregation, so every
+  category is National.
+
+  VALUES ARE IN THOUSANDS despite the page's unit line reading "Unité :
+  Nombre": INS's quarterly note gives 3 568,1 mille employed for 2026-Q2 and
+  this table's 2026-Q2 total is 3568.1. Emitted as thousand_persons rather
+  than multiplied out.
+
+  THE TOTAL ROW IS LABELLED WITH THE TABLE'S OWN TITLE rather than "Total";
+  it is a published figure and is kept, relabelled.
+
+  ROLLING WINDOW: about nine quarters are rendered at a time and the window is
+  NOT the same across INS's three pages — 2024-Q4 is absent from this table
+  while present on /151. History accumulates across runs by merge-on-write;
+  INS does not republish the quarters that drop off, so a run that replaced
+  the file would lose them permanently.
+
+  CROSS-CHECK (2026-Q2, en milliers): total 3568,1; Agriculture et pêche
+  581,6; Industries manufacturières 730,3; Industries non manufacturières
+  477,4; Services 1778,8. 2024-Q1: total 3476,0; Agriculture et pêche 533,0;
+  Services 1828,4. "Non déclarés" prints "--" in four of the nine quarters —
+  a missing cell, never a zero.

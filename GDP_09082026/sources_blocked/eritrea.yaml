@@ -1,0 +1,31 @@
+# =====================================================================
+# BLOCKED -- no official Eritrean national-accounts publication exists
+# online, live or archived. Checked 2026-10-01:
+#
+# LIVE HOSTS. nso.gov.er (196.200.102.110), mof.gov.er (196.200.102.238) and
+# boe.gov.er / www.boe.gov.er (196.200.104.42) now RESOLVE -- earlier notes
+# recorded every .gov.er host as NXDOMAIN -- but all three time out on
+# connect (HTTP and HTTPS). www.nso.gov.er, eritrea-nso.gov.er,
+# www.mof.gov.er, erina.gov.er, moi.gov.er and bankoferitrea.org do not
+# resolve.
+#
+# WAYBACK MACHINE (CDX index, all captures):
+#   * nso.gov.er -- 9 captures 2017-2022; the one 200 (2018-08-08) is the
+#     default IIS7 server page, everything else 403/404. No document.
+#   * boe.gov.er / www.boe.gov.er -- the home page captured ~50 times
+#     2011-2018 is a single "under construction" image (under_image.jpg)
+#     with no links; the other 31 captured paths are a XAMPP dashboard,
+#     a firewall login page and 404s. No document.
+#   * mof.gov.er, bankoferitrea.org, erina.gov.er -- no captures.
+#   * shabait.com (Ministry of Information) -- 515 archived PDFs, all
+#     newspaper issues (Eritrea Profile, Haddas Ertra, Al-Haditha), not
+#     statistical publications.
+#
+# Only aggregators (IMF, World Bank, UN) carry Eritrean GDP, and they are
+# excluded. Re-check nso.gov.er and boe.gov.er: they resolve, so a site may
+# come up.
+# =====================================================================
+country: Eritrea
+iso3: ERI
+indicator: GDP
+blocked_reason: no official national-accounts publication online, live or archived (2026-10-01)

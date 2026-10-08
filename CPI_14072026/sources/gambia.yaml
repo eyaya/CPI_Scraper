@@ -1,0 +1,30 @@
+country: Gambia
+iso3: GMB
+indicator: CPI
+tier: 2
+source_type: excel
+agency: Gambia Bureau of Statistics (GBoS)
+frequency: monthly
+verify_ssl: false
+
+# --- discover ---
+# GBoS publishes the monthly CPI workbook on its data portal. Each monthly file
+# carries the FULL national chained series (2019-01 to the release month), so a
+# recent file gives the whole history. The download route only serves the file
+# when the FULL slug URL is used (the bare /downloads-file/<id> returns empty).
+# Update to a newer month from gbosdata.org/downloads when GBoS posts one.
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/638-consumer-price-index-october-2025"
+  save_as: gambia_cpi.xlsx
+
+parser: gambia_gbos
+geography: Total country
+
+notes: >
+  GBoS national CPI, chained link series ("NChained Link Series to Publish" sheet),
+  monthly index levels by COICOP division and sub-class, 2019-2025. Index only (the
+  workbook publishes no inflation rates, so none are derived). Base is the GBoS
+  chained series (2003/04 weights). The portal also carries urban and rural series
+  (separate sheets) and older CPI vintages — deferred. Same gbosdata.org portal and
+  full-slug download quirk as Gambia GDP.

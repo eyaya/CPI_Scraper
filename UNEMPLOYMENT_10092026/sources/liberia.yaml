@@ -1,0 +1,70 @@
+country: Liberia
+iso3: LBR
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+publication_code: LBR-LFS 2016-2017
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 8
+
+# --- discover ---
+# UNBLOCKED 2026-09-27. LISGIS rebuilt its site as a single-page app over a JSON
+# API; /api/survey-report-grid lists each survey report with a direct
+# downloadUrl, and the LFS 2016/2017 main report is served at a stable path.
+# (The old surveys.php listing and its opaque upload names are gone.)
+discover:
+  method: static_url
+  url: "https://www.lisgis.gov.lr/uploads/surveys/lfs-2016-2017.pdf"
+  save_as: liberia_lfs_2016_17.pdf
+
+parser: liberia_pdf
+geography: Total country
+
+notes: >
+  READ BY POSITION SINCE THE SITE REBUILD. The copy now served wraps row labels
+  across two to four lines and puts the LU rows on an uncaptioned continuation
+  page; line matching mis-read the informal-employment COUNT as its share. The
+  parser (`parse_positional`) takes Table 3.1's seventeen-number rows in printed
+  order and proves the mapping in every column (LF = E + U; population = LF +
+  outside; LU1 = U/LF; LFPR = LF/population). LU2 is now collected as well.
+
+  LISGIS Labour Force Survey 2016-2017, "Main labour force and labour
+  underutilization (LU) indicators (%), LBR-LFS 2016-2017 - Main job".
+
+  THE WIDEST TABLE IN THE COLLECTOR: seventeen columns in seven blocks --
+  Sex | Residence | Region | Functional Difficulty | Age | Subsistence Farming
+  | Total. Two things about that order are easy to get wrong and were confirmed
+  against the printed table: FUNCTIONAL DIFFICULTY COMES BEFORE AGE, and there
+  is a SUBSISTENCE FARMING block between Age and Total that is simple to miss
+  entirely.
+
+  The caption claims "(%)" but the table is MIXED: the first five rows are
+  absolute persons and the rest are percentages.
+
+  The ICLS-19 ladder is labelled LU1-LU4 here; Cameroon and Burkina print
+  SU1-SU4 for the same concepts.
+
+  ARITHMETICALLY CHECKABLE: every count row sums across all seven column blocks
+  to the Total column, and LU1 reproduces as Unemployed/Labour force in all
+  seventeen columns. If a parse is right, those identities hold; if a column
+  slipped, they break immediately. Use them.
+
+  ONE SUSPECT SOURCE VALUE: LU4 for the "With functional difficulty" column
+  reads 78.0, which is implausible beside LU3 15.0 and LU2 14.6 for the same
+  column and breaks reconciliation to the 27.1 national total. It re-extracted
+  as 78.0 on a targeted second pass, so it is what the document says -- likely a
+  printed typo or a column shift in the source. Flagged rather than silently
+  corrected.
+
+  Indicators are computed on the MAIN JOB only, per the caption.
+
+  SERIES IS FROZEN at 2016-17. The NPHC 2022 thematic report on labour exists
+  but its file 404s: the whole /admin_area/uploads/census/ directory is broken
+  or permission-restricted on the LISGIS server, while the sibling
+  /uploads/surveys/ folder serves fine.
+
+  CROSS-CHECK (Total column): population 15+ 2,355,060; labour force 615,549;
+  employed 538,902; unemployed 76,647; LFPR 26.1%; EPR 22.9%; LU1 12.5%;
+  LU3 18.0%; LU4 27.1%; informal employment 86.7%.

@@ -1,0 +1,50 @@
+country: Nigeria
+iso3: NGA
+indicator: Population
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS), projections by the National Population Commission (NPC)
+publication_code: Demographic Statistics Bulletin 2022, 2021, 2020 (annexes)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# The NBS e-library (nigerianstat.gov.ng/elibrary?queries[search]=demographic)
+# lists the bulletins; its `download/<id>` route serves the file named in the
+# Content-Disposition header. Neighbouring ids serve unrelated reports (CPI,
+# FAAC), so each id was verified by that header, and the parser re-checks the
+# edition on every cover -- a wrong file raises instead of parsing. The 2023
+# and 2024 editions are in the release calendar but were never uploaded; switch
+# the primary when they are.
+#   1241422 = DEMOGRAPHIC_BULLETIN_2022_FINAL.pdf
+#   1241207 = DEMOGRAPHIC BULETIN 2021.pdf
+#   1241121 = DEMOGRAPHIC BULLETIN 2020.pdf
+discover:
+  method: static_url
+  url: "https://nigerianstat.gov.ng/download/1241422"
+  save_as: NBS_Demographic_Bulletin_2022.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://nigerianstat.gov.ng/download/1241207"
+    save_as: NBS_Demographic_Bulletin_2021.pdf
+  - url: "https://nigerianstat.gov.ng/download/1241121"
+    save_as: NBS_Demographic_Bulletin_2020.pdf
+
+parser: nbs_nigeria_population
+geography: Total country
+
+notes: >
+  NPC projections (2006 census base) as reprinted in NBS's Demographic
+  Statistics Bulletins: national by sex 2006-2022 (2022 Annex 1); five-year
+  age groups x sex 2018-2022 (Annex 3); single years of age 0..79, 80+ x sex
+  2018-2022 (Annex 2, each year emitted only if its ages sum to Annex 1); the
+  36 states + FCT, total only, 2016-2020 (2021 and 2020 editions, which must
+  agree where they overlap). Checks: M + F = T, bands and states sum to the
+  national figure.
+
+  PUBLISHED DEFECTS PINNED: the 2020 edition's 2018 TOTAL prints 191,625,349
+  (its states sum to 196,042,933); it splits Adamawa 2018 as "4,4 17,584".
+
+  CROSS-CHECK: 2022 216,783,381 (108,350,410 M / 108,432,971 F); 2006
+  140,431,790; Kano 2020 14,655,311; 0-04 2022 33,596,028.

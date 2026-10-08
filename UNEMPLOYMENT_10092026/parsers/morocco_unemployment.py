@@ -122,4 +122,19 @@ LAYOUTS["morocco"] = {
 
 
 LAYOUT = LAYOUTS['morocco']
-parse = make_parser(LAYOUT)
+_annual = make_parser(LAYOUT)
+
+
+def parse(path: str):
+    """Tableaux 2/3 (annual, the layout above) plus Tableau 11's four quarters
+    by milieu (`morocco_quarterly`). A report whose Tableau 11 no longer fits
+    is announced and the annual figures are still collected."""
+    import pandas as pd
+    from . import morocco_quarterly as Q
+    df = _annual(path)
+    try:
+        q = Q.parse_quarters(path)
+    except ValueError as e:
+        print(f"[morocco] Tableau 11 skipped: {e}")
+        return df
+    return pd.concat([df, pd.DataFrame(q)], ignore_index=True)

@@ -1,0 +1,55 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Zimbabwe National Statistics Agency (ZIMSTAT)
+publication_code: 2019 Labour Force and Child Labour Survey (LFCLS) report
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# Listed on https://zimstat.co.zw/labour-statistic/ (whose hrefs carry literal
+# TAB characters -- strip them before matching). A one-off annual round, so
+# the file is pinned. NOT the quarterly QLFS report `unemployment/` reads: see
+# notes for why that one cannot serve this indicator.
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Labor-force/Labour-Force-Report-2019.pdf"
+  save_as: Labour-Force-Report-2019.pdf
+
+parser: zimbabwe_labour
+geography: Total country
+
+notes: >
+  ZIMSTAT 2019 LFCLS report (356 pp; fieldwork 5 June - 7 July 2019; base
+  15+). Collected, all column-% distributions: Table 4.5(b) status in
+  employment by area within sex (National -- ICSE not named); 4.6(a) 23
+  industries by sex (National -- ISIC never named, though the sections are
+  ISIC-Rev.4-shaped); 4.7(a) occupation by sex (ISCO-08, named in section
+  4.8); 7.1a formal / informal / household SECTOR by sex within area, percent
+  and number; 7.10's Total row -- informal vs formal EMPLOYMENT counts by sex
+  (a job characteristic, distinct from 7.1a's sector).
+
+  NOT COLLECTED: Table 4.8 institutional sector -- its base (1,422,153) is not
+  stated: own-account workers were "not asked", but the figure is neither
+  employed minus own-account (1,879,532) nor employees (1,735,822). The
+  row-% twins (4.5a, 4.6b, 4.7b, 4.8b); 7.1b-7.9 (within the informal sector
+  only); chapter 5 youth repeats.
+
+  PUBLISHED ROUNDING KEPT: 7.1a Urban female sectors sum to 681 061 under a
+  Total of 681 062 (weighted cells rounded one by one).
+
+  WHY NOT THE QUARTERLY QLFS (this entry was previously in sources_blocked/).
+  The QLFS `unemployment/` collects publishes every composition cut as a
+  FIGURE -- 7b sector of employment, 9 industries, 10 occupation, 11/12
+  informal by industry -- and the text layer under each carries only the
+  caption and the sex totals ("Figure 10 ... Number: 1,850,500 1,336,098
+  3,186,598"), no category values. Re-checked on Q2 2025: still charts; only
+  its Table 1 prints values. Do not read values off the bars: that invents
+  precision ZIMSTAT never published. If a QLFS issue ever prints these cuts
+  as tables, add it as a second, quarterly source.
+
+  CROSS-CHECK: employees 59.9%; agriculture, forestry and fishing 36.0%;
+  retail trade 17.0%; elementary occupations 29.4%; informal sector 975,880
+  (33.7%); informal employment 2,187,175 of 2,897,064 employed.

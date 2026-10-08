@@ -1,0 +1,95 @@
+country: Morocco
+iso3: MAR
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: Activité, emploi et chômage — résultats annuels
+frequency: annual
+
+# --- discover ---
+# THE SAME REPORT THE `unemployment` INDICATOR COLLECTS (Tableaux 2 and 3
+# there, Tableau 4 here). Reused verbatim from unemployment/sources/morocco.yaml,
+# including its finding: HCP's topic pages (/downloads/*_tNNNNN.html) are
+# client-rendered and come back EMPTY — always use the ?tag= route, which is
+# newest-first.
+discover:
+  method: page_scrape
+  page_url: "https://www.hcp.ma/downloads/?tag=Emploi"
+  link_contains:
+    - "activité, emploi et chômage"
+  save_as: morocco_activite_emploi_chomage.pdf
+
+parser: morocco_labour
+geography: Total country
+
+notes: >
+  HCP "Activité, emploi et chômage, résultats annuels", Tableau 4 — four
+  composition distributions stacked under one header: occupation (ten groups),
+  statut professionnel (six: salariés, indépendants, employeurs, aides
+  familiales, apprentis, autres situations), secteurs d'emploi (four: public
+  administration, public enterprises, private including informal, and non
+  déclaré) and branches d'activité économique (eight).
+
+  EVERY VALUE IN TABLEAU 4 IS A PERCENTAGE — each sub-heading says "(en %)" and
+  each block closes on its own Total row of 100. The absolute levels in the
+  same table ("Population active occupée ... en milliers") are employment
+  levels and belong to `unemployment`, so no count is collected here.
+
+  THE FIVE COLUMNS ARE TWO DIMENSIONS: Masculin and Féminin are national
+  figures by sex; Urbain and Rural are both sexes by place; National is both.
+  They go to `sex` and `locality` separately — read flat, "Urbain" would be
+  published as a third sex.
+
+  NO SCHEME IS NAMED anywhere in the report (no CITP, CITE, nomenclature or
+  CSP), so every category is National, despite the occupation groups being
+  recognisably ISCO-88 shaped.
+
+  NOT COLLECTED HERE: the age, diplôme and niveau-scolaire distributions —
+  `age_group` and `education` are columns in this schema, not topics, and there
+  is no "employment by age" topic to hold a distribution of the employed. The
+  employment levels and rates in the same table belong to `unemployment`.
+
+  TABLEAU 5 IS NOW COLLECTED, and carries the DIPLOMA dimension —
+  "Structures socio-professionnelles de l'emploi selon le niveau du diplôme, le
+  sexe et le milieu de résidence", ten pages (27–36) in FIVE population blocks
+  (NATIONAL, URBAIN, RURAL, MASCULIN, FÉMININ), each repeating three of
+  Tableau 4's structures with Sans diplôme / Niveau moyen / Niveau supérieur as
+  its columns. 315 rows, on top of Tableau 4's 160.
+
+  AN EARLIER VERSION OF THIS NOTE CALLED THAT "a schema decision, not a parsing
+  one", because the five blocks overlap. That was too pessimistic: they map
+  onto exactly the `sex` × `locality` cells Tableau 4 already uses — NATIONAL
+  is total/all, URBAIN total/urban, MASCULIN male/all — so they occupy DISTINCT
+  merge keys and nothing is double counted. The diploma level rides in the
+  `education` column. No occupation breakdown is published here (only statut,
+  secteurs and branches are collectable; the age structure has no topic).
+
+  "NATIONAL" CANNOT PIN ITS OWN PAGES: every block's sector rows contain "y
+  compris la promotion nationale", so that substring appears on pages 29, 31,
+  33 and 35 too. The national block is pinned by EXCLUDING the other four block
+  words; pinning it on "national" would file the urban, rural, male and female
+  figures as national.
+
+  THE LOST LEADING ZERO COST A CATEGORY, and the earlier diagnosis in this
+  descriptor was wrong twice. HCP prints small decimals without their leading
+  zero (",0", ",1", ",3"). The first claim — that such rows "would be silently
+  skipped as short" — was wrong; so was the second, that fixing `numbers_in`
+  had solved it. The row died EARLIER, at the label pattern: it ended at the
+  first DIGIT, and the character after "Activités mal désignées" is a COMMA, so
+  the line yielded no label and was discarded before `numbers_in` ran. The
+  category vanished from two of five blocks (pages 30 and 34) and only
+  `expect_rows` caught it. The label now ends at the first value, comma or
+  digit, and `labour/tests/test_offline.py` pins both halves.
+
+  METHODOLOGY BREAK: HCP replaced the ENE with the Enquête sur la Main-d'Œuvre
+  (EMO) from Q1 2026 and the two are NOT comparable (annual 2025 unemployment
+  13,0% against Q2 2026's 9,5%). This descriptor reads the ANNUAL ENE report;
+  do not chain it to an EMO note without a level-shift flag.
+
+  FR conventions: comma decimals. A SPACE IS NOT A THOUSANDS SEPARATOR IN THIS
+  TABLE, though it is elsewhere in the report: every value being a percentage,
+  "Total 100 100 100 100 100" is five values, and the space-grouping rule read
+  it as the single number 100100100100100. The layout sets
+  `space_thousands: False` for that reason — do not copy it to a layout that
+  collects the "en milliers" levels.

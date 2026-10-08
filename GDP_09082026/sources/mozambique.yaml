@@ -1,0 +1,45 @@
+country: Mozambique
+iso3: MOZ
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Instituto Nacional de Estatística de Moçambique (INE)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INE's Liferay library: Estatísticas > Económicas (folder 44331) has a "PIB"
+# folder (45000) whose "Trimestrais" (45027) and "Anuais" (45030) subfolders
+# hold only 2013-2014 notes; quarterly GDP otherwise appears only as prose in
+# the Síntese de Conjuntura and as two lines in the Indicadores em Flash. The
+# NSO's tabulated national accounts are in the ANUÁRIO ESTATÍSTICO, chapter 5
+# (source line: INE Direcção de Contas Nacionais e Indicadores Globais), under
+# Anuário Estatístico (44568) > Nacionais (44595) > <year> (2025 = 476597).
+# Pinned to the 2025 edition; each edition gives five years, and the 2024
+# edition captions its tables differently (not read). ine.gov.mz times out
+# intermittently -- retry before concluding it is down.
+discover:
+  method: static_url
+  url: "https://www.ine.gov.mz/documents/20119/476597/ANU%C3%81RIO%20ESTAT%C3%8DSTICO%202025.pdf/9198aff1-b75a-3e30-d25e-10a36f2b3ad1?download=true"
+  save_as: INE_MZ_Anuario_Estatistico_2025.pdf
+  download_timeout: 600
+
+parser: mozambique_ine_gdp
+geography: National
+
+notes: >
+  INE Moçambique Anuário Estatístico 2025, 2021-2025: GDP by the EXPENDITURE
+  approach (total/private/public consumption, gross capital formation,
+  exports, imports, PIBpm) at current and constant 2019 prices (MZN million),
+  volume growth of each component, and GDP per capita in MT and US$.
+  Identity C + I + X - M = PIB checked every year; the headline table's PIB
+  and volume growth are checked against the detailed tables.
+
+  NOT READ: deflator growth (Quadro 5.5.2, no measure in the schema), the
+  fiscal/external ratios of Quadro 5.4.1, the tourism satellite table. No
+  production-approach table is published in the yearbook. GDP outputs
+  OVERWRITE, so moving to a newer edition replaces the five-year window.
+
+  CROSS-CHECK: PIBpm current 2021 1 058 442 / 2025 1 508 475 MZN million;
+  constant 2019 prices 2025 1 101 792; volume growth 2023 5.48%, 2025 -0.17%;
+  per capita 2025 44 249 MT / US$ 692.

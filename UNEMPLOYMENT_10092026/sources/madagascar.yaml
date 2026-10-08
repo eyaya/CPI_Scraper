@@ -1,0 +1,49 @@
+country: Madagascar
+iso3: MDG
+indicator: Unemployment
+tier: 2
+source_type: excel
+agency: Institut National de la Statistique (INSTAT)
+publication_code: ENEMPSI 2012 Tome 1; RGPH-3 2018 Caractéristiques économiques; EPM 2021-2022
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 3
+
+# --- discover ---
+# PRIMARY AND FIRST EXTRA REUSED VERBATIM from labour/sources/madagascar.yaml
+# (the same two files). The ENEMPSI workbook is linked from
+#   https://www.instat.mg/statistiques/enquetes-et-recensements/item/enquete-nationale-sur-lemploi-et-le-secteur-informel-enempsi
+# and the EPM 2021-2022 report from
+#   https://www.instat.mg/p/epm-enquete-permanente-aupres-des-menages-2021-2022
+# (listed under /statistiques/enquetes-et-recensements/item/enquete-periodique-
+# aupres-des-menages-epm). The parser recognises each file by its content.
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_ENEMPSI2012_Tome1_11-2013.xls"
+  save_as: INSTAT_ENEMPSI2012_Tome1_11-2013.xls
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.instat.mg/documents/upload/main/INSTAT-RGPH3_%20CaracteristiquesEconomiquesdelaPopulation.pdf"
+    save_as: INSTAT-RGPH3_CaracteristiquesEconomiques.pdf
+  - url: "https://www.instat.mg/documents/upload/main/INSTAT_Epm21-22_06-2024.pdf"
+    save_as: INSTAT_Epm21-22_06-2024.pdf
+
+parser: madagascar_unemployment
+geography: Total country
+
+notes: >
+  ENEMPSI 2012 (base 5+): activity, occupation, STRICT and ÉLARGI
+  unemployment (INSTAT's own labels: 1,23 / 8,03) and time-related
+  underemployment by milieu, région, sexe, âge, education. RGPH-3 2018 (base
+  15-59): net activity and unemployment rates by région / âge / education x
+  milieu x sexe. EPM 2021-2022 (base 15+): participation, unemployment, youth
+  unemployment, NEET, underemployment, informal employment share.
+
+  NOT COLLECTED: ENEMPSI "sous-emploi global" and "emploi inadéquat"
+  (AFRISTAT composites with income-based underemployment); RGPH-3 gross
+  activity rates (exceed 100) and "taux net d'emploi spécifique" (employed /
+  active); EPM 4.14 (informal-sector share -- composition) and 4.16.
+
+  CROSS-CHECK: unemployment 1,23 strict / 8,03 broad (2012), 4,2 (2018),
+  6,6 (2022); youth 11,2 (2022); participation 63,24 (2012, 5+), 58,8 (2022).

@@ -115,4 +115,21 @@ LAYOUTS["zimbabwe"] = {
 
 
 LAYOUT = LAYOUTS['zimbabwe']
-parse = make_parser(LAYOUT)
+_qlfs = make_parser(LAYOUT)
+
+
+def parse(path: str, extras: list[str] | None = None):
+    """The newest QLFS key-findings table, plus the 2019 LFCLS annual report
+    (an extra, read by `zimbabwe_lfcls`: participation and employment ratio by
+    age group, area and sex, base 15+). Periods differ (YYYY-Qn vs 2019) and
+    so do the bases (16+ vs 15+), so no merge key is shared."""
+    import os
+    import pandas as pd
+    from . import zimbabwe_lfcls
+    frames = [_qlfs(path)]
+    for p in extras or []:
+        if "labour-force-report-2019" in os.path.basename(p).lower():
+            frames.append(zimbabwe_lfcls.parse(p))
+        else:
+            frames.append(_qlfs(p))
+    return pd.concat(frames, ignore_index=True)

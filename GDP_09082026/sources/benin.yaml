@@ -1,0 +1,41 @@
+country: Benin
+iso3: BEN
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Institut National de la Statistique et de la Démographie (INStaD, formerly INSAE)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# instad.bj answers "Maintenance en cours" (HTTP 503) on every path since
+# 2026-09-29, so the files are read from Wayback Machine `id_` captures of
+# INSAE's OWN uploads (original bytes) -- the precedent of
+# labour/sources/benin.yaml. Not an aggregator. Re-point to instad.bj
+# (/images/docs/insae-statistiques/economiques/comptes-nationaux/...) when the
+# new platform is up; its 2022-2024 notes (NOTE_SUR_LES_COMPTES_NATIONAUX_
+# 2022/2023/2024_INStaD.pdf, and INStaD_Note_CNT_4T2023.pdf) were never
+# captured as files, only as error pages.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20220625133140id_/http://instad.bj/images/docs/insae-statistiques/economiques/comptes-nationaux/Serie-Comptes-Nationaux-2014/S%C3%A9rie_PIB_1999-2021.xlsx"
+  save_as: INSAE_Serie_PIB_1999-2021.xlsx
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 300
+
+extra_urls:
+  - url: "http://web.archive.org/web/20220626162758id_/http://instad.bj/images/docs/insae-publications/trimestrielles/CNT/anneeencours/S%C3%A9rie_PIB_Trimestriel_2018_2021.xlsx"
+    save_as: INSAE_Serie_PIB_Trimestriel_2018_2021.xlsx
+
+parser: benin_insae_gdp
+geography: National
+
+notes: >
+  INSAE annual series 1999-2021 (billion XAF): production approach (branches)
+  and expenditure approach, current and constant 2015 prices (SCN 2008
+  rebased). Vintage per year in category_group, as INSAE flags it:
+  1999-2014 rétropolés provisoires, 2015-2016 définitifs, 2017-2021
+  estimations. Quarterly 2018-Q1..2021-Q4: value added by branch at constant
+  prices only. Identities checked each run (VA + taxes = PIB; PIB (Emploi) =
+  PIB). Cross-check: PIB current 2 263,3 (1999), 9 809,7 (2021); 2015 current =
+  constant = 6 732,8.

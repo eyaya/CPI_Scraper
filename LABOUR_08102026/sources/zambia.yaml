@@ -1,0 +1,56 @@
+country: Zambia
+iso3: ZMB
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats)
+publication_code: Labour Force Survey 2024
+frequency: annual
+
+# --- discover ---
+# THE SAME REPORT THE `unemployment` INDICATOR COLLECTS, read for a different
+# purpose: that one takes the headline status rates, this one takes the
+# composition of employment. Each opens only its own tables, so no figure is
+# written twice.
+#
+# ZamStats runs WordPress; the annual LFS report is published as
+# /wp-content/uploads/<YYYY>/<MM>/<YYYY>-Labour-Force-Survey-Report.pdf, where
+# the YEAR IN THE FILENAME is the reference year and the /YYYY/MM/ path is the
+# upload date (the 2024 report was uploaded in 2025/11). We take the newest
+# year-stamped link from the publications listing.
+#
+# DUPLICATE ALERT: the same report is listed from two upload paths
+# (…/2025/10/… and …/2025/11/…) with an identical basename. Discovery resolves
+# one of them; both are the same file.
+discover:
+  method: latest_year_file
+  page_url: "https://www.zamstats.gov.zm/latest-publications/"
+  link_contains:
+    - "labour-force-survey-report"
+    - ".pdf"
+
+parser: zambia_labour
+geography: Total country
+
+notes: >
+  ZamStats Labour Force Survey 2024, Table 5.2 — employed persons by status in
+  employment and sex, as counts AND as published percentages, for Total, Male
+  and Female.
+
+  ZAMBIA NAMES ITS OWN CLASSIFICATION, and the rows are tagged accordingly.
+  Section 5.4 states that employed persons were classified on ICSE-93 "until
+  2023" and that the current reporting uses ICSE-18-A — the AUTHORITY hierarchy
+  of ICSE-18 — rather than ICSE-18-R. The rows carry `ICSE-18-A`, not a bare
+  ICSE-18, and that also marks a methodology break against any Zambian status
+  series before 2024.
+
+  A DASH IS NOT A ZERO. "Dependent contractors" prints counts of 0 and
+  percentages as dashes; the row is skipped rather than having a 0.0 invented
+  for a share ZamStats did not publish. That is why the scan expects 8 rows
+  rather than the 11 printed.
+
+  Deferred, all in the same report: industry by type of employment (5.4),
+  occupation by educational attainment (5.7), youth employment by industry
+  (6.5), the informal economy tables (7.x), weekly hours by occupation and by
+  industry (8.6, 8.7), and paid employees by income bracket (14.2–14.4). Each
+  is a layout addition rather than new discovery work.

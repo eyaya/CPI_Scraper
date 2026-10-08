@@ -1,0 +1,56 @@
+country: Lesotho
+iso3: LSO
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Bureau of Statistics Lesotho (BOS)
+publication_code: Lesotho Labour Force Survey (LFS) 2024 and 2019
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 9
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/lesotho.yaml: the same three documents.
+# bos.gov.ls builds its publication list in the BROWSER from a JavaScript array
+# inside publications.htm ("catalogueData"), so no crawler sees a link. The
+# array lists every report under /Bos_Reports/Copy%20of%20Demography/, each a
+# ZIP holding one PDF. The primary ZIP is unzipped by the harness
+# (inner_suffix); the parser unzips the extras itself.
+discover:
+  method: static_url
+  url: "https://www.bos.gov.ls/Bos_Reports/Copy%20of%20Demography/2024_Labour_Force_Survey_Report.zip"
+  save_as: 2024_Labour_Force_Survey_Report.zip
+  inner_suffix: ".pdf"
+
+extra_urls:
+  - url: "https://www.bos.gov.ls/Bos_Reports/Copy%20of%20Demography/2019_Lesotho_LFS_report.zip"
+    save_as: 2019_Lesotho_LFS_report.zip
+  - url: "https://www.bos.gov.ls/Bos_Reports/Copy%20of%20Demography/2019_Lesotho_LFS_Tables.zip"
+    save_as: 2019_Lesotho_LFS_Tables.zip
+
+parser: lesotho_unemployment
+geography: Total country
+
+notes: >
+  LFS 2024: Table 3.9 main indicators by sex (counts, participation, employment
+  ratio, informal employment, LU1-LU4, youth 15-24 unemployment and employment
+  ratio); 3.7 population / labour force / participation by district x sex; 3.8
+  the same by age x settlement (urban / peri-urban / rural); 3.6 participation
+  by age x sex; 4.22 employment ratio by district x sex. LFS 2019: Table 3.9
+  main indicators by sex and settlement; 3.5 / 3.6 by age x sex / settlement;
+  3.7 participation by district; 7.1 / 7.2 unemployed by age / settlement x
+  sex; tables volume 7.4 unemployed by district x sex. Base 15+.
+
+  Supporting tables' Total rows/columns are checked against Table 3.9 and not
+  emitted twice. Every count/rate pair is held to its own arithmetic.
+
+  PUBLISHED DEFECTS: 2024 Table 3.9's youth block is internally inconsistent
+  (youth 15-35 unemployment total outside its sexes; a "15-35" participation
+  rate equal to the 15-24 rate; an absorption rate above participation) -- only
+  the two consistent 15-24 rows are taken. 2019 Table 3.6's rural/total labour
+  force (313 910 / 672 755) disagree with Table 3.9 (313 866 / 672 711); 3.9 is
+  kept.
+
+  CROSS-CHECK: 2024 LU1 30,1 (male 29,5), LFPR 52,0, Maseru LFPR 62,0, youth
+  15-24 unemployment 48,8; 2019 LU1 22,5 (rural 27,9), LU4 42,3, Maseru
+  unemployed 45 067.

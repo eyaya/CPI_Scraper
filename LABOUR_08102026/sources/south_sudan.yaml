@@ -1,0 +1,48 @@
+country: South_Sudan
+iso3: SSD
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS; then SSCCSE)
+publication_code: Southern Sudan Counts -- Tables from the 5th Sudan Population and Housing Census, 2008
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# NBS lists the 2008 census tables volume on /surveys/Household_Surveys.php as
+# a relative href under /assets/images/. A one-off census volume, so the file
+# is pinned. The host is slow: a 90-second transfer was seen to stop at 2.1 of
+# 3.4 MB, so allow a long timeout. The NBS "Labor Market" page says "update in
+# progress" -- no labour force survey is published yet; switch or add a source
+# when one is.
+discover:
+  method: static_url
+  url: "https://nbs.gov.ss/assets/images/South%20Sudan%20Census%20Tables.pdf"
+  save_as: South_Sudan_Census_Tables_2008.pdf
+  download_timeout: 300
+
+parser: south_sudan_labour
+geography: Total country
+
+notes: >
+  2008 census (Southern Sudan), chapter 5: Tables 5-3/5-4 main occupational
+  group, 5-5/5-6 nine industry aggregates, 5-7/5-8 employment status -- each
+  on the 10+ and 15+ bases, by sex, urban/rural, age group (10+ tables only),
+  educational attainment and the ten states. Shares.
+
+  UNIVERSE: persons "working or who worked previously" -- current workers plus
+  those describing a past job. Collected, and named in `survey` on every row,
+  because it is not the currently employed.
+
+  CLASSIFICATION National throughout: industry was coded to ISIC Rev.4 two-
+  digit codes but published as nine NBS aggregates (Appendix A gives the code
+  ranges); ISCO is never named for the occupation groups.
+
+  NOT COLLECTED: household-head sections (sex, education and status of the
+  head), rates (5-1/5-2), reasons for not seeking work (5-9/5-10).
+
+  READING: sideways landscape pages, two table parts per page; pdfplumber
+  reverses the tokens, so PyMuPDF word positions are used (see the parser).
+
+  CROSS-CHECK: 15+ agriculture 63.3 and paid employees / own account / unpaid
+  family 13.0 / 36.9 / 42.7 -- the report's key findings (63%, 13/37/42%).

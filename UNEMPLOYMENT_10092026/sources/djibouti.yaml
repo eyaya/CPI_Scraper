@@ -1,0 +1,60 @@
+country: Djibouti
+iso3: DJI
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique de Djibouti (INSTAD)
+publication_code: RGPH-3 Tome 3 Caractéristiques économiques; EDST quarterly notes 2025
+frequency: quarterly
+verify_ssl: false
+expect_topics: 5
+
+# --- discover ---
+# instad.dj is a Nuxt SPA over an Express backend:
+#   GET https://instad-dj-6abc7b0eb612.herokuapp.com/fichiers/<categorie>/<year>
+# returns records whose `imgUrl` is a Firebase Storage PDF.
+# PRIMARY: the census volume -- REUSED VERBATIM from labour/sources/djibouti.yaml.
+discover:
+  method: instad_dj_ipc
+  api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
+  categorie: "RGPH"
+  title_contains: "Caractéristiques économiques de la population"
+  save_as: dj_rgph3_caracteristiques_economiques.pdf
+
+# EXTRAS: the quarterly EDST notes (Enquête Djiboutienne sur les Statistiques
+# du Travail), filed under categorie "Sociale", YEAR 0 (not the survey year)
+# and titled "EDST T<n> <YYYY>". Their `month` field is 0 or -1, so
+# `instad_dj_ipc`'s newest-month rule cannot pick the latest note; they are
+# pinned (with Firebase's download tokens) until a discovery that sorts on the
+# title's "T<n> <YYYY>" exists. Add each new note here as it appears;
+# merge-on-write keeps the quarters already collected.
+extra_urls:
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Sociale%2F0%2FRapport%20EDST_T4_2025_VF.pdf?alt=media&token=699191a4-e130-42a7-a1ea-e1c379190dd8"
+    save_as: EDST_T4_2025.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Sociale%2F0%2FRapport%20EDST_T3_2025_VF.pdf?alt=media&token=0ce8e0f4-899f-4ca8-9575-c25e6c17e0e1"
+    save_as: EDST_T3_2025.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Sociale%2F0%2FRapport%20EDST_T2_2025.pdf?alt=media&token=39690fe0-f6f3-426e-a365-956174d1e919"
+    save_as: EDST_T2_2025.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Sociale%2F0%2FRapport%20EDST%20T1%202025.pdf?alt=media&token=35d7ab36-277f-428f-b64a-35a215f643cc"
+    save_as: EDST_T1_2025.pdf
+
+parser: djibouti_unemployment
+geography: Total country
+
+notes: >
+  RGPH-3 (May 2024, 15+): unemployment BIT (strict) and élargi (broad) by
+  region, milieu, age, education x sex on the 15-64 and 15-59 populations and
+  for youth 15-34 / 15-24; employment-to-population ratio (Tableau n°9);
+  active population and occupés / chômeurs / découragés counts. BIT and élargi
+  reproduce from Tableau n°17's counts. Tableau n°10 is not collected (its
+  caption repeats n°9's over employed / ACTIVE).
+
+  EDST 2025 Q1-Q4 (household LFS, base 16+): LFPR, EPR, SU1 (strict), SU2-SU4
+  (broad), NEEF 16-24 by sex, age, milieu and Djibouti-ville / autres régions,
+  plus Annexe 1 counts. Published defects handled explicitly: Q4 Annexe 1
+  SU1 37,7 vs Annexe 4 37,3 (counts give 37,3); Q2's "potential labour force"
+  is the SU3 numerator and Q2's time-related underemployment row copies SU2
+  (both not collected); Q2 Annexe 7's "Région 1" row not collected.
+
+  CROSS-CHECK: RGPH-3 BIT 15-64 38,2, élargi 45,1; EDST 2025-Q4 SU1 37,3,
+  LFPR 45,6, SU4 54,1; 2025-Q1 SU1 36,4.

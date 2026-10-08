@@ -1,0 +1,38 @@
+country: Uganda
+iso3: UGA
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Uganda Bureau of Statistics (UBOS)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover (two hops, impersonated) ---
+# UBOS posts the Quarterly GDP Excel on each QGDP press-release page. The site
+# search lists the releases (newest first); we take the newest press-release page
+# and its 'Current_Prices' workbook. The search index resets plain connections, so
+# both hops use a browser TLS fingerprint.
+discover:
+  method: two_hop_scrape
+  index_url: "https://www.ubos.org/?s=quarterly+gross+domestic+product"
+  page_link_contains:
+    - "quarterly-gross-domestic-product"
+    - "press-release"
+  file_link_contains:
+    - "Current_Prices"
+    - ".xlsx"
+  impersonate: chrome124
+
+parser: uganda_ubos_gdp
+geography: National
+
+notes: >
+  UBOS Quarterly GDP, current-prices workbook. Production value added by activity
+  (Original_VA) and expenditure on GDP (Original_Expenditure) as levels, plus
+  activity shares of GDP (Original_%share), quarterly. Uganda's fiscal year is
+  July–June, so each fiscal quarter is mapped to the calendar quarter it covers
+  (FY2016/17 Q1 = 2016-Q3 … Q4 = 2017-Q2). Units UGX billion; shares in percent
+  (GDP = 100). Verified: GDP at market prices 2026-Q1 = UGX 59.7tn. Everything as
+  published — nothing derived. The separate constant-prices workbook (real levels,
+  real growth, deflators; different 18-sheet layout) and the seasonally-adjusted /
+  trend sheets are left for a later pass.

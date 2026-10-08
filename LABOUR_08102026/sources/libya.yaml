@@ -1,0 +1,51 @@
+country: Libya
+iso3: LBY
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Bureau of Statistics and Census (BSC)
+publication_code: نتائج مسح القوى العاملة 2022 (Labour Force Survey 2022 results)
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# Listed on bsc.ly/our-versions/. A one-off survey round, so the file is
+# pinned. Plain `requests` with the project headers fetches it (HTTP 200,
+# 53,693,084 bytes; curl_cffi was reset by the server during discovery). It
+# is 53 MB, so the whole-transfer allowance is raised.
+discover:
+  method: static_url
+  url: "https://bsc.ly/wp-content/uploads/2024/02/نتائج-مسح-القوي-العاملة-2022.pdf"
+  save_as: bsc_libya_lfs_2022.pdf
+  download_timeout: 300
+
+parser: libya_labour
+geography: Total country
+
+notes: >
+  BSC Labour Force Survey 2022 (fieldwork 1-28 February 2022). LIBYAN
+  NATIONALS AGED 15+ ONLY -- the survey population excludes non-Libyan
+  workers; carried in `survey`.
+
+  COLLECTED: Table 12 employed by sector (10 BSC categories mixing
+  institutional sector and private-economy status), counts and % by sex;
+  Table 13-a employed by 22 regions x administrative apparatus / public /
+  private sector, COUNTS ONLY; Table 14 employed by 20 sections of economic
+  activity, % by sex (National -- ISIC-shaped, no scheme named); Table 15
+  employed by weekly hours band, counts and % by sex (`hours`).
+
+  THE TEXT LAYER'S ARABIC IS GARBLED (broken font mapping; caption digits
+  too -- "2022" reads "2222", Table 10's caption reads as "12"). Labels were
+  read off the rendered pages and are stated in the parser verbatim; rows are
+  anchored by each table's arithmetic, and a caption number only nominates
+  candidate pages -- exactly one must fit.
+
+  PUBLISHED DEFECTS: Table 14's shares sum to 103.9 / 104.6 / 104.1 (pinned,
+  kept); Table 13-a's printed shares contradict its counts in 20 of 23 rows
+  (shares not collected, counts are consistent throughout).
+
+  NOT COLLECTED: 13-b and 16 (rates), unemployment/activity tables. No
+  occupation or status-in-employment table exists in the report.
+
+  CROSS-CHECK: government 1 595 163 (81.6%); public administration and
+  defence 44.1%; education 26.8%; under 25 hours 641 251 (33.2%).

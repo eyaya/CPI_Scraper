@@ -1,0 +1,47 @@
+country: Cameroon
+iso3: CMR
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Cameroun)
+publication_code: EESI3 Phase 1 rapport principal
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# NOT the dépliant `unemployment/` reads: its composition titles carry no
+# values. The main report is listed at
+#   https://ins-cameroun.cm/statistique/eesi3-phase-1-enquete-sur-lemploi-rapport-principal/
+# and, like the dépliant, sits under /wp-content/uploads/2025/07/ -- the
+# RE-UPLOAD date, not the publication date. 43 MB and a slow host: allow time.
+discover:
+  method: static_url
+  url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/EESI3_Rapport-principal_Emploi_VF.pdf"
+  save_as: EESI3_Rapport-principal_Emploi_VF.pdf
+  # The host stalls mid-transfer and resets plain `requests` streams (seen
+  # twice, 2026-09-29); a browser fingerprint with a long whole-request
+  # timeout is what completes the 43 MB download.
+  impersonate: chrome124
+  download_timeout: 600
+
+parser: cameroon_labour
+geography: Total country
+
+notes: >
+  INS EESI3 Phase 1 (household employment survey, from 10 May 2021), main
+  report. Tableaux 3.7 / 3.15: secteur institutionnel (Public / Privé formel /
+  Informel non agricole / Informel agricole -> formality) and secteur
+  d'activité (Primaire / Industrie / Commerce / Services -> industry) by
+  milieu, sex and (3.7) age group. Tableaux 3.8 / 3.16: CSP (->
+  employment_status, National). 3.15/3.16 are the 15-34 cohort, carried in
+  age_group. Base 14+.
+
+  3.7'S ENSEMBLE COLUMN IS PRINTED LAST, after the three age columns, though
+  its header word reads before them in the text layer -- settled by page
+  geometry and confirmed by the values.
+
+  NOT COLLECTED: GSE blocks (sector x status in one label); child tables
+  3.18-3.20 (10-17, below the 14+ base); chapter 6 rate comparisons.
+
+  CROSS-CHECK (Ensemble): public 8,2; informel agricole 34,7; services 32,7;
+  propre compte 55,5.

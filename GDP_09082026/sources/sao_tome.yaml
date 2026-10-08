@@ -1,0 +1,48 @@
+country: Sao_Tome_and_Principe
+iso3: STP
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Instituto Nacional de Estatistica (INE)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INE STP publishes the GDP workbooks through a Joomla Phocadownload category
+# (159 = 'produto-interno-bruto-2001-2023'). The file serves only via the Phoca
+# download trigger '?option=com_phocadownload&view=category&download=<fileid>&id=159'
+# (the /file/<id> landing page returns HTML, not the file). Production (primary)
+# and expenditure (extra) are separate files. Update the download ids for a newer
+# vintage (currently 954 = producao 2008-2023, 953 = despesa 2008-2023).
+discover:
+  method: static_url
+  url: "https://www.ine.st/index.php?option=com_phocadownload&view=category&download=954&id=159"
+  save_as: "INE_STP_PIB_Producao_2008_2023.xlsx"
+
+extra_urls:
+  - url: "https://www.ine.st/index.php?option=com_phocadownload&view=category&download=953&id=159"
+    save_as: "INE_STP_PIB_Despesa_2008_2023.xlsx"
+
+parser: saotome_ine_gdp
+geography: National
+
+notes: >
+  INE Sao Tome e Principe annual GDP, 2008-2023, two workbooks (production =
+  primary, expenditure = extra). Each is a single sheet of vertically-stacked
+  blocks (Portuguese); every block starts with a year-header row (2008..2023),
+  data below (col2 = label). Units 'mil STD' (thousand new dobras); no
+  redenomination scale break within the series. The block MEASURE is decided by
+  the magnitude of the block's PIB/aggregate row (two different blocks share the
+  title 'PIB A PRECO CORRENTE' — one is the level, one the % structure): millions
+  -> level (mil STD), ~100 -> share (%), small -> a growth block. Basis from title
+  (Cadeia/constante/volume -> constant, else current). Captured: current &
+  constant LEVELS (production identity Producao/Consumo intermedio/Valor
+  acrescentado/Impostos/PIB + by-sector 'optica de oferta' VAB by primary/
+  secondary/tertiary sector; expenditure 'optica de demanda' consumption/capital/
+  net-exports), REAL (volume) growth, and SHARES. DEFERRED as ambiguous: the
+  price/nominal-growth blocks ('evolucao em Precos', 'crescimento de preco') and
+  the chained contribution block. GOTCHA: the aggregate tables put a generic
+  'Designacao' header on the year row — the real title is the row above. Verified:
+  current PIB 2008 = 2,763,009 / 2023 = 15,499,918 mil STD (~US$0.7bn); VA +
+  net-taxes = PIB exactly; production PIB = expenditure PIB (both current &
+  constant); real growth 2023 ~= 0.4% (matches the 2023 slowdown). Nothing derived.

@@ -1,0 +1,42 @@
+country: Central African Republic
+iso3: CAF
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Institut Centrafricain des Statistiques et des Etudes Economiques et Sociales (ICASEES)
+publication_code: RGPH03 Caractéristiques économiques (rapport d'analyse thématique, juin 2005)
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# ICASEES lists its publications at
+#   https://icasees.org/index.php/publications/liste-des-publications?layout=columns&start=0
+# (paged by 50). The RGPH03 thematic reports are one-off census volumes, so
+# the report's own /download route is pinned. It returns the PDF directly
+# (1,299,447 bytes, checked 2026-09-29).
+discover:
+  method: static_url
+  url: "https://icasees.org/index.php/publications/liste-des-publications/rgph03-caracteristiques-economiques-rapport-danalyse-thematique-juin-2005/download"
+  save_as: RGPH03_caracteristiques_economiques.pdf
+
+parser: central_african_republic_labour
+geography: Total country
+
+notes: >
+  RGPH03 (census, December 2003), chapter 3.2: occupation by sex (Eco 11), by
+  milieu (Eco 12) and by region (Eco 13); branch of activity by milieu (Eco
+  15); status in the profession by sex within milieu (Eco 17). Shares of the
+  employed aged 6 AND OVER -- the report's own working-age convention.
+
+  PUBLISHED DEFECTS: Eco 13 prints Region 3 and Region 4 as the same column in
+  all nine rows (one is a copy; neither is collected, re-checked every run).
+  Eco 17's sex-ratio column is misaligned (dropped, as every ratio column is);
+  its share columns are consistent. Eco 11's Ensemble cells sit on the line
+  above each label -- the pairing is proved against Eco 12's Ensemble.
+
+  NOT COLLECTED: Eco 14 (1988 vs 2003 excluding the military), Eco 16 (row %),
+  Eco 18 (branch within status), Eco 19-20 (children 6-14). The report flags
+  branch and occupation coding as the census's weakest variables.
+
+  CROSS-CHECK: agriculteurs 73,8 (urban 40,4, rural 86,1); agriculture branch
+  78,6; indépendants 80,1; salariés 7,9; Bangui commerce 37,5.

@@ -118,4 +118,16 @@ LAYOUT = {
 }
 
 
-parse = make_parser(LAYOUT)
+_census = make_parser(LAYOUT)
+
+
+def parse(path: str, extras: list[str] | None = None):
+    """The 2024 census edition (this layout) plus, from the descriptor's
+    extra, the 2022 UNHS-based edition -- a SEPARATE measure (12 indicators,
+    employment and financial inclusion), see `uganda_unhs_mpi`."""
+    import pandas as pd
+    from .uganda_unhs_mpi import parse as parse_unhs
+    frames = [_census(path)]
+    for p in extras or []:
+        frames.append(parse_unhs(p))
+    return pd.concat(frames, ignore_index=True)

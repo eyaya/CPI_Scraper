@@ -1,0 +1,41 @@
+country: Guinea_Bissau
+iso3: GNB
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE Guiné-Bissau)
+publication_code: RGPH 2009 Características económicas (Anexos 11, 13, 14)
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# Linked from https://www.stat-guinebissau.com/Menu_principal/IV_RGPH/RGPH.html
+# as rgph1/caracteristicas_economicas.pdf. A one-off census volume, so pinned.
+# The host flaps for hours at a time -- retry rather than conclude it is down.
+discover:
+  method: static_url
+  url: "https://www.stat-guinebissau.com/Menu_principal/IV_RGPH/rgph1/caracteristicas_economicas.pdf"
+  save_as: gnb_rgph2009_caracteristicas_economicas.pdf
+  download_timeout: 300
+
+parser: guinea_bissau_labour
+geography: Total country
+
+notes: >
+  RGPH 2009, Anexos 11 (18 branches), 13 (10 occupation groups) and 14 (9
+  situações na profissão): COUNTS of employed persons (6+) with a DECLARED
+  answer, plus each annex's printed declared subtotal. Declared coverage is
+  54% (branch), 30% (occupation) and 66% (status) of the 488 644 employed, so
+  the body's percentage tables (Quadros 21-34, shares of the declared subset
+  only, with no "not declared" category) are NOT collected. Anexo 11's
+  branches sum to 263 078 against a printed 263 071 (kept, pinned). Counts
+  exclude the 4,6% post-enumeration omission.
+
+  THE ERI-ESI 2017/18 RELATÓRIO GERAL WAS EXAMINED AND REFUSED: Tabelas 30,
+  46 and 52 (formal/informal by sector, sector of employer, CITP groups) all
+  sit on ~241 000 employed against the report's own national estimate of
+  394 354, with no explanation -- universe unknown. Tabela 95 / chapter 9 are
+  informal-unit (UPI) tables. `unemployment/` keeps reading its synthesis.
+
+  CROSS-CHECK: agricultura 96 617; comércio 85 356; conta própria 159 792;
+  trabalho familiar sem remuneração 117 720.

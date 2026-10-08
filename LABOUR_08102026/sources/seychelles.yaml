@@ -1,0 +1,42 @@
+country: Seychelles
+iso3: SYC
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS Seychelles)
+publication_code: LFS Bulletin
+frequency: quarterly
+
+# --- discover (two hops) ---
+# THE SAME BULLETIN THE `unemployment` INDICATOR COLLECTS (Table 1A there,
+# Tables 7-10 here). Reused verbatim from unemployment/sources/seychelles.yaml,
+# including its one known maintenance point: the year folder is PINNED by
+# `page_link_contains: ["-2026"]` and needs bumping each January.
+discover:
+  method: two_hop_scrape
+  index_url: "https://www.nbs.gov.sc/downloads/34-social-statistics/161-labour-force-survey"
+  page_link_contains:
+    - "-2026"
+  file_link_contains:
+    - "labour-force-survey"
+    - "download"
+  save_as: seychelles_lfs_bulletin.pdf
+
+parser: seychelles_labour
+geography: Total country
+
+notes: >
+  NBS Seychelles Labour Force Survey bulletin, Tables 7A-7C2 (status in
+  employment on ICSE-93, ICSE-18-A and ICSE-18-R -- all three named by NBS),
+  8A (occupation, ISCO-08), 9 (industry, ISIC Rev.4), 10A (informal/formal
+  sector) and 10B (informal/formal employment). Every value is a column
+  percentage for Male / Female / Both sexes, for the current quarter and the
+  same quarter a year earlier, each dated from the table header.
+
+  NOT COLLECTED: 8B and 9B, the sex split WITHIN each occupation / industry.
+  They would share topic, category, sex and measure with 8A / 9 and overwrite
+  them on merge.
+
+  The text layer letter-spaces digits in 7B2, 7C2, 8A and 9 ("7 5.4" for 75.4);
+  the layout rejoins them, which is safe only because every value in those
+  tables carries one decimal.

@@ -1,0 +1,52 @@
+country: Senegal
+iso3: SEN
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: ENES quarterly note + ERI-ESI 2017
+frequency: quarterly
+expect_topics: 5
+verify_ssl: false
+
+# --- discover ---
+# ANSD's ENES page lists every quarterly note NEWEST FIRST under
+# /sites/default/files/<YYYY-MM>/. Filenames are wildly inconsistent
+# (Rapport ENES T4 2022 / rapp_enes_T1_2023 / Rap-ENES_T4_2024 /
+# Rapport ENEST12025 / Rapport_ENES_T2_2026_version-ok-dssscv), so the match is
+# just "ENES" + ".pdf"; the first match is the current quarter.
+# Only notes from 2025 Q1 carry the self-verifying summary box, so the back
+# issues kept as extras start there; merge-on-write accumulates new quarters.
+discover:
+  method: page_scrape
+  page_url: "https://www.ansd.sn/Indicateur/enquete-emploi"
+  link_contains:
+    - "ENES"
+    - ".pdf"
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.ansd.sn/sites/default/files/2026-07/Rapport_ENES_T1_2026_y_obs_ab_integr%2BobsDG_VF%20%281%29.pdf"
+    save_as: ENES_T1_2026.pdf
+  - url: "https://www.ansd.sn/sites/default/files/2026-03/Rapport_ENES_T4_2025_VF.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-12/Rapport_ENES_T3_2025_Vf.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-09/Rapport%20ENEST22025.pdf"
+    save_as: ENES_T2_2025.pdf
+  - url: "https://www.ansd.sn/sites/default/files/2025-06/Rapport%20ENEST12025.pdf"
+    save_as: ENES_T1_2025.pdf
+  # The same ERI-ESI 2017 report labour/sources/senegal.yaml retains.
+  - url: "https://www.ansd.sn/sites/default/files/2023-05/Senegal_ERI-ESI_RapportFinal.pdf"
+    save_as: senegal_eriesi_2017_rapport_final.pdf
+
+parser: senegal_unemployment
+geography: Total country
+
+notes: >
+  UNBLOCKED. ENES notes carry no Tableau (README §4) -- only the front-page
+  "PRINCIPAUX INDICATEURS" box is read, and only because it proves itself
+  (labour force + outside = working-age; printed participation = LF / WAP).
+  Its unlabelled "Chômage" figure is the ÉLARGI rate and is NOT taken.
+  ERI-ESI 2017 supplies BIT/SU1-SU4, participation-related counts, the
+  employment ratio and NEET by sex, age, education, milieu and 14 regions.
+  CROSS-CHECK: ENES 2026-Q2 LF 6 779 717 (55,9%); ERI-ESI chômage BIT 2,9,
+  SU4 28,4, ratio emploi 45,0.

@@ -1,0 +1,65 @@
+country: Angola
+iso3: AGO
+indicator: Unemployment
+tier: 2
+source_type: excel
+agency: Instituto Nacional de Estatística (INE Angola)
+publication_code: IEA — Séries cronológicas, quadros complementares, indicadores por província
+frequency: quarterly
+verify_ssl: false
+expect_topics: 8
+
+# --- discover ---
+# UNBLOCKED 2026-09-24. INE replaced the quarterly IEA bulletin PDF with
+# workbooks whose "links" are onclick handlers POSTing `filepath` to
+# /Diretorios/Download; the harness now supports that (core/fetch `post_data`,
+# discovery `ine_ao_directory_files`, first proven by labour/angola.yaml).
+# Folder links carry per-session tokens, so the tree is walked by folder NAME
+# and each file matched by name -- each pattern must match exactly one file.
+# The first is the primary source; the rest arrive as extras.
+discover:
+  method: ine_ao_directory_files
+  index_url: "https://www.ine.gov.ao/Publicacoes/Todas"
+  dirs:
+    - "População e Sociedade"
+    - "Emprego em Angola"
+  files:
+    - ["SERIES", "ANTIGA"]      # 13ª CIET headline series, 2019 Q2 - 2025 Q3
+    - ["SERIES", "NOVA"]        # 19ª-21ª CIET headline series, 2025 Q4 on
+    - ["QUADROS", "ANTIGA"]     # rates by residence / sex / age, old basis
+    - ["QUADROS", "NOVA"]       # the same, new basis
+    - ["PROV"]                  # 18 provinces, annual, old basis
+
+parser: angola_ine_workbooks
+geography: Total country
+
+notes: >
+  INE Angola, Inquérito sobre o Emprego em Angola (IEA), five workbooks. Headline
+  series in three blocks (15+, the 15-24 youth cut, and an 18+ BASE), the rates
+  by área de residência, sexo and grupo etário, and an annual provincial table
+  (2019-2022, 2024, 2025 -- no 2023 printed).
+
+  METHODOLOGY BREAK -- NEVER CHAIN: 13ª CIET to 2025 Q3 (participation 87-89%,
+  own-use production counted as employment) and 19ª-21ª CIET from 2025 Q4
+  (participation 50-56%). `survey` names the basis on every row; the periods do
+  not overlap.
+
+  The complementary sheets' "Angola" and "15-24" rows REPEAT the series file
+  and are checked against it rather than emitted. Five repeated cells differ by
+  up to 0,05 points (2022 Anual 15-24, 2025 IV trim headline) -- a reweighting
+  in one workbook; the series file's value is kept, and a gap over 0,1 raises.
+
+  NOT COLLECTED: inactivity rates (100 minus participation), the formal /
+  informal employment counts and the formal share (the informal SHARE is taken),
+  informality within each branch and employment by sector/situation
+  (composition -- labour/angola.yaml), and the provinces' non-agricultural
+  informality (a different denominator).
+
+  The earlier PDF layout (`angola_pdf`, Quadro 1 of the bulletin) is kept in
+  parsers/angola_unemployment.py in case INE resumes the bulletin.
+
+  CROSS-CHECK (2026 Q2, 15+): população 23 006 410; força de trabalho
+  12 962 065; empregada 10 171 244; desempregada 2 790 821; taxa da força de
+  trabalho 56,34; taxa de emprego 44,21; taxa de emprego informal 80,08; taxa de
+  desemprego 21,53. Old 2019 Q2 taxa de desemprego 28,71. Luanda 2019 taxa de
+  desemprego 43,88.

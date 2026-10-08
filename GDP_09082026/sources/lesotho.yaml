@@ -1,0 +1,61 @@
+country: Lesotho
+iso3: LSO
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Bureau of Statistics Lesotho (BOS)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# bos.gov.ls lists its publications in a JavaScript array (`catalogueData`)
+# inside publications.htm -- no <a href> exists for a crawler, which is why
+# Lesotho was long recorded as having "no GDP file". Each quarter's
+# "QGDP Publication Tables" is a ZIP under /Bos_Reports/Copy%20of%20Economics/,
+# and the array lists them NEWEST FIRST, so the first match is the latest
+# edition. The harness unzips it (default inner .xlsx). Every edition carries
+# the full history from 2007, and merge-on-write keeps what earlier runs held.
+discover:
+  method: regex_on_page
+  page_url: "https://www.bos.gov.ls/publications.htm"
+  pattern: 'Bos_Reports/Copy%20of%20Economics/QGDP_Publication%20tables_[^"]+?\.zip'
+  base_url: "https://www.bos.gov.ls/"
+
+# The annual national accounts add the EXPENDITURE approach. The catalogue lists
+# "Annual National Accounts 2012-2024" (Annual_National_Accounts_2024.zip) but
+# that file 404s (checked 2026-09-27); the unlisted 2023 edition is served, so
+# it is used. Switch to 2024 when BOS uploads it.
+extra_urls:
+  - url: "https://www.bos.gov.ls/Bos_Reports/Copy%20of%20Economics/Annual_National_Accounts_2023.zip"
+    save_as: Annual_National_Accounts_2023.zip
+
+parser: lesotho_bos_gdp
+geography: National
+
+notes: >
+  BOS Quarterly GDP publication tables, production approach, annual and
+  quarterly from 2007: levels at current and constant 2012 prices (million
+  maloti) for fifteen industry groups, FISIM, GVA at basic prices, taxes on
+  products and GDP, plus seasonally adjusted GDP; real year-on-year growth for
+  all of them; seasonally adjusted quarter-on-quarter real GDP growth; and
+  current-price shares of GDP by industry (the sheet named "Contributions").
+  Each growth column's meaning was VERIFIED against the level sheets.
+
+  2025 ANNUAL COMPONENTS DROPPED (Q1-2026 edition): the 2025 annual row pairs
+  a current-vintage GDP (= sum of the 2025 quarters) with older industry, GVA
+  and tax figures that no longer add up to it, and annual growth on the old
+  vintage (manufacturing 2.2% vs 9.1% from the quarters). Only 2025 annual GDP
+  is kept; the four quarters carry the year. The parser raises once BOS aligns
+  the row, so the exclusion can be lifted.
+
+  EXPENDITURE APPROACH (annual, 2014-2023) from the Annual National Accounts
+  2023 PDF: Tables 3a/4a levels at current and constant 2012 prices, 3b shares,
+  4b real growth, 5 deflators (2012 = 100). Checked every year: consumption +
+  capital formation = gross domestic expenditure, and GDE + exports - imports =
+  expenditure on GDP. Its production tables are a different vintage from the
+  quarterly workbook and are NOT read; "GDP at market prices" duplicates
+  "Expenditure on GDP" and is skipped.
+
+  CROSS-CHECK: real GDP 2025 LSL 22,632.8 million (2012 prices), growth 3.87%;
+  2026 Q1 real GDP +2.82% y/y, seasonally adjusted -0.77% q/q; 2019 Q1
+  agriculture 4.52% of current-price GDP.

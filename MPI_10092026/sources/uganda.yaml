@@ -21,6 +21,11 @@ discover:
   url: "https://statistics.ubos.org/nphc/monographs/MPI-Census-Monograph-2024-Volume-5-Report.pdf"
   save_as: uganda_mpi_census_2024.pdf
 
+# The 2022 UNHS-based edition: a SEPARATE measure, read by uganda_unhs_mpi.
+extra_urls:
+  - url: "https://www.ubos.org/wp-content/uploads/publications/08_2022Multi_Poverty_Dimensional_Index_Report_2022.pdf"
+    save_as: uganda_mpi_unhs_2022.pdf
+
 parser: uganda_mpi
 geography: Total country
 
@@ -39,7 +44,11 @@ notes: >
   They are NOT comparable: the Employment and financial inclusion dimension was
   dropped and Basic Services added, the indicator count changed, and the data
   source moved from a survey to a census. Keep them as separate descriptors and
-  never chain them. The 2022 edition is not yet collected.
+  never chain them. The 2022 edition IS COLLECTED (since 2026-10-07) as
+  "Uganda MPI (UNHS, 2022 report)": M0 for residence/region/sub-region and
+  H (%) for the nation, sub-regions and household characteristics, both
+  rounds (2016/17, 2019/20). Its Table 3.3 prints H and A as PROPORTIONS, so H
+  is taken from the tables that print it as a percentage and A is not taken.
 
   ⚠️ A widely circulated press figure of "27% of Ugandans" does NOT match this
   report, which reports 53.1%. Do not wire that number in.

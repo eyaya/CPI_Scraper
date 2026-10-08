@@ -145,4 +145,28 @@ LAYOUTS["botswana"] = {
 
 
 LAYOUT = LAYOUTS['botswana']
-parse = make_parser(LAYOUT)
+_headline = make_parser(LAYOUT)
+
+
+def parse(path: str):
+    """Table 1.0's current quarter (the layout above), plus the same report's
+    restated rounds, eight-round trend tables and breakdowns by age, stratum
+    and district (`botswana_qmts_trends`), each column dated by its own
+    header. Values a trend table repeats for a round Table 1.0 already gives
+    are checked equal and emitted once."""
+    import pandas as pd
+    from . import botswana_qmts_trends as T
+    df = _headline(path)
+    have = {(r.topic, r.series_label, r.working_age_base, r.sex, r.period,
+             r.age_group, r.geography, r.locality_label): float(r.value)
+            for r in df.itertuples()}
+    # A future issue may rearrange these tables. Their guards raise on any
+    # shape they were not written for; the headline is then still collected
+    # and the skip is announced, rather than misreading a changed layout or
+    # losing the quarter altogether.
+    try:
+        extra = T.parse_trends(path, have)
+    except ValueError as e:
+        print(f"[botswana] trend/breakdown tables skipped for this issue: {e}")
+        return df
+    return pd.concat([df, pd.DataFrame(extra)], ignore_index=True)

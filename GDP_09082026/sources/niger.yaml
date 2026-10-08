@@ -1,0 +1,33 @@
+country: Niger
+iso3: NER
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# INS posts the 'Comptes économiques de la Nation' report on its national-accounts
+# page as cna_<type>_<year>_VF.pdf; the provisional edition carries the full annex
+# tables. The site gates plain requests, so we impersonate a browser.
+discover:
+  method: page_scrape
+  page_url: "https://www.stat-niger.org/?pub_eco=comptes-economiques-de-la-nation"
+  link_contains:
+    - "cna_provisoires"
+    - ".pdf"
+  impersonate: chrome124
+
+parser: niger_ins_gdp
+geography: National
+
+notes: >
+  INS Niger 'Comptes économiques de la Nation' annual report (PDF). The annex
+  tables extract as text; we read GDP (PIB) by branch of activity (production
+  approach) at current prices (annex 2) and constant chained volume (annex 3), for
+  the two most recent years shown. Units million XOF (FCFA). Verified: PIB 2024 =
+  12.0tn FCFA nominal, real growth 2024 ≈ 8.3% (oil-driven boom). The expenditure
+  (annex 6) and income (annex 7) tables render each label letter-spaced with the
+  values detached, so they aren't reliably parseable and are deferred. Everything
+  as published; nothing derived.

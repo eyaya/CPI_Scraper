@@ -1,0 +1,83 @@
+# =====================================================================
+# BLOCKED -- THE TABLES ARE IMAGES, NOT TEXT.
+#
+# The download route is fixed and works (see the discover block below): the
+# report is at nbs.gov.so and fetches cleanly at 15.8 MB. What does not work is
+# reading it. Tables 3.1, 3.2 and 3.3 -- the national MPI, the urban/rural/
+# nomadic split, and all 17 regions -- are RASTER IMAGES pasted into the page.
+# pdfplumber sees their captions and nothing else:
+#
+#     Table 3.1 Multidimensional Poverty Index (MPI), Incidence, and Intensity
+#     <no rows>
+#
+# Every headline number in this file's own cross-check list was read out of the
+# executive summary's PROSE, not out of a table:
+#
+#     "...was estimated at 67.0 per cent. The intensity of deprivation ... is
+#      54.3 per cent. The MPI ... has a value of 0.363."
+#
+# Mining those sentences would not be reading the published table. It would
+# also cover only the four regions the narrative happens to name (Bakool,
+# Hiraan, Awdal, Lower Shabelle) out of seventeen, and would break on any
+# rewording. The parser refuses image PDFs for exactly this reason.
+#
+# THE FIX IS OCR, and it belongs behind a deliberate decision about whether an
+# OCR'd figure is still "as published" for this collector's purposes -- not
+# behind a loosened regex. The layout in parsers/somalia_mpi.py is kept whole
+# so that moving this descriptor back is the entire change if SNBS republishes
+# with real text, or if OCR is adopted.
+# =====================================================================
+
+country: Somalia
+iso3: SOM
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Somali National Bureau of Statistics (SNBS) with the Ministry of Labour and Social Affairs
+publication_code: Somalia MPI 2024
+frequency: ad_hoc
+expect_metrics: 3
+
+# --- discover ---
+# SNBS runs WordPress and its media REST endpoint works, which is the reliable
+# discovery route for this host. Note the MPI file does NOT come back on
+# search=poverty — query `multidimensional` (as here) or `MPI`.
+discover:
+  # `wp_media_named`, NOT `wp_media_latest`: the latter orders by a month name
+  # in the filename, which a monthly CPI bulletin has and a one-off MPI report
+  # does not, so it discarded the file as undated. This one matches by name and
+  # orders by the API's own upload date.
+  # The default media listing returns only the newest few items, so the search
+  # term is part of the URL; the report was uploaded in December 2024.
+  method: wp_media_named
+  api_url: "https://nbs.gov.so/wp-json/wp/v2/media?search=multidimensional&per_page=100"
+  name_contains: "Multidimensional-Poverty-Index"
+  save_as: somalia_mpi_2024.pdf
+
+parser: somalia_mpi
+geography: Total country
+
+notes: >
+  SNBS/MoLSA "Multidimensional Poverty Index (MPI) For Somalia Report 2024",
+  from the 2022 Somalia Integrated Household Budget Survey.
+
+  NATIONAL measure: 5 dimensions each weighted 20% — Education, Health, Living
+  Standards, Services, INCLUSION — 13 indicators, k = 35%. The Inclusion
+  dimension (assets, unemployment, shocks) has no global-MPI analogue.
+
+  THE NOMADIC STRATUM IS FIRST-CLASS. Somalia reports urban / rural / NOMADIC,
+  and the nomadic population is neither urban nor rural. It is emitted with
+  locality `other` and its own label rather than being folded into rural, which
+  would both misstate it and corrupt the rural figure.
+
+  COVERAGE GAP: Middle Juba was not sampled. That is a limitation of the source,
+  not of the parser, and any national figure carries it.
+
+  Also published and not yet captured: 95% confidence intervals, censored
+  headcount ratios, indicator contributions (years of schooling 13.1%, school
+  attendance 13.0%, cooking fuel 11.6%), and the monetary/multidimensional
+  overlap (both poor 45.5%; multidimensional only 21.4%; monetary only 8.9%).
+
+  CROSS-CHECK: National 67.0 / 54.3 / 0.363 (H 95% CI 63.9-70.0);
+  Urban 61.7 / 54.3 / 0.335; Rural 74.3 / 57.2 / 0.425;
+  Nomadic 81.5 / 48.5 / 0.395; Bakool 97.4 / 68.7 / 0.669; Awdal 46.2 / 50.3 / 0.232.

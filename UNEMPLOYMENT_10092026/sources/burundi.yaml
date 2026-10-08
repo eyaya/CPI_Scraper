@@ -1,0 +1,44 @@
+country: Burundi
+iso3: BDI
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Burundi (INSBU, formerly ISTEEBU)
+publication_code: EICVMB 2019-2020, Module Emploi
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 6
+
+# --- discover ---
+# NOT labour/'s document. labour/ reads the Annuaire statistique (Tableau
+# 6.01, status counts), whose employment chapter has no rates. The rates are in
+# the EICVMB 2019-20 employment module, listed by INSBU's API
+# (api.insbu.bi/api/publications, id 342, type "rem", title "Rapport de
+# l'enquête intégrée sur les conditions de vie des ménages au Burundi (EICVMB,
+# 2019-2020) | Module: Emploi"). It is a one-off round and sits far below the
+# API's first page, which is all `insbu_latest` reads, so the file is pinned.
+# Checked for other rounds (2026-10-01): INSBU's 499-item catalogue lists no
+# ECVMB 2013-14 or ERCVMB 2017 employment report, and the yearly "Indicateurs
+# du développement humain durable" carry only labour DEFINITIONS, no rates.
+discover:
+  method: static_url
+  url: "https://api.insbu.bi/storage/documents/01KNRPB0A1G81F5MEFH6E64WX7.pdf"
+  save_as: EICVMB_2019-2020_Module_Emploi.pdf
+
+parser: burundi_unemployment
+geography: Total country
+
+notes: >
+  EICVMB 2019-20 (household survey, ICLS-19, base 15+): activity rate strict
+  and étendu (T3 by milieu/sex/age/education, T4 by province), employment
+  ratio (T5, T6), strict unemployment and the cumulated unemployment +
+  potential labour force rate (T9 -> labour_underutilisation_rate, broad),
+  and annex counts: working-age population by province x sex (A1), outside
+  the labour force and labour force by province/milieu/sex/age/education (A2).
+
+  NOT COLLECTED: A2's percentages (repeat T3/T4), A3 extended-labour-force
+  counts, Tableau 7 (a composition), youth and underemployment figures (chart
+  labels only, scrambled).
+
+  CROSS-CHECK: activité 76,4 strict / 77,8 étendue; emploi 75,6; chômage
+  strict 1,1 (urbain 7,3, rural 0,4); cumulé 2,8; population 15+ 6 460 883.

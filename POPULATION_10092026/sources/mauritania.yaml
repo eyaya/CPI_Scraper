@@ -1,0 +1,54 @@
+country: Mauritania
+iso3: MRT
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Économique (ANSADE)
+publication_code: RGPH-5 (2023) Thèmes 1-2 + Projections démographiques 2023-2053
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# ansade.mr is a single-page app; its catalogue API
+#   https://admin.ansade.mr/wp-json/ansade/v1/publications/?lang=fr
+# lists every publication with its file URL (entries 13917 Thème 2, 13919
+# Thème 1, 13931 Projections). ANSADE's files return 404 to plain requests and
+# serve normally to a browser fingerprint, and the host throttles (a 4.8 MB
+# file took 300 s for GDP), hence impersonate + a long timeout. The README's
+# earlier rejection looked only at the socio-demographic yearbook; the RGPH-5
+# thematic reports published since carry the counts.
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2024/09/Theme-2.pdf"
+  save_as: Theme-2-Structure-par-sexe-et-age_RGPH2023.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 900
+
+extra_urls:
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Theme-1-Etat-et-repartition-spatiale-de-la-population_RGPH2023.pdf"
+    save_as: Theme-1-Etat-et-repartition-spatiale_RGPH2023.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Projections_demographiques_Mauritanie_2023-2053.pdf"
+    save_as: Projections_demographiques_Mauritanie_2023-2053.pdf
+
+parser: ansade_mauritania_population
+geography: Total country
+
+notes: >
+  CENSUS RGPH-5 2023: national and 15 wilayas by age group and sex (Thème 2
+  Tableaux A.2.3-A.2.18). CENSUS ROUNDS 1988/2000/2013/2023: each wilaya's
+  population and intercensal growth rates (Thème 1 Tableau A.1.2; "Nouakchott
+  global" kept beside its three wilayas -- never add both). PROJECTIONS: national
+  age x sex, every year 2023-2053.
+
+  WILAYA PROJECTIONS REFUSED: the projections PDF's text layer overlays pages
+  on one another (a Brakna block inside Hodh El Gharbi's page; Hodh Chargui's
+  2023 block repeated inside Assaba's) and its running heads are misspelt, so
+  no block can be attributed to a wilaya with certainty.
+
+  READING: counts are letter-spaced in places ("3 4 002", "8 08 289", "8 61")
+  and every row is split under total = male + female (within the 1-person
+  residues ANSADE prints). Wilaya names follow Tableau A.1.2 (Thème 2's
+  captions abbreviate "D. Nouadhibou" and misspell "Tris Zemmour").
+
+  CROSS-CHECK: 2023 census 4 927 532 (wilayas sum to 4 927 531, as printed);
+  1988 1 864 236; 2013 3 537 368; projection 2053 11 010 691.

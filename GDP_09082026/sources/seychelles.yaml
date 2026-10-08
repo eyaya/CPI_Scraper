@@ -1,0 +1,34 @@
+country: Seychelles
+iso3: SYC
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: National Bureau of Statistics (NBS)
+frequency: quarterly
+verify_ssl: false            # NBS serves an incomplete TLS chain (and is often slow)
+
+# --- discover ---
+# NBS links the latest 'Quarterly National Accounts Q<n> <year>' download from its
+# home page; we take the newest by the 'q<n>-<year>' stamp. The /download route
+# carries no filename, so save_as names the retained file.
+discover:
+  method: latest_quarter_link
+  page_url: "https://www.nbs.gov.sc/"
+  link_contains:
+    - "quarterly-national-accounts"
+    - "download"
+  save_as: Seychelles_Quarterly_National_Accounts.xlsx
+
+parser: seychelles_nbs_gdp
+geography: National
+
+notes: >
+  NBS Seychelles Quarterly National Accounts (Excel, 'Tables 1-6' sheet). GDP by
+  industrial activity (production approach), quarterly from 2014: value levels at
+  current and constant (base 2014) prices, nominal and real year-on-year growth,
+  point contributions to real growth, and the implicit price deflator. Two
+  headline aggregates published: 'GDP' (market prices) and 'Total' (gross value
+  added). Units SCR million for levels. Verified: GDP current 2024-Q4 = SCR 8.3bn,
+  real GDP growth 2024 = 1.7/0.9/9.2/2.1%. The expenditure tables (7-8, a
+  different transposed layout) are left for a later pass. NBS's server is often
+  slow. Everything as published; nothing derived.

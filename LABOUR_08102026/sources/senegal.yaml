@@ -1,0 +1,66 @@
+country: Senegal
+iso3: SEN
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: ERI-ESI 2017 rapport final + EHCVM 2018/2019 rapport final
+frequency: ad_hoc
+verify_ssl: false            # ANSD serves an incomplete TLS certificate chain
+
+# --- discover ---
+# Both reports are linked from ANSD's own survey pages, on the stable
+# /sites/default/files/<YYYY-MM>/ pattern:
+#   /enquete-et-etude/enquete-regionale-integree-sur-lemploi-et-le-secteur-informel-eri-esi-senegal-2017
+#   /enquete-et-etude/enquete-harmonisee-sur-les-conditions-de-vie-des-menages-ehcvm-2018-2019
+# One-off survey rounds, so the files are pinned. (The ERI-ESI report is also
+# re-posted under /2022-11/Senegal_ERI-ESI_RapportFinal_0.pdf.)
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2023-05/Senegal_ERI-ESI_RapportFinal.pdf"
+  save_as: senegal_eriesi_2017_rapport_final.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.ansd.sn/sites/default/files/2022-04/Rapport-final-EHCVM-11092021%20vf-Senegal%20004_1.pdf"
+    save_as: senegal_ehcvm_2018_2019_rapport_final.pdf
+
+parser: senegal_labour
+geography: Total country
+
+notes: >
+  ERI-ESI 2017 (employment chapter; base 15+): Tableau 5.21 institutional
+  sector by sex, milieu, 14 regions and Sénégal; Tableau 5.8 Total block,
+  employed counts by sector and the formal/informal split (3,6 / 96,4);
+  Tableau 7.5 employed by CITP major group, counts and %. Printed subtotals
+  (secteur privé / public; four skill levels) verified, not emitted. Universe
+  checked: 5.8's and 7.5's totals equal the report's employed population,
+  3 906 070. The UPI chapters (9-14, incl. 9.2-9.7) are excluded.
+
+  EHCVM 2018/2019 (chapter VII.4; base 15-59): secteur institutionnel, statut
+  dans l'emploi and branche d'activité (5 groups), each by milieu and by
+  education. The by-education tables' Ensemble column is checked equal to the
+  by-milieu national column. Quintile tables not read.
+
+  WHY THIS WAS BLOCKED BEFORE, AND STILL IS FOR THE QUARTERLY SERIES. ANSD's
+  live labour series, the quarterly ENES notes (listed newest first at
+  https://www.ansd.sn/Indicateur/enquete-emploi, back to 2022 Q3), publish
+  every composition cut as a `Graphique` whose data labels reach the text layer
+  as scattered glyph fragments ("% 8 .4", ".1 6 7 .1 5"); assigning them to bars
+  would be inference -- the Zimbabwe refusal, which Burkina Faso passes because
+  INSD prints labels as ordered text. The ENES narrative percentages are not
+  scraped either: partial, no Total row, category set varying by quarter, and
+  Graphique 5's four-way legend contradicts the text's three-way split. ENES
+  microdata (NADA catalog/347) is by written request only. If ANSD ever prints
+  the ENES cuts as tables, add them here as a quarterly series (page_scrape on
+  the landing page, link_contains ["ENES", ".pdf"]).
+
+  ALSO CHECKED (2026-10-01): ENES 2015 baseline report -- its only branch table
+  (3.1) covers EMPLOYEES, not the employed (Lesotho precedent), and its other
+  captions are rates; ENES T4 2019 note -- charts only; RGPH-5 2023 provisional
+  general report (541 pp) -- no employment composition table, only disability
+  by profession.
+
+  CROSS-CHECK: initiative privée 54,8; ménage employeur, femmes 10,6; secteur
+  privé 3 524 192; professions élémentaires 968 977 (24,8%); EHCVM salarié
+  public 4,8, agriculture 27,4 (rural 50,3), public among supérieur 35,4.

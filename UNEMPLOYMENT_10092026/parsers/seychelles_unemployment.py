@@ -40,7 +40,13 @@ LAYOUTS["seychelles"] = {
     "decimal": ".",
     "period_patterns": [
         r"for the\s+((?:first|second|third|fourth)\s+quarter\s+of\s+20\d{2})",
-        r"Labour Force Survey\s+(20\d{2}/Q[1-4])",
+        # Q4 issues never say "for the fourth quarter" ("In the fourth quarter
+        # of 2023, ...", "During the fourth quarter of 2024, ..."). The
+        # catalogue line "Labour Force Survey 2024/Q4" used to be the next
+        # pattern, and `parse_period` cannot read "2024/Q4" -- so every Q4
+        # issue was dated as the bare YEAR 2024. The catalogue is now a
+        # CROSS-CHECK in `parse`, never the date.
+        r"(?:in|during)\s+the\s+((?:first|second|third|fourth)\s+quarter\s+of\s+20\d{2})",
     ],
     "tables": [{
         "page_contains": ["rates (%)"],
@@ -85,4 +91,43 @@ LAYOUTS["seychelles"] = {
 
 
 LAYOUT = LAYOUTS['seychelles']
-parse = make_parser(LAYOUT)
+_issue = make_parser(LAYOUT)
+_CATALOGUE = re.compile(r"Labour Force Survey\s+(20\d{2})/Q([1-4])")
+
+
+def _one(path: str):
+    """One bulletin, dated from its prose and CHECKED against its catalogue
+    number; an issue whose Table 1A is not the layout above is skipped."""
+    import pdfplumber
+    df = _issue(path)
+    with pdfplumber.open(path) as pdf:
+        cover = pdf.pages[0].extract_text() or ""
+    m = _CATALOGUE.search(cover)
+    periods = set(df["period"])
+    if m and periods != {f"{m.group(1)}-Q{m.group(2)}"}:
+        raise ValueError(f"{path}: dated {sorted(periods)} but catalogued "
+                         f"{m.group(1)}/Q{m.group(2)}")
+    head = df[(df["topic"] == "unemployment_rate") & (df["sex"] == "total")]
+    if len(df) < 21 or head.empty:
+        raise ValueError(f"{path}: Table 1A yields {len(df)} rows and no "
+                         f"headline unemployment rate -- not this layout")
+    return df
+
+
+def parse(path: str, extras: list[str] | None = None):
+    """The newest bulletin plus the back issues the descriptor lists, each read
+    for ITS OWN current quarter. A back issue that does not fit the layout is
+    skipped with a message (the Q4 2023 bulletin's Table 1A predates it)."""
+    import pandas as pd
+    frames = [_one(path)]
+    for p in extras or []:
+        try:
+            frames.append(_one(p))
+        except ValueError as e:
+            print(f"[seychelles] back issue skipped: {e}")
+    df = pd.concat(frames, ignore_index=True)
+    dup = df.duplicated(["topic", "series_label", "sex", "age_group", "period"])
+    if dup.any():
+        raise ValueError(f"two bulletins claim the same quarter: "
+                         f"{sorted(set(df.loc[dup, 'period']))}")
+    return df

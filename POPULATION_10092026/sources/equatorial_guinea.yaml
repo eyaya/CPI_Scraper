@@ -1,0 +1,40 @@
+country: Equatorial_Guinea
+iso3: GNQ
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estadística de Guinea Ecuatorial (INEGE)
+publication_code: Anuario Estadístico de Guinea Ecuatorial 2026, cap. 3.1 Población
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# inege.org sits behind Cloudflare: its HTML routes answer 403, but files under
+# /wp-content/uploads/ are served to a browser TLS fingerprint (see core/fetch
+# impersonating_get, and the CPI/GDP/labour descriptors for this host). The
+# yearbook is pinned, as GDP pins it; add each new edition here.
+discover:
+  method: static_url
+  url: "https://inege.org/wp-content/uploads/2026/08/AEGE-2026-Final.pdf"
+  save_as: AEGE-2026.pdf
+  impersonate: [safari17_0, chrome124, firefox133]
+  download_timeout: 300
+
+parser: inege_eqguinea_population
+geography: Total country
+
+notes: >
+  Censuses 1983, 1994, 2001 and 2015 (series_type census): population by
+  region and province for all four (Tabla 19), by district for 2015 (Tabla 22),
+  % male / % female by area for 2015 (Tabla 20), and density by area for the
+  four census years (Tabla 23).
+
+  OVERLAPPING GEOGRAPHIES -- regions contain provinces; districts partition the
+  country again. All sums checked; do not add levels together. Province names
+  as printed per table ("Kie Ntem" in T19, "Kie-Ntem" in T20/T23).
+
+  NOT READ: nationality and urban/rural shares (no schema dimension); the
+  chart-only "2025 Estim" population.
+
+  CROSS-CHECK: 2015 total 1 225 377; Litoral 2015 367 348; 1983 300 000;
+  Bata 309 345; % hombres 2015 52,4.

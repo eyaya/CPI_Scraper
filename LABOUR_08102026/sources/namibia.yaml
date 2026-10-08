@@ -1,0 +1,57 @@
+country: Namibia
+iso3: NAM
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Namibia Statistics Agency (NSA)
+publication_code: PHC 2023 Labour Force Report
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover (two hops) ---
+# THE SAME REPORT THE `unemployment` INDICATOR COLLECTS (Table 0.1 there,
+# Chapter 4 and Section 6 here). Reused verbatim from
+# unemployment/sources/namibia.yaml: NSA runs WordPress, the labour-force-survey
+# document category lists each release, and each release is a /document/<slug>/
+# landing page hosting the PDF under /wp-content/uploads/<YYYY>/<MM>/.
+discover:
+  method: two_hop_scrape
+  index_url: "https://nsa.org.na/document-category/labour-force-survey/"
+  page_link_contains:
+    - "/document/"
+  file_link_contains:
+    - "wp-content/uploads"
+    - ".pdf"
+
+parser: namibia_labour
+geography: Total country
+
+notes: >
+  NSA 2023 Population and Housing Census Labour Force Report. Occupation (4.4,
+  NASCO-96 — Namibia's own scheme, "based on the ISCO-88"), industry (4.6, ISIC
+  Rev.4, which the report names), status in employment (4.12, no standard named
+  anywhere, so National), and the youth 15-34 cuts of occupation (6.4, counts
+  only) and industry (6.5).
+
+  CENSUS CADENCE: NSA has run no labour force survey since 2018 (2013, 2014,
+  2016, 2018, then a gap), so this is a point in time, not a series. A scheduled
+  run will find nothing new for years.
+
+  THE TEXT LAYER CARRIES THE WHOLE REPORT TWICE, three to five points apart, and
+  rows of the two copies sometimes merge and interleave. The dangerous result is
+  a row whose label is destroyed but whose NUMBERS ARE CORRECT AND WELL FORMED
+  ("EEmmppllooyyemee nt status 462,996 84.7 ..."), which nothing downstream
+  would question. Those lines are excluded by three signatures no clean row has:
+  fused numbers (,\d{4,}), doubled characters, and interleaved case. The copies
+  are complementary — each prints cleanly what the other mangles — so both pages
+  are read and the labels dedupe.
+
+  TWO WRAPPED LABELS ARE REJOINED by label_map because each copy printed only
+  one half and neither printed the whole: "Own-account worker (without hired" +
+  "employees)" and "Technicians and associate" + "professionals". The text is
+  the report's own.
+
+  Deferred, in the same report: the education cut (4.3), manufacturing and
+  agriculture employment by region (4.7-4.11, SDG indicators with their own
+  denominators), and the youth NEET tables (6.9-6.14), which belong with the
+  `unemployment` indicator's definitional columns.

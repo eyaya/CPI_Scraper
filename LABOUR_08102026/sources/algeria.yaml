@@ -1,0 +1,65 @@
+country: Algeria
+iso3: DZA
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Office National des Statistiques (ONS)
+publication_code: Rétrospective Statistique 1962-2020, Chapitre II Emploi
+frequency: ad_hoc
+verify_ssl: false
+
+# --- discover ---
+# ONS (SPIP site) gives the retrospective's employment chapter its own article
+# page; the French edition is CH2_Emploi1962_2020Fr.pdf (an Arabic edition,
+# ...Ar.pdf, sits on article2883 -- same figures, not needed). Scraped rather
+# than hard-coded so a re-issued chapter under a new filename is picked up.
+discover:
+  method: page_scrape
+  page_url: "https://www.ons.dz/spip.php?article2850"
+  link_contains:
+    - "CH2_Emploi"
+    - "Fr.pdf"
+  save_as: CH2_Emploi1962_2020Fr.pdf
+
+parser: algeria_labour
+geography: Total country
+
+notes: >
+  ONS Rétrospective Statistique 1962-2020, Chapitre II "Emploi" -- one PDF
+  reprinting forty years of household-side employment composition, one table
+  per survey round. All `industry` except 1997's secteur juridique (`sector`).
+
+  COLLECTED: (1) 25 rounds of the Enquête emploi auprès des ménages,
+  June 2000 to May 2019 (Tableaux 17-35): employed by ONS's own sector grouping,
+  count + share -- six groups in 2000-2001, four from 2003. Two rounds a year
+  (April and September) in 2014 and 2016-2018, so periods are the QUARTER of
+  the reference month, with the month kept in reference_period. Units are
+  persons to 2007 and thousands from December 2008, read per page.
+  (2) Enquêtes Main d'œuvre (MOD) June 1989-1992 (Tableaux 7, 9, 11, 13):
+  nine branches by sex, persons. (3) 1997 (Tableau 15): six sectors and
+  public/privé, thousands. (4) RGPH 1977 (urbain/rural) and RGPH 1987 (zone
+  agglomérée/éparse) by branch, persons.
+
+  NOT COLLECTED: Tableaux 1.1-1.4 (employment "hors agriculture" compiled from
+  mixed sources -- a different universe); the "dont salariés" columns (industry
+  x status, and a row percentage); employed/unemployed by sex, stratum and age
+  and the rate boxes (labour-force status: `unemployment`'s territory);
+  Tableau 16 (1998 census labour force by wilaya).
+
+  NEWER DATA: ONS's only post-2019 labour publication is Chomage2024.pdf
+  (spip.php?article3059), a three-page communiqué giving the 2024 unemployment
+  rate (9,7%) and prose only -- no composition. Nothing newer to add here.
+
+  PRINTED INCONSISTENCIES, kept as printed: RGPH 1977 Administration row is
+  +60 and Autres Services -60 against their own row sums while every column
+  sums to its Total (whitelisted in the parser); Septembre 2018 prints shares
+  up to 0,07 points off count/total; 1997's sectors sum to 5 707 against a
+  5 708 total (thousands rounding).
+
+  WORKING-AGE BASE NOT STATED for these distributions -- the June 2000 age
+  table counts 25 075 employed under 15, so the totals are not a 15+ figure.
+
+  CROSS-CHECK: Sept 2012 total employed 10 170 thousand, Agriculture 912 (9,0%);
+  May 2019 total 11 281, Agriculture 1 083 (9,60%); June 2000 total 6 179 992
+  persons; MOD June 1989 total 4 432 050 (men 4 115 420); RGPH 1977 total
+  2 336 971; RGPH 1987 total 4 137 736.

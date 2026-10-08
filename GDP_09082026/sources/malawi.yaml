@@ -1,0 +1,28 @@
+country: Malawi
+iso3: MWI
+indicator: GDP
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: National Statistical Office (NSO)
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# nsomalawi.mw is a Nuxt SPA over a Laravel CMS; the publications API lists each
+# release with a `document` download URL. We take the 'GDP EXPENDITURE' workbook.
+discover:
+  method: nso_malawi_publication
+  api_base: "https://cms.nsomalawi.mw"
+  title_contains: "GDP EXPENDITURE"
+
+parser: malawi_nso_gdp
+geography: National
+
+notes: >
+  Malawi NSO 'GDP by Expenditure' workbook (2017-rebased). Annual GDP by
+  expenditure component (final consumption, gross capital formation, exports and
+  imports of goods/services) at current (GDP_E_CP) and constant 2017 (GDP_E_KP)
+  prices, 2017 onward. Units MWK million. Verified: base-year 2017 current =
+  constant; GDP 2024 current = MWK 19.7tn (reflecting Malawi's high inflation).
+  Only the expenditure approach is published here (no by-activity/production
+  breakdown in this file). Everything as published; nothing derived.

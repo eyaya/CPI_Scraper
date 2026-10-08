@@ -1,0 +1,39 @@
+country: Egypt
+iso3: EGY
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Central Agency for Public Mobilization and Statistics (CAPMAS)
+publication_code: تقديرات السكان (Population estimates), CAPMAS publication 150
+frequency: annual
+verify_ssl: false
+
+# --- discover ---
+# CAPMAS's SPA is backed by a JSON API (`<api>/api/Publication/<id>` returns
+# the newest issue) -- the route CPI (32) and labour/unemployment (11) use.
+# Publication 150 is "تقديرات السكان". The earlier rejection scanned for
+# ENGLISH keywords; the catalogue's names are Arabic, so it found nothing.
+discover:
+  method: capmas_publication
+  api_base: "https://www.capmas.gov.eg:8080"
+  publication_id: 150
+  prefer: pdf
+  save_as: egypt_capmas_population_estimates.pdf
+
+parser: capmas_egypt_population
+geography: Total country
+
+notes: >
+  Estimated population inside Egypt on 1 JANUARY of the edition's year, by
+  governorate (27) and sex, from page 1's Total block (urban / rural blocks
+  have no column here). Period = the edition's year; series_code says "1 Jan".
+  Governorate names are stated in the parser (the Arabic text layer is
+  ligature-mangled) and each extracted label is checked to carry the same
+  letters. Every block adds up (urban + rural = total, M + F = T) and the
+  governorates sum to the national total.
+
+  NOT READ: census 2017 final results (publication 151; text layer too
+  mangled to locate its tables reliably) and projections (106).
+
+  CROSS-CHECK (1 Jan 2026): 108 613 296 (M 55 778 095 / F 52 835 201); Cairo
+  10 478 084; Giza 9 820 469.

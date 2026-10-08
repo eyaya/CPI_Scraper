@@ -1,0 +1,47 @@
+country: Gabon
+iso3: GAB
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Gabon (INSTAT, formerly DGS)
+publication_code: RGPL-2013 Résultats globaux (December 2015)
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 5
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/gabon.yaml -- the same census volume;
+# labour/ reads Tableaux 71-72 (composition), this reads Tableaux 61-64 and 67.
+# The live host is new.instatgabon.org (dgstat.ga is dead); the volume is
+# listed on /population under "Documents - RGPL".
+#
+# OTHER INSTAT DOCUMENTS CHECKED (2026-10-01):
+#   * EGEP 2017 rapport de synthèse, chapitre 6 -- REFUSED: no tables, only
+#     prose and Graphiques 110-118, and the prose contradicts itself (the
+#     activity rate is "29,4 %" of the 15-64 and "50 %" of the 15-65 a
+#     paragraph later; unemployment "26 %" of the actifs "de 16-65 ans" under
+#     a 15-64 definition). A figure whose base the report cannot state once is
+#     not collectable.
+#   * the quarterly SIMT employment bulletins -- formal-sector administrative
+#     data (README section 4).
+discover:
+  method: static_url
+  url: "https://new.instatgabon.org/uploads/folder_1/RESULTATS-GLOBAUX-RGPL2013-OK_DECEMBRE-2015-1.pdf"
+  save_as: RESULTATS-GLOBAUX-RGPL2013.pdf
+
+parser: gabon_unemployment
+geography: Total country
+
+notes: >
+  RGPL-2013, chapter V, base 16-65 (the legal working age). Tableau 61
+  actifs / inactifs / total by milieu x sex and Tableau 62 by province x sex
+  (counts); Tableau 63 taux brut d'activité and Tableau 64 taux de chômage by
+  province x milieu x sex; Tableau 67 occupés by sex.
+
+  The 41 939 with no declared activity status are inside the working-age
+  total but outside both actifs and inactifs, and outside the TBA's
+  denominator (58,3 = 577 242 / 989 582). Census status, self-declared:
+  definition not_applicable.
+
+  CROSS-CHECK: TBA 58,3; chômage 16,5 (hommes 13,1, femmes 22,1); actifs
+  577 242; occupés 481 928; population 16-65 1 031 521.

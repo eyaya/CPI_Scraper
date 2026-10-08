@@ -1,0 +1,48 @@
+country: Eswatini
+iso3: SWZ
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Central Statistical Office (CSO), Ministry of Economic Planning and Development
+publication_code: ILFS 2023
+frequency: ad_hoc
+
+# --- discover ---
+# THE SAME BOOKLET THE `unemployment` INDICATOR COLLECTS (Tables 6.7 and 6.25
+# there, Chapters 4 and 5 here). Reused verbatim from
+# unemployment/sources/eswatini.yaml, including its finding: Eswatini's CSO has
+# no standalone domain and gov.sz dumps files flat into /images/ with no index
+# page, so a static URL is the honest choice — there is nothing to scrape.
+discover:
+  method: static_url
+  url: "https://www.gov.sz/images/2023-LFS-KEY-FINDINGS-booklet.pdf"
+
+parser: eswatini_labour
+geography: Total country
+
+notes: >
+  CSO Integrated Labour Force Survey 2023 key findings booklet: occupation
+  (4.5), economic activity (4.6), unit of production (4.1) and informal
+  employment as a proportion of employment by region (5.5, where the region
+  comes from the row label).
+
+  EVERYTHING IS A PERCENTAGE. The only counts are the base line above each
+  table ("Employed population 131 586 128 770 260 356"), which is an employment
+  level and belongs to `unemployment`; it is written with space thousands
+  separators and is not collected here.
+
+  NO SCHEME IS NAMED ANYWHERE — ISIC, ISCO and ICSE appear nowhere in the
+  booklet — so occupation and economic activity are both National, despite
+  reading like ISCO-08 and ISIC Rev.4.
+
+  NOT COLLECTED, and why: Tables 5.1/5.3/5.4 cross formality with a second
+  category (unit of production, occupation, economic activity), which one
+  category column cannot hold; Table 5.2 distributes the informally employed
+  across regions and would collide with 5.5's proportion WITHIN each region on
+  the merge key, so 5.5 is taken and 5.2 left.
+
+  CADENCE IS TRIENNIAL (2023 is the sixth round since 2007) and the booklet
+  dates no fieldwork, so the period is pinned to 2023 rather than guessed.
+
+  A 2025 LFS is reported to exist but no official file could be located — see
+  the unemployment descriptor. Nothing from press reports is ingested.

@@ -1,0 +1,53 @@
+country: Djibouti
+iso3: DJI
+indicator: MPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique de Djibouti (INSTAD)
+publication_code: RGPH-3, Thématique 16 -- Mesure et cartographie de la pauvreté non monétaire (Nov. 2025)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 1
+
+# --- discover ---
+# instad.dj is a Nuxt SPA over an Express backend; GET
+# <api_base>/fichiers/<categorie>/<year> lists a category's files with their
+# Firebase Storage URLs (the instad-dj bucket). The census thematic volumes sit
+# under categorie "RGPH" (year 2025/2026), so the volume is picked by TITLE --
+# the same discovery CPI and GDP use for INSTAD. Found 2026-10-07: PENDING.md's
+# lead was the older IPM 2012-2017 report (EDAM-IS), hosted only on UNDP's CDN;
+# INSTAD's own site now carries this newer, census-based measure instead.
+discover:
+  method: instad_dj_ipc
+  api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
+  categorie: "RGPH"
+  # accent-free: the API title may store "é" decomposed
+  title_contains: "Mesure et cartographie"
+  lookback_years: 3
+  save_as: djibouti_rgph3_t16_pauvrete_non_monetaire.pdf
+  download_timeout: 300
+
+parser: djibouti_mpi
+geography: Total country
+
+notes: >
+  NATIONAL measure, census-based (RGPH-3, 2024): Alkire-Foster with THREE
+  dimensions -- education (the person's attainment), health (life expectancy
+  below 40,07), living conditions (household standard of living poor / very
+  poor) -- one indicator each, k = 1/3, unit = person. Because each dimension
+  has one indicator and k = 1/3, a person is poor if deprived in ANY ONE --
+  every age group to 15-19 prints 100%. Not comparable with any other MPI.
+
+  ONLY THE HEADCOUNT IS PUBLISHED ("Pauvreté maximale (%)", which the text
+  equates with multidimensional poverty: 86,2% nationally). A and M0 are
+  defined but never printed; nothing is computed.
+
+  n_indicators = 3 from Tableau n°1, which defines the index; a definitions
+  paragraph says "9 dimensions" -- the report's own contradiction, recorded.
+
+  READ: Tableau 21 (national, 6 régions, urbain/rural, 20 age groups) and
+  Tableau 20 (29 préfectures / sous-préfectures / arrondissements). NOT READ:
+  sex, education, nationality and migration rows (no matching topic).
+
+  CROSS-CHECK: 86,2; Djibouti-ville 83; Rural 98,7; 25-29 ans 68,7;
+  Plateau Arrondissement 74,3.

@@ -1,0 +1,38 @@
+country: Central African Republic
+iso3: CAF
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Institut Centrafricain des Statistiques et des Études Économiques et Sociales (ICASEES)
+publication_code: RGPH03 Caractéristiques économiques (June 2005)
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 2
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/central_african_republic.yaml: the
+# census thematic report on icasees.org's publication list (Joomla download).
+discover:
+  method: static_url
+  url: "https://icasees.org/index.php/publications/liste-des-publications/rgph03-caracteristiques-economiques-rapport-danalyse-thematique-juin-2005/download"
+  save_as: RGPH03_caracteristiques_economiques.pdf
+
+parser: central_african_republic_unemployment
+geography: Total country
+
+notes: >
+  RGPH03 (census, December 2003). Taux brut d'activité (6+, the census's
+  activity threshold) and taux spécifique d'activité (15+) by milieu x sex
+  (Eco 3), région / préfecture x sex (Eco 4) and education (Eco 5); the 1988
+  census rates as republished in Eco 8 (period 1988); taux de chômage 15+ by
+  milieu (Eco 25), five-year age (Eco 26) and région / préfecture (Eco 27).
+
+  DEFINITION not_applicable: the census defines the unemployed as persons 15+
+  not occupied "mais ayant déjà travaillé ou à la recherche éventuelle d'un
+  premier emploi" -- no availability test, no BIT label, no élargi variant.
+
+  Eco 27 prints Ensemble | Homme | Femme (reverse of Eco 25); checked against
+  Eco 25's national row every run. Eco 4's "46.1" (Bangui) is a misprinted
+  decimal point, read as 46,1.
+
+  CROSS-CHECK: taux brut 51,9; spécifique 66,4; chômage 7,6 (Bangui 21,1).

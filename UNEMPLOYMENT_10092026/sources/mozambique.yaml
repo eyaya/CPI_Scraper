@@ -1,0 +1,51 @@
+country: Mozambique
+iso3: MOZ
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE)
+publication_code: IOF 2022 and IOF 2019/20 final reports, chapter 6
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 6
+
+# --- discover ---
+# PRIMARY REUSED VERBATIM from labour/sources/mozambique.yaml (the same IOF
+# 2022 report). INE's Liferay document library lists it in folder 44454:
+#   https://www.ine.gov.mz/web/guest/estat%C3%ADsticas/-/document_library/pfpz/view/44454
+# and IOF 2019/20 in folder 331703 (same /documents/20119/<folder>/<name>/<uuid>
+# shape). The URL basenames are UUIDs, hence save_as. ine.gov.mz timed out on
+# the 2026-10-01 labour --all run, so a long timeout is set.
+discover:
+  method: static_url
+  url: "https://www.ine.gov.mz/documents/20119/44454/Relatorio_IOF_2022.pdf/4b0f2845-65a9-5ed7-03d3-075a6a70c52a?download=true"
+  save_as: Relatorio_IOF_2022.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.ine.gov.mz/documents/20119/331703/Relatorio%20IOF%202019_20%20%281%29.pdf/44a0d625-15b4-5bb3-7392-f71fdf893640?download=true"
+    save_as: Relatorio_IOF_2019_20.pdf
+
+parser: mozambique_unemployment
+geography: Total country
+
+notes: >
+  IOF (household budget survey) employment module, base 15+: PEA share,
+  employment rate (by age too), underemployment and unemployment rates by
+  sex, residence, province and education; counts in 2022 only. Periods 2022
+  and 2020 (IOF 2019/20).
+
+  NOT ILO-STRICT: both reports drop the job-search criterion and use a
+  "definição alternativa" that counts casual / irregular / unpaid family
+  workers ("Desempregado C") as unemployed. Unemployment and PEA are filed
+  `broad`; every label says "definição alternativa".
+
+  PUBLISHED INCONSISTENCY (2022): employed + unemployed = 13 879 207 against
+  a PEA of 13 542 861. Quadro 6.8's count column is misheaded "População
+  subempregada" (it is the unemployed). Both kept as printed.
+
+  NO DEDICATED LFS REPORT was found in INE's document library (folders
+  44454, 331703, 181701 checked); the IOF module is the current source.
+
+  CROSS-CHECK: unemployment 18,4 (2022), 17,5 (2019/20); employment rate
+  71,4 / 74,0; Maputo Cidade unemployment 37,1 (2019/20).

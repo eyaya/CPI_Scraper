@@ -2,26 +2,42 @@ country: DR_Congo
 iso3: COD
 indicator: CPI
 tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
-source_type: excel
+source_type: html
 agency: Banque Centrale du Congo (BCC)   # INS-RDC (NSO) is WAF-blocked; BCC is the fallback
-frequency: annual
+frequency: monthly
 verify_ssl: false
 
 # --- discover ---
-# The NSO (INS-RDC) site is WAF-blocked, so we use the central bank's stable
-# annual CPI workbook.
+# The NSO (INS-RDC) site is WAF-blocked, so we use the central bank, which
+# republishes INS's series. BCC's 2026 rebuild retired the annual workbook this
+# source used to read ('ipc_annuel_bcc.xlsx' now 404s) in favour of a Next.js data
+# explorer — but that page SERVER-RENDERS the whole series into its flight
+# payload, so the page itself is the data file and one static URL is enough.
 discover:
   method: static_url
-  url: "https://www.bcc.cd/system/files_force/statistiques/ipc_annuel_bcc.xlsx/?download=1"
-  save_as: BCC_IPC_Annuel.xlsx
+  url: "https://www.bcc.cd/statistiques/secteur-reel/inflation"
+  save_as: BCC_inflation_series.html
 
 parser: drc_bcc
 geography: National
 expect_divisions: 1           # national all-items only
 
 notes: >
-  PARTIAL capture. INS-RDC (the NSO) is unreachable (WAF-403), so this uses the
-  Banque Centrale du Congo 'ipc_annuel_bcc.xlsx' — the national all-items CPI as an
-  ANNUAL series (index base 2012 = 100 + year-on-year inflation). Limitations:
-  all-items only (no COICOP breakdown), annual frequency, and the file ends in 2020.
-  Annual values are dated to year-end (YYYY-12) to fit the monthly period schema.
+  CENTRAL-BANK FALLBACK, and still partial — but much less so than before. INS-RDC
+  (the NSO) is unreachable (WAF-403), so this reads the Banque Centrale du Congo,
+  which republishes INS's price series and credits it. BCC's 2026 site rebuild
+  retired the annual workbook this source used to read; its data explorer now
+  carries the MONTHLY all-items index with month-on-month and year-on-year rates
+  from December 2011 to the current month, server-rendered into the page's Next.js
+  flight payload, so the page is parsed as the data file.
+  WHAT IS LEFT OUT, and why: BCC also publishes the twelve COICOP consumption
+  functions, but as WEEKLY percentage series (period keys like '2026-08-S3'), which
+  the CPI schema's monthly `period` cannot carry without aggregating them — that
+  would be re-estimation, so they are dropped, as are the weekly national/Kinshasa
+  indices and the cumulative rates. Still all-items only, therefore.
+  BASE PERIOD: neither BCC nor INS states it on this page, so it is left blank
+  rather than guessed (the retired annual workbook was base 2012 = 100, but its
+  index levels do not line up with this series').
+  HISTORY: the retired workbook's annual series (1992–2020) is no longer served
+  anywhere reachable; the last copy collected sits under source_data/DR_Congo/ for
+  audit, and the pre-2011 part of it is not represented in the current output.

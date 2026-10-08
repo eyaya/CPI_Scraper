@@ -129,4 +129,17 @@ LAYOUT = {
 }
 
 
-parse = make_parser(LAYOUT)
+_body = make_parser(LAYOUT)
+
+
+def parse(path: str):
+    """The body tables, then Appendix D (states, the 109 senatorial
+    districts, confidence bounds and the Child MPI) -- see
+    `nigeria_appendix_d`."""
+    import pandas as pd
+    from .nigeria_appendix_d import parse_appendix
+    body = _body(path)
+    points = {(r.geography, r.locality, r.topic, r.characteristic, r.age_group,
+               r.metric): float(r.value) for r in body.itertuples()}
+    return pd.concat([body, pd.DataFrame(parse_appendix(path, points))],
+                     ignore_index=True)

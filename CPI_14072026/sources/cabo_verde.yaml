@@ -1,0 +1,41 @@
+country: Cabo_Verde
+iso3: CPV
+indicator: CPI
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Instituto Nacional de Estatística (INE)
+frequency: monthly
+
+# --- discover ---
+# ine.cv is an Angular SPA over a .NET backend whose obvious routes are shut
+# (/Indicator, /Statistic and /Search/advanced-search all answer 401) but whose
+# paginated /Publication does not. Theme 27 is the IPC; dissemination type 10
+# ('Principais Quadros') is the series workbook, type 2 ('Publicações') the
+# monthly note. Attachments are a second hop through /GenericFile/GetFile.
+discover:
+  method: ine_cv_publication_file
+  api_base: "https://bdmi.ine.cv/site_deploy_api/api"
+  file_base: "https://bdmi.ine.cv/site_deploy_api"
+  code_theme: 27              # Índice de Preços no Consumidor
+  publication_type: 10        # Principais Quadros (the series workbook)
+  title_contains: "coicop"    # 'Agregados familiares dos coicop da série 2018 100 …'
+  extension: ".xlsx"
+
+parser: cabo_verde_ine
+geography: National
+expect_divisions: 13          # TOTAL + 12 CCIO classes
+
+notes: >
+  CPI (IPC), série 2018 = 100, weights from the Inquérito às Receitas e Despesas
+  Familiares 2015, compiled as the aggregation of three regional price indices
+  (Santo Antão, São Vicente, Santiago) and classified in twelve CCIO classes.
+  Unlike most Tier-2 CPI sources this workbook is the WHOLE series, not the latest
+  month: 'Tabela 1' runs from January 2019 to the newest month (91 periods in the
+  July 2026 issue) for TOTAL plus classes 01..12, and the file is republished each
+  month. INDEX ONLY: the workbook's 'Tabela 5' rate is the twelve-month moving
+  average (1,4% for July 2026, against a year-on-year 0,4% computed from Tabela 1),
+  which matches neither `inflation_yoy` nor `inflation_mom`, so it is left out
+  rather than mislabelled — deriving the rates from the index levels would be
+  re-estimation. 'Tabela 2'/'Tabela 3' (CCIO groups and sub-groups) and 'Tabela 4'
+  (special aggregates: fresh products, energy, core) are available in the same
+  file if more depth is wanted. Portuguese labels kept as published.

@@ -1,0 +1,82 @@
+country: Equatorial_Guinea
+iso3: GNQ
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Instituto Nacional de Estadística de Guinea Ecuatorial (INEGE)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# INEGE moved from inege.gq to inege.org, behind Cloudflare: HTML routes and
+# the WordPress REST API are refused, but /wp-content/uploads/ files are served
+# to a browser TLS fingerprint -- and WHICH fingerprint passes changes within
+# the hour (chrome124 got 403 on a file it had served minutes earlier while
+# safari17_0 succeeded), so several are listed.
+#
+# HOW TO FIND NEWER ISSUES: the site search's RSS feed is reachable with a
+# fingerprint and carries each post's direct PDF links inside CDATA --
+#   https://inege.org/?s=trimestrales&feed=rss2   (quarterly accounts, every 3 months)
+#   https://inege.org/?s=anuario&feed=rss2        (yearbook, AEGE)
+# `page_scrape` cannot read links inside CDATA and `regex_on_page` cannot
+# impersonate, so the files are pinned. Making this self-updating needs either
+# `impersonate` support in `regex_on_page` (a one-line pass-through to
+# fetch.impersonating_get), after which:
+#   method: regex_on_page
+#   page_url: "https://inege.org/?s=trimestrales&feed=rss2"
+#   pattern: 'https://inege\.org/wp-content/uploads/\d{4}/\d{2}/INFORME-DE-LAS-CUENTAS-NACIONALES-TRIMESTRALES-T\d-\d{4}[^"<\s]*\.pdf'
+# would resolve the newest report (the feed lists newest first).
+discover:
+  method: static_url
+  url: "https://inege.org/wp-content/uploads/2026/09/INFORME-DE-LAS-CUENTAS-NACIONALES-TRIMESTRALES-T2-2026-1.pdf"
+  save_as: INFORME-CNT-TRIMESTRALES-T2-2026.pdf
+  impersonate:
+    - safari17_0
+    - chrome124
+    - firefox133
+  download_timeout: 300
+
+# `impersonate` and `download_timeout` apply to the extras too (core/run.py).
+# File names must keep "TRIMESTRAL" (quarterly) and the T<q>-<year> / edition
+# year: the parser ranks issues by them, newest winning every overlap.
+extra_urls:
+  - url: "https://inege.org/wp-content/uploads/2026/06/INFORME-DE-LAS-CUENTAS-NACIONALES-TRIMESTRALES-T1-2026_vf.pdf"
+    save_as: INFORME-CNT-TRIMESTRALES-T1-2026.pdf
+  - url: "https://inege.org/wp-content/uploads/2026/08/AEGE-2026-Final.pdf"
+    save_as: AEGE-2026.pdf
+  # Path recovered from the Wayback CDX index of inege.gq; still served by inege.org.
+  - url: "https://inege.org/wp-content/uploads/2023/12/ANUARIO-ESTADI%CC%81STICO-2023.pdf"
+    save_as: AEGE-2023.pdf
+
+parser: equatorial_guinea_inege_gdp
+geography: National
+
+notes: >
+  INEGE national accounts, 2006 base (SCN 93). QUARTERLY: Informe de las
+  Cuentas Nacionales Trimestrales, Anexos 1-6 (production side: PIB total,
+  petrolero / no petrolero, three sectors and their branches; levels at current
+  and constant prices in FCFA millions, year-on-year and quarter-on-quarter
+  growth, and both contributions), 2025-Q1 to 2026-Q2 from the T2 2026 and
+  T1 2026 issues. No seasonal adjustment is stated (nsa). ANNUAL: Anuario
+  Estadístico, Contabilidad Nacional section -- synthesis of aggregates
+  (income, saving, financing balances, per-capita GDP), supply side (levels,
+  deflators, growth, contributions) and demand side (levels, growth,
+  contributions), FCFA thousand millions; AEGE 2026 (2021-2025) and AEGE 2023
+  (2018-2022), the newer edition winning every year both print (2022 nominal
+  GDP revised 7 503,6 -> 8 537,8).
+
+  PUBLISHED INCONSISTENCIES KEPT: 2024 nominal GDP is 8 262,5 (synthesis and
+  demand) vs 8 036,7 (supply), each under its own approach. PINNED AND NOT
+  COLLECTED: AEGE 2023 supply-current SECTOR TERCIARIO 2021 "3.047.643,5";
+  AEGE 2026 demand-constant consumo final 2021 3 140,8 (its parts give
+  3 190,2). Neither is back-filled from the older edition.
+
+  NOT COLLECTED: synthesis ratios (tasas, propensión, cobertura,
+  competitividad, apertura), "crecimiento en precio", population; quarterly
+  Anexos 7-25 (physical indicators, prices). Older material exists for
+  extension: annual definitive accounts 2015-2020 and quarterly reports
+  2019-2022 (Wayback CDX of inege.gq), and yearbooks 2017-2022.
+
+  CROSS-CHECK: 2026-Q2 PIB corriente 1 920 402 and constante 1 086 775
+  (FCFA millions), interanual -1,9; 2025 PIB real 4 412,8 (FCFA thousand
+  millions), growth -5,8; 2018 PIB nominal 7 274,7.

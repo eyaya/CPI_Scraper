@@ -1,0 +1,48 @@
+country: Congo
+iso3: COG
+indicator: GDP
+tier: 3                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: pdf
+agency: Institut National de la Statistique (INS Congo)
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# INS Congo lists publications through a JSON API:
+#   https://ins-congo.cg/backend/api/publications/list.php?per_page=50&page=N
+# Each item has titre, periode ("T4-2025"), sous_secteur ("comptes-nationaux")
+# and download_url "backend/api/publications/download.php?id=<id>", which
+# 302-redirects to /uploads/publications/ins_<hash>.pdf (requests follows it).
+# Pinned to the newest note (id 121, T4-2025) until a discovery method exists:
+# NEEDED -- `ins_congo_publication`: page the list API, keep items with
+# sous_secteur "comptes-nationaux" and titre containing "Trimestriels", take
+# the newest by periode "T<n>-<YYYY>", return <host>/<download_url>.
+# Do NOT use download_url_excel: INS's "Excel" files are automatic
+# PDF-to-spreadsheet conversions, not data.
+discover:
+  method: static_url
+  url: "https://ins-congo.cg/backend/api/publications/download.php?id=121"
+  save_as: INS_Congo_CNT_T4_2025.pdf
+  download_timeout: 300
+
+parser: congo_ins_gdp
+geography: National
+
+notes: >
+  INS Congo quarterly national accounts note, production approach (20 CNT
+  branches incl. SIFIM), données brutes, billion XAF: Tableau 1 chained volume
+  (reference 2005) levels + real y/y growth (quarterly and annual); Tableau 2
+  current-price levels (its deflator-variation columns are not collected);
+  Tableau 3 contributions to real growth. Seven quarters per note, revised by
+  each new note. Chained PIB pétrole + hors pétrole do not add to PIB (as
+  published).
+
+  NOT YET READ: "Comptes nationaux 2005-2018" (annual, production + demand,
+  current, chained-2005 volumes, deflators, contributions) at
+  /assets/Documents/Statistiques%20economiques/COMPTABILIT%C3%89%20NATIONALE/
+  Comptes%20nationaux%202005-2018/Comptes%20nationaux%202005-2018.pdf --
+  Tableau 2's text layer is letter-spaced column by column; Tableaux 3 and 6
+  read cleanly. Also "COMPTES NATIONAUX DEFINITIFS 2022" (id 116).
+
+  CROSS-CHECK: PIB T4_2025 current 2 072,3, volume 1 200,3; real growth
+  T4_2025 5,3%, 2025 3,4%.

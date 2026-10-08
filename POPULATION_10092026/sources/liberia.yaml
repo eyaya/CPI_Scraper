@@ -1,8 +1,8 @@
 country: Liberia
 iso3: LBR
 indicator: Population
-tier: 2
-source_type: excel
+tier: 1
+source_type: api
 agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
 publication_code: 2022 PHC
 frequency: annual
@@ -10,12 +10,31 @@ verify_ssl: false
 
 # --- discover ---
 # LISGIS publishes a clean county-level population workbook from the 2022 census.
+# --- discover ---
+# REPOINTED 2026-09-27. LISGIS rebuilt its site as a single-page app over a JSON
+# API; county_population.xlsx is gone and its old path returns the app's HTML
+# shell with HTTP 200. The same 2022 census county table is served as JSON by
+# the dataset API, with county names in `dimension_attributes`. Verified
+# against the previous output: identical values.
+# UPGRADE AVAILABLE: /api/datasets/census-population-age-sex-residence(-by-county)
+# carries five-year age x sex x urban/rural, nationally and for every county,
+# from the census thematic report -- the age breakdown this file never had.
 discover:
   method: static_url
-  url: "https://www.lisgis.gov.lr/admin_area/uploads/population/county_population.xlsx"
-  save_as: liberia_county_population.xlsx
+  url: "https://www.lisgis.gov.lr/api/datasets/population-counties"
+  save_as: liberia_population_counties.json
 
-parser: lisgis_liberia_population
+# Five-year age x sex for the nation and each county, from the census thematic
+# report's tables as the dataset API serves them (added 2026-10-06). Only the
+# age bands are taken; the all-ages series stays the county table's -- see
+# _age_rows in the parser for the two counties whose sex split differs.
+extra_urls:
+  - url: "https://www.lisgis.gov.lr/api/datasets/census-population-age-sex-residence"
+    save_as: liberia_population_age_sex.json
+  - url: "https://www.lisgis.gov.lr/api/datasets/census-population-age-sex-residence-by-county"
+    save_as: liberia_population_age_sex_by_county.json
+
+parser: lisgis_liberia_population_api
 geography: Total country
 
 notes: >
@@ -23,5 +42,5 @@ notes: >
   Male / Female) for the 15 counties. National "Total country" = sum of the counties
   (5,250,187; M 2,643,979 / F 2,606,133). This clean file has no age breakdown, so
   age_group is "Total"; the full census report PDF (documents/2022_census_report.pdf)
-  is 404 on the site — revisit for the age-sex table when it is posted. series_type
-  = census. Same LISGIS site used for Liberia GDP.
+  is 404 on the site; the age-sex tables now come from the dataset API (see
+  extra_urls). series_type = census. Same LISGIS site used for Liberia GDP.

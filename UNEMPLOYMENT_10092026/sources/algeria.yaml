@@ -1,0 +1,57 @@
+country: Algeria
+iso3: DZA
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Office National des Statistiques (ONS)
+publication_code: Rétrospective Statistique 1962-2020, Chapitre II Emploi + communiqué Chômage 2024
+frequency: ad_hoc
+verify_ssl: false
+expect_topics: 1
+
+# --- discover ---
+# REUSED VERBATIM from labour/sources/algeria.yaml: ONS (SPIP site) gives the
+# retrospective's employment chapter its own article page; the French edition
+# is CH2_Emploi1962_2020Fr.pdf. Scraped so a re-issued chapter is picked up.
+# The extra is ONS's only post-2019 labour release, linked from
+# spip.php?article3059 (Chomage2024.pdf).
+discover:
+  method: page_scrape
+  page_url: "https://www.ons.dz/spip.php?article2850"
+  link_contains:
+    - "CH2_Emploi"
+    - "Fr.pdf"
+  save_as: CH2_Emploi1962_2020Fr.pdf
+
+extra_urls:
+  - url: "https://www.ons.dz/IMG/pdf/Chomage2024.pdf"
+    save_as: Chomage2024.pdf
+
+parser: algeria_unemployment
+geography: Total country
+
+notes: >
+  23 rounds of the Enquête emploi auprès des ménages (June 2000 - May 2019,
+  Tableaux 17-35): taux d'activité, d'emploi, de chômage; population active /
+  occupée / en chômage; employed and unemployed by sex x strate and by age.
+  Dated to the quarter of the reference month (two rounds a year in 2014 and
+  2016-2018). Persons to 2007, thousands from December 2008. Tableaux 36/37:
+  unemployment rate from 1966 and activity rate from 1977 for the years before
+  2000 (censuses, MOD surveys, LSMS 1995, ONS 1996/97), later years checked
+  against the round pages. Tableau 16.1: RGPH 1998 labour force by wilaya x sex.
+  2024: the communiqué's headline rate 9,7% (preliminary, after ONS's stated
+  adjustments), definition not stated.
+
+  DEFINITIONS: the rate's denominator is "occupés + STR + TD", STR = sans
+  travail ET à la recherche d'un emploi -> strict. Activity and employment
+  rates are on 15+; counts and unemployment rates carry "not stated" (the June
+  2000 age table counts employed under 15).
+
+  READ BY WORD GEOMETRY (space-grouped adjacent counts), held to each table's
+  arithmetic. PUBLISHED DEFECTS: December 2008 employed 40-44 printed "0" (not
+  collected, pinned); September 2018 employed age groups 201 thousand short of
+  the Total (kept, gap pinned); RGPH 1998 Skikda "181 7 03" = 181 703. December
+  2008 splits by dispersion (aggloméré / épars, locality "other").
+
+  CROSS-CHECK: juin 2000 chômage 28,89, active 8 690 855; avril 2016 activité
+  42,0; mai 2019 chômage 11,4; 1966 32,9; RGPH 1998 actifs 8 056 789; 2024 9,7.

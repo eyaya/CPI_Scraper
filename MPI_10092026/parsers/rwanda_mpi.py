@@ -82,4 +82,16 @@ LAYOUT = {
 }
 
 
-parse = make_parser(LAYOUT)
+_eicv7 = make_parser(LAYOUT)
+
+
+def parse(path: str, extras: list[str] | None = None):
+    """EICV7 (this layout) plus, from the descriptor's extra, the Second
+    Rwanda MPI Report's EICV3/4/5 rounds -- a SEPARATE measure (k = 40%,
+    14 indicators), see `rwanda_eicv5_mpi`."""
+    import pandas as pd
+    from .rwanda_eicv5_mpi import parse as parse_second_report
+    frames = [_eicv7(path)]
+    for p in extras or []:
+        frames.append(parse_second_report(p))
+    return pd.concat(frames, ignore_index=True)
