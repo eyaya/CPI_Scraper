@@ -1,0 +1,41 @@
+country: South Africa
+iso3: ZAF
+indicator: Public_Debt
+tier: 2
+source_type: pdf
+agency: National Treasury -- Budget Review statistical annexure, table sourced "National Treasury and Reserve Bank"
+frequency: annual
+coverage: "National government debt (excludes extra-budgetary institutions and social security funds)"
+verify_ssl: false
+
+# --- discover ---
+# treasury.gov.za refuses plain clients; a browser TLS fingerprint gets the
+# file. The Budget Review is published each February under
+# /documents/National Budget/<year>/review/FullBR.pdf -- bump the year to
+# advance (the page itself lists links client-side). Table 10 carries the
+# full history from 2001/02, so one issue suffices; merge-on-write keeps
+# earlier vintages where a later one revises.
+# SARB was tried first: its WebIndicators API serves only home-page codes
+# (debt codes return []), and the Quarterly Bulletin xlsx list loads
+# client-side.
+discover:
+  method: static_url
+  url: "https://www.treasury.gov.za/documents/National%20Budget/2026/review/FullBR.pdf"
+  save_as: NT_Budget_Review_2026_FullBR.pdf
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 300
+
+parser: south_africa_nt_debt
+geography: Total country
+
+notes: >
+  2026 Budget Review, statistical annexure Table 10 "Total debt of
+  government", R million, fiscal years 2001/02-2024/25 (dated to the March
+  year end, 2002-2025). Only audited outcomes are collected; the 2025/26
+  revised estimate and MTEF projections are not. Stocks (domestic marketable /
+  bonds / bills / non-marketable / gross / net; foreign gross / net; total
+  gross / net), composition shares and % of GDP. NRF cash balances and
+  GFECRA are not debt and are not collected.
+
+  CROSS-CHECK: 2024/25 gross loan debt 5 693 713 (Table 7.7 R5 693.7 bn),
+  77.0% of GDP; 2001/02 433 454, 36.0%.

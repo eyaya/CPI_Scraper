@@ -1,0 +1,39 @@
+country: Equatorial_Guinea
+iso3: GNQ
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: INEGE Anuario Estadístico, reprinting the Caja Autónoma de Amortización de la Deuda Pública (CAADP), Equatorial Guinea
+publication_code: Anuario Estadístico de Guinea Ecuatorial, cap. "Financiación estadística y deuda pública"
+frequency: annual
+verify_ssl: false
+coverage: "Deuda pública (CAADP): externa + interna"
+
+# --- discover ---
+# inege.org sits behind Cloudflare; the files under /wp-content/uploads/ are
+# served to a browser TLS fingerprint (same URLs and settings as
+# indicators/gdp/sources/equatorial_guinea.yaml). Pinned to the 2026 edition;
+# the 2023 edition (2018-2022) is an extra. Newer edition wins on revisions.
+discover:
+  method: static_url
+  url: "https://inege.org/wp-content/uploads/2026/08/AEGE-2026-Final.pdf"
+  save_as: AEGE-2026.pdf
+  impersonate:
+    - safari17_0
+    - chrome124
+    - firefox133
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://inege.org/wp-content/uploads/2023/12/ANUARIO-ESTADI%CC%81STICO-2023.pdf"
+    save_as: AEGE-2023.pdf
+
+parser: equatorial_guinea_inege_debt
+geography: National
+
+notes: >
+  "Dinámica general de la deuda pública": end-year public debt, external
+  (bilateral, multilateral) and domestic, milliards FCFA, and debt / GDP, as
+  printed, credited to the CAADP. 2026 edition 2021-2025 + 2023 edition
+  2018-2022; the editions revise (2021: 2.876,9 vs 3.160,6), newest wins.
+  Debt-service table not read (a flow). CROSS-CHECK 2025: 2.433,3 (32,6% PIB).

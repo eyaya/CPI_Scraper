@@ -1,0 +1,50 @@
+country: Liberia
+iso3: LBR
+indicator: Population
+tier: 1
+source_type: api
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+publication_code: 2022 PHC Thematic Report on Population Projections + Population Size, Distribution and Structure (LISGIS dataset API)
+frequency: annual
+verify_ssl: false
+
+# A SECOND Liberia descriptor beside liberia.yaml (2022 census, same API).
+# LISGIS publishes its census thematic-report tables as JSON datasets at
+# lisgis.gov.lr/api/datasets/<id>, each a cell-for-cell copy of the report
+# workbook (LISGIS's own extraction note: no calculations). The report PDF
+# links now return the SPA shell, so the API is the route.
+discover:
+  method: static_url
+  url: "https://www.lisgis.gov.lr/api/datasets/lisgis-population-projection-table-2-6"
+  save_as: lr_proj_table_2_6.json
+
+extras_cache: false
+extra_urls:
+  - url: "https://www.lisgis.gov.lr/api/datasets/lisgis-population-projection-table-4-3"
+    save_as: lr_proj_table_4_3.json
+  - url: "https://www.lisgis.gov.lr/api/datasets/lisgis-population-projection-table-a8"
+    save_as: lr_proj_table_a8.json
+  - url: "https://www.lisgis.gov.lr/api/datasets/lisgis-population-projection-table-a9"
+    save_as: lr_proj_table_a9.json
+  - url: "https://www.lisgis.gov.lr/api/datasets/lisgis-population-projection-table-a10"
+    save_as: lr_proj_table_a10.json
+  - url: "https://www.lisgis.gov.lr/api/datasets/census-population-size"
+    save_as: lr_census_population_size.json
+  - url: "https://www.lisgis.gov.lr/api/datasets/census-population-county-trend"
+    save_as: lr_census_county_trend.json
+
+parser: lisgis_liberia_projection
+geography: Total country
+
+notes: >
+  Censuses (series census): national by sex 1962, 1974, 1984, 2008; counties
+  1984, 2008 (2022 is liberia.yaml's -- checked equal). Projections (series
+  projection, 2022-census based): MEDIUM variant by sex, 2022-2065
+  five-yearly (Table 2.6); 5-year age group x sex annually 2022-2032 (Tables
+  A8-A10); county x sex 2022, 2027, 2032, 2035 (Table 4.3). Low / high
+  variants, broad age groups and age indicators not read. A figure printed
+  in two tables is filed once; the 2032 national total differs by 7 persons
+  between Table 2.6 (filed) and A8 / 4.3 -- pinned.
+
+  CROSS-CHECK: census 1962 1 016 443; 2008 3 489 072; medium 2065 per Table
+  2.6.

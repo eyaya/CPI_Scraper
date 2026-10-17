@@ -19,6 +19,97 @@ discover:
     - ".zip"
   inner_suffix: ".pdf"
 
+# --- back issues ---
+# Every monthly archive on the 2022 = 100 base (January 2023 on), same URL
+# pattern as the current issue. Reports 2017-2022 are also online but state no
+# base, so they are not listed (the parser would skip them anyway).
+extras_cache: true
+extra_urls:
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_January_2023.zip"
+    save_as: CPI_January_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_February_2023.zip"
+    save_as: CPI_February_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_March_2023.zip"
+    save_as: CPI_March_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_April_2023.zip"
+    save_as: CPI_April_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_May_2023.zip"
+    save_as: CPI_May_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_June_2023.zip"
+    save_as: CPI_June_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_July_2023.zip"
+    save_as: CPI_July_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_August_2023.zip"
+    save_as: CPI_August_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_September_2023.zip"
+    save_as: CPI_September_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_October_2023.zip"
+    save_as: CPI_October_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_November_2023.zip"
+    save_as: CPI_November_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_December_2023.zip"
+    save_as: CPI_December_2023.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_January_2024.zip"
+    save_as: CPI_January_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_February_2024.zip"
+    save_as: CPI_February_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_March_2024.zip"
+    save_as: CPI_March_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_April_2024.zip"
+    save_as: CPI_April_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_May_2024.zip"
+    save_as: CPI_May_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_June_2024.zip"
+    save_as: CPI_June_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_July_2024.zip"
+    save_as: CPI_July_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_August_2024.zip"
+    save_as: CPI_August_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_September_2024.zip"
+    save_as: CPI_September_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_October_2024.zip"
+    save_as: CPI_October_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_November_2024.zip"
+    save_as: CPI_November_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_December_2024.zip"
+    save_as: CPI_December_2024.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_January_2025.zip"
+    save_as: CPI_January_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_February_2025.zip"
+    save_as: CPI_February_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_March_2025.zip"
+    save_as: CPI_March_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_April_2025.zip"
+    save_as: CPI_April_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_May_2025.zip"
+    save_as: CPI_May_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_June_2025.zip"
+    save_as: CPI_June_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_July_2025.zip"
+    save_as: CPI_July_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_August_2025.zip"
+    save_as: CPI_August_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_September_2025.zip"
+    save_as: CPI_September_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_October_2025.zip"
+    save_as: CPI_October_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_November_2025.zip"
+    save_as: CPI_November_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_December_2025.zip"
+    save_as: CPI_December_2025.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_January_2026.zip"
+    save_as: CPI_January_2026.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_February_2026.zip"
+    save_as: CPI_February_2026.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_March_2026.zip"
+    save_as: CPI_March_2026.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_May_2026.zip"
+    save_as: CPI_May_2026.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_June_2026.zip"
+    save_as: CPI_June_2026.zip
+  - url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/CPI_July_2026.zip"
+    save_as: CPI_July_2026.zip
+
 parser: lesotho_bos
 geography: National
 expect_divisions: 13          # Overall CPI + 12 COICOP-1999 divisions

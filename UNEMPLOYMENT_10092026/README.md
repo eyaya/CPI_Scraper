@@ -281,6 +281,45 @@ Stated plainly, because they determine what the first run will do.
    fine — it is purely additive — but it was not needed, even after the
    expansion to 28 countries.
 
+## 5a. Standardised columns (added 2026-10-15)
+
+The published columns stay verbatim. Thirteen derived columns are appended by
+`standardise.py` (wired as `Pipeline.standardise`, recomputed on every write;
+backfill with `py -3 -m tools.standardise unemployment`), for consumers that
+compare countries or build identifiers:
+
+| Column | Meaning |
+| --- | --- |
+| `category_code` | `UNE_RATE`, `LFPR`, `EPR`, `LU2`/`LU3`/`LU4`, `TRU_RATE`, `NEET_RATE`, `NEET`, `INF_EMP_SHARE`, `LTU_SHARE`, `POP_WA`, `LF`, `EMP`, `UNE`, `OLF`, `PLF`, `LTU` — or **blank** |
+| `category_std` | English name |
+| `sex_code` / `age_code` / `education_code` | `M`/`F`/`_T`; SDMX band (`Y15T24`, `Y_GE65`); `_T`/`_U` only (national levels not mapped to ISCED) |
+| `geography_level` | `national` / `subnational` |
+| `currency`, `unit_multiplier`, `unit_std`, `value_std` | `persons`/`percent`; thousand_persons x1000 |
+| `edition` | publication year (and quarter) when readable |
+| `series_id` | `UNE_<code>_<STRICT/BROAD>_<ICLS13/ICLS19 where stated>_<WA15P/WA15T64...>_<A/Q/H>` |
+| `is_preferred` | one per (country, series_id, sex, age_group, education, geography, locality_label, period): newest edition, then the longest-running series |
+
+**Definitions never share an ID**: strict vs broad, the working-age base and a
+STATED ICLS convention (Angola, Cabo Verde, Morocco's EMO) are all in `series_id`.
+`labour_underutilisation_rate` is split by its label into LU2/LU3/LU4 (SU2-4,
+CRUPLF); a label naming none (Rwanda) stays blank.
+
+**Blank on purpose (1.8% of rows):** parts of a count filed under the whole's
+topic (Sudan 2008 census "Unemployed: Seeking work for the first time" /
+"Worked Before", Malawi "Seeking / Not Seeking Work", Mauritius employment
+"in / outside large establishments"), the crude "Taux brut d'activité" (Gabon,
+CAR), São Tomé's youth rate with no band ("Jovens"), and three Zimbabwe COUNTS
+filed under rate topics.
+
+**Verified by labour-force arithmetic** (`tests/test_standardise.py`) on preferred
+rows: UNE_RATE = 100·UNE/LF, LFPR = 100·LF/POP_WA, EPR = 100·EMP/POP_WA,
+LF = EMP + UNE. That check found all three mapping bugs above. Remaining
+failures are listed with reasons in `KNOWN`: Kenya Table 1, Mauritius
+(unemployment counts Mauritians only), Côte d'Ivoire EHCVM 2021 (published
+EMP+UNE > LF), and an **open parser defect — Morocco's 2025 annual unemployed
+counts by sex/milieu all read ~1.6M**; Tunisia, Botswana, Angola, Mozambique
+are a few rows each, not yet verified against source.
+
 ## 6. How to fix a layout that fails
 
 1. Run the one country: `python -m indicators.unemployment.pipeline <country>`.

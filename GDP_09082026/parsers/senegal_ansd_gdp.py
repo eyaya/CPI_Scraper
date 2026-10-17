@@ -204,7 +204,7 @@ def _read_sheet(ws, kind, rows):
             })
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
     wb = openpyxl.load_workbook(pdf_path, data_only=True)
     rows = []
     for name in wb.sheetnames:
@@ -218,5 +218,17 @@ def parse(pdf_path: str) -> pd.DataFrame:
     wb.close()
     if not rows:
         raise ValueError("no GDP rows parsed from ANSD Senegal workbook")
-    return pd.DataFrame.from_records(rows)[_OUT_COLS].drop_duplicates(
+    df = pd.DataFrame.from_records(rows)[_OUT_COLS].drop_duplicates(
         ["approach", "category", "series_code", "period", "measure", "price_basis"])
+    # BACK SERIES (extras; see senegal_ansd_backseries): the base-2021 series
+    # retropolated to 2014 + 2025 provisional supplies only the years this
+    # edition does not print; the previous base (2014, 1999-2023) is a separate
+    # base and is emitted whole. Both are tagged in category_group.
+    from .senegal_ansd_backseries import read as _back
+    b21, b14 = _back(extras)
+    printed = set(df["period"])
+    b21 = [r for r in b21 if r["period"] not in printed]
+    if b21 or b14:
+        df = pd.concat([df, pd.DataFrame.from_records(b21 + b14, columns=_OUT_COLS)],
+                       ignore_index=True)
+    return df

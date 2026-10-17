@@ -1,0 +1,46 @@
+country: Egypt
+iso3: EGY
+indicator: Public_Debt
+tier: 2
+source_type: excel
+agency: Central Bank of Egypt (CBE) — Time Series (External Debt by Debtor; Gross Domestic Debt)
+frequency: quarterly
+# Two perimeters, set per row by the parser; this default is not used.
+coverage: "Per row: Government external debt (CBE, by debtor) / Gross domestic debt of government, public economic authorities and NIB"
+verify_ssl: false
+
+# --- discover ---
+# cbe.org.eg (Sitecore) serves 269-byte stubs to plain clients; a browser TLS
+# fingerprint gets the real pages and files. The Time Series page lists one
+# download category per topic (/en/economic-research/time-series/downloadlist?
+# category=<id>); each workbook is updated IN PLACE at a fixed media path, so
+# the files are pinned. The host is slow -- 1.7 MB took several minutes.
+discover:
+  method: static_url
+  url: "https://www.cbe.org.eg/-/media/project/cbe/listing/time-series/external-debt/external-debt-by-debtor/external_debt_by_debtor_____quarters.xlsx"
+  save_as: cbe_external_debt_by_debtor_quarters.xlsx
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 900
+
+# Gross Domestic Debt, quarterly, one sheet per fiscal year 2004/05..2019/20.
+# CBE has not extended this table since June 2020; kept for its history.
+extra_urls:
+  - url: "https://www.cbe.org.eg/-/media/project/cbe/listing/time-series/domestic-debt/domestic-debt-of-government-and-economic-authorities-debt/domestic-debt-quarter.xlsx"
+    save_as: cbe_gross_domestic_debt_quarter.xlsx
+
+parser: egypt_cbe_debt
+geography: National
+
+notes: >
+  CBE External Debt by Debtor (US$ million, quarterly, FY2004/05 .. current):
+  the GOVERNMENT debtor block only (total, maturity split, securities, loans,
+  SDRs) -- the table is economy-wide and its central-bank, bank and
+  other-sector blocks are not public debt. Fiscal quarters (July-June) are
+  relabelled to calendar quarters (FY Q1 = calendar Q3). CBE Gross Domestic
+  Debt (LE million, quarterly, Sept 2004 .. June 2020, discontinued): all
+  components except the signed netting offsets (net balances with the banking
+  system, NIB deposits).
+
+  CROSS-CHECK: Government external debt 82 841,7 US$ mn at end-March 2026;
+  18 231,0 at end-June 2005. Gross domestic debt 4 742 107 LE mn at end-June
+  2020. Government = long-term + short-term in every quarter.

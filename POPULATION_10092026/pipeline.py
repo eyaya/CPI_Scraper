@@ -12,6 +12,7 @@ import os
 from core.run import Pipeline, run_cli
 from . import parsers
 from . import schema
+from .standardise import standardise
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -29,6 +30,9 @@ CONFIG = Pipeline(
     # instead of replacing it (see core.run._merge_with_existing).
     merge_keys=["series_type", "sex", "age_group", "geography", "period", "measure"],
     validate=lambda df, d: schema.validate_population(df),
+    # Cross-country columns derived from the published ones (2026-10-15):
+    # sex/age codes, safe series_id, census > estimate > projection preference.
+    standardise=standardise,
 )
 
 if __name__ == "__main__":

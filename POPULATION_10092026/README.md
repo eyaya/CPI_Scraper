@@ -198,3 +198,17 @@ is provincial), so the national-total rule carries that explicit exception.
 any validator guard, tightening the count ceiling below a Nigeria-scale total,
 breaking the sex identity in a real output, or injecting a duplicate key each
 turns the suite red on the assertion written for it.
+
+## Standardised columns (added 2026-10-15)
+
+Appended by `standardise.py` (recomputed on every write; backfill: `py -3 -m tools.standardise population`):
+`sex_code`, `age_code`, `geography_level`, `unit_std`, `unit_multiplier`, `value_std`, `series_id`, `is_preferred`.
+
+- `age_code` reads the ~380 published age spellings into SDMX-style bands (`0-4 anos` -> `Y0T4`,
+  `65 ans et plus` -> `Y_GE65`, `Menos de 1 ano` -> `Y_LT1`, `Total` -> `_T`, `Not stated` -> `_U`).
+  Parser leakage stays blank and gets no ID — only South Sudan's truncated `35-3` today.
+- `series_id` = `POP_<measure>_<sex>_<age>` and deliberately **excludes `series_type`**: a census, an
+  estimate and a projection of the same year are one quantity measured three ways, so they share an ID
+  and `is_preferred` picks census > estimate > projection.
+- **Verified** (`tests/test_standardise.py`, mutation-checked 3/3): disjoint age bands chained from 0 to
+  an open-ended top band sum to the published total within 0.5% in 99.6% of 17,386 chains (43 countries).

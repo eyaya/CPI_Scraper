@@ -64,7 +64,7 @@ def _classify(label: str, approach: str):
     return approach
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
     rows = []
     table = None            # current table number
     basis_override = None   # for Table 6 CURRENT / CONSTANT sections
@@ -143,8 +143,16 @@ def parse(pdf_path: str) -> pd.DataFrame:
 
     if not rows:
         raise ValueError("no GDP rows parsed from Stats SL report")
+    # Back series (extra): the 2018-base rebasing report, 2018-2023 in OLD
+    # leones -- see sierraleone_stats_rebased. Never fed to this reader, whose
+    # year columns are fixed to the 2024 report's.
+    from .sierraleone_stats_rebased import parse_rebased
+    for ex in extras or []:
+        if "rebased" in ex.lower():
+            rows.extend(parse_rebased(ex))
     return pd.DataFrame.from_records(rows)[_OUT_COLS].drop_duplicates(
-        ["approach", "category", "series_code", "period", "measure", "price_basis"])
+        ["approach", "category", "category_group", "series_code", "period",
+         "measure", "price_basis", "unit"])
 
 
 def _emit(rows, code, label, nums, approach, basis, measure, base, unit,

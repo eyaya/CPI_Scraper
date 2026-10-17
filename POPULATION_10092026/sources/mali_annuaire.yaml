@@ -1,0 +1,42 @@
+country: Mali
+iso3: MLI
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Mali (INSTAT)
+publication_code: Annuaire statistique du Mali, editions 2019, 2023, 2024 -- Tableau 1
+frequency: annual
+verify_ssl: false
+
+# A SECOND Mali descriptor beside mali.yaml (2022 RGPH5 census). INSTAT's
+# yearbooks reprint the DNP "Projections démographiques du Mali 2010-2035"
+# as a rolling window; three editions together give 2013-2023. All three are
+# INSTAT's own files at instat-mali.org/laravel-filemanager/files/shares/pub/.
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair24_pub.pdf"
+  save_as: instat_mali_anuair24.pdf
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair23_pub.pdf"
+    save_as: instat_mali_anuair23.pdf
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair19_pub.pdf"
+    save_as: instat_mali_anuair19.pdf
+
+parser: instat_mali_annuaire
+geography: Total country
+
+notes: >
+  National population by sex (persons). 2013-2018 from the 2019 edition (DNP
+  projections printed rounded to the thousand); 2019-2021 from the 2023
+  edition (DNP, to the unit; the 2024 edition's 2020-2021 are checked equal);
+  2023 from the 2024 edition (series_type estimate -- the table's footnotes
+  name no source for 2023). 2022 is the RGPH5 census, already collected by
+  mali.yaml, and is not repeated; 2024 is printed "ND". Urban/rural rows not
+  collected (EMOP-based "calcul des auteurs" in earlier editions; no locality
+  column). Editions 2015-2018 also print age x sex x region for 2014-2018 --
+  not read yet.
+
+  CROSS-CHECK: 2013 16 808 000; 2019 19 972 410 (2019 edition: 19 973 000);
+  2023 23 143 456.

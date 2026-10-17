@@ -1,0 +1,55 @@
+country: Niger
+iso3: NER
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Niger (INS)
+publication_code: Annuaire statistique du Niger, six editions (2013-2017 .. 2020-2024), Tableaux 07.01.b-07.01.c
+frequency: annual
+verify_ssl: false
+
+# A SECOND Niger descriptor beside niger.yaml (RGP/H 2012 census). INS's own
+# yearbooks, listed at stat-niger.org/?page_id=1555. The 2018-2022 edition is
+# deliberately NOT used (pages mixed from two editions; see the parser).
+# save_as names carry the edition fragment the parser keys on.
+discover:
+  method: static_url
+  url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/annuaire/annuaire_statistique_ins_2020_2024_vf.pdf"
+  save_as: ins_niger_annuaire_2020_2024.pdf
+  download_timeout: 600
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/annuaire/annuaire_statistique_ins_2019_2023_vf.pdf"
+    save_as: ins_niger_annuaire_2019_2023.pdf
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/annuaire/Annuaire_Statistique_version_du_31122023_vf.pdf"
+    save_as: ins_niger_annuaire_31122023.pdf
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/annuaire/Annuaire_2016_2020_version_JAS%202022.pdf"
+    save_as: ins_niger_annuaire_2016_2020.pdf
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/annuaire/Annuaire_statististique_2015_2019_INS_30_09_2021.pdf"
+    save_as: ins_niger_annuaire_2015_2019.pdf
+  - url: "https://stat-niger.org/wp-content/uploads/2020/06/Annuaire_Statistique_2013-2017.pdf"
+    save_as: ins_niger_annuaire_2013-2017.pdf
+
+parser: ins_niger_annuaire
+geography: Total country
+
+notes: >
+  INS projections (Projections démographiques, Niger 2012-2024; series_type
+  projection), persons. Totals (both sexes) for the 8 regions and Niger,
+  2013-2024, from Tableau 07.01.b's five-year windows -- newest edition wins
+  for each year (later editions revise: Niger 2017 20 651 070 in the
+  2013-2017 edition, 20 407 944 from 2019 on). Male / female for the final
+  year of each edition from Tableau 07.01.c: 2017, 2019, 2020, 2021, 2023,
+  2024 (series_code names the edition; the 2017 sexes are the 2013-2017
+  edition's and sum to its pre-revision 20 651 070). 2024 Maradi total, 2019
+  Maradi/Zinder by sex, 2024 Niamey/Niger by sex are not printed (or have no
+  text layer) and are not collected.
+
+  PUBLISHED INCONSISTENCIES pinned in the parser: Dosso 2020 printed
+  3 172 644 (= its 2024 figure) in every edition from 2016-2020 on;
+  Tillabéri 2020-2021 M + F short of the Total; 2015-2017 regions over-run
+  the national total by 47-87 thousand.
+
+  CROSS-CHECK: Niger 2013 17 679 760; 2020 22 752 385; 2024 26 312 034
+  (= the INS Tableau de Bord Social 2023 figure 25 369 414 +-1 for 2023).

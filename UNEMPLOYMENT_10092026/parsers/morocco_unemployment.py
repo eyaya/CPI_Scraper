@@ -89,7 +89,17 @@ LAYOUTS["morocco"] = {
         },
         {
             "page_contains": ["indicateurs du chômage selon le milieu"],
-            "page_excludes": ["sommaire", "diplôme"],
+            # NOT "diplôme": Tableau 3's own page carries its diploma rows, so
+            # excluding it selected NO page and the engine scanned EVERY page.
+            # That only mattered because the count line (wrapped around its
+            # label: "Population active en / 1052 569 1333 288 1621 / chômage
+            # (en milliers)") read as FOUR numbers -- the thousands rule glued
+            # "569 1333" into 569133 -- so it was skipped and Tableau 11's five
+            # QUARTERLY national counts (1 630 1 595 1 629 1 647 1 621) were
+            # taken as Masculin..National. Root cause fixed in
+            # _common.numbers_in (2026-10-15); this exclusion keeps Tableau 11
+            # out of reach. The continuation page to skip says "(suite)".
+            "page_excludes": ["sommaire", "(suite)"],
             "take": "trailing",
             "columns": _MA_COLS,
             # THE AGE BREAKDOWN IS DELIBERATELY NOT READ. The label
@@ -125,16 +135,21 @@ LAYOUT = LAYOUTS['morocco']
 _annual = make_parser(LAYOUT)
 
 
-def parse(path: str):
+def parse(path: str, extras: list[str] | None = None):
     """Tableaux 2/3 (annual, the layout above) plus Tableau 11's four quarters
     by milieu (`morocco_quarterly`). A report whose Tableau 11 no longer fits
-    is announced and the annual figures are still collected."""
+    is announced and the annual figures are still collected. The extra
+    workbook (`morocco_hcp_retro`) adds HCP's EMO-basis retropolated quarters
+    2017-2025 as a separate survey -- a methodology break, not chained."""
     import pandas as pd
     from . import morocco_quarterly as Q
-    df = _annual(path)
+    from .morocco_hcp_retro import parse_retro
+    frames = [_annual(path)]
     try:
-        q = Q.parse_quarters(path)
+        frames.append(pd.DataFrame(Q.parse_quarters(path)))
     except ValueError as e:
         print(f"[morocco] Tableau 11 skipped: {e}")
-        return df
-    return pd.concat([df, pd.DataFrame(q)], ignore_index=True)
+    for extra in extras or []:
+        if extra.endswith("retropole_emo.xlsx"):
+            frames.append(pd.DataFrame(parse_retro(extra)))
+    return pd.concat(frames, ignore_index=True)

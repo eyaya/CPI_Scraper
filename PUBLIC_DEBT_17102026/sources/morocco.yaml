@@ -1,0 +1,46 @@
+country: Morocco
+iso3: MAR
+indicator: Public_Debt
+tier: 2
+source_type: excel
+agency: "Ministère de l'Économie et des Finances, Direction du Trésor et des Finances Extérieures (DTFE)"
+frequency: quarterly
+# The workbooks publish three perimeters; the parser sets coverage per row
+# (Treasury / public establishments and enterprises / public external debt).
+coverage: "Treasury (central government)"
+verify_ssl: false
+
+# --- discover ---
+# The DTFE's live statistics files are
+#   https://www.finances.gov.ma/Chiffres_stats/FR/dette-tresor-trimestriel.xls
+#   https://www.finances.gov.ma/Chiffres_stats/FR/dette-exterieure-publique-annuel.xls
+# but finances.gov.ma refuses connections from the collector's network (plain
+# and browser-impersonated, 2026-10). These are the Wayback Machine's `id_`
+# captures of those exact files (2022-09-01) -- the Ministry's own bytes,
+# "Mise à jour : 30 juin 2022". When the host is reachable again, point `url`
+# and the extra back at the live paths: the parser reads newer editions as is.
+# data.gov.ma also carries older MEF editions (to 2013/2014), superseded by these.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20220901212424id_/https://www.finances.gov.ma/Chiffres_stats/FR/dette-tresor-trimestriel.xls"
+  save_as: dette-tresor-trimestriel.xls
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+extras_cache: true
+extra_urls:
+  - url: "http://web.archive.org/web/20220901212421id_/https://www.finances.gov.ma/Chiffres_stats/FR/dette-exterieure-publique-annuel.xls"
+    save_as: dette-exterieure-publique-annuel.xls
+
+parser: morocco_dtfe_debt
+geography: National
+
+notes: >
+  DTFE quarterly Treasury debt 2007-Q1..2022-Q1 (encours: total, short term
+  domestic/external, medium-long term domestic/external) and the same for
+  public establishments and enterprises; annual 1998-2021 public external
+  debt (USD and MAD million, % of GDP), Treasury external / domestic / total
+  debt with % of GDP. MAD million. Flows (service, principal, interest) not
+  collected. Quarters 2022-Q2..2023-Q1 are printed as 0 placeholders and
+  skipped. Cross-check: Treasury debt 2021-Q4 885 305,9; 2021 68,9 % of GDP;
+  public external debt 2021 US$ 40 791 m (29,5 % of GDP).

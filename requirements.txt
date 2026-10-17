@@ -1,0 +1,16 @@
+pandas>=2.0
+openpyxl>=3.1
+requests>=2.31
+beautifulsoup4>=4.12
+PyYAML>=6.0
+pdfplumber>=0.11   # Tier-3 PDF table/text extraction (e.g. Kenya KNBS)
+pymupdf>=1.23     # `fitz`: one-cell-per-line text where pdfplumber's line
+                   # layout fuses space-grouped counts (Burundi, Zimbabwe,
+                   # Madagascar labour)
+xlrd>=2.0          # legacy .xls sources (Burkina, Benin, Zimbabwe, Mozambique)
+curl_cffi>=0.7     # browser TLS fingerprint for hosts that refuse `requests`
+                   # outright, whatever the User-Agent (INEGE Equatorial Guinea);
+                   # only imported by the sources that set `impersonate`
+lxml>=5.0          # pandas.read_html backend for HTML tables (Comoros, Tunisia)
+html5lib>=1.1      # the lenient read_html backend some pages need (ICASEES CAR
+                   # population): lxml rejects their malformed markup outright

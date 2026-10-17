@@ -1,0 +1,47 @@
+country: Central African Republic
+iso3: CAF
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministère des Finances et du Budget, Direction de la Dette Publique et Extérieure (DDPE), Central African Republic
+publication_code: Rapport de gestion de la dette (annuel)
+frequency: annual
+verify_ssl: false
+coverage: "Dette publique de l'Etat (DDPE, rapport annuel de gestion de la dette)"
+
+# --- discover ---
+# finances.gouv.cf/finances/Dette%20publique lists the reports among the
+# bulletins, under upload folders with no stable naming. Pinned to the newest
+# (2025 edition, posted 22 Sept 2026); on a new edition, move this one into
+# extra_urls with its year in save_as.
+discover:
+  method: static_url
+  url: "https://www.finances.gouv.cf/sites/default/files/2026-09/RAPPORT%20DE%20GESTION%20DETTE%20RCA%20%2822092026%29.pdf"
+  save_as: DDPE_rapport_gestion_2025.pdf
+  download_timeout: 300
+
+# Earlier editions (same page, 2026-10-14). The parser takes each edition's
+# year from save_as -- keep the DDPE_rapport_gestion_<YYYY> names.
+extras_cache: true
+extra_urls:
+  - url: "https://www.finances.gouv.cf/sites/default/files/2025-07/RAPPORT_DE_GESTION-2024-Valid%C3%A9%2022%20Juillet.pdf"
+    save_as: DDPE_rapport_gestion_2024.pdf
+  - url: "https://www.finances.gouv.cf/sites/default/files/2025-07/Rapport%20de%20Gestion%20de%20la%20Dette-%202023.pdf"
+    save_as: DDPE_rapport_gestion_2023.pdf
+  - url: "https://www.finances.gouv.cf/sites/default/files/2023-06/Rapport%20de%20gestion%20de%20la%20dette%202022%20Valid%C3%A9%2021%20Juin%20CNDP_0.pdf"
+    save_as: DDPE_rapport_gestion_2022.pdf
+  - url: "https://www.finances.gouv.cf/sites/default/files/2022-06/Rapport%20de%20gestion%20de%20la%20dette%202021%20Valid%C3%A9%20CNDP%2028%20Juin2022%20%282%29_3.pdf"
+    save_as: DDPE_rapport_gestion_2021.pdf
+
+parser: car_ddpe_rapport_gestion
+geography: National
+
+notes: >
+  Beside central_african_republic.yaml (the quarterly bulletin, 2026 layout).
+  Each annual edition's three-year year-end table, FCFA milliards: "Stock de
+  la dette" (2021-2023 editions; stock = encours + arrears) or "Evolution de
+  l'encours" (2024-2025 editions). Editions reclassify and switch measure, so
+  each keeps its own series_code and none is chained or overwritten (see the
+  parser). The 2023-2025 quarterly bulletins print other layouts and are not
+  read. CROSS-CHECK: 2025 edition, end-2025 encours 926,26 (external 381,332
+  incl. the IMF ECF from 2025); 2021 edition, end-2019 stock 629,30.

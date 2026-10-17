@@ -28,8 +28,60 @@ notes: >
   CEMAC harmonised CPI (IHPC, base 2022 = 100). INS publishes only a monthly PDF
   note (Tier 3). Its 'Tableau 2' has ~12 monthly index columns + 1-/3-/12-month
   variations by COICOP function, but doesn't extract as a grid, so the parser
-  reconstructs rows from word coordinates: >=12-number rows are data rows (current
-  index = nums[-4], MoM nums[-3], YoY nums[-1]); wrapped division labels (01
+  reconstructs rows from word coordinates: >=12-number rows are data rows (indices
+  = nums[:-3], MoM nums[-3], YoY nums[-1]); wrapped division labels (01
   Produits alimentaires…, 04 Logement…, 05 Meubles…) are carried forward to their
   number-only row. First COICOP-function match wins over its sub-groups. Opens the
   Central-Africa / CEMAC region. French labels kept as published.
+
+# BACK ISSUES (added 2026-10-13): the national 'Note sur les prix au Cameroun'
+# PDFs in INS's WordPress media library (wp-json/wp/v2/media?search=prix).
+# Each prints 10-12 consecutive monthly indices, dated from the report month
+# and checked against the header. Not listed: 2023-05 and 2023-08 (older
+# layout, no Tableau 2 the parser reads), 2023-11 and 2025-09 (a division
+# label is lost in extraction) -- their months are reprinted by later notes.
+# Yaoundé/Douala city notes (2018-2022) are a different geography; not read.
+extras_cache: true
+extra_urls:
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-octobre-2023.pdf"
+    save_as: cameroon_note_2023-10.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-janvier-2024-1.pdf"
+    save_as: cameroon_note_2024-01.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-avril-2024-1.pdf"
+    save_as: cameroon_note_2024-04.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-mai-2024-du-18-juin-2024-1.pdf"
+    save_as: cameroon_note_2024-05.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-juin-2024.pdf"
+    save_as: cameroon_note_2024-06.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-juillet-2024_12-08-2024.pdf"
+    save_as: cameroon_note_2024-07.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-aout-2024.pdf"
+    save_as: cameroon_note_2024-08.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-septembre-2024-1.pdf"
+    save_as: cameroon_note_2024-09.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-octobre-2024.pdf"
+    save_as: cameroon_note_2024-10.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-novembre-2024.pdf"
+    save_as: cameroon_note_2024-11.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-decembre-2024-1.pdf"
+    save_as: cameroon_note_2024-12.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-les-prix-au-Cameroun-en-janvier-2025.pdf"
+    save_as: cameroon_note_2025-01.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/09/Note-sur-les-prix-au-Cameroun-en-Juin-2025-Rev-DG.pdf"
+    save_as: cameroon_note_2025-06.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/12/Note-sur-les-prix-au-Cameroun-en-Juillet-2025.pdf"
+    save_as: cameroon_note_2025-07.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/12/Note-sur-les-prix-au-Cameroun-en-Aout-2025.pdf"
+    save_as: cameroon_note_2025-08.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/12/Note-sur-les-prix-au-Cameroun-en-Octobre-2025.pdf"
+    save_as: cameroon_note_2025-10.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2026/01/Note-sur-les-prix-au-Cameroun-en-Novembre-2025.pdf"
+    save_as: cameroon_note_2025-11.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2026/06/Note-sur-les-prix-au-Cameroun-en-Decembre-2025.pdf"
+    save_as: cameroon_note_2025-12.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2026/06/Note-sur-les-prix-au-Cameroun-en-Fevrier-2026.pdf"
+    save_as: cameroon_note_2026-02.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2026/06/Note-sur-les-prix-au-Cameroun-en-Mai-2026-Rev-DG-ok.pdf"
+    save_as: cameroon_note_2026-05.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2026/08/Note-sur-les-prix-au-Cameroun-en-juillet-2026.pdf"
+    save_as: cameroon_note_2026-07.pdf

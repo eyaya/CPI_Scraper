@@ -23,6 +23,37 @@ parser: guinea_bissau_ine
 geography: National
 expect_divisions: 14          # INDICE GLOBAL + 13 COICOP-2018 divisions
 
+
+# --- back issues (2026-10-13) ---
+# Earlier notes are on base 2014 (COICOP-1999, four towns) with an ordinary text
+# table, read by the parser's fallback. Listed: every note that reads. Left out,
+# with reasons: the 2019-2020 notes (inhpc_M_YYYY.pdf) state NO base period
+# anywhere, so they are not labelled by guess; the 2018 notes still on the old
+# Bissau-only IHPC base 2008 print only the all-items row as text; Aug 2018 and
+# Nov 2023 have broken header/number text. The site flaps -- extras_cache.
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/2024/INHPC_JULHO_2024.pdf"
+    save_as: "GNB_2024_INHPC_JULHO_2024.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/2024/INHPC_Junho_2024.pdf"
+    save_as: "GNB_2024_INHPC_Junho_2024.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/2024/INHPC_Maio_2024.pdf"
+    save_as: "GNB_2024_INHPC_Maio_2024.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/2023/Abril_2023.pdf"
+    save_as: "GNB_2023_Abril_2023.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/2023/Marco_2023.pdf"
+    save_as: "GNB_2023_Marco_2023.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/2023/Fevereiro_2023.pdf"
+    save_as: "GNB_2023_Fevereiro_2023.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/2023/janeiro_2023.pdf"
+    save_as: "GNB_2023_janeiro_2023.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/ihpc_7_2018.pdf"
+    save_as: "GNB_ihpc_7_2018.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/ihpc_6_2018.pdf"
+    save_as: "GNB_ihpc_6_2018.pdf"
+  - url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/IHPC/ihpc_5_2018.pdf"
+    save_as: "GNB_ihpc_5_2018.pdf"
+
 notes: >
   Harmonised CPI (INHPC), the WAEMU/UEMOA methodology shared with Senegal, Benin,
   Mali, …, rebased to 2023 = 100 with the January 2025 issue (weights from EHCVM

@@ -53,7 +53,11 @@ HTML_LAYOUTS["tunisia"] = {
     "working_age_base": "15+",
     "decimal": ".",
     "tables": [
-        {"caption": r"population active.*selon le sexe",
+        # ANCHORED (2026-10-14): ".*" let this caption also match "population
+        # active EN CHÔMAGE selon le sexe" and "... OCCUPÉE ...", and the
+        # output filed the unemployed count as the labour force (2024-Q3
+        # female: 283.4 under both topics; the labour force is 1 284.3).
+        {"caption": r"population active\s+selon le sexe",
          "defaults": {"topic": "labour_force", "measure": "count",
                       "unit": "thousand_persons",
                       "label": "Population active (en millier)"},

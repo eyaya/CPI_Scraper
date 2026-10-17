@@ -1,0 +1,34 @@
+country: Kenya
+iso3: KEN
+indicator: Public_Debt
+tier: 2
+source_type: csv
+agency: Central Bank of Kenya (CBK)
+publication_code: Government Finance Statistics -- Public Debt (CSV)
+frequency: monthly
+coverage: "Public debt (perimeter not stated by CBK)"
+verify_ssl: false
+
+# --- discover ---
+# CBK's Government Finance Statistics page links its CSV downloads under
+# /uploads/government_finance_statistics/<random id>_<title>.csv; the numeric
+# prefix changes when CBK re-uploads, so the file is found by its link title.
+# "public debt" matches only this file ("Domestic Debt by Instrument" does not
+# contain the phrase).
+discover:
+  method: page_scrape
+  page_url: "https://www.centralbank.go.ke/statistics/government-finance-statistics/"
+  link_contains:
+    - "public debt"
+    - ".csv"
+  save_as: CBK_Public_Debt.csv
+
+parser: kenya_cbk_debt
+geography: National
+
+notes: >
+  CBK "Public Debt" (KSh million): domestic debt, external debt and total
+  public debt, monthly from 1999-09. Domestic + external = total, checked
+  every month. The companion instrument breakdown is collected by
+  kenya_domestic.yaml into the same output (merge-on-write).
+  CROSS-CHECK: 2026-06 total 13 097 471.11, domestic 7 327 202.088.

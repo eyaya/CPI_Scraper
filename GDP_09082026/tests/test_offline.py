@@ -381,6 +381,57 @@ def test_egypt_expenditure_workbook_uses_billions():
           ("expenditure", "current", "EGP billion"))
 
 
+def test_cameroon_numbers_without_thousands_space():
+    """INS's current-price tables print levels WITHOUT a thousands space
+    ("6972,9"). The old number pattern split that into "697" + "2,9", so current
+    consumption/FBCF/exports were published as 2.9/3.8/6.6 and constant GDP for
+    2021-Q4 as 582.0 (the note prints 5829,6). The sign of FISIM was also lost.
+    Rows verbatim from Note-danalyse-CNT_T4_2025 p.20 and CNT_INS_Cameroun_T1_2015."""
+    from indicators.gdp.parsers import cameroon_ins_gdp as C
+    hdr = [None, "T3_2024", "T4_2024", "T1_2025", "T2_2025", "T3_2025", "T4_2025"]
+    tb = [hdr,
+          ["", "Consommation Finale", "6972,9", "6922,7", "7053,6", "7541,0", "7545,5",
+           "7291,9", "4,5", "5,5", "4,4", "3,9", "3,1", "2,4", "3,5"],
+          ["", "Importations", "1560,8", "1639,0", "1388,9", "1576,3", "1652,5", "1594,7",
+           "-6,4", "5,0", "-1,8", "-8,5", "-1,3", "-14,0", "-6,8"]]
+    rows = C._parse_table(tb, "expenditure", "current", "nsa", "")
+    got = {(r["category"], r["period"]): r["value"] for r in rows}
+    check("CM FCE 2024-Q4 current", got.get(("Consommation Finale", "2024-Q4")), 6922.7)
+    check("CM imports 2024-Q4 current", got.get(("Importations", "2024-Q4")), 1639.0)
+    check("CM six levels, no growth leak", sorted(got.values())[:2], [1388.9, 1560.8])
+    hdr5 = [None, "T1_2014", "T2_2014", "T3_2014", "T4_2014", "T1_2015"]
+    rows = C._parse_table([hdr5, ["SIFIM -20,6 -20,4 -20,5 -20,8 -20,7 4,3 1,2 -1,3 0,7 0,5"]],
+                          "production", "current", "nsa", "")
+    check("CM FISIM label + sign", [(r["category"], r["value"]) for r in rows][:2],
+          [("SIFIM", -20.6), ("SIFIM", -20.4)])
+
+
+def test_gambia_memo_items_are_not_levels():
+    """Below an "Items" divider GBoS's production LEVEL sheets carry growth
+    rates (%-formatted fractions), GDP per capita in GMD and USD, population and
+    the exchange rate. All were stored as GMD levels; "Industry" = -0.018 GMD
+    was then coded as industry value added. Read from the retained workbook."""
+    from indicators.gdp.parsers import gambia_gbos_gdp as G
+    src = os.path.join(GDP_DIR, "source_data", "Gambia")
+    prod = os.path.join(src, "GBoS_GDP_Production_Approach.xlsx")
+    if not os.path.exists(prod):
+        return                                   # workbook not retained here
+    df = G.parse(prod, [os.path.join(src, "GBoS_GDP_Expenditure_Approach.xlsx")])
+    lv = df[(df["measure"] == "level")]
+    check("GM no level below 1000 GMD", int((lv["value"].abs() < 1000).sum()), 0)
+    g = df[(df["category"] == "GDP growth rate") & (df["period"] == "2005")]
+    check("GM GDP growth 2005", [(m, round(v, 2), u) for m, v, u in
+                                 zip(g["measure"], g["value"], g["unit"])],
+          [("growth_yoy", -2.35, "percent")])
+    pc = df[df["category"].str.startswith("GDP per Capita") & (df["period"] == "2014")]
+    check("GM per capita units", sorted(zip(pc["measure"], pc["unit"])),
+          [("per_capita", "GMD"), ("per_capita", "USD")])
+    check("GM population/exchange rate skipped",
+          int(df["category"].str.contains("Population|Exchange rate").sum()), 0)
+    check("GM production and expenditure tables kept apart",
+          bool(df["category_group"].str.startswith("Table").all()), True)
+
+
 def test_lesotho_stale_annual_row():
     """BOS's Q1-2026 edition prints a 2025 ANNUAL row whose GDP is the current
     vintage but whose industry/GVA/tax columns are an older one (GVA 38,002.7
@@ -427,7 +478,9 @@ def main() -> int:
                test_every_descriptor_has_a_parser,
                test_egypt_fiscal_to_calendar_quarters,
                test_egypt_expenditure_workbook_uses_billions,
-               test_lesotho_stale_annual_row):
+               test_lesotho_stale_annual_row,
+               test_cameroon_numbers_without_thousands_space,
+               test_gambia_memo_items_are_not_levels):
         try:
             fn()
         except Exception as e:            # a crash is a failure too

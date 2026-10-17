@@ -1,0 +1,67 @@
+country: Guinea
+iso3: GIN
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: "Ministère de l'Économie et des Finances (MEF) - DNDAPD, Bulletin statistique de la dette"
+frequency: quarterly
+coverage: "Central government (Administration centrale), external + domestic; guarantees and public-enterprise debt excluded"
+verify_ssl: false
+
+# --- discover ---
+# The MEF's WordPress media API lists every bulletin upload:
+#   https://www.mef.gov.gn/wp-json/wp/v2/media?search=bulletin&per_page=50
+# Recent issues are .docx (stock tables pasted as images; only the
+# "Indicateurs de risque" table is text), 2022-23 issues are PDFs with a text
+# Tableau 1. The newest issue is pinned as the primary; add each new issue at
+# the head of extra_urls' order (newest first) as it appears.
+discover:
+  method: static_url
+  url: "https://www.mef.gov.gn/wp-content/uploads/2026/03/BULLETIN-STATISTIQUE_-septembre-T3-2025_-VP_PROJET_2025_nov.docx"
+  save_as: MEF_Guinee_Bulletin_dette_T3_2025.docx
+  download_timeout: 300
+
+# NEWEST FIRST: the parser keeps the first issue that prints a period.
+extra_urls:
+  - url: "https://www.mef.gov.gn/wp-content/uploads/2026/03/BULLETIN-STATISTIQUE-juin-_-T2-2025_-VF_PROJET_12-aout-2025.docx"
+    save_as: MEF_Guinee_Bulletin_dette_T2_2025.docx
+  - url: "https://www.mef.gov.gn/wp-content/uploads/2026/03/BULLETIN-STATISTIQUE_fin-mars-T1-2025_.docx"
+    save_as: MEF_Guinee_Bulletin_dette_T1_2025.docx
+  - url: "https://www.mef.gov.gn/wp-content/uploads/2026/03/BULLETIN-STATISTIQUE-DEDETTE_decembre-FIN-2024_-06-mars-2025.docx"
+    save_as: MEF_Guinee_Bulletin_dette_T4_2024.docx
+  - url: "https://www.mef.gov.gn/wp-content/uploads/2024/04/BULLETIN-3eme-TRIMESTRE-2023-VF.pdf"
+    save_as: MEF_Guinee_Bulletin_dette_T3_2023.pdf
+  - url: "https://www.mef.gov.gn/wp-content/uploads/2024/04/BULLETIN-2eME-TRIMESTRE-2023_VF.pdf"
+    save_as: MEF_Guinee_Bulletin_dette_T2_2023.pdf
+  - url: "https://www.mef.gov.gn/wp-content/uploads/2024/04/GUI-BULLETIN-STATISTIQUE-T1-2023_-VF.pdf"
+    save_as: MEF_Guinee_Bulletin_dette_T1_2023.pdf
+  - url: "https://www.mef.gov.gn/wp-content/uploads/2023/04/BULLETIN-STATISTIQUE-DETTE-2022-aaaa.pdf"
+    save_as: MEF_Guinee_Bulletin_dette_2022.pdf
+  # BCRG workbook (source line "DNDAPD&DNP"); its perimeter changes in 2020.
+  - url: "https://www.bcrg-guinee.org/wp-content/uploads/2023/10/8-Dette-Exterieure.xlsx"
+    save_as: BCRG_8-Dette-Exterieure.xlsx
+
+parser: guinea_mef_debt
+geography: National
+
+notes: >
+  MEF / DNDAPD Bulletin statistique de la dette. Central-government debt stock
+  (Dette Totale / Extérieure / Intérieure) in USD and GNF million: PDF Tableau
+  1 for end-2020..2022 (annual) and 2023-Q1..Q3, with the printed % shares;
+  docx "Indicateurs de risque" for 2024-Q4 and 2025-Q3 (stocks + % of GDP).
+  Plus the BCRG "Dette Extérieure" workbook (USD million and % of GDP,
+  2013-2022 and 2023-Q1/Q2), kept under its own series code.
+
+  PUBLISHED DEFECTS: the T1 2025 and T2 2025 issues print identical risk
+  tables -- neither quarter is collected (pinned). T3 2025 prints "4O 102
+  175,71" (letter O), read as 40 102 175,71 because the parts then sum to the
+  printed total. BCRG's "Dette extérieure" stock equals the MEF's TOTAL debt
+  from 2020 -- its perimeter is not stable, and its coverage says so.
+
+  NOT COLLECTED: the 2022-Q1..Q3 bulletins -- a different layout and
+  perimeter ("Dette publique et dette garantie"), headed "millier USD" over
+  figures that are USD millions; drawings, debt service (flows); the docx
+  stock tables (images, no OCR).
+
+  CROSS-CHECK: Dette Totale 2022 6 757,80 USD million; 2023-Q3 9 159,64;
+  end-2024 9 285,9 USD / 79 042 500,4 GNF million, 40,4% of GDP.

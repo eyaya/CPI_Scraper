@@ -19,6 +19,177 @@ discover:
     - "/download/"
   save_as: Togo_IHPC.pdf
 
+# BACK ISSUES (added 2026-10-12): every document on INSEED's inflation-prix
+# page, older than the newest. Each note prints five months of index, so the
+# set rebuilds the monthly series back to base 2014; a document that is not
+# an IHPC note fails the shared reader's table checks and is skipped with a
+# message (parsers/ihpc_note_pdf.py). Complete copies are reused.
+extras_cache: true
+# (download/2236 omitted: inseed.tg answers HTTP 500 for it, 2026-10-12.)
+extra_urls:
+  - url: "https://inseed.tg/download/8050/"
+    save_as: Togo_IHPC_8050.pdf
+  - url: "https://inseed.tg/download/8013/"
+    save_as: Togo_IHPC_8013.pdf
+  - url: "https://inseed.tg/download/7963/"
+    save_as: Togo_IHPC_7963.pdf
+  - url: "https://inseed.tg/download/7866/"
+    save_as: Togo_IHPC_7866.pdf
+  - url: "https://inseed.tg/download/7798/"
+    save_as: Togo_IHPC_7798.pdf
+  - url: "https://inseed.tg/download/7729/"
+    save_as: Togo_IHPC_7729.pdf
+  - url: "https://inseed.tg/download/7644/"
+    save_as: Togo_IHPC_7644.pdf
+  - url: "https://inseed.tg/download/7578/"
+    save_as: Togo_IHPC_7578.pdf
+  - url: "https://inseed.tg/download/7482/"
+    save_as: Togo_IHPC_7482.pdf
+  - url: "https://inseed.tg/download/7391/"
+    save_as: Togo_IHPC_7391.pdf
+  - url: "https://inseed.tg/download/7342/"
+    save_as: Togo_IHPC_7342.pdf
+  - url: "https://inseed.tg/download/7232/"
+    save_as: Togo_IHPC_7232.pdf
+  - url: "https://inseed.tg/download/7128/"
+    save_as: Togo_IHPC_7128.pdf
+  - url: "https://inseed.tg/download/7077/"
+    save_as: Togo_IHPC_7077.pdf
+  - url: "https://inseed.tg/download/6948/"
+    save_as: Togo_IHPC_6948.pdf
+  - url: "https://inseed.tg/download/6879/"
+    save_as: Togo_IHPC_6879.pdf
+  - url: "https://inseed.tg/download/6844/"
+    save_as: Togo_IHPC_6844.pdf
+  - url: "https://inseed.tg/download/6804/"
+    save_as: Togo_IHPC_6804.pdf
+  - url: "https://inseed.tg/download/6795/"
+    save_as: Togo_IHPC_6795.pdf
+  - url: "https://inseed.tg/download/6745/"
+    save_as: Togo_IHPC_6745.pdf
+  - url: "https://inseed.tg/download/6715/"
+    save_as: Togo_IHPC_6715.pdf
+  - url: "https://inseed.tg/download/6663/"
+    save_as: Togo_IHPC_6663.pdf
+  - url: "https://inseed.tg/download/6554/"
+    save_as: Togo_IHPC_6554.pdf
+  - url: "https://inseed.tg/download/6329/"
+    save_as: Togo_IHPC_6329.pdf
+  - url: "https://inseed.tg/download/6257/"
+    save_as: Togo_IHPC_6257.pdf
+  - url: "https://inseed.tg/download/6166/"
+    save_as: Togo_IHPC_6166.pdf
+  - url: "https://inseed.tg/download/5943/"
+    save_as: Togo_IHPC_5943.pdf
+  - url: "https://inseed.tg/download/5765/"
+    save_as: Togo_IHPC_5765.pdf
+  - url: "https://inseed.tg/download/5594/"
+    save_as: Togo_IHPC_5594.pdf
+  - url: "https://inseed.tg/download/5487/"
+    save_as: Togo_IHPC_5487.pdf
+  - url: "https://inseed.tg/download/5424/"
+    save_as: Togo_IHPC_5424.pdf
+  - url: "https://inseed.tg/download/5393/"
+    save_as: Togo_IHPC_5393.pdf
+  - url: "https://inseed.tg/download/5257/"
+    save_as: Togo_IHPC_5257.pdf
+  - url: "https://inseed.tg/download/5141/"
+    save_as: Togo_IHPC_5141.pdf
+  - url: "https://inseed.tg/download/5039/"
+    save_as: Togo_IHPC_5039.pdf
+  - url: "https://inseed.tg/download/4929/"
+    save_as: Togo_IHPC_4929.pdf
+  - url: "https://inseed.tg/download/4888/"
+    save_as: Togo_IHPC_4888.pdf
+  - url: "https://inseed.tg/download/4778/"
+    save_as: Togo_IHPC_4778.pdf
+  - url: "https://inseed.tg/download/4730/"
+    save_as: Togo_IHPC_4730.pdf
+  - url: "https://inseed.tg/download/4640/"
+    save_as: Togo_IHPC_4640.pdf
+  - url: "https://inseed.tg/download/4558/"
+    save_as: Togo_IHPC_4558.pdf
+  - url: "https://inseed.tg/download/4463/"
+    save_as: Togo_IHPC_4463.pdf
+  - url: "https://inseed.tg/download/4412/"
+    save_as: Togo_IHPC_4412.pdf
+  - url: "https://inseed.tg/download/4304/"
+    save_as: Togo_IHPC_4304.pdf
+  - url: "https://inseed.tg/download/4272/"
+    save_as: Togo_IHPC_4272.pdf
+  - url: "https://inseed.tg/download/4164/"
+    save_as: Togo_IHPC_4164.pdf
+  - url: "https://inseed.tg/download/4106/"
+    save_as: Togo_IHPC_4106.pdf
+  - url: "https://inseed.tg/download/4045/"
+    save_as: Togo_IHPC_4045.pdf
+  - url: "https://inseed.tg/download/3960/"
+    save_as: Togo_IHPC_3960.pdf
+  - url: "https://inseed.tg/download/3857/"
+    save_as: Togo_IHPC_3857.pdf
+  - url: "https://inseed.tg/download/3718/"
+    save_as: Togo_IHPC_3718.pdf
+  - url: "https://inseed.tg/download/3580/"
+    save_as: Togo_IHPC_3580.pdf
+  - url: "https://inseed.tg/download/3533/"
+    save_as: Togo_IHPC_3533.pdf
+  - url: "https://inseed.tg/download/3350/"
+    save_as: Togo_IHPC_3350.pdf
+  - url: "https://inseed.tg/download/3323/"
+    save_as: Togo_IHPC_3323.pdf
+  - url: "https://inseed.tg/download/3274/"
+    save_as: Togo_IHPC_3274.pdf
+  - url: "https://inseed.tg/download/3197/"
+    save_as: Togo_IHPC_3197.pdf
+  - url: "https://inseed.tg/download/3150/"
+    save_as: Togo_IHPC_3150.pdf
+  - url: "https://inseed.tg/download/3139/"
+    save_as: Togo_IHPC_3139.pdf
+  - url: "https://inseed.tg/download/3094/"
+    save_as: Togo_IHPC_3094.pdf
+  - url: "https://inseed.tg/download/3028/"
+    save_as: Togo_IHPC_3028.pdf
+  - url: "https://inseed.tg/download/2999/"
+    save_as: Togo_IHPC_2999.pdf
+  - url: "https://inseed.tg/download/2933/"
+    save_as: Togo_IHPC_2933.pdf
+  - url: "https://inseed.tg/download/2854/"
+    save_as: Togo_IHPC_2854.pdf
+  - url: "https://inseed.tg/download/2811/"
+    save_as: Togo_IHPC_2811.pdf
+  - url: "https://inseed.tg/download/2421/"
+    save_as: Togo_IHPC_2421.pdf
+  - url: "https://inseed.tg/download/1732/"
+    save_as: Togo_IHPC_1732.pdf
+  - url: "https://inseed.tg/download/1660/"
+    save_as: Togo_IHPC_1660.pdf
+  - url: "https://inseed.tg/download/1684/"
+    save_as: Togo_IHPC_1684.pdf
+  - url: "https://inseed.tg/download/2249/"
+    save_as: Togo_IHPC_2249.pdf
+  - url: "https://inseed.tg/download/2247/"
+    save_as: Togo_IHPC_2247.pdf
+  - url: "https://inseed.tg/download/2245/"
+    save_as: Togo_IHPC_2245.pdf
+  - url: "https://inseed.tg/download/2243/"
+    save_as: Togo_IHPC_2243.pdf
+  - url: "https://inseed.tg/download/2241/"
+    save_as: Togo_IHPC_2241.pdf
+  - url: "https://inseed.tg/download/2239/"
+    save_as: Togo_IHPC_2239.pdf
+  - url: "https://inseed.tg/download/2237/"
+    save_as: Togo_IHPC_2237.pdf
+  - url: "https://inseed.tg/download/2234/"
+    save_as: Togo_IHPC_2234.pdf
+  - url: "https://inseed.tg/download/2232/"
+    save_as: Togo_IHPC_2232.pdf
+  - url: "https://inseed.tg/download/2230/"
+    save_as: Togo_IHPC_2230.pdf
+  - url: "https://inseed.tg/download/2217/"
+    save_as: Togo_IHPC_2217.pdf
+  - url: "https://inseed.tg/download/2563/"
+    save_as: Togo_IHPC_2563.pdf
+
 parser: togo_inseed_ihpc
 geography: National
 expect_divisions: 14          # All items (Global) + 13 COICOP-2018 divisions

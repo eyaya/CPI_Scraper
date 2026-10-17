@@ -1,0 +1,47 @@
+country: DR_Congo
+iso3: COD
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Direction Générale de la Dette Publique (DGDP), DR Congo
+publication_code: Bulletin trimestriel de la dette publique
+frequency: annual
+verify_ssl: false
+coverage: "Dette publique de l'Etat (DGDP; dette des entreprises publiques et des provinces publiée séparément)"
+
+# --- discover ---
+# dgdp.cd lists its quarterly bulletins under /fr/publications?category=
+# bulletin-trimestriel, each a /documents/<id>/<file>.pdf link. Ids are not
+# chronological across the archive (Q3 2024 is id 3) but a new upload takes a
+# new, higher id, so the largest id is the newest bulletin (127 = Q4 2025).
+discover:
+  method: largest_id_link
+  page_url: "https://dgdp.cd/fr/publications?category=bulletin-trimestriel"
+  link_contains:
+    - "documents/"
+    - "bulletin"
+    - ".pdf"
+  id_regex: '/documents/(\d+)/'
+
+
+# BACK ISSUES (2026-10-14), newest first: the annual columns of Tableau 1 in
+# older bulletins (parsers/drc_dgdp_debt._parse_back) -- Q2 2022 (2018-2021),
+# Q2 2019 (2014-2018). The newer bulletin wins on overlap.
+extras_cache: true
+extra_urls:
+  - url: "https://dgdp.cd/documents/91/BULLETIN-2emeTRIMESTRE-2022.pdf"
+    save_as: DGDP_Bulletin_T2-2022.pdf
+  - url: "https://dgdp.cd/documents/55/BULLETIN-2eTRIMESTRE-2019.pdf"
+    save_as: DGDP_Bulletin_T2-2019.pdf
+parser: drc_dgdp_debt
+geography: National
+
+notes: >
+  DGDP quarterly bulletin. Tableau n°1: five years of end-year stocks (total,
+  external + technical arrears, domestic), millions USD, with shares of GDP and
+  of the total, and the total in milliards CDF; Tableau n°6: domestic debt by
+  category at the reference date. External + domestic = total is checked
+  every run. Back issues add 2014-2020 (total, external, domestic, shares of
+  GDP and of total; not the wrapped arrears and CDF rows). Footnote 1 of the Q4 2025 bulletin gives 12 012,14 for end-2025
+  where the table prints 15 012,14; the table reconciles and is collected.
+  CROSS-CHECK: 2025 total 15 012,14 (17,32% of GDP); external 9 730,56.

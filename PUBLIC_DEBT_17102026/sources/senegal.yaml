@@ -1,0 +1,49 @@
+country: Senegal
+iso3: SEN
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministère des Finances et du Budget — Direction de la Dette Publique (DDP), published on the Trésor public site sentresor.org
+publication_code: Bulletin statistique de la dette publique (trimestriel)
+frequency: quarterly
+verify_ssl: false
+coverage: "Administration centrale"
+
+# --- discover ---
+# sentresor.org answers "Site en maintenance" (HTTP 503) as of 2026-10-08, so
+# both issues are WAYBACK `id_` CAPTURES OF THE TREASURY'S OWN FILES (original
+# bytes), not a third-party copy. When sentresor.org returns, switch to a
+# page_scrape of its bulletin listing (files under /app/uploads/).
+# The archive answers plain `requests` with 429 at times: impersonate.
+# Not used: the T3-2023 capture is truncated (1 MB, "Unexpected EOF").
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20241004134237id_/https://www.sentresor.org/app/uploads/Bulletin_statistique_TRIM2_2024def.pdf"
+  save_as: SN_bulletin_dette_T2_2024.pdf
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://web.archive.org/web/20241004121220id_/https://www.sentresor.org/app/uploads/Bulletin_statistique_TRIM1_2024.pdf"
+    save_as: SN_bulletin_dette_T1_2024.pdf
+  # Earlier bulletins in the same layout, also Wayback id_ copies of
+  # sentresor.org (CDX on sentresor.org/app/uploads/*). The Q3/Q4 2023
+  # captures are truncated at 1 MiB and the end-June 2022 issue words its rows
+  # differently; neither is listed.
+  - url: "https://web.archive.org/web/20240803093521id_/https://www.sentresor.org/app/uploads/2023Template_Bulletin_statistique_TRIM1DDP_v_updated1.pdf"
+    save_as: SN_bulletin_dette_T1_2023.pdf
+  - url: "https://web.archive.org/web/20230609004050id_/https://www.sentresor.org/app/uploads/Bulletin-statistique-TRIM4.pdf"
+    save_as: SN_bulletin_dette_T4_2022.pdf
+  - url: "https://web.archive.org/web/20230609005200id_/https://www.sentresor.org/app/uploads/Dette_Bulletin_statistique_S3.pdf"
+    save_as: SN_bulletin_dette_T3_2022.pdf
+extras_cache: true
+
+parser: senegal_ddp_debt
+geography: National
+
+notes: >
+  Tableau 4: central-government debt stock (total / domestic / external, each
+  split fixed/variable rate), milliards FCFA, for 2024-Q1, 2024-Q2 and the
+  2023 year-end. Figures as published at the time -- Senegal's 2019-2023 debt
+  was revised up sharply after the 2024-25 audit; a revised series is a
+  different vintage. CROSS-CHECK: end-June 2024 total 14 981,8.

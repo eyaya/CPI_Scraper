@@ -1,0 +1,27 @@
+country: Namibia
+iso3: NAM
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Namibia Statistics Agency (NSA)
+publication_code: Namibia National Population Projections 2023-2053
+frequency: annual
+verify_ssl: false
+
+# A SECOND Namibia descriptor beside namibia.yaml (the 2023 census workbook):
+# NSA's 2023-census-based national projections, posted September 2026 at
+# nsa.org.na/document/namibia-national-population-projections-2023-2053/.
+discover:
+  method: static_url
+  url: "https://nsa.org.na/wp-content/uploads/2026/09/Namibia-National-Population-Projections-2023-2053.pdf"
+  save_as: namibia_projections_2023_2053.pdf
+
+parser: nsa_namibia_projection
+geography: Total country
+
+notes: >
+  NSA national projections 2023-2053, MEDIUM variant (section 3.9, Tables
+  3.14-3.44): five-year age group (0-4 .. 95+, Total) x sex, every year
+  2023-2053 (2023 base 2,978,967 -- the projection's adjusted base, not the
+  census count 3,022,401; 2053 5,264,514). National only (no regional
+  tables). Deferred: low/high variants, TFR / e0 / dependency tables.

@@ -93,4 +93,137 @@ LAYOUTS["ethiopia"] = {
 
 
 LAYOUT = LAYOUTS['ethiopia']
-parse = make_parser(LAYOUT)
+_engine = make_parser(LAYOUT)
+
+
+# =========================================================================
+# EARLIER ROUNDS -- Summary Tables 1A (national), 1B (urban), 1C (rural).
+# Added 2026-10-12. The same annex prints, for every region x sex, the
+# participation rate, employment-to-population ratio and unemployment rate for
+# FOUR survey rounds side by side: the national LFS/LMS rounds March 1999,
+# March 2005, June 2013, February 2021 (1A, 1C), and the urban UEUS rounds
+# April 2016, June 2018, January 2020 plus February 2021 (1B). Those are the
+# NSO's own published estimates for each round, so each column is dated to its
+# own round -- not interpolated.
+#
+# Base 10+, as for ST3. "-" is a missing cell (Tigray absent from 2021; Sidama
+# created in 2020) and is never read as 0.
+#
+# NOT DOUBLE-COUNTED: ST3 above already emits the 2021 unemployment rate for
+# some regions by sex. A 1A/1B/1C 2021 rate for the same region x sex x
+# locality is skipped (the figures agree; only the label would differ).
+#
+# CROSS-CHECK (Country Total): 1A unemployment 8.0 / 5.0 / 4.5 / 8.0
+# (1999/2005/2013/2021); LFPR 1999 75.1; 1B urban unemployment 2016 16.9,
+# 2018 19.1, 2020 18.7; Addis Ababa urban 2016 21.0.
+# =========================================================================
+import pdfplumber as _pdfplumber
+import pandas as _pd
+
+_ST1 = {
+    "1A": ("all", "Total", [("1999", "March 1999"), ("2005", "March 2005"),
+                            ("2013", "June 2013"), ("2021", "February 2021")]),
+    "1B": ("urban", "Urban", [("2016", "April 2016"), ("2018", "June 2018"),
+                              ("2020", "January 2020"), ("2021", "February 2021")]),
+    "1C": ("rural", "Rural", [("1999", "March 1999"), ("2005", "March 2005"),
+                              ("2013", "June 2013"), ("2021", "February 2021")]),
+}
+_ST1_REGION = {
+    "country": "Total country", "tigray": "Tigray", "afar": "Afar",
+    "amhara": "Amhara", "oromia": "Oromia", "somali": "Somali",
+    "beni - gumuz": "Benishangul-Gumuz", "benishangul - gumuz": "Benishangul-Gumuz",
+    "snnp": "SNNP", "snnp -": "SNNP", "sidama": "Sidama", "gambella": "Gambella",
+    "harari": "Harari", "addis ababa city admin.": "Addis Ababa",
+    "dire dawa admin.": "Dire Dawa",
+}
+_ST1_TOPICS = [("labour_force_participation_rate", "not_applicable",
+                "Activity rate / labour force participation rate"),
+               ("employment_to_population_ratio", "not_applicable",
+                "Employment to population ratio"),
+               ("unemployment_rate", "strict", "Unemployment rate")]
+_ST1_ROW = re.compile(r"^(Total|Male|Female)\s+((?:[\d.]+|-)(?:\s+(?:[\d.]+|-)){11})\s*$")
+_ST1_SKIP = re.compile(r"^(Activity|Region|Participation|Sex|Unemployment|"
+                       r"KEY FINDINGS|\d{4} LABOUR|Febru|and Sex|Population|TOTAL$|URBAN$|RURAL$)", re.I)
+
+
+def _st1_sections(path: str) -> dict:
+    with _pdfplumber.open(path) as pdf:
+        text = "\n".join((pg.extract_text() or "") for pg in pdf.pages[23:30])
+    out, cur = {}, None
+    for ln in text.splitlines():
+        m = re.match(r"^Summary Table (\w+)\s*:", ln.strip())
+        if m:
+            cur = m.group(1) if m.group(1) in _ST1 else None
+            if cur:
+                out[cur] = []
+            continue
+        if cur:
+            out[cur].append(ln.strip())
+    missing = [k for k in _ST1 if k not in out]
+    if missing:
+        raise ValueError(f"Ethiopia LMS: Summary Table(s) {missing} not found")
+    return out
+
+
+def _st1_rows(path: str) -> list:
+    rows = []
+    for key, lines in _st1_sections(path).items():
+        locality, loc_label, rounds = _ST1[key]
+        head = " ".join(lines[:14])
+        for y, _ in rounds:
+            if y not in head:
+                raise ValueError(f"Ethiopia ST{key}: header lacks round {y}")
+        region, pending, seen = None, [], 0
+        for ln in lines:
+            m = _ST1_ROW.match(ln)
+            if not m:
+                if (ln and not re.search(r"\d", ln) and not _ST1_SKIP.match(ln)
+                        and not re.fullmatch(r"(March|June|April|January|"
+                                             r"February|[A-Za-z ]+Rate)[A-Za-z ]*", ln)):
+                    pending.append(ln)
+                    # a region name is the last line, or the last two joined
+                    # ("Addis Ababa" / "City Admin."); header debris before it
+                    # (the tail of a wrapped "Febru-ary") is dropped.
+                    for cand in (pending[-1], " ".join(pending[-2:])):
+                        if cand.lower().strip() in _ST1_REGION:
+                            region, pending = _ST1_REGION[cand.lower().strip()], []
+                            break
+                    if len(pending) > 3:
+                        raise ValueError(f"Ethiopia ST{key}: unknown region {pending!r}")
+                continue
+            if region is None or pending:
+                raise ValueError(f"Ethiopia ST{key}: data row before a known "
+                                 f"region ({pending!r}): {ln!r}")
+            sex = m.group(1).lower()
+            cells = m.group(2).split()
+            seen += 1
+            for t, (topic, definition, label) in enumerate(_ST1_TOPICS):
+                for r, (period, ref) in enumerate(rounds):
+                    v = cells[4 * t + r]
+                    if v == "-":
+                        continue
+                    rows.append({
+                        "survey": LAYOUT["survey"],
+                        "topic": topic, "definition": definition,
+                        "series_label": f"{label} (Summary Table {key})",
+                        "sex": sex, "age_group": "Total", "education": "Total",
+                        "geography": region, "locality": locality,
+                        "locality_label": loc_label, "working_age_base": "10+",
+                        "period": period, "reference_period": ref,
+                        "frequency": "ad_hoc", "measure": "rate",
+                        "value": float(v), "unit": "percent",
+                        "series_code": f"LMS 2021 ST{key}"})
+        if seen < 30:
+            raise ValueError(f"Ethiopia ST{key}: only {seen} region x sex rows read")
+    return rows
+
+
+def parse(path: str) -> _pd.DataFrame:
+    base = _engine(path)
+    extra = _pd.DataFrame(_st1_rows(path))
+    ur = base[base.topic == "unemployment_rate"]
+    have = set(zip(ur.geography, ur.sex, ur.locality))
+    dup = (extra.topic == "unemployment_rate") & (extra.period == "2021") & _pd.Series(
+        [(g, s, l) in have for g, s, l in zip(extra.geography, extra.sex, extra.locality)],
+        index=extra.index)
+    return _pd.concat([base, extra[~dup]], ignore_index=True)

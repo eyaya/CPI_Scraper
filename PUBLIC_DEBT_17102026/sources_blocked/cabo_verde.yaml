@@ -1,0 +1,28 @@
+# =====================================================================
+# NOT COLLECTABLE YET (checked 2026-10-08 and 2026-10-12) -- Cabo Verde.
+#
+# * Ministério das Finanças debt bulletin n.37 (mf.gov.cv): every table on
+#   pages 9-15 is an IMAGE (zero numbers in the text layer) -- would need OCR,
+#   which the project does not do. It also downloads in full only over
+#   HTTP/1.1 (HTTP/2 truncates at 2.7 of 6.36 MB).
+# * Banco de Cabo Verde statistics workbooks sit on an old SharePoint site
+#   (newest Oct 2022) whose download returned an HTML stub.
+# * NOT YET CHECKED: earlier bulletins n.11-15 captured by the Wayback Machine
+#   -- the Wayback CDX was offline ("Temporarily Offline") on 2026-10-12.
+#   Re-check them for text-layer tables first.
+#
+# THIRD PASS (2026-10-12):
+# * Wayback CDX for mf.gov.cv answers again: it lists the MoF debt bulletins
+#   as "DGT_BEDP_Nº <n>.pdf" (e.g. n.22, n.23). BEDP n.23 (20 pp, fetched both
+#   live and from the 2023-05-11 capture, identical 3 753 538 bytes) has the
+#   same defect as n.37 -- every table page carries zero decimal numbers in its
+#   text layer (images).
+# * The budget annex "ANEXO III - DÍVIDA PÚBLICA E PASSIVOS CONTINGENTES"
+#   (mf.gov.cv, live) has text, but letter-spaced into glyph fragments, and its
+#   debt figures are PROJECTIONS ("2017 Proj", "2018 Proj", "2019 O.E.") --
+#   budget estimates, not published outturns. Refused.
+# =====================================================================
+country: Cabo Verde
+iso3: CPV
+indicator: Public_Debt
+blocked_reason: MoF bulletin tables are images; BCV workbooks unreachable; Wayback leads pending

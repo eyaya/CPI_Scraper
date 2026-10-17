@@ -624,6 +624,35 @@ fields, the ones that carry the meaning:
   percent
 - `period` — `YYYY`, `YYYY-Qn` or `YYYY-Hn`
 
+## Standardised columns (added 2026-10-15)
+
+The published columns stay verbatim; eleven columns are **appended** for
+cross-country use and for building identifiers (same contract as GDP — see
+`standardise.py`): `category_code`, `category_std`, `sex_code`, `age_code`,
+`geography_level`, `unit_std`, `unit_multiplier`, `value_std`, `edition`,
+`series_id` (`[A-Z][A-Z0-9_]*`, e.g. `LAB_IND_F_COUNT_T_Y15T24_W15_GE`) and
+`is_preferred` (one per country · series_id · geography · locality ·
+locality_label · period). Recomputed on every write; backfill with
+`py -3 -m tools.standardise labour`.
+
+`category_code` by topic: industry → ISIC Rev.4 section letter (or the
+combination as published: DE, HJ, GI, LMN, KLMN; broad sectors only in a table
+of broad sectors); occupation → ISCO major group `ISCO_0..9`; employment status
+→ ICSE-93 `EES/EMP/OAW/CFW/COOP`; sector → `GOV/SOE/PUB/PRIV/HH/NGO/INTL`;
+formality → `INFEMP/FORMEMP` (jobs) vs `INFSEC/FORMSEC/HHSEC` (units); hours →
+`H<lo>T<hi>`; `_T` total, `_U` not stated, `_X` not classifiable. **Blank is a
+decision**: residuals, mixtures, sub-items, truncated labels, national
+socio-professional groups, and words whose scope varies by office (bare
+"Transport", "Finance", "Self-employed"). Rows broken down by education get no
+`series_id` (no shared education scheme).
+
+**Verified by the tables' own arithmetic** (`tests/test_standardise.py`): coded
+categories never exceed their table's Total, and 3,184 of 3,188 fully-coded
+tables (28 countries) add to it within 2%. Exceptions are published: Libya 2022
+industry (shares sum to 104%), Cabo Verde 2014 occupation (rows sum 2% short).
+Coverage: 70.9% of rows coded (industry 85%, occupation 90%, formality 82%,
+hours 98%, status 38%, sector 43%, activity status 46%).
+
 ## Run
 
 ```bash

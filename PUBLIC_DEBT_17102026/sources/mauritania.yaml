@@ -1,0 +1,46 @@
+country: Mauritania
+iso3: MRT
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministère des Affaires Economiques et des Finances, Direction de la Dette Publique (DDP) — Bulletin Statistique trimestriel
+frequency: quarterly
+coverage: "Public sector debt: central administration, BCM and SNIM, domestic and external, nominal value, excluding IMF SDR allocations (DDP)"
+verify_ssl: false
+
+# --- discover ---
+# finances.gov.mr (Drupal) lists its publications newest first on
+# /fr/Publications; the quarterly DDP bulletin is "BULLETIN STATISTIQUE
+# T<n>-<YYYY> -DDP.pdf" (some issues sit on /fr/Rapports instead, hence the
+# pinned extra). Fetched with a browser fingerprint; plain requests is refused
+# intermittently.
+discover:
+  method: page_scrape
+  page_url: "https://finances.gov.mr/fr/Publications"
+  link_contains:
+    - "bulletin statistique"
+    - ".pdf"
+  # NO `impersonate`: the Publications page links the bulletins over plain
+  # http://, and a browser-fingerprint client gets "Empty reply from server" on
+  # those links while `requests` follows them to the PDF (2026-10-12).
+  download_timeout: 300
+
+# T3-2025 (listed on /fr/Rapports). T1/T2-2025 ("BS-T1-2025.pdf") print
+# Tableau 1 as an IMAGE -- no values in the text layer -- and are left out;
+# the parser refuses such an issue rather than guess.
+extra_urls:
+  - url: "https://finances.gov.mr/sites/default/files/2026-01/BULLETIN%20STATISTIQUE%20T3-2025%20-DDP.pdf"
+    save_as: BULLETIN_STATISTIQUE_T3-2025_DDP.pdf
+
+parser: mauritania_ddp_debt
+geography: National
+
+notes: >
+  DDP quarterly public-debt bulletin, Tableau 1 stock lines: total, external
+  and domestic public debt, for the four previous year-ends (annual) and the
+  current quarter-end (quarterly), in USD million and MRU million as printed
+  (end-of-period exchange rate). External + domestic = total checked in every
+  column. Flow lines (drawings, debt service) are not collected.
+
+  CROSS-CHECK (T4-2025): total 196 333,95 MRU million at 31 December 2025
+  (4 924,35 USD million); external 161 973,37; domestic 34 360,59.

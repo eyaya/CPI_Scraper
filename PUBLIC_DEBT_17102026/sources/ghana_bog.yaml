@@ -1,0 +1,111 @@
+country: Ghana
+iso3: GHA
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Bank of Ghana (BoG)
+publication_code: Summary of Economic and Financial Data (bi-monthly), Public Debt block
+frequency: monthly
+# Each issue states (or omits) its own perimeter in a footnote; the parser
+# sets coverage per row from that footnote. This default is used only if a
+# row arrives without one.
+coverage: "Public debt (perimeter not stated in this BoG issue)"
+verify_ssl: false
+
+# --- discover ---
+# A SECOND Ghana descriptor beside sources/ghana.yaml (GSS StatsBank). BoG's
+# WordPress media API lists every upload; wp_media_latest takes the newest
+# "Summary-of-Economic-and-Financial-Data-<Month>-<YYYY>.pdf" by the month and
+# year in its FILE NAME (the /uploads/<y>/<m>/ path is the upload date, and the
+# companion "...Charts..." PDFs do not match the name).
+discover:
+  method: wp_media_latest
+  api_url: "https://www.bog.gov.gh/wp-json/wp/v2/media?search=Summary%20of%20Economic%20and%20Financial%20Data&per_page=100"
+  name_contains: "Summary-of-Economic-and-Financial-Data"
+  lang: en
+
+# Back issues whose Public Debt block reads cleanly (each prints 12 months;
+# overlapping windows give the monthly record from 2016). Issues whose rows
+# cannot be aligned to their header ("···" placeholders, short rows) or whose
+# layout predates the block are not listed. save_as keeps the upload path so
+# re-uploads of the same issue do not overwrite each other.
+extra_urls:
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2020/05/Summary-of-Economic-and-Financial-Data-May-2017.pdf"
+    save_as: "2020_05_Summary-of-Economic-and-Financial-Data-May-2017.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2020/05/Summary-of-Economic-and-Financial-Data-November-2018.pdf"
+    save_as: "2020_05_Summary-of-Economic-and-Financial-Data-November-2018.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2021/05/Summary-of-Economic-and-Financial-Data-May-2021-1.pdf"
+    save_as: "2021_05_Summary-of-Economic-and-Financial-Data-May-2021-1.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2021/05/Summary-of-Economic-and-Financial-Data-May-2021.pdf"
+    save_as: "2021_05_Summary-of-Economic-and-Financial-Data-May-2021.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2021/09/Summary-of-Economic-and-Financial-Data-September-2021.pdf"
+    save_as: "2021_09_Summary-of-Economic-and-Financial-Data-September-2021.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2021/11/Summary-of-Economic-and-Financial-Data-November-2021-1.pdf"
+    save_as: "2021_11_Summary-of-Economic-and-Financial-Data-November-2021-1.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2021/11/Summary-of-Economic-and-Financial-Data-November-2021.pdf"
+    save_as: "2021_11_Summary-of-Economic-and-Financial-Data-November-2021.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2021/12/Summary-of-Economic-and-Financial-Data-November-2021.pdf"
+    save_as: "2021_12_Summary-of-Economic-and-Financial-Data-November-2021.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2022/03/Summary-of-Economic-and-Financial-Data-November-2021.pdf"
+    save_as: "2022_03_Summary-of-Economic-and-Financial-Data-November-2021.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2022/03/Summary-of-Economic-and-Financial-Data-March-2022-1.pdf"
+    save_as: "2022_03_Summary-of-Economic-and-Financial-Data-March-2022-1.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2022/03/Summary-of-Economic-and-Financial-Data-March-2022-2.pdf"
+    save_as: "2022_03_Summary-of-Economic-and-Financial-Data-March-2022-2.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2022/03/Summary-of-Economic-and-Financial-Data-March-2022.pdf"
+    save_as: "2022_03_Summary-of-Economic-and-Financial-Data-March-2022.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2022/07/Summary-of-Economic-and-Financial-Data-July-2022.pdf"
+    save_as: "2022_07_Summary-of-Economic-and-Financial-Data-July-2022.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2022/07/Summary-of-Economic-and-Financial-Data-July-2022_1.pdf"
+    save_as: "2022_07_Summary-of-Economic-and-Financial-Data-July-2022_1.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2022/08/Summary-of-Economic-and-Financial-Data-July-2022_1.pdf"
+    save_as: "2022_08_Summary-of-Economic-and-Financial-Data-July-2022_1.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2022/10/Summary-of-Economic-and-Financial-Data-October-2022.pdf"
+    save_as: "2022_10_Summary-of-Economic-and-Financial-Data-October-2022.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2023/03/Summary-of-Economic-and-Financial-Data-March-2023.pdf"
+    save_as: "2023_03_Summary-of-Economic-and-Financial-Data-March-2023.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2024/01/Summary-of-Economic-and-Financial-Data-January-2024.pdf"
+    save_as: "2024_01_Summary-of-Economic-and-Financial-Data-January-2024.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2024/03/Summary-of-Economic-and-Financial-Data-January-2024.pdf"
+    save_as: "2024_03_Summary-of-Economic-and-Financial-Data-January-2024.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2024/07/Summary-of-Economic-and-Financial-Data-July-2024.pdf"
+    save_as: "2024_07_Summary-of-Economic-and-Financial-Data-July-2024.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2024/09/Summary-of-Economic-and-Financial-Data-September-2024.pdf"
+    save_as: "2024_09_Summary-of-Economic-and-Financial-Data-September-2024.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2024/11/Summary-of-Economic-and-Financial-Data-November-2024.pdf"
+    save_as: "2024_11_Summary-of-Economic-and-Financial-Data-November-2024.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2025/01/Summary-of-Economic-and-Financial-Data-January-2025.pdf"
+    save_as: "2025_01_Summary-of-Economic-and-Financial-Data-January-2025.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2025/03/Summary-of-Economic-and-Financial-Data-March-2025.pdf"
+    save_as: "2025_03_Summary-of-Economic-and-Financial-Data-March-2025.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2025/05/Summary-of-Economic-and-Financial-Data-May-2025.pdf"
+    save_as: "2025_05_Summary-of-Economic-and-Financial-Data-May-2025.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2025/07/Summary-of-Economic-and-Financial-Data-July-2025.pdf"
+    save_as: "2025_07_Summary-of-Economic-and-Financial-Data-July-2025.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2025/09/Summary-of-Economic-and-Financial-Data-September-2025.pdf"
+    save_as: "2025_09_Summary-of-Economic-and-Financial-Data-September-2025.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2025/11/Summary-of-Economic-and-Financial-Data-November-2025.pdf"
+    save_as: "2025_11_Summary-of-Economic-and-Financial-Data-November-2025.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2026/01/Summary-of-Economic-and-Financial-Data-January-2026.pdf"
+    save_as: "2026_01_Summary-of-Economic-and-Financial-Data-January-2026.pdf"
+  - url: "https://www.bog.gov.gh/wp-content/uploads/2026/07/Summary-of-Economic-and-Financial-Data-July-2026.pdf"
+    save_as: "2026_07_Summary-of-Economic-and-Financial-Data-July-2026.pdf"
+
+parser: ghana_bog_debt
+geography: National
+
+notes: >
+  Bank of Ghana, Summary of Economic and Financial Data, "Public Debt" block:
+  total public debt (USD and GHC billion, % of GDP), external debt (USD, GHC,
+  % of GDP), domestic debt (GHC, % of GDP), monthly, March 2016 to the latest
+  issue. A SEPARATE series from GSS StatsBank (sources/ghana.yaml): own
+  publisher, units and series_code; never chained.
+
+  COVERAGE IS PER ISSUE, from each issue's footnote: "excluding ESLA bonds"
+  (2021-22), "Central Government debt excluding SOE/SPV debt" (2023),
+  "including SOE/SPV debt" (2024); recent issues state none. The same month
+  under two definitions is kept twice, told apart by coverage.
+
+  CROSS-CHECK: 2026:07 total USD 62.8bn / GHC 733.9bn / 45.9% of GDP;
+  domestic GHC 396.7bn (September 2026 issue). 2024:06 total GHC 742.0bn
+  incl. SOE/SPV (July 2024 issue) vs 744.8bn perimeter not stated (July 2025).

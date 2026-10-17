@@ -1,0 +1,41 @@
+country: Namibia
+iso3: NAM
+indicator: Public_Debt
+tier: 2
+source_type: excel
+agency: Bank of Namibia (BoN) -- table sourced "MoF and BoN"
+frequency: quarterly
+coverage: "Central government debt"
+verify_ssl: false
+
+# --- discover ---
+# BoN's "Government finance statistics" page
+#   https://www.bon.com.na/Economic-information/Statistical-information/Government-finance-statistics.aspx
+# lists two Kentico attachments, both linked only as "Download": "Govt Debt
+# Database <year> Market" (instrument-level marketable debt) and "Total
+# Government Debt" (this file). Neither link text names the file, so the
+# attachment GUID is pinned; Kentico keeps the GUID when the file is replaced.
+discover:
+  method: static_url
+  url: "https://www.bon.com.na/getattachment/6a570285-d2ca-4997-b105-fdb8e331e6f9/.aspx"
+  save_as: bon_total_government_debt.xlsx
+
+parser: namibia_bon_debt
+geography: Total country
+
+notes: >
+  BoN "Total Government Debt" workbook, sheet "Debt and gurantees ".
+  Table 1 central government debt (N$ million), FY 2008/09 Q1 onward:
+  foreign (bilateral, multilateral, Eurobond, JSE bonds, ex-Rand), domestic
+  (T-bills, internal registered stock, RFP), gross, deposits, net, plus the
+  published shares of total and shares of GDP. Fiscal quarters (April-March)
+  relabelled to the calendar quarter of the same months.
+
+  Table 2 (loan guarantees, coverage set per row) has labels SHIFTED against
+  its numbers -- proved by its own arithmetic; only domestic guarantees
+  (level, % of GDP) and total guarantees % of GDP are collected, through FY
+  2023/24 Q4, after which the rows shift again. One pinned published ratio
+  (FY 2016/17 Q2). Debt-service rows (flows) not collected.
+
+  CROSS-CHECK: gross central government debt 2008/09 Q1 12 436.35; 2026/27 Q1
+  181 894.23 (65.10% of GDP).

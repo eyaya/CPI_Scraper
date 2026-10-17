@@ -22,7 +22,15 @@ discover:
   url: "https://www.ins.tn/statistiques/152"
   save_as: tunisia_population_occupee.html
 
-parser: tunisia_labour
+# BACK SERIES (2026-10-14; parser tunisia_ins_backseries): INS's workbook
+# attached to every quarterly note "Indicateurs de l'emploi et du chômage" --
+# Tableau 5 (branch, 1966-2026 Q2) and Tableau 6 (status, 2006-2026 Q2). The
+# filename carries the end year; update the URL when INS posts the next one.
+extras_cache: false
+extra_urls:
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Statistiques_Emploi_Tunisie_2006_2026.xlsx"
+    save_as: Statistiques_Emploi_Tunisie_2006_2026.xlsx
+parser: tunisia_ins_backseries
 geography: Total country
 
 notes: >

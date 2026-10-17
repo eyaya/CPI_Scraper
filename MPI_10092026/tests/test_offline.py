@@ -647,6 +647,19 @@ def test_row_scan_guard_fires():
             FAILURES.append(f"row_scan raised the wrong error: {e}")
 
 
+def test_selector_miss_raises():
+    """A table whose page selector matches nothing must read NOTHING, not
+    fall back to every page (the fallback is how unemployment's Morocco
+    layout took a different table's numbers, 2026-10-17)."""
+    cfg = copy.deepcopy(LAYOUTS["angola"])
+    tbl = copy.deepcopy(cfg["tables"][0])
+    got, _ = T._parse_table([ANGOLA_PAGE], cfg, tbl, "2016", "2015-2016")
+    check("angola caption selects its page", len(got) > 0, True)
+    tbl["page_contains"] = ["a caption this report does not print"]
+    got, matched = T._parse_table([ANGOLA_PAGE], cfg, tbl, "2016", "2015-2016")
+    check("selector miss reads no page", (len(got), sorted(matched)), (0, []))
+
+
 def test_no_silent_undated_output():
     """A layout with neither a fixed period nor a matching pattern must raise
     rather than dating the measure to whatever year it can find -- MPI reports
@@ -673,7 +686,7 @@ def main() -> int:
                test_mauritius_index_first, test_burkina_region_then_province,
                test_morocco_percent_m0, test_egypt_index_first,
                test_uganda_control, test_ghana_pxweb, test_validator_guards,
-               test_row_scan_guard_fires,
+               test_row_scan_guard_fires, test_selector_miss_raises,
                test_no_silent_undated_output):
         try:
             fn()

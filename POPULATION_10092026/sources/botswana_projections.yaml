@@ -1,0 +1,31 @@
+country: Botswana
+iso3: BWA
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Statistics Botswana (Statsbots)
+publication_code: Population Projections for Botswana 2011-2026
+frequency: annual
+verify_ssl: false
+
+# A SECOND Botswana descriptor beside botswana.yaml (the 2022 census report):
+# the 2011-census-based projections (2015), linked from
+# statsbots.org.bw/population-projections-botswana-2011-2026. Statsbots blocks
+# bare requests -- browser impersonation, as for botswana.yaml.
+discover:
+  method: static_url
+  url: "https://www.statsbots.org.bw/sites/default/files/census_documents/population_projection%202011-2026.pdf"
+  impersonate: chrome124
+  save_as: botswana_projections_2011_2026.pdf
+
+parser: statsbots_projection
+geography: Total country
+
+notes: >
+  Statsbots Population Projections 2011-2026, MEDIUM scenario only (the merge
+  key has no scenario column; High 1a/1b, Low and HIV/AIDS variants not read).
+  National total 2011-2026 (2011 2,024,904 = census; 2026 2,584,645), Males and
+  Females by five-year age group (no both-sexes age column is printed, none is
+  computed), and 27 census districts (both sexes; Ghanzi absent from the
+  2011-2016 block). Districts exceed the national total by up to 760 (report's
+  rounding footnote).

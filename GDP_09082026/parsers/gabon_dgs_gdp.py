@@ -214,4 +214,10 @@ def parse(path: str, extras: list[str] | None = None) -> pd.DataFrame:
                     "base_period": "Constant 2001 prices"
                     if (tid == "V.1.1.2") else "",
                 })
+    # The 2001-2007 edition (extra), current prices only -- see
+    # gabon_dgs_annuaire0107.
+    from .gabon_dgs_annuaire0107 import parse_annuaire
+    for ex in extras or []:
+        if "2001-2007" in ex:
+            out.extend(parse_annuaire(ex))
     return pd.DataFrame(out)

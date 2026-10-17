@@ -16,6 +16,15 @@ discover:
   title_contains: "Comptes Nationaux Trimestriels"
   save_as: "INSBU_Comptes_Nationaux_Trimestriels.pdf"
 
+# Annual back series (parsers/burundi_insbu_annual.py): the national-accounts
+# chapter (ch. 17, 'Comptes économiques') of INSBU's Annuaire statistique du
+# Burundi, édition 2024 -- GDP by production and expenditure, 2016-2023, current
+# and previous-year prices. INSBU API publication id 498.
+extras_cache: true
+extra_urls:
+  - url: "https://api.insbu.bi/storage/documents/01M0WF6F346CZ0KBK8A07YJVSP.pdf"
+    save_as: "INSBU_Annuaire_statistique_2024.pdf"
+
 parser: burundi_insbu_gdp
 geography: National
 

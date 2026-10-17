@@ -15,6 +15,127 @@ discover:
   link_contains:
     - "press_release"
     - ".pdf"
+  # statistics.sl refuses `requests` by TLS fingerprint (403, 2026-10-13).
+  impersonate: [chrome124, safari17_0]
+
+# --- back issues ---
+# Every release on the December 2021 = 100 base (2022 on) from the archive page
+# /index.php/cpi.html. Releases 2008-2021 (2008 = 100, another layout) are not
+# listed; the parser skips any issue that does not state the 2021 base.
+extras_cache: true
+extra_urls:
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/August_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_August_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/December_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_December_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/February_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_February_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/January_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_January_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/July_2022_cpi_press_release.pdf"
+    save_as: sl_2022_July_2022_cpi_press_release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/June_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_June_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/March_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_March_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/May_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_May_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/November_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_November_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/October_2022_cpi_Press_Release.pdf"
+    save_as: sl_2022_October_2022_cpi_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/September_2022-CPI-Press-Release.pdf"
+    save_as: sl_2022_September_2022-CPI-Press-Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2022/april_2022_CPI_Press_Release.pdf"
+    save_as: sl_2022_april_2022_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/April_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_April_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/August_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_August_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/December_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_December_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/February_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_February_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/January_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_January_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/July_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_July_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/June_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_June_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/March_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_March_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/May_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_May_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/November_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_November_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/October_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_October_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2023/September_2023_CPI_Press_Release.pdf"
+    save_as: sl_2023_September_2023_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/April_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_April_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/August_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_August_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/December_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_December_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/February_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_February_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/January_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_January_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/July_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_July_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/June_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_June_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/March_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_March_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/May_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_May_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/November_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_November_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/October_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_October_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2024/September_2024_CPI_Press_Release.pdf"
+    save_as: sl_2024_September_2024_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/April_2025_CPI_Press_Release_2.pdf"
+    save_as: sl_2025_April_2025_CPI_Press_Release_2.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/August_2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_August_2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/December-2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_December-2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/February_2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_February_2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/January_2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_January_2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/July_2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_July_2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/June_2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_June_2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/March_2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_March_2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/May_2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_May_2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/November-2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_November-2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/October-2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_October-2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2025/September-2025_CPI_Press_Release.pdf"
+    save_as: sl_2025_September-2025_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2026/April-2026_CPI_Press_Release.pdf"
+    save_as: sl_2026_April-2026_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2026/August-2026-CPI_Press_Release.pdf"
+    save_as: sl_2026_August-2026-CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2026/February-2026_CPI_Press_Release.pdf"
+    save_as: sl_2026_February-2026_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2026/January-2026_CPI_Press_Release.pdf"
+    save_as: sl_2026_January-2026_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2026/July-2026-CPI_Press_Release.pdf"
+    save_as: sl_2026_July-2026-CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2026/June-2026_CPI_Press_Release.pdf"
+    save_as: sl_2026_June-2026_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2026/March-2026_CPI_Press_Release.pdf"
+    save_as: sl_2026_March-2026_CPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/cpi/2026/May-2026_CPI_Press_Release.pdf"
+    save_as: sl_2026_May-2026_CPI_Press_Release.pdf
 
 parser: sierraleone_stats
 geography: National

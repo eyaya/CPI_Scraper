@@ -22,9 +22,23 @@ parser: malawi_nso
 geography: National
 expect_divisions: 13          # All items + 12 COICOP-1999 divisions
 
+
+# --- back issues (2026-10-13) ---
+# Each Stats Flash workbook shows 25 months. The oldest on the CMS (Oct 2024)
+# reaches 2022-10; the old NSO site's 'MtM_CPI_Stats_Flash.xlsx' (Wayback
+# capture 2023-03-10, same Dec 2021 = 100 base) holds Jan-Dec 2022. Its column
+# order differs -- index first, rates last -- so the parser maps columns by
+# header. Nothing older on Dec 2021 = 100 exists; the Dec 2017 = 100 series
+# (to 2021) was not found as a workbook.
+extras_cache: true
+extra_urls:
+  - url: "https://cms.nsomalawi.mw/api/download/474/NSO-CPI-October--2024---Stats-Flash.xlsx"
+  - url: "https://web.archive.org/web/20230310045902id_/http://www.nsomalawi.mw/images/stories/data_on_line/economics/CPI/MtM_CPI_Stats_Flash.xlsx"
+    save_as: "MtM_CPI_Stats_Flash_2023-03.xlsx"
+
 notes: >
   Monthly 'Stats Flash' workbook, base Dec 2021 = 100, with National / Urban /
-  Rural sections. Columns 5–17 are the index for the 12 COICOP-1999 divisions +
-  All items; we emit index for every division and geography plus all-items
+  Rural sections. The index for the 12 COICOP-1999 divisions + All items
+  (columns found by header); we emit index for every division and geography plus all-items
   month-on-month inflation, for every reported month. Discovered through the
   headless CMS at cms.nsomalawi.mw/api/web (the SPA's own public API).

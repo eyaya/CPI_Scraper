@@ -1,0 +1,71 @@
+country: Seychelles
+iso3: SYC
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministry of Finance, National Planning & Trade, Seychelles (Debt Management Division)
+publication_code: Quarterly Debt Bulletin, Q1 2021 - Q4 2024
+frequency: quarterly
+verify_ssl: false
+# Table 2 splits "Total Debt" into Government and Government-Guaranteed debt;
+# domestic and external both included.
+coverage: "Central government debt and government-guaranteed debt"
+
+# --- discover ---
+# finance.gov.sc/resources/debt-management/ lists every bulletin, but
+# ALPHABETICALLY (Q1-2021, Q1-2022, ...), so "first matching link" would be
+# the oldest. The newest is pinned as the primary and the rest as extras; the
+# parser reads all sixteen, the newer issue winning where two print the same
+# quarter. Add each new bulletin here when the Ministry posts it.
+# LIVE: `wp_media_latest_quarter` (core/discover.py) searches the Ministry's
+# WordPress media library and takes the newest bulletin by the quarter and
+# year in its FILE NAME (the page lists them alphabetically; names vary:
+# "Debt-Bulletin-Q4-2024", "Q1-Debt-Bulletin-2026", "260818-Q2-...-2026-Final").
+# Every earlier bulletin is an extra; merge-on-write keeps every quarter.
+# No Q3/Q4 2025 bulletin is on the site (2025-Q4 comes from Q1 2026's
+# previous-quarter column; 2025-Q3 is a gap).
+discover:
+  method: wp_media_latest_quarter
+  api_url: "https://www.finance.gov.sc/wp-json/wp/v2/media?search=Debt-Bulletin&per_page=100"
+  name_contains: "debt-bulletin"
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2026/06/Q1-Debt-Bulletin-2026.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/10/Q2-Debt-Bulletin-2025.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/10/Q1-Debt-Bulletin-2025.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q4-2024.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q1-2021.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q2-2021.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q3-2021.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q4-2021.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q1-2022.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q2-2022.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q3-2022.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q4-2022.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q1-2023.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q2-2023.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q3-2023.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q4-2023.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q1-2024.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q2-2024.pdf"
+  - url: "https://www.finance.gov.sc/wp-content/uploads/2025/08/Debt-Bulletin-Q3-2024.pdf"
+
+parser: seychelles_mof_debt
+geography: National
+
+notes: >
+  MoF Quarterly Debt Bulletins, SCR million: Table 1 by residency (domestic /
+  external, each split government / guaranteed) with the current quarter's
+  % of GDP; Table 2 by guarantee status; external debt by creditor category
+  and by instrument; domestic debt by instrument. Q4 2020 - Q4 2024 (each
+  issue prints the previous and the current quarter). "% Diff" columns are
+  computed changes and not collected. Tables found by caption (numbering
+  shifts in Q4 2021). Domestic instrument labels changed over time ("Treasury
+  Bills" in early issues, "T-bills" later) and are kept as printed.
+
+  PINNED MISPRINT: Q1 2024 Table 2 prints Total Debt 17,873 against its own
+  parts and Table 1 (17,918).
+
+  CROSS-CHECK: Q4 2024 total 18,885 (60.8% of GDP), external 9,604,
+  multilateral 7,829; Q1 2021 total 20,024 (89.5% of GDP).

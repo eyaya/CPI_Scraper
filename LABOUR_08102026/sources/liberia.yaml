@@ -21,6 +21,12 @@ discover:
   url: "https://www.lisgis.gov.lr/uploads/surveys/lfs-2016-2017.pdf"
   save_as: lfs-2016-2017.pdf
 
+# The previous round, LFS 2010 (fieldwork Feb-May 2010), from the same LISGIS
+# survey-report listing: Tables 4.2 / 4.4 / 4.6 (parsers/liberia_lfs2010.py).
+extra_urls:
+  - url: "https://www.lisgis.gov.lr/uploads/surveys/lfs-2010.pdf"
+    save_as: liberia_lfs_2010.pdf
+
 parser: liberia_labour
 geography: Total country
 

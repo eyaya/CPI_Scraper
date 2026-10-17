@@ -1,0 +1,42 @@
+country: Comoros
+iso3: COM
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministère des Finances et du Budget des Comores, Direction de la Dette Publique (DDP)
+publication_code: Bulletin statistique de la dette publique, T1 2026
+frequency: quarterly
+verify_ssl: false
+# The bulletin's own heading: "dette de l'administration centrale".
+coverage: "Central government debt (administration centrale), external and domestic"
+
+# --- discover ---
+# finances.gouv.km (WordPress) links the newest DDP bulletin from its home
+# page (/wp-content/uploads/<YYYY>/<MM>/Bulletin-statistique-T<n>-<YYYY>-DDP*.pdf).
+# Each issue prints the previous year-end and the current quarter;
+# merge-on-write accumulates them.
+discover:
+  method: page_scrape
+  page_url: "https://finances.gouv.km/"
+  link_contains:
+    - "bulletin-statistique"
+    - "ddp"
+    - ".pdf"
+  download_timeout: 300
+
+parser: comoros_ddp_debt
+geography: National
+
+notes: >
+  DDP quarterly debt bulletin, KMF million: Tableau 1 external / domestic /
+  total stock and their shares; Tableau 2 external debt by creditor group and
+  creditor; Tableau 3 domestic debt by financing type. Columns are the end-2025
+  stock (period 2025, annual) and T1 2026 (2026-Q1). Variation rows not
+  collected. Read by word position (space-thousands counts side by side).
+
+  PINNED PUBLISHED INCONSISTENCY: T1 2026 multilateral creditors sum to 100 489
+  against the printed 92 943 (IDA 48 341 likely misprinted), and the groups to
+  180 367 against the printed external total 180 354. Kept as printed.
+
+  CROSS-CHECK (T1 2026): public debt 219 765; external 180 354 (82,07%);
+  domestic 39 411; Exim Bank Chine 37 556.

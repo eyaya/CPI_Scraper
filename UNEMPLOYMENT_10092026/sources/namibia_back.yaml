@@ -1,0 +1,46 @@
+country: Namibia
+iso3: NAM
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Namibia Statistics Agency (NSA)
+publication_code: Namibia Labour Force Survey 2013-2018
+frequency: ad_hoc
+verify_ssl: false            # as namibia.yaml (nsa.org.na certificate chain)
+
+# --- discover ---
+# The BACK-SERIES: the four Labour Force Survey rounds before the 2023 census
+# labour-force report (namibia.yaml). NSA's own files, linked from
+# https://nsa.org.na/document-category/labour-force-survey/ (each round's
+# /document/<slug>/ page). The 2018 report is the primary; 2013, 2014 and the
+# 2016 Key Highlights are extras. The parser tells the rounds apart by the
+# year in each save_as name.
+discover:
+  method: static_url
+  url: "https://nsa.org.na/wp-content/uploads/2024/08/Labour_Force_Survey_final_-_2018.pdf"
+  save_as: "NSA_LFS_2018_report.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://nsa.org.na/wp-content/uploads/2024/08/Namibia_Labour_Force_Survey_report_2013-1.pdf"
+    save_as: "NSA_LFS_2013_report.pdf"
+  - url: "https://nsa.org.na/wp-content/uploads/2024/08/9b8e77842e3dec459407c2a76b9d79ab.pdf"
+    save_as: "NSA_LFS_2014_report.pdf"
+  - url: "https://nsa.org.na/wp-content/uploads/2024/08/Key_Highlights_of_the_Namibia_Labour_Force_Survey_2016_Report2.pdf"
+    save_as: "NSA_LFS_2016_key_highlights.pdf"
+
+parser: namibia_lfs_back
+geography: Total country
+
+notes: >
+  NSA Labour Force Surveys 2013, 2014, 2016 (Key Highlights) and 2018: Table
+  3.4 (working-age population, labour force, LFPR) and Table 5.3 (2016: Table
+  5; unemployed, labour force, unemployment rate), by sex for Namibia, urban,
+  rural and every region. ALL ON NSA'S BROAD DEFINITION (no active-search
+  requirement) and labelled so -- never mixed with the strict 19th-ICLS rows of
+  the 2023 census. Sex column order differs by round (2013-2014 Female | Male |
+  Both; 2016-2018 Both | Male | Female, checked on the rendered pages) and is
+  proved by male + female = both on every row. 2018 prints LFPR 71.2 in Table
+  3.4 and 71.1 in its summary Table 1; Table 3.4 is the one read. Not read:
+  the strict-definition tables, age/education tables, and employment
+  composition.

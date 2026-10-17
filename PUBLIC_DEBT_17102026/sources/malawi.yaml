@@ -1,0 +1,38 @@
+country: Malawi
+iso3: MWI
+indicator: Public_Debt
+tier: 2
+source_type: excel
+agency: Reserve Bank of Malawi (RBM)
+frequency: annual
+coverage: "Central government external debt"
+verify_ssl: false
+
+# --- discover ---
+# RBM Statistics > Economic Data lists its files in tabbed tables; the
+# "External Debt" tab links "Central Government External debt" (newest first)
+# to /Statistics/GetContentFile/?ContentID=<n>. The link TEXT is the only
+# selector (the href is an opaque id), and the URL carries no extension, so
+# the file is saved under an explicit name.
+discover:
+  method: page_scrape
+  page_url: "https://www.rbm.mw/Statistics/EconomicData/"
+  link_contains:
+    - "central government external debt"
+    - "getcontentfile"
+  save_as: rbm_central_government_external_debt.xlsx
+
+parser: malawi_rbm_debt
+geography: Total country
+
+notes: >
+  RBM "Central Government External Debt" (MWK million), annual 1984-2023:
+  total, multilateral, bilateral, commercial -- stocks, checked to sum each
+  year. Debt service and interest payments are flows and not collected.
+  EXTERNAL ONLY: no domestic-debt table is published on RBM's statistics page
+  (its "Government Financial Statistics" file is the monetary survey's
+  government borrowing and deposits, not a debt-stock table), and MoF's
+  Annual Debt Report was not used.
+
+  CROSS-CHECK: 1984 total 980.6; 2006 67 541.52 (post-HIPC/MDRI);
+  2023 5 887 049.29.

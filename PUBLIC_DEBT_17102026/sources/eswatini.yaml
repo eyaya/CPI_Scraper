@@ -1,0 +1,51 @@
+country: Eswatini
+iso3: SWZ
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Central Bank of Eswatini (CBE) -- debt stocks sourced "CBE, Ministry of Finance"
+frequency: quarterly
+coverage: "Total public debt (domestic + external), as CBE states it"
+verify_ssl: false
+
+# --- discover ---
+# CBE is a WordPress site; its Quarterly Reviews are media items (most under
+# /wp-content/uploads/2021/04/ regardless of date, the newest under
+# /2026/09/). Names vary ("CBE-Quarterly-Review_June-2026-Online.pdf",
+# "March-2026-Quarterly-Review.pdf"), so the newest issue is pinned; each
+# issue dates its own three quarter-ends from the table headers, so history
+# accumulates on merge. To advance: /wp-json/wp/v2/media?search=quarterly.
+# The March 2026 extra is 31 MB -- hence the long timeout.
+discover:
+  method: static_url
+  url: "https://www.centralbank.org.sz/wp-content/uploads/2026/09/CBE-Quarterly-Review_June-2026-Online.pdf"
+  save_as: CBE_Quarterly_Review_June_2026.pdf
+  download_timeout: 600
+
+extra_urls:
+  - url: "https://www.centralbank.org.sz/wp-content/uploads/2021/04/March-2026-Quarterly-Review.pdf"
+    save_as: CBE_Quarterly_Review_March_2026.pdf
+  # Back issue in the same Table 4/5 layout (adds 2024-Q1, 2024-Q4); the Dec
+  # 2025, Jun 2025 and Q4 2022 reviews differ and are skipped by the parser.
+  - url: "https://www.centralbank.org.sz/wp-content/uploads/2021/04/CBE-Quarterly-Review__March_2025_F-min.pdf"
+    save_as: CBE_Quarterly_Review_March_2025.pdf
+extras_cache: true
+
+parser: eswatini_cbe_debt
+geography: Total country
+
+notes: >
+  CBE Quarterly Review section 6.3: Table 4 (total, domestic, external public
+  debt, E billion, and % of GDP) and Table 5 (domestic debt by instrument,
+  E million, shares, % of GDP), 2025-Q1..2026-Q2 from two issues; newest
+  issue wins on revisions. DSA thresholds and gross financing needs (IMF-WB
+  framework) not collected. External-debt annex Table 7.6 is rotated and
+  does not reconcile -- refused. Pinned: June 2025 domestic + external
+  (38.5) vs printed total 38.2. Table 4 and Table 5 domestic-debt-to-GDP
+  disagree within issues; both kept as distinct rows.
+
+  The Ministry of Finance / CSO site (gov.sz) was not reached (times out);
+  CBE's Monthly Statistical Release carries only Treasury-bill auctions.
+
+  CROSS-CHECK: Jun 2026 total 42.5 (E bn), 40.8% of GDP; domestic portfolio
+  21 677 (E m), treasury bonds 13 869.

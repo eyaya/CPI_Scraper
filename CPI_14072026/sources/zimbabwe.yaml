@@ -18,6 +18,14 @@ discover:
     - "CPI_Weighted_"
     - ".xls"
 
+# Pre-rebase history: the Feb 2024 headline workbook carries the blended CPI on
+# base Aug 2023 = 100 from June 2019 (sheet 'CPI 1'). Emitted only for months
+# before the current series starts; not chained.
+extras_cache: true
+extra_urls:
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Prices/CPI/2024/CPI_02_2024.xls"
+    save_as: CPI_02_2024_oldbase.xls
+
 parser: zimbabwe_zimstat
 geography: National
 expect_divisions: 13          # All Items + 12 COICOP-1999 divisions

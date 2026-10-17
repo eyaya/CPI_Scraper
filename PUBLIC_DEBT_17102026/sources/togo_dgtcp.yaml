@@ -1,0 +1,102 @@
+country: Togo
+iso3: TGO
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Direction de la Dette Publique et du Financement (DDPF), Direction Générale du Trésor et de la Comptabilité Publique (DGTCP), Ministère de l'Economie et des Finances
+publication_code: Bulletin statistique de la dette de l'Administration centrale (trimestriel) + Rapport analytique de la dette publique (annuel)
+frequency: quarterly
+verify_ssl: false
+coverage: "Dette de l'Administration centrale (intérieure et extérieure)"
+
+# --- discover ---
+# The Treasury's site (tresorpublic.gouv.tg, WordPress) posts each quarterly
+# bulletin as a media item "BULLETIN-STATISTIQUE-DE-FIN-<MOIS>-<YYYY>-...pdf";
+# the newest is taken by the month and year in its filename.
+discover:
+  method: wp_media_latest
+  api_url: "https://tresorpublic.gouv.tg/wp-json/wp/v2/media?search=BULLETIN-STATISTIQUE-DE-FIN&per_page=100"
+  name_contains: "BULLETIN-STATISTIQUE-DE-FIN"
+  lang: fr
+  download_timeout: 300
+
+# BACK ISSUES (same site, wp/v2/media listing, 2026-10-14): every quarterly
+# bulletin from 31 March 2020 (30 June 2020 is not posted; the 1st-semester
+# 2019 bulletin and one Dec-2024 copy are dead links), plus the annual
+# "Rapport analytique de la dette publique", 2019-2025 editions. Saved under
+# dated names: the parser reads them oldest first, so the newest issue wins.
+extras_cache: true
+extra_urls:
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/Bulletin_statistique_dette_premier_trimestre_2020.pdf"
+    save_as: TG_bulletin_dette_2020-03.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/Bulletin_statistique_dette_administration_centrale_fin_sept_2020.pdf"
+    save_as: TG_bulletin_dette_2020-09.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/Bulletin_statistique_dette_administration_fin_decembre_2020.pdf"
+    save_as: TG_bulletin_dette_2020-12.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-MARS-2021.pdf"
+    save_as: TG_bulletin_dette_2021-03.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-JUIN-2021-avec-COUT-RISQUS.pdf"
+    save_as: TG_bulletin_dette_2021-06.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-SEPT-2021-avec-COUT-RISQUES.pdf"
+    save_as: TG_bulletin_dette_2021-09.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-DECEMBRE-2021-avec-COUT-RISQUS-VAL.pdf"
+    save_as: TG_bulletin_dette_2021-12.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-MARS-2022-avec-COUT-RISQUS.pdf"
+    save_as: TG_bulletin_dette_2022-03.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-JUIN-2022-avec-COUT-RISQUS_Valide.pdf"
+    save_as: TG_bulletin_dette_2022-06.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-SEPT-2022-avec-COUT-RISQUS.pdf"
+    save_as: TG_bulletin_dette_2022-09.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-DECEM-2022-avec-COUT-RISQUS-A-PUBLIE.pdf"
+    save_as: TG_bulletin_dette_2022-12.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-MARS-2023-avec-COUT-RISQUS-version-finale-.pdf"
+    save_as: TG_bulletin_dette_2023-03.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-JUIN-2023-avec-COUT-RISQUES-1.pdf"
+    save_as: TG_bulletin_dette_2023-06.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-SEPTEMBRE-2023-avec-COUT-RISQUS-final.pdf"
+    save_as: TG_bulletin_dette_2023-09.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-DECEMBRE-2023-avec-COUT-RISQUS-final.pdf"
+    save_as: TG_bulletin_dette_2023-12.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-MARS-2024-avec-COUT-RISQUS-final2024-corrige-1.pdf"
+    save_as: TG_bulletin_dette_2024-03.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-JUIN-2024-avec-COUT-RISQUES30.08.24-FIN.pdf"
+    save_as: TG_bulletin_dette_2024-06.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/BULLETIN-STATISTIQUE-DE-FIN-SEPT-2024-avec-COUT-RISQUES-26.11.24-FIN.pdf"
+    save_as: TG_bulletin_dette_2024-09.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/08/BULLETIN-STATISTIQUE-DE-FIN-MARS-2025-avec-COUT-RISQUES.pdf"
+    save_as: TG_bulletin_dette_2025-03.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2026/01/BULLETIN-STATISTIQUE-DE-FIN-JUIN-2025-avec-COUT-RISQUES-FINAL1-1-11.pdf"
+    save_as: TG_bulletin_dette_2025-06.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2026/01/BULLETIN-STATISTIQUE-DE-FIN-SEPTEMBRE-2025-avec-COUT-RISQUES-FINAL.pdf"
+    save_as: TG_bulletin_dette_2025-09.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2026/05/BULLETIN-STATISTIQUE-DE-FIN-DECEMBRE-2025-avec-COUT-RISQUES-FINAL.pdf"
+    save_as: TG_bulletin_dette_2025-12.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2026/07/BULLETIN-STATISTIQUE-DE-FIN-MARS-2026-avec-COUT-RISQUES-FINAL.pdf"
+    save_as: TG_bulletin_dette_2026-03.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/RAPPORT-ANALYTIQUE-AU-31-12-2019.pdf"
+    save_as: TG_rapport_analytique_2019.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/Rapport_analytique_dette_publique_fin_dec_2020.pdf"
+    save_as: TG_rapport_analytique_2020.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/RAPPORT-ANALYTIQUE-AU-31-12-2021_DIK_AB_AT.pdf"
+    save_as: TG_rapport_analytique_2021.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/RAPPORT-ANALYTIQUE-AU-31-12-2022-27-03-23-final1.pdf"
+    save_as: TG_rapport_analytique_2022.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/01/RAPPORT-ANALYTIQUE-DE-LA-DETTE-PUBLIQUE-DU-TOGO-AU-31-12-2023.pdf"
+    save_as: TG_rapport_analytique_2023.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2025/05/RAPPORT-ANALYTIQUE-DE-LA-DETTE-PUBLIQUE-DU-TOGO-AU-31-12-2024-final.pdf"
+    save_as: TG_rapport_analytique_2024.pdf
+  - url: "https://tresorpublic.gouv.tg/wp-content/uploads/2026/05/RAPPORT-ANALYTIQUE-DE-LA-DETTE-PUBLIQUE-DU-TOGO.pdf"
+    save_as: TG_rapport_analytique_2025.pdf
+
+parser: togo_dgtcp_debt
+geography: National
+
+notes: >
+  Successor of togo.yaml's 2013-2017 DDPF bulletin, same directorate, own
+  series codes. Quarterly: Tableau 3 (QPDS Tableau 4) gross total, by currency
+  and by creditor residence, XOF million, 2019-Q1 onward. Annual: the reports'
+  "Situation de la dette" table, total / external / domestic, FCFA milliards,
+  2017 onward. Instrument/maturity rows not read (cells wrap and merge in the
+  text layer). PINNED: 2023-Q2/Q3 "Dette brute totale" misprinted as the
+  local-currency figure in four issues (see parser). CROSS-CHECK: 30 June
+  2026 gross debt 4 458 115,04 XOF million; end-2025 4 312,64 milliards.

@@ -18,6 +18,14 @@ discover:
     - "release"
     - ".pdf"
 
+# BACK SERIES (added 2026-10-12): NBS's "CPI Summary" workbook, posted with each
+# release, holds the rebased series year by year from December 2020 (index by
+# division, all-items index and 12-month inflation). Pinned to the September
+# 2026 edition; the monthly release above carries new months forward.
+extra_urls:
+  - url: "https://www.nbs.go.tz/uploads/statistics/documents/en-1791476090-CPI%20Summary%20September%202026.xls"
+    save_as: CPI_Summary_September_2026.xls
+
 parser: tanzania_nbs
 geography: National
 expect_divisions: 14          # All items + 13 COICOP-2018 divisions

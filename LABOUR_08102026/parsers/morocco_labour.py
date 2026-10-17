@@ -123,6 +123,8 @@ pêche" 13,7 / 26,3 / 3,4 / 37,7 / 16,2; and the two wrapped occupation groups,
 """
 from __future__ import annotations
 
+import pandas as pd
+
 from .pdf_tables_labour import make_parser
 
 
@@ -224,7 +226,9 @@ LAYOUT = {
         # statuses, four sectors, eight branches.
         _block(r"groupes de professions\s*\(en\s*%\)", "occupation", 11,
                "HCP T4-professions", "(suite)"),
-        _block(r"^professionnel\s*\(en\s*%\)", "employment_status", 7,
+        # The 2023 and 2024 reports keep "statut" on the caption's line
+        # ("statut professionnel (en %)"); 2025 wraps it onto the line above.
+        _block(r"^(?:statut\s+)?professionnel\s*\(en\s*%\)", "employment_status", 7,
                "HCP T4-statut", "(suite)"),
         _block(r"secteurs d.emploi\s*\(en\s*%\)", "sector", 5,
                "HCP T4-secteurs", "(fin)"),
@@ -286,4 +290,25 @@ for _blk, _cut, _want, _not in _T5_BLOCKS:
         })
 
 
-parse = make_parser(LAYOUT)
+_parse_one = make_parser(LAYOUT)
+
+
+def parse(path: str, extras: list[str] | None = None) -> pd.DataFrame:
+    """The current annual report plus earlier editions (`extra_urls`).
+
+    BACK ISSUES (added 2026-10-14): the 2022, 2023 and 2024 "résultats
+    annuels" print Tableaux 4 and 5 in the same layout, and each dates itself
+    ("RÉSULTATS ANNUELS 2024"), so every edition is read whole by the same
+    layout -- 475 rows each, every block closing on its published Total of
+    100. Every edition must read: a back issue that stops matching is a layout
+    change to look at, not a year to drop quietly. NOT READ: 2021, whose
+    occupation block wraps differently (one category found of eleven).
+    """
+    frames = [_parse_one(p) for p in [path, *(extras or [])]]
+    df = pd.concat(frames, ignore_index=True)
+    dup = df.duplicated(["series_code", "characteristic", "sex", "locality",
+                         "education", "period"], keep=False)
+    if dup.any():
+        raise ValueError(f"HCP: {int(dup.sum())} rows repeated across editions "
+                         f"-- two files carry the same year")
+    return df

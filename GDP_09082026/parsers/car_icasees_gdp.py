@@ -205,7 +205,11 @@ def _report(path: str, gdp_wb: dict) -> list[dict]:
 def parse(path: str, extras: list[str] | None = None) -> pd.DataFrame:
     rows, gdp = _workbook(path)
     for p in extras or []:
-        if p.lower().endswith(".pdf"):
+        if "annuaire" in p.lower():
+            # old (SCN 1993) accounts 2014-2019 -- see car_icasees_annuaire
+            from .car_icasees_annuaire import parse_annuaire
+            rows += parse_annuaire(p)
+        elif p.lower().endswith(".pdf"):
             rows += _report(p, gdp)
     df = pd.DataFrame(rows)
     # Deflators are an index; the corpus convention is unit "index" with the

@@ -1,0 +1,39 @@
+country: Comoros
+iso3: COM
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministère des Finances et du Budget des Comores, Direction de la Dette Publique (DDP)
+publication_code: Bulletin de la dette (annuel), annexes "Indicateurs et statistiques de la Dette"
+frequency: annual
+verify_ssl: false
+coverage: "Per row: central government debt (creditor, treasury and bank tables); State guarantees (guarantee tables)"
+
+# --- discover ---
+# finances.gouv.km did not answer on 2026-10-14. WAYBACK id_ COPIES of the
+# ministry's own uploads (CDX on finances.gouv.km/wp-content/uploads/*).
+# Pinned to the newest edition (2024, "CORRECTE").
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20250711025557id_/https://finances.gouv.km/wp-content/uploads/2025/04/Bulletin-de-la-dette-2024-CORRECTE.pdf"
+  save_as: DDP_bulletin_dette_2024.pdf
+  download_timeout: 300
+
+# The 2022 edition (2019-2022 columns). Not listed: the 2023 edition (text
+# layer drops most creditor cells), the June 2022 / June 2024 issues (the
+# latter's capture is truncated at 1 MiB), the .docx "corrigé" reposts.
+extras_cache: true
+extra_urls:
+  - url: "https://web.archive.org/web/20240711173846id_/http://finances.gouv.km/wp-content/uploads/2024/05/Bulletin-de-la-dette-2022.pdf"
+    save_as: DDP_bulletin_dette_2022.pdf
+
+parser: comoros_ddp_annual
+geography: National
+
+notes: >
+  Beside comoros.yaml (the quarterly DDP bulletin, T1 2026). External debt by
+  multilateral and bilateral creditor, year-ends 2019-2024, KMF million, each
+  edition its own series code. A table is read only when complete and its
+  columns sum to the printed Total; the guarantee, treasury-instrument and
+  bank-debt tables of these editions have empty cells and are skipped. See
+  the parser. CROSS-CHECK: end-2024 multilateral 91 707, bilateral 46 897.

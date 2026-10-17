@@ -176,11 +176,83 @@ def _parse_growth(xlsx_path: str, sheet: str, basis: str) -> list[dict]:
     return rows
 
 
-def parse(xlsx_path: str) -> pd.DataFrame:
+def parse(xlsx_path: str, extras: list[str] | None = None) -> pd.DataFrame:
     rows = []
     rows += _parse_main(xlsx_path)
     rows += _parse_growth(xlsx_path, "nominal gdp growth rate %", "current")
     rows += _parse_growth(xlsx_path, "real gdp growth rate %", "constant")
     if not rows:
         raise ValueError("no GDP rows parsed from Nigeria workbook")
-    return pd.DataFrame.from_records(rows)[_OUT_COLS]
+    df = pd.DataFrame.from_records(rows)[_OUT_COLS]
+    for ex in extras or []:
+        if ex.lower().endswith(".xlsx") and "rebased" in ex.lower():
+            back = _parse_rebased(ex)
+            # Years the quarterly report already prints come from the report
+            # (the newer publication); the back series supplies the rest.
+            first = min(int(p[:4]) for p in df["period"])
+            back = back[back["period"].str[:4].astype(int) < first]
+            df = pd.concat([df, back], ignore_index=True)
+    return df
+
+
+# ---------------------------------------------------------------------------
+# The 2019-2024 REBASED BACK SERIES (NBS "2019-2024_rebased_figures.xlsx",
+# released with the 2025 rebasing, catalog 147 download 1257). Same 2019 base
+# as the quarterly reports -- so it is the same series, not a chained one --
+# but ANNUAL only, and NBS words some total labels differently ("GDP Constant
+# Basic Price" here, "GDP at 2019 constant basic price" in the reports). The
+# labels are kept as published; `category_group` names the release so the two
+# vintages are never confused. Verified: its 2024 current basic-price GDP,
+# 364 619 398.9995, equals the Q1 2026 report's 2024 Total exactly.
+# ---------------------------------------------------------------------------
+_REBASED_GROUP = "NBS 2019-2024 rebased figures (annual)"
+
+
+def _annual_map(df: pd.DataFrame) -> dict[int, tuple[str, str]]:
+    for i in range(min(8, len(df))):
+        texts = _row_texts(df, i)
+        cols = {c: t for c, t in enumerate(texts) if c and re.fullmatch(r"20\d\d", t)}
+        if len(cols) >= 2:
+            return {c: (t, "annual") for c, t in cols.items()}
+    raise ValueError("rebased NBS workbook: no year header row")
+
+
+def _parse_rebased(xlsx_path: str) -> pd.DataFrame:
+    rows = []
+    df = pd.read_excel(xlsx_path, sheet_name="GDP_Current%", header=None, dtype=str)
+    pmap = _annual_map(df)
+    starts = [i for i in range(len(df))
+              if isinstance(df.iat[i, 0], str) and _BLOCK_HEAD_RE.search(df.iat[i, 0])]
+    starts.append(len(df))
+    for b in range(len(starts) - 1):
+        top, end = starts[b], starts[b + 1]
+        header = str(df.iat[top, 0]).lower()
+        data_idx = [i for i in range(top + 1, end)
+                    if isinstance(df.iat[i, 0], str) and _is_data_label(df.iat[i, 0])]
+        basis = "constant" if "constant" in header else "current"
+        if "implicit" in header:
+            measure, basis, unit, base = "deflator", "not_applicable", "index", "2019=100"
+        elif "distribution" in header:
+            measure, unit, base = "share", "percent", ""
+        else:
+            measure, unit = "level", "NGN million"
+            base = "2019 constant basic prices" if basis == "constant" else ""
+        for i in data_idx:
+            rows.extend(_emit_rows(df, i, pmap, measure, basis, unit, base))
+    for sheet, basis in (("Nominal GDP growth rate%", "current"),
+                         ("Real growth rate %", "constant")):
+        g = pd.read_excel(xlsx_path, sheet_name=sheet, header=None, dtype=str)
+        gmap = _annual_map(g)
+        for i in range(len(g)):
+            if isinstance(g.iat[i, 0], str) and _is_data_label(g.iat[i, 0]):
+                rows.extend(_emit_rows(g, i, gmap, "growth_yoy", basis, "percent", ""))
+    if not rows:
+        raise ValueError("rebased NBS workbook: no rows read")
+    out = pd.DataFrame.from_records(rows)[_OUT_COLS]
+    out["category_group"] = _REBASED_GROUP
+    # every year must carry both a current and a constant GDP total
+    tot = out[(out["measure"] == "level") & out["category"].str.contains("GDP", case=False)]
+    for y in sorted(set(out.loc[out["measure"] == "level", "period"])):
+        if set(tot.loc[tot["period"] == y, "price_basis"]) != {"current", "constant"}:
+            raise ValueError(f"rebased NBS workbook: GDP totals incomplete for {y}")
+    return out

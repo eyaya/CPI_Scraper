@@ -28,8 +28,63 @@ discover:
   publication_id: 11
   prefer: pdf
   save_as: egypt_lfs_quarterly.pdf
+  download_timeout: 900         # CAPMAS port 8080 is slow; applies to extras
 
-parser: egypt_labour
+# BACK ISSUES (2026-10-14; parser egypt_labour_backissues): the quarterly
+# workbooks 2021 Q1 - 2026 Q1 (Tables 16 and 17, all regions), from CAPMAS's
+# API (/api/Publication/SearchPublicationDetail?PublicationId=11&Year=Y&
+# Quarter=Q, `excelUrl`). `save_as` carries the API's year/quarter, checked
+# against each workbook's cover. Pre-2021 issues are PDF image scans (no OCR).
+extras_cache: true
+extra_urls:
+  - url: "https://www.capmas.gov.eg:8080/News/Data/f89a575e-aae2-449a-8407-96884c072386.xlsx"
+    save_as: egypt_lfs_2021Q1.xlsx
+  - url: "https://www.capmas.gov.eg:8080/News/Data/e3f29f90-69b2-43af-87df-8cc618709f6a.xlsx"
+    save_as: egypt_lfs_2021Q2.xlsx
+  - url: "https://www.capmas.gov.eg:8080/News/Data/97568444-9ffb-48c1-a20e-3b5dc183966c.xlsx"
+    save_as: egypt_lfs_2021Q3.xlsx
+  - url: "https://www.capmas.gov.eg:8080/News/Data/f24ac4b9-773e-4e95-b6a3-8ab03ae2a103.xlsx"
+    save_as: egypt_lfs_2021Q4.xlsx
+  - url: "https://www.capmas.gov.eg:8080/News/Data/d2bac8e3-01f2-40d0-a1ec-b7711abe5fe4.xlsx"
+    save_as: egypt_lfs_2022Q1.xlsx
+  - url: "https://www.capmas.gov.eg:8080/News/Data/d720b032-ad7b-44a2-be6a-ceeafa39860e.xlsx"
+    save_as: egypt_lfs_2022Q2.xlsx
+  - url: "https://www.capmas.gov.eg:8080/News/Data/0a8e04de-4089-4b15-be53-5fe359a83e8b.xlsx"
+    save_as: egypt_lfs_2022Q3.xlsx
+  - url: "https://www.capmas.gov.eg:8080/News/Data/d1b6399e-62a2-4665-a77a-617f08321d7c.xlsx"
+    save_as: egypt_lfs_2022Q4.xlsx
+  - url: "https://www.capmas.gov.eg:8080/News/Data/41d76491-4cb2-417e-a085-131e58414985.xlsx"
+    save_as: egypt_lfs_2023Q1.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/12ad5853-00eb-498f-928d-f8e5d7ecdaaa.xlsx"
+    save_as: egypt_lfs_2023Q2.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/ec43644a-5cc6-4bdf-bb1c-1ed0b3412c36.xlsx"
+    save_as: egypt_lfs_2023Q3.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/9cc9a7e0-2448-40fd-9f81-a66d89480bcd.xlsx"
+    save_as: egypt_lfs_2023Q4.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/14152bd4-5761-4abd-9a99-15796bca980e.xlsx"
+    save_as: egypt_lfs_2024Q1.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/a13b744a-d534-4edc-a1b8-350e52231944.xlsx"
+    save_as: egypt_lfs_2024Q2.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/ddefe7a8-4588-4dce-9b39-22db33d46eb7.xlsx"
+    save_as: egypt_lfs_2024Q3.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/bf9b9d73-a0c8-47b3-9401-96aad288a6e1.xlsx"
+    save_as: egypt_lfs_2024Q4.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/97b4dcd8-ddc0-4ee3-b10b-cd31a8c23f2b.xlsx"
+    save_as: egypt_lfs_2025Q1.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/5f3c3c9c-de67-4255-8c06-990c431e519b.xlsx"
+    save_as: egypt_lfs_2025Q2.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/321dd442-6353-4958-9d1b-5794b0158007.xlsx"
+    save_as: egypt_lfs_2025Q3.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/578e9128-5e3f-4d25-bd12-97cde2cdad5a.xlsx"
+    save_as: egypt_lfs_2025Q4.xlsx
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/a8600e2c-0af6-48af-a328-96d2a84dfa9d.xlsx"
+    save_as: egypt_lfs_2026Q1.xlsx
+  # PDF BACK ISSUE (2026-10-14): 2018 Q1, the one 2015-2020 text-layer issue
+  # whose Tables 16-17 read cleanly (shares sum to 100). Others: tables
+  # changed shape or image scans (no OCR).
+  - url: "https://www.capmas.gov.eg:8080/Publication/Pdf/5fed2e53-70a4-448f-9cbb-92c94bac7113.pdf"
+    save_as: egypt_lfs_2018Q1.pdf
+parser: egypt_labour_backissues
 geography: Total country
 
 notes: >

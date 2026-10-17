@@ -1,0 +1,49 @@
+country: Djibouti
+iso3: DJI
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: "INSTAD (Annuaire statistique), from the Direction de la Dette Publique"
+frequency: annual
+coverage: "External public debt: State direct debt + State-guaranteed debt of public establishments"
+verify_ssl: false
+
+# --- discover ---
+# Same route as the GDP descriptor: INSTAD's files come from a Heroku backend
+# (/fichiers/<categorie>/<year>) whose items point at Firebase Storage PDFs.
+discover:
+  method: instad_dj_ipc
+  api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
+  categorie: "Annuaire statistique"
+  lookback_years: 3
+  download_timeout: 300
+
+# Older editions, NEWEST FIRST (the parser keeps the first edition that prints
+# a year). Each prints five years of Tableau 6.2.1: 2024 -> 2019-2023,
+# 2023 -> 2018-2022, 2022 -> 2017-2021, 2018 (DISED) -> 2013-2017.
+# The 2017 edition carries no machine-readable debt table; the "2020" and
+# "2021" folders hold the 2021/2022 editions (the 2021 file was an empty
+# 65-byte object on 2026-10-08).
+extra_urls:
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2024%2FAnnuaire_Statistique_E2024_VF.pdf?alt=media&token=8b8ff01b-c4da-4737-a11d-6e84c87ff00c"
+    save_as: Annuaire_Statistique_E2024_VF.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2023%2FAnnuaire_Statistique_2023.pdf?alt=media&token=c74335fa-0881-4b4f-93c6-357e0aba2d85"
+    save_as: Annuaire_Statistique_2023.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2022%2FAnnuaire_Statistique_2022.pdf?alt=media&token=9d13f2da-b367-40b3-a207-3319d899dc27"
+    save_as: Annuaire_Statistique_2022.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2018%2FAnnuaire_Statistique_2018.pdf?alt=media&token=2f041641-bb5f-462b-b7a1-ef87053ccc45"
+    save_as: Annuaire_Statistique_2018.pdf
+
+parser: djibouti_instad_debt
+geography: National
+
+notes: >
+  INSTAD Annuaire statistique Tableau 6.2.1 "Encours de la dette extérieure
+  publique" (Millions de FDJ), sourced to the Direction de la Dette Publique
+  (MEF). External debt only: Dette Directe (ETAT) and Dette avalisée
+  (Etablissements publics), each split bilateral / multilateral, plus Total.
+  Annual 2013-2024 across five editions; newest edition wins (2017 revised:
+  direct 99 053 -> 99 318). Debt SERVICE (Tableau 6.2.2) is a flow and is not
+  collected. No domestic debt is published.
+
+  CROSS-CHECK: Total 2024 508 887; 2013 124 278; Dette directe 2024 118 040.

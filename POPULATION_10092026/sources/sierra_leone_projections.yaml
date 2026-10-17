@@ -1,0 +1,35 @@
+country: Sierra Leone
+iso3: SLE
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL)
+publication_code: 2015 PHC Thematic Report on Population Projections -- Tables 2.1, 2.2, 7.2, 7.5
+frequency: annual
+verify_ssl: false
+
+# A SECOND Sierra Leone descriptor beside sierra_leone.yaml (2015 census and
+# 2021 mid-term census). statistics.sl now answers every client with a
+# challenge page (HTTP 202, 169 bytes), which is not bypassed; this is the
+# Wayback Machine's unmodified (id_) copy of Stats SL's OWN file, captured
+# 2019-03-12.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20190312075821id_/https://www.statistics.sl/images/StatisticsSL/Documents/Census/2015/sl_2015_phc_thematic_report_on_population_projections.pdf"
+  save_as: sl_2015_phc_thematic_report_on_population_projections.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 600
+
+parser: statssl_projection
+geography: Total country
+
+notes: >
+  National population at each census 1901-2004 (Table 2.1; 1901-1948 filed
+  as estimate -- those censuses covered the Colony and added estimates for the
+  provinces; 2015 is in sierra_leone.yaml and only checked); regional shares
+  of the population 1963-2015 (Table 2.2, percent); medium-variant
+  projections 2016-2030 nationally by sex (Table 7.2) and for the four
+  pre-2017 regions (Table 7.5), labels as printed.
+
+  CROSS-CHECK: 1963 2 180 355; 2004 4 976 871; 2030 projection 10 038 361
+  (M 4 941 221 / F 5 097 140).

@@ -7,7 +7,7 @@ agency: Institut National de la Statistique et de la Démographie (INSD)
 publication_code: ENB-ESI 2023
 frequency: ad_hoc
 verify_ssl: false
-expect_topics: 4
+expect_topics: 3
 
 # --- discover ---
 # INSD runs Drupal; files sit under /sites/default/files/<YYYY-MM>/ where the
@@ -32,7 +32,20 @@ discover:
     - ".pdf"
   save_as: burkina_enbesi_note.pdf
 
-parser: burkina_faso_pdf
+# ENSE semester bulletins (parsers/burkina_ense_back.py, which also reads the
+# primary via burkina_faso_pdf). Only page 3's printed headline panel is read
+# (participation, employment, unemployment -- text, not chart labels; checked
+# by employment = participation x (1 - unemployment)). Decided 2026-10-14: the
+# chart-label ban below still holds for every breakdown in these bulletins.
+# expect_topics is 3 because the bulletins carry three topics.
+extras_cache: true
+extra_urls:
+  - url: "https://www.insd.bf/sites/default/files/2026-02/Bulletin%20statistique%20ENSE2.pdf"
+    save_as: insd_ense2_2025S1.pdf
+  - url: "https://www.insd.bf/sites/default/files/2026-06/Bulletin%20semestriel%20sur%20emploi_ENSE3_0.pdf"
+    save_as: insd_ense3_2025S2.pdf
+
+parser: burkina_ense_back
 geography: Total country
 
 notes: >

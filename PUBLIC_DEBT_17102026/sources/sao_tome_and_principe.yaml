@@ -1,0 +1,34 @@
+country: Sao Tome and Principe
+iso3: STP
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE STP), reprinting the Ministry of Finance's annual public-debt management report
+frequency: annual
+coverage: "Public debt by source of financing (perimeter not stated by INE)"
+verify_ssl: false
+
+# --- discover ---
+# INE's PhocaDownload category 99 ("STP em Números") lists one edition; the
+# file path carries a double space, URL-encoded as published.
+discover:
+  method: static_url
+  url: "https://www.ine.st/phocadownload/userupload/Documentos/STPemNumeros/STPemNumeros%20%202017.pdf"
+  save_as: STPemNumeros_2017.pdf
+  download_timeout: 300
+
+parser: sao_tome_ine_debt
+geography: National
+
+notes: >
+  INE "São Tomé e Príncipe em Números 2017", table 17.1: public debt by source
+  of financing (multilateral, bilateral, suppliers, Treasury bills, total),
+  USD million, 2013-2017, source "Relatório anual sobre Gestão e Seguimento da
+  Dívida Pública". Every year sums exactly to TOTAL.
+
+  EARLIER EVIDENCE (was sources_blocked, 2026-10-12): financas.gov.st answers
+  403 (also to browser impersonation); BCSTP's only debt workbook ("Dívida
+  Pública Externa_2015-2026.xlsx") holds debt SERVICE flows with no stock
+  block; BCSTP's 2022 economy report gives the stock (573,0 million USD) only
+  in prose. A newer stock table would come from a later "STP em Números" or a
+  BCSTP statistical release.

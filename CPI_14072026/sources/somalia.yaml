@@ -19,6 +19,54 @@ discover:
   name_contains: "cpi"
   lang: en
 
+# --- back issues ---
+# Every report on the January-2025 base (COICOP 2018) from the media API, each a
+# 3-month window; the parser keeps the newest issue's figure where windows
+# overlap. January 2025 printed no month header and is skipped by the parser.
+# Reports before 2025 are on the old Mogadishu base in another layout (not read).
+extras_cache: true
+extra_urls:
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/10/CPI-Report_2026_August.pdf"
+    save_as: so_CPI-Report_2026_August.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/08/CPI-_July-2026.pdf"
+    save_as: so_CPI-_July-2026.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/07/June-CPI-2026.pdf"
+    save_as: so_June-CPI-2026.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/07/April-CPI-Report-2026.pdf"
+    save_as: so_April-CPI-Report-2026.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/07/May-CPI-Report-2026.pdf"
+    save_as: so_May-CPI-Report-2026.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/05/March-CPI-Report-2026.pdf"
+    save_as: so_March-CPI-Report-2026.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/04/February-CPI-Report-2026.pdf"
+    save_as: so_February-CPI-Report-2026.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/04/January-CPI-Report-2026.pdf"
+    save_as: so_January-CPI-Report-2026.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/02/CPI-December-2025.pdf"
+    save_as: so_CPI-December-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2026/01/CPI-Report-November-2025.pdf"
+    save_as: so_CPI-Report-November-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/11/CPI-October-2025.pdf"
+    save_as: so_CPI-October-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/11/CPI-September-2025.pdf"
+    save_as: so_CPI-September-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/11/CPI-August-2025.pdf"
+    save_as: so_CPI-August-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/10/CPI-May-2025.pdf"
+    save_as: so_CPI-May-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/10/CPI-June-2025.pdf"
+    save_as: so_CPI-June-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/10/CPI-July-2025.pdf"
+    save_as: so_CPI-July-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/07/CPI-Report-April-2025.pdf"
+    save_as: so_CPI-Report-April-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/05/CPI-Report-March-2025.pdf"
+    save_as: so_CPI-Report-March-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/05/CPI-Report-January-2025.pdf"
+    save_as: so_CPI-Report-January-2025.pdf
+  - url: "https://nbs.gov.so/wp-content/uploads/2025/05/CPI-Report-February-2025.pdf"
+    save_as: so_CPI-Report-February-2025.pdf
+
 parser: somalia_snbs
 geography: National
 expect_divisions: 14          # CPI TOTAL + 13 COICOP-2018 divisions

@@ -31,6 +31,7 @@ T4_2025 5,3%, 2025 annual 3,4%; extraction des hydrocarbures current T4_2025
 """
 from __future__ import annotations
 
+import os
 import re
 
 import pandas as pd
@@ -65,7 +66,23 @@ def _table(text: str):
     return levels, growth, annual, rows
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
+    """The current note, plus (extras) older notes and the definitive annual
+    accounts. Older notes overlap the current one; the NEWEST note wins (the
+    primary is read first and duplicates keep the first)."""
+    frames = [_parse_note(pdf_path)]
+    from .congo_ins_annual import parse_report
+    for ex in sorted(extras or [], reverse=True):      # newest year first
+        if "CND" in os.path.basename(ex):
+            frames.append(pd.DataFrame.from_records(parse_report(ex))[_OUT_COLS])
+        else:
+            frames.append(_parse_note(ex))
+    out = pd.concat(frames, ignore_index=True)
+    key = [c for c in _OUT_COLS if c != "value"]
+    return out.drop_duplicates(key, keep="first").reset_index(drop=True)
+
+
+def _parse_note(pdf_path: str) -> pd.DataFrame:
     tables = {}
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:

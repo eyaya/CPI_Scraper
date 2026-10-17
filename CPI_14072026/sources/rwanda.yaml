@@ -18,6 +18,14 @@ discover:
     - "consumer-price-index-cpi-"
   pdf_contains: "consumer price index"
 
+# BACK SERIES (added 2026-10-12): NISR's "CPI_time_series" workbook, posted with
+# each monthly report, holds the whole All-Rwanda series from February 2009 on
+# the same base. Pinned to the September 2026 edition; the monthly PDF above
+# carries new months forward and merge-on-write keeps them.
+extra_urls:
+  - url: "https://www.statistics.gov.rw/sites/default/files/documents/2026-10/CPI_time_series_September_2026.xls"
+    save_as: CPI_time_series_September_2026.xls
+
 parser: rwanda_nisr_cpi
 geography: National           # 'All Rwanda' aggregate (Urban/Rural also in PDF)
 expect_divisions: 13          # General index + 12 COICOP-1999 divisions

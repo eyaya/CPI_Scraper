@@ -1,0 +1,52 @@
+country: Mozambique
+iso3: MOZ
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministério da Economia e Finanças de Moçambique (MEF)
+publication_code: Boletim da Dívida Pública, II Trimestre 2026
+frequency: quarterly
+verify_ssl: false
+# "Total da Dívida" = Dívida Externa + Dívida Interna as MEF records them in
+# Meridian; the bulletin states no wider perimeter (no SOE or guarantee line).
+coverage: "Public debt as defined in the MEF bulletin (external + domestic; perimeter not further stated)"
+
+# --- discover ---
+# mef.gov.mz > Publicações > Políticas > Gestão da Dívida Pública lists each
+# bulletin as /index.php/publicacoes/politicas/gestao-da-divida-publica/
+# <id>-boletim-divida-publica-<trimestre>-<ano>, downloadable with
+# /file?force-download=1. Pinned to the II Trimestre 2026 issue; each issue
+# prints two quarters and merge-on-write accumulates them. ine.gov.mz-style
+# intermittent timeouts were not seen on this host, but a long timeout is set.
+discover:
+  method: static_url
+  url: "https://www.mef.gov.mz/index.php/publicacoes/politicas/gestao-da-divida-publica/2523-boletim-divida-publica-ii-trimestre-2026/file?force-download=1"
+  save_as: MEF_Boletim_Divida_Publica_IITrim2026.pdf
+  download_timeout: 300
+
+# BACK ISSUES: Tabela 1 only (external / domestic / total, USD and MZN), read
+# by the parser's legacy reader. Only the 2023 I T - 2024 I T issues print it
+# as text: 2025 issues print it as an image, 2022 issues in a different
+# layout, and 2024 II T - 2025 I T return 404 on MEF's site.
+extra_urls:
+  - url: "https://www.mef.gov.mz/index.php/publicacoes/politicas/gestao-da-divida-publica/2183-boletim-divida-publica-i-trimestre-2024-1/file?force-download=1"
+    save_as: MEF_Boletim_Divida_Publica_ITrim2024.pdf
+  - url: "https://www.mef.gov.mz/index.php/publicacoes/politicas/gestao-da-divida-publica/1992-boletim-trimestral-sobre-a-divida-publica-iii-trimestre/file?force-download=1"
+    save_as: MEF_Boletim_Divida_Publica_IIITrim2023.pdf
+  - url: "https://www.mef.gov.mz/index.php/publicacoes/politicas/gestao-da-divida-publica/1950-boletim-da-divida-publica-ii-trimestre-2023/file?force-download=1"
+    save_as: MEF_Boletim_Divida_Publica_IITrim2023.pdf
+
+parser: mozambique_mef_debt
+geography: National
+
+notes: >
+  MEF quarterly public debt bulletin: Tabela 1 external / domestic / total
+  stock in USD million and MZN million, plus % of GDP (current quarter);
+  Tabela 2 external debt by creditor group and creditor (USD million);
+  Tabela 6 domestic debt by instrument (MZN million). Identities checked:
+  creditors sum to groups, Tabela 2 TOTAL = Tabela 1 external, instruments
+  sum to domestic debt. Currency shares and disbursement / debt-service flows
+  not collected.
+
+  CROSS-CHECK (II T 2026): total USD 17.386,32 m / MZN 1.110.985,56 m (73,6%
+  of GDP); IDA 3.118,26; MOZAM 2032 897,07; OT 201.094,36.

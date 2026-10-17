@@ -22,6 +22,12 @@ discover:
 extra_urls:
   - url: "https://icasees.org/index.php/publications/tableau-de-bord/comptes-nationaux-definitifs-2019-2021-de-la-republique-centrafricaine/download"
     save_as: "ICASEES_Comptes_nationaux_definitifs_2019-2021.pdf"
+  # Old (SCN 1993) accounts 2014-2019, Annuaire ch. V Tableaux 231-234
+  # (parsers/car_icasees_annuaire.py). Its own vintage and base; never chained
+  # to the base-2019 rows above.
+  - url: "https://www.icasees.org/index.php/publications/liste-des-publications/annuaire-statistique-2018-2021-vf/download"
+    save_as: "ICASEES_Annuaire_statistique_2018-2021.pdf"
+extras_cache: true
 
 parser: car_icasees_gdp
 geography: National

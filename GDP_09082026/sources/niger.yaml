@@ -19,6 +19,17 @@ discover:
     - ".pdf"
   impersonate: chrome124
 
+# OLDER EDITIONS for the years the current report does not print (each report
+# prints only its latest two years). Read newest first; each edition supplies
+# only years no newer edition gave, tagged in category_group. Only annexe 2
+# (branches, current prices) is readable in the multi-year editions -- their
+# volume table is letter-spaced -- so 2016-2021 is current-price branch value
+# added without a PIB total. Immutable, so complete local copies are reused.
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-niger.org/wp-content/uploads/rapport_economique/cna/cna_provisoires_2023_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/rapport_economique/cna/cna_definitifs_2022_revises_2016_2021_VF.pdf"
+
 parser: niger_ins_gdp
 geography: National
 

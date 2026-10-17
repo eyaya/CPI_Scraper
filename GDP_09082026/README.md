@@ -117,6 +117,41 @@ price_basis · seasonal_adjustment · measure**, plus identity/provenance column
 One shape holds a quarterly constant-price value-added figure, an annual expenditure
 share and a per-capita level side by side, so all 38 countries concatenate into one file.
 
+## Standardised columns (added 2026-10-15)
+
+The published columns above stay verbatim. Eleven columns are **appended** for
+anything that compares countries or builds identifiers (the Africa Data Commons
+app built variable IDs from `category`/`series_code`/`unit` and produced names
+like "... [Sac6314] (XAF Billion)"). They are derived in `standardise.py`, recomputed
+on every write (`Pipeline.standardise`, after merge-on-write), and backfilled with
+`py -3 -m tools.standardise gdp`.
+
+| Column | Meaning |
+| --- | --- |
+| `category_code` | SNA concept or ISIC section: `GDP`, `FCE_HH`, `GFCF`, `EXP`, `VA_C`, `VA_DE` (= D+E as published) … **blank** when the label is ambiguous, a sub-item, or not yet covered |
+| `category_std` | English name of the code |
+| `price_concept` / `base_year` | `current`, `fixed_base`, `chained`, `previous_year`, `constant_unspecified`, `not_applicable`; base year as a number |
+| `currency` / `unit_multiplier` / `unit_std` | ISO 4217 (CFA zone from iso3), 1/1e3/1e6/1e9, or `percent`/`percentage_points`/`index` |
+| `value_std` | value × multiplier; negative import levels/shares made positive |
+| `edition` | the publication's year (and quarter) when it can be read |
+| `series_id` | safe ID, `[A-Z][A-Z0-9_]*`, e.g. `GDP_FCE_HH_LEVEL_CUR_LCU_A_NSA` |
+| `is_preferred` | exactly one `True` per (country, series_id, currency, geography, period): the newest edition |
+
+**Rules that matter.** A blank code is a decision, not a gap: "Construction" is value
+added under production but capital formation under expenditure; bare "Agriculture" is
+section A for some offices and crops for others; "Government"/"Households" appear under
+both consumption and capital formation in one Rwandan table. Sub-items ("dont",
+"of which", a leading "…") are never promoted. Where a label repeats inside one table
+with different values (Stats SA's three "Final consumption expenditure" rows), only the
+series code can decide — `_CODE_OVERRIDES` — and without one the rows stay blank.
+
+**Verified by the countries' own arithmetic** (`tests/test_standardise.py`):
+FCE + GCF + EXP − IMP = GDP closes within 1% for 404 of 452 country-periods (18
+countries); GVA + net product taxes = GDP for 17 countries. Known exceptions, each for a
+published or parser reason: Cameroon (current-price block of the CNT notes misread —
+open parser defect), Zambia (prints a statistical discrepancy), Malawi (no inventories
+line). Coverage: 59.6% of rows carry a code, including GDP for 52 countries.
+
 ## Tests
 
 ```bash

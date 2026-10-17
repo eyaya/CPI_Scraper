@@ -1,0 +1,61 @@
+country: Guinea_Bissau
+iso3: GNB
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Direção Geral da Dívida Pública (MF-DGDP), Ministério das Finanças
+publication_code: Boletim Estatístico da Dívida Pública (semestral + anual)
+frequency: annual
+verify_ssl: false
+coverage: "Dívida do Governo Central Orçamental (sem a dívida da EAGB)"
+
+# --- discover ---
+# mef.gw is Joomla with Edocman. The category page
+# /boletim-estatistico-da-divida-publica lists the bulletins as
+# /<slug>/viewdocument/<id>; any document downloads from
+# /index.php?option=com_edocman&task=document.download&id=<id>. Ids seen
+# 2026-10-12: 201 (I Semestre 2026, newest), 185 (Anual 2025), 175/172
+# (I Semestre 2025), 164 (Anual 2024). Pinned (the existing edocman_latest
+# method expects French month slugs); put the next issue's id first.
+discover:
+  method: static_url
+  url: "https://mef.gw/index.php?option=com_edocman&task=document.download&id=201"
+  save_as: GW_DGDP_boletim_divida_I_semestre_2026.pdf
+
+extra_urls:
+  - url: "https://mef.gw/index.php?option=com_edocman&task=document.download&id=185"
+    save_as: GW_DGDP_boletim_divida_anual_2025.pdf
+  # I-semester 2025 bulletin (Edocman id 175): the same stock table, numbered
+  # Quadro 10, adding 2025-Q2. Listed LAST (oldest) so newer issues win.
+  # Bulletins 2019-2024 (ids 106-116) print no comparable stock table.
+  - url: "https://mef.gw/index.php?option=com_edocman&task=document.download&id=175"
+    save_as: GW_DGDP_boletim_divida_I_semestre_2025.pdf
+  # 2022-2023 issues (edocman ids probed 100-200, 2026-10-14), newest first;
+  # read by the parser's legacy reader (central-government quadro / 2022
+  # "Figura 1", same perimeter). Not listed: ids 106-108 (2014-2021) and
+  # 116/164 (2024) -- their stock tables are glyph-scattered (no OCR); 112
+  # and 114/115 duplicate 111 and 113/110; 117-119 are narrative reports.
+  - url: "https://mef.gw/index.php?option=com_edocman&task=document.download&id=111"
+    save_as: GW_DGDP_boletim_divida_anual_2023.pdf
+  - url: "https://mef.gw/index.php?option=com_edocman&task=document.download&id=109"
+    save_as: GW_DGDP_boletim_divida_I_semestre_2023.pdf
+  - url: "https://mef.gw/index.php?option=com_edocman&task=document.download&id=113"
+    save_as: GW_DGDP_boletim_divida_anual_2022.pdf
+  - url: "https://mef.gw/index.php?option=com_edocman&task=document.download&id=110"
+    save_as: GW_DGDP_boletim_divida_I_semestre_2022.pdf
+extras_cache: true
+
+parser: guinea_bissau_dgdp_debt
+geography: National
+
+notes: >
+  Quadro 9 (annex) "Stock da Dívida da Administração Central e Orçamental":
+  total / interna / externa, milhões XOF and USD, two dates per issue
+  (31/12/2024, 31/12/2025, I Semestre 2026 = 2026-Q2). Central budgetary
+  government -- the perimeter of the bulletin's debt/GDP ratio; the
+  consolidated figure adding EAGB (Quadro 1) is not read. Newest issue wins
+  on overlaps: 31/12/2025 total is 1 118 614,51 in the 2026 issue vs
+  1 118 454,51 in the 2025 annual issue, whose year-end figures are footnoted
+  as first-semester values carried forward.
+
+  CROSS-CHECK: I Semestre 2026 total 1 202 431,77 XOF m (2 088,64 USD m).

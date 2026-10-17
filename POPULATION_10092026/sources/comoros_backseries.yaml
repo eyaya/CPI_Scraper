@@ -1,0 +1,38 @@
+country: Comoros
+iso3: COM
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED)
+publication_code: RGPH04 Thème 0 Tableau 9 (censuses 1980-2017) + RGPH 2003 Principaux indicateurs
+frequency: annual
+verify_ssl: false
+
+# A SECOND Comoros descriptor beside comoros.yaml (the 2017 RGPH4). Both files
+# are INSEED's own, on its NADA catalogue (study 8 = RGPH 2017, study 2 =
+# RGPH 2003).
+discover:
+  method: static_url
+  url: "https://www.nada.inseed-comores.org/index.php/catalog/8/download/70"
+  save_as: RGPH2017_Theme0_Resultats_globaux.pdf
+  download_timeout: 300
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.nada.inseed-comores.org/index.php/catalog/2/download/12"
+    save_as: RGPH2003_Principaux_indicateurs.pdf
+
+parser: inseed_comoros_backseries
+geography: Total country
+
+notes: >
+  Census counts for 1980, 1991 and 2003 (series_type census): the Union and
+  its three islands (MWALI, NDZUWANI, NGAZIDJA, as comoros.yaml labels them),
+  both sexes, from Tableau 9 of the RGPH04 Thème 0 report; plus 2003 by sex
+  from the DNS's RGPH 2003 "Principaux indicateurs" (Mohéli / Anjouan / Grande
+  Comore). 2017 stays with comoros.yaml and is only checked here. Urban/rural
+  rows and intercensal growth rates not collected; the 2003 report's age rows
+  are not read because two of its own printings disagree.
+
+  CROSS-CHECK: Union 1980 335 150, 1991 453 184, 2003 575 660
+  (M 285 705 / F 289 955); islands sum to the Union every year.

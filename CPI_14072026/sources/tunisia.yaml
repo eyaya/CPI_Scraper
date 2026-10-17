@@ -14,6 +14,18 @@ discover:
   method: static_url
   url: "https://www.ins.tn/statistiques/90"
   save_as: Tunisia_IPC.html
+  download_timeout: 900         # applies to the extra too: the workbook trickles in at ~7 KB/s
+
+# --- back series ---
+# The monthly results workbook posted with the CPI note (publication page
+# /publication/indice-des-prix-la-consommation-<mois>-<annee>); its 'COICOP'
+# sheet holds every month since January 2015 at full precision. Pinned to the
+# September 2026 issue; the HTML window carries the newer months. The host is
+# slow (~4 MB in ~10 min), hence the long timeout and the cache.
+extras_cache: true
+extra_urls:
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/R%C3%A9sultats_d%C3%A9finitifs_IPC_Base_2015_Septembre_2026.xlsx"
+    save_as: Resultats_definitifs_IPC_Base_2015_Septembre_2026.xlsx
 
 parser: tunisia_ins
 geography: National

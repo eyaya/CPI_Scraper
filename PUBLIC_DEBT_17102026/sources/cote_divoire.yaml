@@ -1,0 +1,41 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministère des Finances et du Budget — Direction Générale des Financements (DGF), via the Trésor public (tresor.gouv.ci)
+publication_code: Bulletin statistique de la dette publique (trimestriel)
+frequency: quarterly
+verify_ssl: false
+# The bulletin's own section A: debt of the Administration centrale, domestic
+# and external, EXCLUDING the C2D (France) and PCD (Spain) conversion debt;
+# state-guaranteed debt is reported separately and not collected here.
+coverage: "Administration centrale (hors C2D et PCD)"
+
+# --- discover ---
+# The Treasury's listing page links the newest bulletin FIRST (then one per
+# year, older years on sub-pages). dgf.gouv.ci's own listing is rendered
+# client-side and answers 404 to a crawler. Each issue recalls the four
+# previous year-ends plus the current quarter, so back issues add quarters.
+discover:
+  method: page_scrape
+  page_url: "https://tresor.gouv.ci/tres/bulletins-statistiques-de-la-dette-publique/"
+  link_contains:
+    - "bulletin-statistique-de-la-dette-publique"
+    - ".pdf"
+
+extra_urls:
+  - url: "https://tresor.gouv.ci/tres/wp-content/uploads/2025/07/bulletin-statistique-de-la-dette-publique-fin-mars-2025.pdf"
+  - url: "https://tresor.gouv.ci/tres/wp-content/uploads/2025/06/bulletin-statistique-de-la-dette-publique-au-31-decembre-2024fr.pdf"
+  - url: "https://tresor.gouv.ci/tres/wp-content/uploads/2026/01/bulletin-statistique-de-la-dette-publique-t4-2023.pdf"
+
+parser: cote_divoire_dgf_debt
+geography: National
+
+notes: >
+  Tableau 1 stocks (Dette Totale / Extérieure / Intérieure) in millions USD and
+  milliards FCFA as printed, and Tableau 3 debt/GDP; year-ends 2019-2024 and
+  quarters 2025-Q1, 2025-Q3. Newest issue wins where issues overlap. Tableaux
+  4 and 7 refused (text layer drops glyphs); flows not held by the schema.
+  CROSS-CHECK: Sept 2025 total 34 016,3 milliards FCFA (53 970,2 M USD),
+  59,3 % of GDP.

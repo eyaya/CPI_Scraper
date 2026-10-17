@@ -1,0 +1,40 @@
+country: Central African Republic
+iso3: CAF
+indicator: Population
+tier: 3
+source_type: html
+agency: Institut Centrafricain des Statistiques et des Etudes Economiques et Sociales (ICASEES)
+publication_code: ICASEES projections démographiques -- population par préfecture 2021 et 2024; par sexe 2024
+frequency: annual
+verify_ssl: false
+
+# A SECOND CAR descriptor beside central_african_republic.yaml (national age x
+# sex, 2022-2023). Two ICASEES HTML tables in the RGPH-4 section of
+# www.icasees.org (pages 190 and 199).
+discover:
+  method: static_url
+  url: "https://www.icasees.org/index.php/actualites/rgph-4/190-population-rca-par-prefecture-en-2021-et-2024"
+  save_as: car_icasees_pop_prefecture_2021_2024.html
+
+extras_cache: false        # small HTML pages; re-read each run
+extra_urls:
+  - url: "https://www.icasees.org/index.php/actualites/rgph-4/199-population-de-la-rca-par-sexe-selon-la-subdivision-administrative-en-2024"
+    save_as: car_icasees_pop_sexe_subdivision_2024.html
+
+parser: icasees_car_prefectures
+geography: Total country
+
+notes: >
+  Projections (series_type projection) for the nation, its 7 regions and 20
+  prefectures (Bangui is both the prefecture and the Bas-Oubangui region):
+  2021 both sexes (page 190) and 2024 by sex plus density per km2 (page 199,
+  "ICASEES, projections démographiques 2024"; page 190's 2024 column is only
+  cross-checked). Prefecture spellings differ between the pages and are
+  mapped to one label. Communes (pages 207, 211) not read.
+
+  PUBLISHED, PINNED: page 190 prints Yadé region 2021 as 910 945 -- its
+  prefectures sum to 1 208 849, and with that figure the regions add up to
+  the RCA total exactly. Filed as printed. Pages 190/199 differ by 1 for
+  Plateaux and Kagas 2024.
+
+  CROSS-CHECK: RCA 2021 6 091 097; 2024 6 470 307 (H 3 208 814 / F 3 261 493).

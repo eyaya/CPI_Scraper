@@ -1,0 +1,68 @@
+country: Zambia
+iso3: ZMB
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Bank of Zambia (BoZ)
+frequency: monthly
+coverage: "Central government domestic marketable securities outstanding (Treasury bills and GRZ bonds; excludes BoZ 'mega bonds')"
+verify_ssl: false
+
+# --- discover ---
+# BoZ's site is an Angular app over a Drupal JSON:API (/jsonapi). Each
+# Statistics Fortnightly issue is a file in /jsonapi/file/file named
+# StatisticsFortnightly<YYYY>Vol<NN>IssueNo_<n>.pdf under
+# /sites/default/files/<YYYY-MM>/. No existing discovery method reads Drupal
+# JSON:API, so the newest issue is pinned; each issue reprints the monthly
+# outstanding balances from January two years back, so history accumulates
+# on merge even from a stale pin. To advance: GET
+#   /jsonapi/file/file?filter[f][condition][path]=filename
+#     &filter[f][condition][operator]=CONTAINS
+#     &filter[f][condition][value]=StatisticsFortnightly<YYYY>
+# and take the highest IssueNo.
+discover:
+  method: static_url
+  url: "https://www.boz.zm/sites/default/files/2026-09/StatisticsFortnightly2026Vol33IssueNo_19.pdf"
+  save_as: BoZ_StatisticsFortnightly_2026_Vol33_No19.pdf
+
+
+# BACK SERIES (2026-10-14), newest first -- the newest printing of a month
+# owns it (parsers/zambia_boz_debt.parse): year-end Statistics Fortnightly
+# issues from BoZ's own archive (jsonapi node--statistics, 'Volume NN Issue No.
+# NN'), each printing its tables from two years back, then BoZ's FORTNIGHTLY
+# TIMESERIES workbook (Table 17 monthly 2009-01..2017-05, Table 18 2012-01..
+# 2016-05; parsers/zambia_boz_timeseries.py). The workbook is re-posted with
+# each issue under a new name; this copy ends 2 October 2026.
+extras_cache: true
+extra_urls:
+  - url: "https://www.boz.zm/sites/default/files/migrated/fortnight-statistics/2024/StatisticsFortnightly2024Vol31IssueNo26.pdf"
+    save_as: BoZ_SF_StatisticsFortnightly2024Vol31IssueNo26.pdf
+  - url: "https://www.boz.zm/sites/default/files/migrated/fortnight-statistics/2023/StatisticsFortnightly2023Vol30IssueNo26.pdf"
+    save_as: BoZ_SF_StatisticsFortnightly2023Vol30IssueNo26.pdf
+  - url: "https://www.boz.zm/sites/default/files/migrated/fortnight-statistics/2022/StatisticsFortnightly2022Vol29IssueNo26.pdf"
+    save_as: BoZ_SF_StatisticsFortnightly2022Vol29IssueNo26.pdf
+  - url: "https://www.boz.zm/sites/default/files/migrated/fortnight-statistics/2021/StatisticsFortnightly2021Vol28No27.pdf"
+    save_as: BoZ_SF_StatisticsFortnightly2021Vol28No27.pdf
+  - url: "https://www.boz.zm/sites/default/files/migrated/fortnight-statistics/2019/StatisticsFortnightly2019Vol26No26.pdf"
+    save_as: BoZ_SF_StatisticsFortnightly2019Vol26No26.pdf
+  - url: "https://www.boz.zm/sites/default/files/migrated/fortnight-statistics/2017/StatisticsFortnightly2017Vol25No6.pdf"
+    save_as: BoZ_SF_StatisticsFortnightly2017Vol25No6.pdf
+  - url: "https://www.boz.zm/sites/default/files/2026-10/FORTNIGHTLYTIMESERIESending2October2026_1.xlsx"
+    save_as: BoZ_Fortnightly_Timeseries_2026-10-02.xlsx
+parser: zambia_boz_debt
+geography: Total country
+
+notes: >
+  BoZ Statistics Fortnightly, Table 17 (Treasury bills) and Table 18 (GRZ
+  bonds): monthly outstanding balances by tenor and total, K'000, January
+  2024 onward in the current issue; with the back series above, T-bills from
+  January 2009 and GRZ bonds from January 2012 (2009-11 bond months print
+  placeholder 0s and are left out; December 2023 is taken from the 2024
+  issue, the 2023 one printing it before its balances were final). The bond
+  tenor is "24 months" in issues to 2021 and the workbook, "2 year" from 2022,
+  as printed. Workbook and PDFs agree on overlapping months (2016-03 T-bills
+  11 997 811.49). DOMESTIC MARKETABLE SECURITIES ONLY -- not total public debt;
+  external debt is not published as a stock by BoZ or MoFNP on their sites.
+  Flows (sales, maturities) not collected; tenors checked to sum to totals.
+
+  CROSS-CHECK: Jan 2024 T-bills 45 561 870.19; GRZ bonds 180 072 699.97.

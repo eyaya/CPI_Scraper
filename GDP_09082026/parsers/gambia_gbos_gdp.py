@@ -70,6 +70,26 @@ def _num(v):
     return None
 
 
+def _caption(ws, fallback: str) -> str:
+    """The sheet's own title ('Table 1.2: Constant GDP estimates, 2013 base
+    year'), so the production and expenditure books' tables stay apart."""
+    for r in range(1, 4):
+        for c in range(1, 4):
+            v = ws.cell(r, c).value
+            if v and str(v).strip().lower().startswith("table"):
+                return re.sub(r"\s+", " ", str(v)).strip()
+    return fallback
+
+
+# MEMO ITEMS. Below an "Items" divider the production LEVEL sheets carry rows
+# that are not dalasi levels at all: population, GDP per capita in GMD and in
+# USD, the exchange rate, and a block of GROWTH RATES (GDP, Agriculture,
+# Industry, Services) stored as %-formatted fractions. Until 2026-10-15 all of
+# them were recorded as GMD levels -- "Industry" = -0.018 GMD was then coded as
+# industry value added. Each now gets its real measure and unit, or is skipped.
+_MEMO_SKIP = re.compile(r"population|exchange rate")
+
+
 def _read_workbook(path: str, approach: str, unit: str, rows: list):
     wb = openpyxl.load_workbook(path, data_only=True)
     for name in wb.sheetnames:
@@ -81,6 +101,8 @@ def _read_workbook(path: str, approach: str, unit: str, rows: list):
         hdr, year_cols = _year_header(ws)
         if not year_cols:
             continue
+        group = _caption(ws, name)
+        memo = False
         for r in range(hdr + 1, ws.max_row + 1):
             code = ws.cell(r, 1).value
             label = ws.cell(r, 2).value
@@ -88,6 +110,11 @@ def _read_workbook(path: str, approach: str, unit: str, rows: list):
                 continue
             label = str(label).strip()
             low = label.lower()
+            if low == "items":
+                memo = True
+                continue
+            if memo and _MEMO_SKIP.search(low):
+                continue
             row_approach = "aggregate" if (
                 "gross domestic product" in low
                 or "gross value added" in low
@@ -98,23 +125,38 @@ def _read_workbook(path: str, approach: str, unit: str, rows: list):
                 v = _num(cell.value)
                 if v is None:
                     continue
-                if is_pct and "%" in (cell.number_format or ""):
+                pct_cell = "%" in (cell.number_format or "")
+                row_measure = measure
+                if memo and measure == "level":
+                    if pct_cell:
+                        row_measure = "growth_yoy"      # %-formatted fraction
+                    elif "per capita" in low:
+                        row_measure = "per_capita"
+                    else:
+                        continue                         # unknown memo row: not a level
+                elif measure == "level" and pct_cell:
+                    # "Statistical discrepancy (in %)" in the expenditure level
+                    # sheets: a %-formatted fraction of GDP, not a D'000 level.
+                    row_measure = "share"
+                if (is_pct or row_measure in ("growth_yoy", "share")) and pct_cell:
                     v *= 100.0
-                if measure == "level":
-                    u, unit_out = unit, unit
-                elif measure == "deflator":
+                if row_measure == "level":
+                    unit_out = unit
+                elif row_measure == "per_capita":
+                    unit_out = "USD" if "usd" in low else "GMD"
+                elif row_measure == "deflator":
                     unit_out = "index"
-                elif measure == "contribution":
+                elif row_measure == "contribution":
                     unit_out = "percentage points"
                 else:
                     unit_out = "percent"
                 rows.append({
                     "approach": row_approach, "category": label,
-                    "category_group": "",
+                    "category_group": group,
                     "series_code": "" if code is None else str(code).strip(),
                     "geography": "National", "period": str(year),
                     "frequency": "annual", "price_basis": basis,
-                    "seasonal_adjustment": "nsa", "measure": measure,
+                    "seasonal_adjustment": "nsa", "measure": row_measure,
                     "value": v, "unit": unit_out, "base_period": base,
                 })
     wb.close()

@@ -1,0 +1,28 @@
+country: Gambia
+iso3: GMB
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Gambia Bureau of Statistics (GBoS)
+publication_code: The 2016 Gambia Statistical Abstract
+frequency: annual
+verify_ssl: false
+
+# A SECOND Gambia descriptor beside gambia.yaml (the 2024 census): the 2016
+# Statistical Abstract, whose Chapter 1 reprints the 1973-2013 census series.
+# gbosdata.org serves the file only on the FULL slug URL.
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/209-the-2016-gambia-statistical-abstract"
+  save_as: gambia_statistical_abstract_2016.pdf
+
+parser: gbos_gambia_abstract
+geography: Total country
+
+notes: >
+  GBoS 2016 Statistical Abstract, Chapter 1: census population by LGA 1973,
+  1983, 1993, 2003, 2013 (1973 total 493,499; 2013 1,857,181), density by LGA
+  in the same years, the 2013 census by LGA x sex and by five-year age group x
+  sex (with "Not stated"). LGAs sum to the Total every year. Later abstracts
+  (2017-2024) hold no census back-series (LFS weights in 2020/2023, the 2024
+  census in 2024). Deferred: inter-censal growth (ranges), urban/rural, TFR.

@@ -22,6 +22,36 @@ parser: sao_tome_ine
 geography: National
 expect_divisions: 13          # IPC GERAL + 12 COICOP-1999 groups
 
+
+# --- back issues (2026-10-13) ---
+# Each year's DECEMBER 'Publicação1' workbook holds the whole year (2021 has no
+# December upload; October is the latest), plus INE's 'Série temporal' workbooks
+# (one sheet per year, same layout): 2005-2015 on base 1996, 2016-2019 on base
+# 2014. Direct userupload paths (the Phoca file route renders a page, not the
+# file); the two series files only resolve via the category '?download=' route.
+# 2024 is MISSING: its December and November workbooks are a new layout that
+# does not state the base period, so they are not read (no base is assumed).
+extras_cache: true
+extra_urls:
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/IPC_Ano/Ano_2018/Dezembro/Resultado_IPC_2018_Novembro_2018_Publica%C3%A7%C3%A3o1.xls"
+    save_as: "STP_Ano_2018_Resultado_IPC_2018_Novembro_2018_Publicação1.xls"
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/IPC_Ano/Ano_2019/Dezembro/Resultado_IPC_2019_Dezembro_2019_Publica%C3%A7%C3%A3o1.xls"
+    save_as: "STP_Ano_2019_Resultado_IPC_2019_Dezembro_2019_Publicação1.xls"
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/IPC_Ano/Ano_2020/Dezembro/Resultado_IPC_2020_Dezembro_2020_Publica%C3%A7%C3%A3o1.xls"
+    save_as: "STP_Ano_2020_Resultado_IPC_2020_Dezembro_2020_Publicação1.xls"
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/IPC_Ano/Ano_2021/Outubro/Resultado_IPC_2021_Outubro_2021_Publica%C3%A7%C3%A3o.xlsx"
+    save_as: "STP_Ano_2021_Resultado_IPC_2021_Outubro_2021_Publicação.xlsx"
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/IPC_Ano/Ano_2022/Dezembro/Resultado_IPC_Dezembro2022_Publica%C3%A7%C3%A3o1.xls"
+    save_as: "STP_Ano_2022_Resultado_IPC_Dezembro2022_Publicação1.xls"
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/IPC_Ano/Ano_2023/Dezembro/Resultado_IPC_Dezembro2023_Publica%C3%A7%C3%A3o%20%281%29.xlsx"
+    save_as: "STP_Ano_2023_Resultado_IPC_Dezembro2023_Publicação_(1).xlsx"
+  - url: "https://www.ine.st/phocadownload/userupload/Documentos/IPC_Ano/Ano_2025/Dezembro/Resultado_IPC_Dezembro-2025_Publica%C3%A7%C3%A3o1.xls"
+    save_as: "STP_Ano_2025_Resultado_IPC_Dezembro-2025_Publicação1.xls"
+  - url: "https://www.ine.st/index.php/component/phocadownload/category/146-serie-ipc-2005-2019?download=577:publicacao-ipc-2015-2019-base2014"
+    save_as: "STP_Serie_IPC_2015_2019_Base2014.xls"
+  - url: "https://www.ine.st/index.php/component/phocadownload/category/146-serie-ipc-2005-2019?download=576:publicacao-ipc-2005-2014-base1996"
+    save_as: "STP_Serie_IPC_2005_2014_Base1996.xls"
+
 notes: >
   CPI (IPC), base 2014 = 100, COICOP-1999 groups 01..12 plus IPC GERAL.
   'Publicação1' is the summary workbook — one row per group, one column per month

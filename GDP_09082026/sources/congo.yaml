@@ -25,6 +25,21 @@ discover:
   save_as: INS_Congo_CNT_T4_2025.pdf
   download_timeout: 300
 
+# BACK SERIES (extras): the two annual CNT notes (each republishes seven
+# quarters; the newest note wins on overlap) and the definitive annual
+# accounts 2022 (2018-2022, by branch and by expenditure; parsers/
+# congo_ins_annual.py). INS ids 135, 117, 116. Ids 69/72/73/74 (comptes 2021,
+# 2005-2018, 2019, 2020) are listed by the API but their files answer
+# "Fichier introuvable" (2026-10-14).
+extras_cache: true
+extra_urls:
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=135"
+    save_as: INS_Congo_CNT_annee_2023.pdf
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=117"
+    save_as: INS_Congo_CNT_annee_2024.pdf
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=116"
+    save_as: INS_Congo_CND_2022.pdf
+
 parser: congo_ins_gdp
 geography: National
 

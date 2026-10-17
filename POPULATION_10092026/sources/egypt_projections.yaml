@@ -1,0 +1,38 @@
+country: Egypt
+iso3: EGY
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Central Agency for Public Mobilization and Statistics (CAPMAS)
+publication_code: إسقاطات السكان المستقبلية (Future Population Projections 2022-2072), CAPMAS publication 106
+frequency: annual
+verify_ssl: false
+
+# A SECOND Egypt descriptor beside egypt.yaml (publication 150, 1 January
+# estimates by governorate). Same CAPMAS JSON API route; publication 106's
+# current issue is the 2022-2072 projections (posted 2026-01-08, 373 pages,
+# 4.3 MB). The port-8080 host can stall; long timeout.
+discover:
+  method: capmas_publication
+  api_base: "https://www.capmas.gov.eg:8080"
+  publication_id: 106
+  prefer: pdf
+  save_as: egypt_capmas_projections_2022_2072.pdf
+  download_timeout: 900
+
+parser: capmas_egypt_projection
+geography: Total country
+
+notes: >
+  2017-census-based projections, MEDIUM fertility hypothesis only (no variant
+  column). Table 5-1: total population 2022-2072 (persons). Annex D medium
+  section: 5-year age group (0-4 .. 80+) x sex, 2022-2072, in thousands (unit
+  thousand_persons); its both-sexes Total is not filed (Table 5-1's persons
+  figure is) but checked within 1 thousand. Annex A: MID-YEAR population
+  2018-2021 by age x sex, persons (series_type estimate). Low / high /
+  constant hypotheses not read. Read by position -- the Arabic text layer is
+  ligature-mangled -- with the medium column confirmed by the report's own
+  text (2072: 159.8 million).
+
+  CROSS-CHECK: mid-2018 97 147 368; 2022 103 605 040; 2072 (medium)
+  159 771 728.

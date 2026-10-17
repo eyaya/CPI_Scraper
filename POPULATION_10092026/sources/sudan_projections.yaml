@@ -1,0 +1,38 @@
+country: Sudan
+iso3: SDN
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Central Bureau of Statistics (CBS Sudan)
+publication_code: Sub-national Population Projections of Sudan and Age-Sex Composition, 2009-2018
+frequency: annual
+verify_ssl: false
+
+# A SECOND Sudan descriptor beside sudan.yaml (2008 census tables). cbs.gov.sd
+# is gone; this is the Wayback Machine's unmodified (id_) copy of CBS's OWN
+# file, served by its download page (download.php?id=45,
+# Pop._Proj._by_satates137.pdf), captured 2016-06-09.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20160609223707id_/http://cbs.gov.sd/en/download.php?id=45&file=Pop._Proj._by_satates137.pdf"
+  save_as: CBS_Sudan_Pop_Proj_by_States_2009_2018.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 600
+
+parser: cbs_sudan_projection
+geography: Total country
+
+notes: >
+  Projections from the 2008 census for the fifteen states of today's Sudan,
+  2009-2018 (series_type projection): each state by five-year age band x
+  sex (Tables 2b-30k), and SUDAN (their sum) both sexes from Table 1. State
+  and age labels follow sudan.yaml. National age x sex is not printed and
+  not derived; 2008 "enumerated"/"smoothed" tables and single-age young
+  population tables not read.
+
+  PUBLISHED, PINNED IN THE PARSER: Red Sea 2009 -- male bands sum 99 below
+  the male total and M + F misses Total by 3-12 in twelve bands; Blue Nile
+  2013 -- Total 965 573 against M + F 965 673.
+
+  CROSS-CHECK: SUDAN 2009 31 898 536; 2018 41 984 512; Khartoum 2018
+  7 993 851.

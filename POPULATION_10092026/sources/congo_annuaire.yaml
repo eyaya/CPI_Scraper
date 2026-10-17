@@ -1,0 +1,50 @@
+country: Congo
+iso3: COG
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: Annuaire statistique du Congo, éditions 2010, 2012, 2014 and 2018 (ch. 6) -- population tables
+frequency: annual
+verify_ssl: false
+
+# A SECOND Congo descriptor beside congo.yaml (the 2023 RGPH-5 census). All
+# four files are INS's own, listed by its publications API
+# (backend/api/publications/list.php?search=annuaire: ids 51, 19, 20; the 2018
+# chapter is id 47).
+discover:
+  method: static_url
+  url: "https://ins-congo.cg/assets/Documents/ANNUAIRE%20STATISTIQUE/Annuaire%20Statistique%20du%20Congo/Annuaire%20Statistique%20du%20CONGO%202018/ASN-CH6-Statistiques-Demographiques.pdf"
+  save_as: INS_Congo_ASN2018_CH6_Statistiques_Demographiques.pdf
+  download_timeout: 900       # also applies to the extras (up to 15 MB)
+
+extras_cache: true
+extra_urls:
+  - url: "https://ins-congo.cg/assets/Documents/ANNUAIRE%20STATISTIQUE/Annuaire%20Statistique%20du%20Congo/Annuaire%20Stat%20du%20Congo%202014.pdf"
+    save_as: INS_Congo_Annuaire_2014.pdf
+  - url: "https://ins-congo.cg/assets/Documents/ANNUAIRE%20STATISTIQUE/Annuaire%20Statistique%20du%20Congo/Annuaire%20Stat%20du%20Congo%202012.pdf"
+    save_as: INS_Congo_Annuaire_2012.pdf
+  - url: "https://ins-congo.cg/assets/Documents/ANNUAIRE%20STATISTIQUE/Annuaire%20Statistique%20du%20Congo/Annuaire%20Statistique%20du%20Congo%202010.pdf"
+    save_as: INS_Congo_Annuaire_2010.pdf
+
+parser: ins_congo_annuaire
+geography: Total country
+
+notes: >
+  Population of the nation and its twelve departments, and national five-year
+  age bands, 2007-2018; the newest edition's printing of a year wins.
+  2014-2018 from the 2018 edition (Tableaux 6.1, 6.4; "Ens." and "dont F"
+  only -- males not printed, not derived); 2010-2013 from the 2014 edition,
+  plus its 2014 male rows by department; 2008-2009 from the 2012 edition;
+  2007 (the RGPH-2007 census, series_type census) from the 2010 edition.
+  2008-2018 are INS estimates projected from that census. Commune tables not
+  read (they reuse department names with different figures).
+
+  PUBLISHED, PINNED IN THE PARSER: 2018 ed. prints Cuvette 2014 as 196 330
+  where the 2014 ed. prints 196 930 (so its departments miss Total Congo by
+  600); 2018 ed. national female 2014 is 2 360 183 in 6.1 and 2 367 754 in
+  6.4; 2014 ed. 2011 age table, M + F misses Ens. for 5-9 (1 000), 30-34
+  (500), 50-54 (500), 55-59 (20), 60-64 (50).
+
+  CROSS-CHECK: 2007 3 697 490 (H 1 821 357 / F 1 876 133); 2013 4 530 366;
+  2018 5 203 073.

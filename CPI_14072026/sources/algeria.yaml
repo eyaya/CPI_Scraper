@@ -27,6 +27,50 @@ notes: >
   native French labels and native grouping; the `coicop_code` (00 = Ensemble,
   01..08) is an Algeria-internal ordering, NOT a COICOP code — do not join it to
   other countries' COICOP codes. Base 2001 = 100. The note's headline table gives
-  the group index + MoM + YoY for the report month (one PDF = one month; the
-  'Alimentation' label wraps, handled by positional extraction). A product-type
+  the group index + MoM + YoY for the report month. TWO GEOGRAPHIES since
+  2026-10-14: 'National' = the national group table (page 7); "Ville d'Alger" =
+  the Algiers table (page 2, 'Alimentation' label wraps, positional extraction).
+  Rows filed as 'National' before 2026-10-14 were in fact the Algiers index. A product-type
   breakdown (agricoles frais / manufacturés / services) is also in the note.
+
+# BACK SERIES (added 2026-10-14). (1) ONS yearbook "Indice des prix a la
+# consommation 2014-2023" (Collections Statistiques n. 238): every month 2014-2023,
+# 8 groups + Ensemble, national and Algiers, index + monthly variation. (2) the
+# monthly notes ONS still links from its spip articles (2023-10 .. 2026-06; found
+# by walking spip.php?article2955-3160). A month's own note wins over history.
+extras_cache: true
+extra_urls:
+  - url: "https://www.ons.dz/IMG/pdf/IPC2014_2023.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Octobre2023.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_novembre2023.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Decembre2023.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Janvier2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_fevrier2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_mars2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Avril2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_mai2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Juin2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Juillet2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Aout2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_septembre2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.ipc_octobre2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.ipc_Novembre2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.IPC_Decembre2024.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/IPC_JANVIER2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.ipc_Fevrier2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.IPC_Mars2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.IPC_Avril2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Mai2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Juin2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Juillet2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Aout2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.IPC_septembre2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.IPC_octobre2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.IPC_Novembre2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/i.IPC_Decembre2025.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Janvier2026.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Fevrier2026.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/I.IPC_Mars2026.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/IPC_Avril2026.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/IPC_mai2026.pdf"
+  - url: "https://www.ons.dz/IMG/pdf/IPC_juin2026.pdf"

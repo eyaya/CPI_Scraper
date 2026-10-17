@@ -73,9 +73,16 @@ def _read_csv(path, rows):
 def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
     rows = []
     _read_csv(pdf_path, rows)
+    from .comoros_inseed_annual import parse_workbook
     for ex in (extras or []):
-        _read_csv(ex, rows)
+        if ex.lower().endswith(".xlsx"):
+            # the notes' data workbooks: levels, growth, deflator changes,
+            # 2007-2025 over four editions -- see comoros_inseed_annual
+            rows.extend(parse_workbook(ex))
+        else:
+            _read_csv(ex, rows)
     if not rows:
         raise ValueError("no GDP rows parsed from INSEED Comoros CSVs")
     return pd.DataFrame.from_records(rows)[_OUT_COLS].drop_duplicates(
-        ["approach", "category", "period", "measure"])
+        ["approach", "category", "category_group", "period", "measure",
+         "price_basis"])

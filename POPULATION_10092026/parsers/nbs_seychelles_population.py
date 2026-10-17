@@ -79,4 +79,47 @@ def parse(local_path: str) -> pd.DataFrame:
     if national:
         emit("Total", national[0], national[1], national[0] + national[1])
 
+    out += _table1_series(local_path, year,
+                          national[0] + national[1] if national else None)
     return pd.DataFrame(out)
+
+
+# TABLE 1, "KEY DEMOGRAPHIC INDICATORS, 1986-<year>": the mid-year estimated
+# all-resident population for every year since 1986, printed in the same report.
+# Only the population column is taken (births/deaths are not population). Two
+# things travel with it, recorded here rather than smoothed:
+#   * from 2022 the series is REBASED on Census 2022 adjusted for undercount
+#     (note (1)): 99,258 in 2021 -> 119,878 in 2022 is a level break, not growth;
+#   * NBS states the 2011-2021 estimates are due for revision.
+# The current year duplicates Table 3a's TOTAL and is checked equal, not emitted.
+_T1_ROW = re.compile(r"^(\d{4})(?:\(\d\))?\s+(.*)$")
+_T1_POP = re.compile(r"\d[\d ]*,\d{3}")
+
+
+def _table1_series(local_path: str, current_year: str, current_total) -> list[dict]:
+    with pdfplumber.open(local_path) as pdf:
+        text = next((t for t in (p.extract_text() or "" for p in pdf.pages)
+                     if "KEY DEMOGRAPHIC INDICATORS" in t.upper()
+                     and re.search(r"Table\s*1\b", t)), None)
+    if text is None:
+        raise ValueError("nbs_seychelles_population: Table 1 not found")
+    rows = {}
+    for ln in text.splitlines():
+        m = _T1_ROW.match(ln.strip())
+        if not m:
+            continue
+        pm = _T1_POP.search(m.group(2))
+        if pm:
+            # letter-spaced digits ("1 23,565") are one number
+            rows[m.group(1)] = int(pm.group(0).replace(" ", "").replace(",", ""))
+    if len(rows) < 30 or "1986" not in rows:
+        raise ValueError(f"nbs_seychelles_population: Table 1 read {len(rows)} years")
+    if current_total is not None and rows.get(current_year) not in (None, current_total):
+        raise ValueError(f"nbs_seychelles_population: Table 1 {current_year} "
+                         f"{rows[current_year]} != Table 3a TOTAL {current_total}")
+    return [{
+        "series_type": "estimate", "sex": "total", "age_group": "Total",
+        "geography": "Total country", "period": y, "frequency": "annual",
+        "measure": "count", "value": float(v), "unit": "persons",
+        "series_code": "SC_ERP_T1",
+    } for y, v in sorted(rows.items()) if y != current_year]

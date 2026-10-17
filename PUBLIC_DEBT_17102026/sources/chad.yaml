@@ -1,0 +1,29 @@
+country: Chad
+iso3: TCD
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: "INSEED (Annuaire Statistique National), from the Direction Générale du Trésor / Direction de la Dette"
+frequency: annual
+coverage: "Public debt (perimeter not stated by the Direction de la Dette)"
+verify_ssl: false
+
+# --- discover ---
+# The same INSEED yearbook the population descriptor reads (INSEED API
+# /api/publications lists it; uploaded names are timestamps, so pinned).
+# finances.gouv.td answers 404 and holds no reachable debt bulletin (2026-10).
+discover:
+  method: static_url
+  url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1772547132053-547718258.pdf"
+  save_as: inseed_annuaire_2024.pdf
+  download_timeout: 300
+
+parser: chad_inseed_debt
+geography: National
+
+notes: >
+  Tableau 13 of the 2024 yearbook: public, domestic and external debt
+  outstanding as % of GDP, 2023 and 2024, credited to the Treasury's Debt
+  Directorate. Ratios only (no amounts are printed); interest and service
+  ratios are flows and not collected. Older editions carry no debt table.
+  Cross-check: 28,6 / 29,1 % of GDP; domestic + external = public.

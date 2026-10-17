@@ -1,0 +1,49 @@
+country: Zambia
+iso3: ZMB
+indicator: Unemployment
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats; Central Statistical Office before 2020)
+publication_code: Labour Force Survey 2017-2023
+frequency: annual
+
+# --- discover ---
+# The BACK-SERIES: the seven annual LFS reports before the current one (the
+# 2024 report is read by zambia.yaml). Each report is its own round. Files are
+# ZamStats's own (WordPress media library, uploaded 2023/12 and 2024/11). The
+# primary is the 2023 report; 2017-2022 are extras. Every filename carries the
+# report year, which the parser reads; save_as keeps it.
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2024/11/2023-Labour-Force-Survey-Report.pdf"
+  save_as: "2023-Labour-Force-Survey-Report.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2022-Labour-Force-Survey-Report.pdf"
+    save_as: "2022-Labour-Force-Survey-Report.pdf"
+  - url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2021-Labour-Force-Survey-Report.pdf"
+    save_as: "2021-Labour-Force-Survey-Report.pdf"
+  - url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2020-Labour-Force-Survey-Report.pdf"
+    save_as: "2020-Labour-Force-Survey-Report.pdf"
+  - url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2019-Labour-Force-Report.pdf"
+    save_as: "2019-Labour-Force-Report.pdf"
+  - url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2018-Labour-Force-Survey-Report.pdf"
+    save_as: "2018-Labour-Force-Survey-Report.pdf"
+  - url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2017-Labour-Force-Survey-Report.pdf"
+    save_as: "2017-Labour-Force-Survey-Report.pdf"
+
+parser: zambia_lfs_back
+geography: Total country
+
+notes: >
+  ZamStats Labour Force Surveys 2017-2023, each report's front-matter "Selected
+  Key Indicators of the Labour Market by Sex and Rural/Urban" table (2023:
+  "Summary of 2023 Labour Force Survey"): Total | Male | Female | Rural | Urban,
+  rural before urban in every year. This descriptor reads the headline status rows (working-age population, labour force, employed, unemployed, potential labour force, outside the labour force, LFPR, EPR, unemployment, youth, time-related underemployment and CRUPLF); the other
+  indicator's zambia_back.yaml reads the rest of the same table. All seven
+  rounds use the 19th-ICLS concepts of the 2024 report. Youth bands as each
+  report defines them (15-35 for 2017-2022, 15-24 and 19-34 in 2023), carried
+  in every youth label. Published arithmetic breaks and one malformed cell are
+  pinned in the parser docstring. NOT READ: the 2008, 2012 and 2014 reports
+  (pre-19th-ICLS concepts, no summary table; a separate layout if wanted).

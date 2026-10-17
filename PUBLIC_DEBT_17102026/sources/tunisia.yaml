@@ -1,0 +1,75 @@
+country: Tunisia
+iso3: TUN
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministère des Finances, Tunisie (D.G.R.E.) — Résultats provisoires de l'exécution du Budget de l'Etat
+frequency: monthly
+coverage: "Dette publique (Etat) -- the State-budget bulletin's 'Encours de la Dette Publique', as published by the Ministère des Finances"
+verify_ssl: false
+
+# --- discover ---
+# finances.gov.tn (Drupal) lists every download newest first at /fr/telechargement
+# (the title filter is ignored; the list is the whole catalogue, 100+ pages).
+# The monthly bulletin is "Résultats provisoires de l'exécution du Budget à fin
+# <mois> <année>"; the first such link is the newest issue.
+discover:
+  method: page_scrape
+  page_url: "https://www.finances.gov.tn/fr/telechargement?title=provisoires&field_secteur_et_domaines_target_id=All"
+  link_contains:
+    - "provisoires"
+    - ".pdf"
+  save_as: tn_mof_resultats_provisoires_latest.pdf
+  download_timeout: 300
+
+# Back issues (catalogue pages 0-3, 2023-10 .. 2025-11). Each issue prints the
+# current and previous month for this year and last, plus past year-ends, so
+# together they give the monthly series; merge-on-write keeps it. "BULLETIN MAI
+# 2025" is a scan with no text layer and is left out; January issues head their
+# columns in Arabic only and are skipped by the parser with a message.
+# finances.gov.tn is heavily throttled (~2 MB per 5-7 min); the 25 back issues
+# never change, so complete copies already on disk are reused (core/run.py).
+extras_cache: true
+
+extra_urls:
+  - url: "https://www.finances.gov.tn/sites/default/files/2026-02/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Octobre%202025.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2026-02/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Novembre%202025.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20septembre%202025_compressed.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-10/bulletin%20juillet%202025_compressed.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-10/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20juin%202025_compressed.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-10/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Avril%202025_compressed.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-10/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Aout%202025%2024-10-2025_compressed.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-06/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Mars%202025_Compressed_F.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-06/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Janvier%202025_Compressed%20_F.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-06/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20Fin%20F%C3%A9vrier%202025%20_Compressed_F.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-02/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20D%C3%A9cembre%202024.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-01/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Octobre%202024.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2025-01/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Novembre%202024.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-12/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Septembre%202024_compressed.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-12/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Juillet%202024_compressed.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-12/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Aout%202024_compressed%20%281%29.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20octobre%202023_compressed%20fin.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20janvier%202024.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Novembre%202023_compressed%20%281%29.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Mars%202024.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Mai%202024.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Juin%202024.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20F%C3%A9vrier%202024.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20D%C3%A9cembre%202023.pdf"
+  - url: "https://www.finances.gov.tn/sites/default/files/2024-11/R%C3%A9sultats%20provisoires%20de%20l%27ex%C3%A9cution%20du%20Budget%20%C3%A0%20fin%20Avril%202024.pdf"
+
+parser: tunisia_mof_debt
+geography: National
+
+notes: >
+  Ministère des Finances monthly budget bulletin, page "Public debt / Dette
+  publique", section II "Encours de la Dette Publique" (MDT = TND million):
+  outstanding public debt and its % of GDP, domestic and foreign debt and
+  their % shares. Columns dated from the bulletin's own header geometry
+  ("End <month>" groups = monthly; LF/LFR budget-forecast columns never
+  collected; unlabelled right-hand columns = past year-end outturns).
+  Checked every issue: domestic + foreign = total and shares sum to 100.
+
+  CROSS-CHECK (December 2025 issue): encours end-Dec 2025 141 665,4 MDT
+  (82,1% of GDP); domestic 86 178,0 (60,8%); foreign 55 487,3 (39,2%);
+  end-2022 114 895,7.

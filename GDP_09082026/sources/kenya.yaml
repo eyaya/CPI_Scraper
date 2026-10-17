@@ -17,6 +17,21 @@ discover:
     - "Quarterly-Gross-Domestic-Product"
     - ".pdf"
 
+# ANNUAL back series (extras; parsers/kenya_knbs_annual.py and
+# kenya_knbs_abstract_pdf.py). Each edition is its own vintage: Kenya rebased in
+# 2014 (2001 -> 2009) and 2021 (2009 -> 2016) and each rebasing revised current-
+# price levels too, so `category_group` names the edition and table, and
+# constant levels carry their own base. Nothing is chained. The 2009-2011
+# Abstracts are image scans (no text layer) and are not read (no OCR).
+extras_cache: true
+extra_urls:
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2025/02/National-Accounts.xlsx"
+    save_as: "KNBS_Statistical_Abstract_2024_National_Accounts.xlsx"   # 2014-2023, 2016 prices
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/2018-Statistical-Abstract.pdf"
+    save_as: "KNBS_Statistical_Abstract_2018.pdf"                      # 2011-2017, 2009 prices
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/2013-Statistical-Abstract.pdf"
+    save_as: "KNBS_Statistical_Abstract_2013.pdf"                      # 2007-2012, 2001 prices
+
 parser: kenya_knbs_gdp
 geography: National
 

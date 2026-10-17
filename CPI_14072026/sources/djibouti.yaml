@@ -17,6 +17,44 @@ discover:
   api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
   categorie: "Indice des prix à la consommation"
 
+# Back issues (same base 2022 = 100), from the INSTAD API's yearly lists.
+# Only issues whose Tableau 2 parses and passes the parser's period checks;
+# 2024 issues mostly use another layout and are not listed. Not chained.
+extras_cache: true
+extra_urls:
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2023%2FBulletin%20de%20l%E2%80%99Indice%20des%20Prix%20%C3%A0%20la%20Consommation%20(IPC)%20Septembre%202023%20(Base%20100%20en%202022).pdf?alt=media&token=2038007f-3a6e-4869-823e-1e77de2a088f"
+    save_as: dj_ipc_2023_09.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2024%2FBulletin%20de%20l%E2%80%99Indice%20des%20prix%20a%20la%20consommation%20janvier%202024.pdf?alt=media&token=d987bdd1-6cff-43b5-95b1-bb8b420945ef"
+    save_as: dj_ipc_2024_01.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2024%2FBulletin%20de%20l'indice%20des%20prix%20a%20la%20consommation%20mai%202024.pdf?alt=media&token=0913cc1a-6c49-463d-8a4d-cd290b01cbcf"
+    save_as: dj_ipc_2024_05.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2025%2FIPC_MARS_%202025_VF.pdf?alt=media&token=d34349ec-e882-480a-8c54-a2366027abfb"
+    save_as: dj_ipc_2025_03.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2025%2FIPC_AVRIL_%202025_VF.pdf?alt=media&token=f18dc29e-8713-4fce-bfb9-811db1f47a43"
+    save_as: dj_ipc_2025_04.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2025%2FIPC_MAI_%202025_VF.pdf?alt=media&token=e03d367d-d0da-430d-800a-54c8f255e272"
+    save_as: dj_ipc_2025_05.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2025%2FIPC_JUIN_%202025_VFF.pdf?alt=media&token=69fc3e87-8afa-4e23-a926-839eb95cc83c"
+    save_as: dj_ipc_2025_06.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2025%2FIPC_JUIL_%202025_VF.pdf?alt=media&token=d4625da6-7f92-40fd-b5f8-3a1a8b082ac4"
+    save_as: dj_ipc_2025_07.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2025%2FIPC_AOUT_%202025_VF.pdf?alt=media&token=53e71178-6302-4c93-9b56-7ba6aae5dab6"
+    save_as: dj_ipc_2025_08.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2025%2FIPC_%20NOVEMBRE_2025_VF.pdf?alt=media&token=6a871e4f-67cf-49b5-9efc-1929058c1ce2"
+    save_as: dj_ipc_2025_11.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2025%2FIPC_%20DEC_2025_VF.pdf?alt=media&token=67fae7ed-64b7-4384-8cff-77718e246494"
+    save_as: dj_ipc_2025_12.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2026%2FIPC_%20JAN_2026_VF.pdf?alt=media&token=d7f742ee-a2e7-42dd-b443-28301dba61b5"
+    save_as: dj_ipc_2026_01.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2026%2FIPC_FEV_2026_VF.pdf?alt=media&token=2b2ede0c-bdc9-487a-9def-daf43597384e"
+    save_as: dj_ipc_2026_02.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2026%2FIPC_%20Mars%202026_VF.pdf?alt=media&token=5914cfcf-28a5-413d-9271-82ca2fe4d17b"
+    save_as: dj_ipc_2026_03.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2026%2FIPC_MAI_2026_VF.pdf?alt=media&token=845ba5d6-fd01-4993-ad05-7a32b45544ab"
+    save_as: dj_ipc_2026_05.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Indice%20des%20prix%20%C3%A0%20la%20consommation%2F2026%2FIPC_%20JUILLET_2026_VF.pdf?alt=media&token=b5b48986-356e-4904-874c-58fbac8d49b9"
+    save_as: dj_ipc_2026_07.pdf
+
 parser: djibouti_instad
 geography: National
 expect_divisions: 13          # GLOBAL + 12 COICOP-1999 functions

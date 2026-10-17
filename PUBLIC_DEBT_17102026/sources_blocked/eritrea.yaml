@@ -1,0 +1,22 @@
+# =====================================================================
+# BLOCKED -- NO REACHABLE OFFICIAL PUBLISHER (checked 2026-10-08).
+#
+# Public debt is compiled by the Ministry of Finance / central bank, so the
+# candidates are the National Statistics Office, the Ministry of Finance and
+# the Bank of Eritrea. On 2026-10-08 nso.gov.er, www.nso.gov.er, mof.gov.er,
+# boe.gov.er and www.boe.gov.er all failed to connect (curl status 000 over
+# both http and https). The Wayback Machine CDX index for mof.gov.er returned
+# no captures; for boe.gov.er the archive was "Temporarily Offline" that day.
+# For other indicators the NSO's captures were a default server page and the
+# Bank of Eritrea's 2011-2018 captures an "under construction" image with no
+# links (gdp/population sources_blocked/eritrea.yaml). shabait.com (Ministry
+# of Information) answers but publishes news, not debt statistics.
+#
+# Eritrean debt figures circulate only via IMF/World Bank products, which this
+# project excludes. Re-check boe.gov.er's Wayback captures for PDFs if the
+# archive is back up.
+# =====================================================================
+country: Eritrea
+iso3: ERI
+indicator: Public_Debt
+blocked_reason: no reachable NSO, Ministry of Finance or central-bank publication

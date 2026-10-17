@@ -11,6 +11,7 @@ import os
 from core.run import Pipeline, run_cli
 from . import parsers
 from . import schema
+from .standardise import standardise
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -32,6 +33,9 @@ CONFIG = Pipeline(
     merge_keys=["approach", "category", "category_group", "series_code",
                 "geography", "period", "frequency", "price_basis",
                 "seasonal_adjustment", "measure", "unit", "base_period"],
+    # Cross-country columns derived from the published ones (2026-10-15) --
+    # see standardise.py. The published columns stay exactly as the NSO printed.
+    standardise=standardise,
 )
 
 if __name__ == "__main__":

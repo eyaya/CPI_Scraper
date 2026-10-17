@@ -14,6 +14,7 @@ prices, Table 3 growth rates (real). Values are KSh million (levels) / percent
 Everything as published; nothing derived.
 """
 from __future__ import annotations
+import os
 import re
 import pdfplumber
 import pandas as pd
@@ -107,8 +108,18 @@ def _parse_table(tb, measure, basis, unit):
     return rows
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
     rows = []
+    # ANNUAL back series (extras): the Statistical Abstract 2024 National
+    # Accounts workbook (kenya_knbs_annual) and older Abstract PDFs, each its
+    # own vintage and base (kenya_knbs_abstract_pdf).
+    from .kenya_knbs_annual import parse_workbook
+    from .kenya_knbs_abstract_pdf import parse_abstract
+    for ex in extras or []:
+        if ex.lower().endswith(".xlsx"):
+            rows.extend(parse_workbook(ex))
+        elif "statistical_abstract" in os.path.basename(ex).lower():
+            rows.extend(parse_abstract(ex))
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
             spec = _spec(_caption(page))
@@ -117,7 +128,9 @@ def parse(pdf_path: str) -> pd.DataFrame:
             tbls = [tb for tb in page.extract_tables() if len(tb) >= 15]
             for tb in tbls:
                 rows.extend(_parse_table(tb, *spec))
-    if not rows:
+    if not any(r["frequency"] == "quarterly" for r in rows):
         raise ValueError("no GDP rows parsed from KNBS report")
     out = pd.DataFrame.from_records(rows)[_OUT_COLS]
-    return out.drop_duplicates(["approach", "category", "period", "measure", "price_basis", "seasonal_adjustment"])
+    return out.drop_duplicates(["approach", "category", "category_group", "period",
+                                "frequency", "measure", "price_basis",
+                                "seasonal_adjustment"])

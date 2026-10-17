@@ -49,7 +49,51 @@ def _spec(caption: str):
 _WANTED = {2, 3}
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
+    """The current edition, plus OLDER EDITIONS (extras) for the years it does
+    not print.
+
+    Each annual report prints only its two latest years, so the series is
+    built from successive editions: the 2023 provisional accounts add 2022 and
+    the 2022 definitive accounts ("révisés 2016-2021") add 2016-2021. Extras
+    are read newest first, and an edition contributes ONLY the years no newer
+    edition already gave -- so every year comes from the latest report that
+    prints it. `category_group` names the edition each row came from, because
+    branch labels and revisions differ between editions and a reader must be
+    able to see where a year's figures were published.
+
+    Only the by-branch current-price table (annexe 2) is readable in the older
+    multi-year editions: their volume table (annexe 3), like the expenditure
+    and income annexes here, renders letter-spaced with values detached.
+    """
+    df = _parse_one(pdf_path)
+    have = set(df["period"])
+    for ex in sorted(extras or [], key=_edition_year, reverse=True):
+        old = _parse_one(ex)
+        old = old[~old["period"].isin(have)]
+        if old.empty:
+            continue
+        old["category_group"] = _edition_label(ex)
+        have |= set(old["period"])
+        df = pd.concat([df, old], ignore_index=True)
+    return df
+
+
+def _edition_year(path: str) -> int:
+    m = re.search(r"(20\d\d)", path.rsplit("/", 1)[-1].rsplit("\\", 1)[-1])
+    return int(m.group(1)) if m else 0
+
+
+def _edition_label(path: str) -> str:
+    name = path.replace("\\", "/").rsplit("/", 1)[-1].lower()
+    if "definitif" in name:
+        return f"INS Niger CEN définitifs {_edition_year(path)} (révisés antérieurs)"
+    if "provisoire" in name:
+        return f"INS Niger CEN provisoires {_edition_year(path)}"
+    return f"INS Niger CEN {_edition_year(path)}"
+
+
+def _parse_one(pdf_path: str) -> pd.DataFrame:
     rows, spec, years = [], None, None
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:

@@ -18,6 +18,14 @@ discover:
   base_url: https://microdata.nigerianstat.gov.ng/index.php
   inner_suffix: ".xlsx"
 
+# The LAST old-base workbook (base November 2009 = 100, COICOP-1999): its
+# Table2 holds the national series from January 1995. Read for the months
+# before the rebased series starts (see parsers/nbs_nigeria_oldbase.py).
+extras_cache: true
+extra_urls:
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/154/download/1117"
+    save_as: cpi_1NewNov_2024_oldbase.xlsx
+
 parser: nbs_nigeria_cpi
 geography: National           # 'Composite' national index (urban + rural)
 expect_divisions: 14          # All items + 13 COICOP-2018 divisions

@@ -1,0 +1,80 @@
+country: Benin
+iso3: BEN
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Caisse Autonome de Gestion de la Dette (CAGD), Ministère de l'Economie et des Finances
+publication_code: Bulletin statistique de la dette publique (trimestriel)
+frequency: quarterly
+verify_ssl: false
+# Tableau 1's "Encours dette publique" -- the debt the CAGD manages for the
+# State. Guarantees, SOE bank debt and on-lent loans are shown separately in
+# the bulletin and are not part of this total.
+coverage: "Dette publique gérée par la CAGD (hors garanties et dette des entreprises publiques)"
+
+# --- discover ---
+# Each issue is a post under /category/dette-publique/bulletin-statistique-de-la-dette/
+# whose PDF sits inside an embedded viewer (viewer.html?file=...) -- not an
+# anchor, so page_scrape/two_hop_scrape cannot see it. Pinned to the newest
+# issue; on a new quarter, open the newest post and copy the file= URL.
+discover:
+  method: static_url
+  url: "https://www.cagd.bj/wp-content/uploads/2026/08/Bulletin-statistique-dette-publique-2eme-Trimestre-2026_06.08.2026.pdf"
+  save_as: BJ_CAGD_bulletin_dette_T2_2026.pdf
+
+
+# BACK ISSUES (cagd.bj wp/v2/media listing, 2026-10-14): one French issue per
+# quarter from 2020-Q2, read by the parser's layout-B reader (quarterly
+# windows of up to 8 quarters, stocks + debt/GDP). Newest issue wins on
+# overlap. Not listed: the English editions; issues before 2020-Q2 (different
+# Tableau 1); 2023-Q1/Q2 and 2025-Q3/Q4 (not posted); 2024-Q2 (both copies
+# print a different row set) and 2021-Q3 (its foreign-currency rows do not
+# sum to the printed total) -- every quarter of those windows is printed by a
+# neighbouring issue.
+extras_cache: true
+extra_urls:
+  - url: "https://www.cagd.bj/wp-content/uploads/2020/08/Bulletin-Statistique-de-la-Dette-publique_T2_2020_fr_Version-Finale-1.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2020_Q2.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2021/01/Bulletin-Statistique-de-la-Dette-publique_T3_2020.fr_-1.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2020_Q3.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2021/05/Bulletin-Statistique-de-la-Dette-publique-_T4_2020_francais_Version-Finale.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2020_Q4.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2021/06/Bulletin-Statistique-de-la-Dette-publique_T1_2021_fr-1.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2021_Q1.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2021/07/Bulletin-Statistique-de-la-Dette-publique_T2_2021_fr_VF.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2021_Q2.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2022/03/Bulletin-Statistique-de-la-Dette-publique_T4_2021_fr.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2021_Q4.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2022/06/Bulletin-Statistique-de-la-Dette-publique_T1_2022_fr-1.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2022_Q1.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2022/09/Bulletin-Statistique-de-la-Dette-publique_T2_2022_fr-1.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2022_Q2.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2023/02/Bulletin-Statistique-de-la-Dette-publique_T3_2022_fr_VF.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2022_Q3.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2023/05/Bulletin-Statistique-de-la-Dette-publique_T4_2022_fr_VF.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2022_Q4.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2023/11/Bulletin-Statistique-de-la-Dette-publique_T3_2023_VF.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2023_Q3.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2024/03/Bulletin-Statistique-de-la-Dette-publique_T4_2023.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2023_Q4.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2024/06/Bulletin-Statistique-de-la-Dette-publique_T1_2024_27062024.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2024_Q1.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2024/11/Bulletin-statistique-dette-publique-3e-Trimestre-2024.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2024_Q3.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2025/02/Bulletin-statistique-dette-publique-4e-Trimestre-2024L_17-04-2025.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2024_Q4.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2025/05/Bulletin-statistique-dette-publique-1er-Trimestre-2025_13-05-2025-VF.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2025_Q1.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2025/08/Bulletin-statistique-dette-publique-2eme-Trimestre-2025_1407025.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2025_Q2.pdf
+  - url: "https://www.cagd.bj/wp-content/uploads/2026/07/Bulletin-statistique-dette-publique-1er-Trimestre-2026.pdf"
+    save_as: BJ_CAGD_bulletin_dette_2026_Q1.pdf
+parser: benin_cagd_debt
+geography: National
+
+notes: >
+  Tableau 1: encours by creditor type and instrument (bilatéral, multilatéral,
+  commercial, devises; obligations, bons, autres; monnaie locale; total), each
+  as stock (milliards FCFA), share of total and % of GDP, for end-2025 and
+  2026-Q1, 2026-Q2. Identities checked every run. CROSS-CHECK: end-June 2026
+  9 122,2 milliards FCFA = 50,1 % of GDP.

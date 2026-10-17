@@ -21,6 +21,19 @@ parser: libya_cbl
 geography: National
 expect_divisions: 13          # Overall + 12 COICOP-1999 groups
 
+
+# --- back series (2026-10-13) ---
+# The CBL also posts the Census & Statistics Dept. back series: 2009 - Dec 2024
+# on base 2008 (the same 12-group + Overall table, plus an all-items year grid)
+# and 2004 - 2008 on base 2003 (all-items grid read; its 8-group table is a
+# different, non-COICOP classification and is NOT read as divisions). Each page
+# carries its own base, never chained. 2024 is printed on both base 2008 and
+# base 2024; the current (newest) file wins, so 2024 stays on base 2024.
+extras_cache: true
+extra_urls:
+  - "https://cbl.gov.ly/en/wp-content/uploads/sites/4/2025/01/Consumer-Price-Index-2009-Dec2024.pdf"
+  - "https://cbl.gov.ly/en/wp-content/uploads/sites/4/2024/02/Consumer-Price-Index-2004-2008-base-year-2003.pdf"
+
 notes: >
   Central-bank source. The CBL republishes the official CPI of Libya's Census &
   Statistics Department (the NSO) without re-estimating it. 'Consumer Price Index

@@ -150,6 +150,12 @@ def _table_5_4(path: str) -> list[dict]:
     return out
 
 
-def parse(path: str) -> pd.DataFrame:
-    return pd.concat([_engine(path), pd.DataFrame(_table_5_4(path))],
-                     ignore_index=True)
+def parse(path: str, extras: list[str] | None = None) -> pd.DataFrame:
+    frames = [_engine(path), pd.DataFrame(_table_5_4(path))]
+    # The LFS 2010 report (the previous round), passed as an extra -- see
+    # `liberia_lfs2010`.
+    from .liberia_lfs2010 import parse_2010
+    for extra in extras or []:
+        if "2010" in extra:
+            frames.append(pd.DataFrame(parse_2010(extra)))
+    return pd.concat(frames, ignore_index=True)

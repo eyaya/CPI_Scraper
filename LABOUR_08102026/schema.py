@@ -76,6 +76,7 @@ TOPICS = {
 # that is common and is NOT a defect, but a user joining two countries has to
 # be able to see it.
 CLASSIFICATIONS = {
+    "ISIC Rev.2",       # Statistics Mauritius 1990-94 ("Revision 2 of 1968")
     "ISIC Rev.3", "ISIC Rev.3.1", "ISIC Rev.4",
     "ISCO-88", "ISCO-08",
     # ICSE-18 has two hierarchies and NSOs say which they used. ZamStats

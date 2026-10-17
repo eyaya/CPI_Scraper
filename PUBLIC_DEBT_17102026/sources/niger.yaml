@@ -1,0 +1,55 @@
+country: Niger
+iso3: NER
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Direction Générale de la Dette Publique et du Financement (DGDPF), Ministère de l'Economie et des Finances
+publication_code: Bulletin Statistique sur la Dette Publique (trimestriel + annuel)
+frequency: quarterly
+verify_ssl: false
+coverage: "Dette de l'administration centrale, y compris la dette rétrocédée aux entreprises publiques (hors dette garantie)"
+
+# --- discover ---
+# finances.gouv.ne is a Joomla site; its "Publications du ministère" page
+# (/index.php/actualites/publications-du-ministere) lists the bulletins as
+# PhocaDownload file pages (/file/<id>-<slug>), and the file itself downloads
+# from the category URL with `?download=<id>`. Ids seen 2026-10-12: 1342 (T4
+# 2025, the newest), 1298 (T3 2025), 1297 (Bulletin annuel 2024, year-ends
+# 2020-2024). Pinned: no existing discovery method reads Phoca file ids; add
+# the next issue's id here (newest as the primary).
+discover:
+  method: static_url
+  url: "https://www.finances.gouv.ne/index.php/actualites/publications-du-ministere?download=1342"
+  save_as: NE_DGDPF_bulletin_dette_T4_2025.pdf
+
+extra_urls:
+  - url: "https://www.finances.gouv.ne/index.php/actualites/publications-du-ministere?download=1298"
+    save_as: NE_DGDPF_bulletin_dette_T3_2025.pdf
+  - url: "https://www.finances.gouv.ne/index.php/actualites/publications-du-ministere?download=1297"
+    save_as: NE_DGDPF_bulletin_dette_annuel_2024.pdf
+  # 2022-2023 issues (download ids probed 300-1360, 2026-10-14), newest first
+  # (the parser reads extras in reverse, so newer printings win). One-decimal
+  # figures; same Tableau 1. No bulletin is posted between mid-2023 and the
+  # 2024 annual issue.
+  - url: "https://www.finances.gouv.ne/index.php/actualites/publications-du-ministere?download=1098"
+    save_as: NE_DGDPF_bulletin_dette_T2_2023.pdf
+  - url: "https://www.finances.gouv.ne/index.php/actualites/publications-du-ministere?download=1073"
+    save_as: NE_DGDPF_bulletin_dette_T1_2023.pdf
+  - url: "https://www.finances.gouv.ne/index.php/actualites/publications-du-ministere?download=1062"
+    save_as: NE_DGDPF_bulletin_dette_annuel_2022.pdf
+
+extras_cache: true
+
+parser: niger_dgdpf_debt
+geography: National
+
+notes: >
+  Tableau 1 (encours by type, milliards FCFA): five period columns -- quarterly
+  issues give five consecutive quarter-ends, the annual issue five year-ends
+  2020-2024 -- plus % du PIB and % du total for the last column. Perimeter
+  stated by the bulletin: central administration, incl. on-lent debt, excl.
+  guarantees; external/domestic split by currency (BOAD FCFA loans external).
+  Newest issue wins on overlaps. Identities checked every run.
+
+  CROSS-CHECK: end-Dec 2025 5 913,27 (47,9% of GDP); end-Sep 2025 5 880,00
+  (44,5%); end-2020 3 510,39.

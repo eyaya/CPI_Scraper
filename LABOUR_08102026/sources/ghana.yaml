@@ -73,7 +73,71 @@ api:
         Locality: ["All Locality Types"]
         Geographic_Area: *regions
         Sex: ["*"]
-        Age: ["All ages"]
+        Age: ["All ages"]    # --- AHIES quarterly household survey (2022-Q1 onward), added 2026-10-12.
+    # Employed persons 15+ by category x quarter x region x locality x sex.
+    # Dated from each cell's `Date`; AHIES names no scheme against these tables,
+    # so categories are National (see parsers/ghana_pxweb_labour.py).
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Annual%20Household%20Income%20and%20Expenditure%20Survey%20(AHIES)/industry.px"
+      topic: industry
+      classification: "National"
+      save_as: ghana_ahies_industry.json
+      dimensions:
+        Main_Industry: ["*"]
+        Date: ["*"]
+        Region: ["*"]
+        Locality: ["*"]
+        Education: ["All Educational Levels"]
+        Sex: ["*"]
+        Age: ["All Ages"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Annual%20Household%20Income%20and%20Expenditure%20Survey%20(AHIES)/occupa.px"
+      topic: occupation
+      classification: "National"
+      save_as: ghana_ahies_occupa.json
+      dimensions:
+        Main_Occupation: ["*"]
+        Date: ["*"]
+        Region: ["*"]
+        Locality: ["*"]
+        Education: ["All Educational Levels"]
+        Sex: ["*"]
+        Age: ["All Ages"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Annual%20Household%20Income%20and%20Expenditure%20Survey%20(AHIES)/emp_status.px"
+      topic: employment_status
+      classification: "National"
+      save_as: ghana_ahies_emp_status.json
+      dimensions:
+        Employment_Status: ["*"]
+        Date: ["*"]
+        Region: ["*"]
+        Locality: ["*"]
+        Education: ["All Educational Levels"]
+        Sex: ["*"]
+        Age: ["All Ages"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Annual%20Household%20Income%20and%20Expenditure%20Survey%20(AHIES)/emp_sec.px"
+      topic: sector
+      classification: "Not applicable"
+      save_as: ghana_ahies_emp_sec.json
+      dimensions:
+        Employment_Sector: ["*"]
+        Date: ["*"]
+        Region: ["*"]
+        Locality: ["*"]
+        Education: ["All Educational Levels"]
+        Sex: ["*"]
+        Age: ["All Ages"]
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Annual%20Household%20Income%20and%20Expenditure%20Survey%20(AHIES)/informality.px"
+      topic: formality
+      classification: "Not applicable"
+      save_as: ghana_ahies_informality.json
+      dimensions:
+        Informality: ["*"]
+        Date: ["*"]
+        Region: ["*"]
+        Locality: ["*"]
+        Education: ["All Educational Levels"]
+        Sex: ["*"]
+        Age: ["All Ages"]
+
 parser: ghana_pxweb_labour
 geography: Total country
 

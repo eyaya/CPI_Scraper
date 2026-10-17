@@ -1,0 +1,31 @@
+country: Rwanda
+iso3: RWA
+indicator: Public_Debt
+tier: 2
+source_type: excel
+agency: Ministry of Finance and Economic Planning (MINECOFIN), Rwanda
+publication_code: Debt Stock workbook (Investor Relations > Debt > Debt Stock)
+frequency: annual
+coverage: "Public and publicly guaranteed debt (central government external + general government domestic + SOE loans); private external debt shown separately"
+verify_ssl: false
+
+# --- discover ---
+# The Debt Stock page lists one workbook per year-end, newest first
+# (Debt_Stock_End_<year>...xlsx); each edition carries the full 2011-<year>
+# series, so the newest is enough and merge-on-write keeps revisions.
+discover:
+  method: page_scrape
+  page_url: "https://www.minecofin.gov.rw/1/investor-relations/debt/debt-stock"
+  link_contains:
+    - "debt_stock"
+    - ".xlsx"
+
+parser: rwanda_minecofin_debt
+geography: National
+
+notes: >
+  MINECOFIN annual debt stock 2011-2025: PPG debt (% GDP, FRW bn), CG external
+  debt (USD m, FRW bn, by creditor), SOE loans, general government domestic
+  debt (by maturity), and debt ratios to GDP as published. The "Excl. IMF
+  SCF" row is refused (larger than the incl. series for 2011-2020).
+  CROSS-CHECK: PPG 2025 73.63% of GDP; CG external 2025 USD 9,504.26 m.

@@ -1,0 +1,41 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Population
+tier: 2
+source_type: excel
+agency: Agence Nationale de la Statistique (ANStat)
+publication_code: Chiffres clés de la Côte d'Ivoire, juillet 2025 -- data workbook, sheet ENSEMBLE, DÉMOGRAPHIE(p)
+frequency: annual
+verify_ssl: false
+
+# A SECOND Côte d'Ivoire descriptor beside cote_divoire.yaml (RGPH 2014 and
+# 2021). anstat.ci now answers every client with a Cloudflare challenge
+# ("Just a moment...", HTTP 403), which is not bypassed; this is the Wayback
+# Machine's unmodified (id_) copy of ANStat's OWN file
+# anstat.ci/assets/publications/data/File_data_indicateur1752684033.xlsx,
+# captured 2025-07-23. Its figures are the ones the printed "Chiffres clés de
+# la Côte d'Ivoire, Juillet 2025" (Chiffres_Cles_CIV_2025.pdf) shows.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20250723231504id_/https://www.anstat.ci/assets/publications/data/File_data_indicateur1752684033.xlsx"
+  save_as: ANStat_Chiffres_Cles_CIV_2025.xlsx
+  download_timeout: 300
+
+parser: anstat_civ_chiffres_cles
+geography: Total country
+
+notes: >
+  National projections 2015-2025 (the block is flagged "(p)=projection"; the
+  sheet notes that only 2021 is observed): population by sex, by broad age
+  group (0-14, 15-59, 60+), growth rate, density, sex ratio, total fertility
+  and life expectancy by sex. 2021 is the RGPH 2021 census, already in
+  cote_divoire.yaml; it is checked (29 389 150; M 15 344 990; F 14 044 160)
+  and not filed again. Values are rounded to each cell's display format, as
+  the workbook and the printed PDF show them.
+
+  NOT READ: sheet DSDS of the same workbook, whose projected population
+  differs from ENSEMBLE's every year (2022: 30 153 010 vs 30 211 973) --
+  ENSEMBLE is what the published PDF prints.
+
+  CROSS-CHECK: 2015 25 476 127; 2020 28 725 589; 2025 32 757 857
+  (H 17 103 895 / F 15 653 962).

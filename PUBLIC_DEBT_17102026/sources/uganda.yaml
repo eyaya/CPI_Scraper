@@ -1,0 +1,53 @@
+country: Uganda
+iso3: UGA
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministry of Finance, Planning and Economic Development (MoFPED), Uganda
+publication_code: Annual Debt Statistical Bulletin and Public Debt Portfolio Analysis
+frequency: annual
+coverage: "Central government public debt (external + domestic; guarantees and SOE/local-government liabilities reported separately)"
+verify_ssl: false
+
+# --- discover ---
+# MoFPED's "Debt and Cash Reports" category lists each report as a page; the
+# PDF is linked from that page under /sites/default/files/reports/. The annual
+# bulletin page slug is "annual-debt-statistical-bulletin-and-public-debt-
+# portfolio-analysis-june-<year>"; the first match is the newest.
+discover:
+  method: two_hop_scrape
+  index_url: "https://www.finance.go.ug/reports/category/debt-and-cash-reports"
+  page_link_contains:
+    - "annual-debt-statistical-bulletin"
+  file_link_contains:
+    - "debt"
+    - ".pdf"
+  download_timeout: 300
+
+# Quarterly bulletins in the same Table 1-2 layout, newest first (older issues
+# rename the tables or are scans -- see the parser). Never change once posted.
+extra_urls:
+  - url: "https://www.finance.go.ug/sites/default/files/reports/March%202026%20Debt%20Statistical%20Bulletin-Final.pdf"
+    save_as: UG_DSB_2026-03.pdf
+  - url: "https://www.finance.go.ug/sites/default/files/reports/DECEMBER%202025%20DEBT%20STATISTICAL%20BULLETIN.pdf"
+    save_as: UG_DSB_2025-12.pdf
+  - url: "https://www.finance.go.ug/sites/default/files/reports/Annual%20Debt%20Statistical%20Bulletin%20June-2025%20Final.pdf"
+    save_as: UG_DSB_2025-06.pdf
+  - url: "https://www.finance.go.ug/sites/default/files/reports/ANNUAL%20DEBT%20STATISTICAL%20BULLETIN-JUNE%202024.pdf"
+    save_as: UG_DSB_2024-06.pdf
+extras_cache: true
+
+# Back issues above, newest first: Mar 2026 and Dec 2025 quarterly, Jun 2025
+# and Jun 2024 annual (Table 1 back to Jun-22). Dec 2021-Dec 2023 bulletins are
+# image scans (not OCR'd); Sep 2025 prints its Total rows blank (skipped).
+parser: uganda_mofped_debt
+geography: National
+
+notes: >
+  MoFPED Annual Debt Statistical Bulletin (June edition): Table 1 total /
+  external / domestic debt stock in US$ bn and Shs bn for three end-June
+  columns; Table 2 nominal debt as % of GDP (external, domestic, total) for
+  two end-June columns. Periods are end-June stocks dated YYYY-06. External
+  stock includes the SDR drawdown of USD 242m. Quarterly bulletins (Dec,
+  Mar) exist on the same page and could be added as further descriptors.
+  CROSS-CHECK: Jun-26 total Shs 136,063 bn / US$ 37.1 bn; debt/GDP 54.3.

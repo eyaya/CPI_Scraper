@@ -1,0 +1,31 @@
+country: Malawi
+iso3: MWI
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: National Statistical Office (NSO)
+publication_code: Malawi Labour Force Survey 2024
+frequency: ad_hoc
+verify_ssl: false            # as malawi.yaml
+
+# --- discover ---
+# A SECOND YEAR for Malawi labour: the 2024 LFS report, the same file the
+# unemployment indicator's malawi.yaml reads for the headline rows (NSO CMS
+# download 651). The 2018 census Series D tables stay with malawi.yaml.
+discover:
+  method: static_url
+  url: "https://cms.nsomalawi.mw/api/download/651/Malawi-Labor-Force-Survey-Report---2024.pdf"
+  save_as: Malawi-Labor-Force-Survey-Report-2024.pdf
+  download_timeout: 300        # as unemployment/sources/malawi.yaml
+
+parser: malawi_lfs_labour
+geography: Total country
+
+notes: >
+  NSO Malawi Labour Force Survey 2024: Table 5.2 status in employment (ICSE-18,
+  percent of the employed; Malawi | Male | Female | Urban | Rural -- urban
+  before rural) and Table 9.2 informal / formal / household sector shares by
+  sex, region, residence, age group and education. Base 15+. Table 5.3
+  (occupation) is NOT read: its columns do not cohere as printed (skilled
+  agricultural 25.5 nationally against 13.4 / 12 / 2.4 / 16.1 by sex and
+  residence). See the parser docstring.

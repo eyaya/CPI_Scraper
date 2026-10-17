@@ -1,0 +1,55 @@
+country: Angola
+iso3: AGO
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministério das Finanças de Angola, Unidade de Gestão da Dívida Pública (UGD)
+publication_code: Boletim Estatístico da Dívida Pública, II Trimestre 2026
+frequency: quarterly
+verify_ssl: false
+# "Dívida Governamental": government debt, external + domestic. Guaranteed
+# debt is a separate table in the bulletin and is not included.
+coverage: "Government debt (Dívida Governamental), external and domestic; excludes guaranteed debt"
+
+# --- discover ---
+# ugd.minfin.gov.ao is an Angular app over a Squidex CMS. `ugd_ao_latest_bulletin`
+# (core/discover.py) reads the bulletin list JSON and picks the newest
+# PORTUGUESE quarterly issue by its title ("Boletim Estatístico do <ordinal>
+# Trimestre da Dívida Pública <YYYY>") -- the CMS's own `trimestre` field is
+# unreliable. Each issue covers six quarters.
+discover:
+  method: ugd_ao_latest_bulletin
+  api_url: "https://cms.minfin.gov.ao/api/content/portal-ugd/boletins-da-divida-publica"
+  asset_base: "https://cms.minfin.gov.ao/api/assets/portal-ugd/"
+  save_as: UGD_Boletim_Estatistico_Divida_Publica_latest.pdf
+  download_timeout: 300
+
+# BACK ISSUE: "Boletim Trimestal da Dívida Pública 2025" (II Trim. 2025), whose
+# window I Trim. 2024 - II Trim. 2025 extends the series a year back. Its
+# Tabela 6 has a different layout and is skipped by the parser; Tabelas 1-4
+# are read. The I Trim. 2026 and III Trim. 2025 issues add no quarter and use
+# other layouts -- not listed.
+extra_urls:
+  - url: "https://cms.minfin.gov.ao/api/assets/portal-ugd/eb3e9d22-ce52-4b3d-b2d0-267c125ff2b6"
+    save_as: UGD_Boletim_Trimestral_Divida_Publica_IITrim2025.pdf
+  # ANNUAL bulletin 2024 (2026-10-14): Tabela 1 end-year stocks 2020-2024,
+  # read as annual rows (parsers/angola_ugd_debt._annual).
+  - url: "https://cms.minfin.gov.ao/api/assets/portal-ugd/f3653143-65ec-402d-af40-7f9284ec0c49"
+    save_as: UGD_Boletim_Anual_2024.pdf
+
+extras_cache: true
+
+parser: angola_ugd_debt
+geography: National
+
+notes: >
+  UGD quarterly statistical bulletin, Visão Geral: Tabela 1 stock of
+  government debt, external and domestic, in USD bn and Kz bn (flows not
+  collected); Tabela 2 by original maturity; Tabela 3 by currency (USD bn);
+  Tabela 6 government debt % of GDP (2025 annual, I and II Trim. 2026).
+  Tabela 4 checked equal to Tabela 1. Six-quarter window per issue
+  (I Trim. 25 - II Trim. 26 in this one). Debt/GDP ratios were revised for
+  INE's new 2025 GDP; the newest issue wins.
+
+  CROSS-CHECK: II Trim. 26 USD 72,04 bn / Kz 65 745,41 bn, 51,24% of GDP;
+  I Trim. 25 USD 60,77 bn.

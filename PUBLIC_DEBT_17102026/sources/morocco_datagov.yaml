@@ -1,0 +1,30 @@
+country: Morocco
+iso3: MAR
+indicator: Public_Debt
+tier: 2
+source_type: excel
+agency: Ministère de l'Économie et des Finances (DTFE), via the national open-data portal data.gov.ma
+frequency: annual
+coverage: "Set per row: Treasury (central government) debt; public external debt"
+verify_ssl: false
+
+# --- discover ---
+# The Ministry's dataset "Séries annuelles et trimestrielles dette extérieure
+# publique / dette extérieure brute" on data.gov.ma (CKAN); the file is hosted
+# on data.gov.ma itself, so it does not depend on finances.gov.ma (refuses
+# this network) or the Wayback Machine (HTTP 429). Release dated 31 Mar 2014.
+discover:
+  method: static_url
+  url: "https://data.gov.ma/data/ar/dataset/5b89f76d-3a85-4f71-b92c-ab4958ec3e6d/resource/96b3423f-9f0e-4279-9947-7d49e45e5455/download/publicdebtannualseries-2013q4-portail.xls"
+  save_as: dtfe_publicdebtannualseries-2013q4.xls
+
+parser: morocco_datagov_debt
+geography: National
+
+notes: >
+  DTFE annual public-debt series 1998-2013 (update 31 March 2014), the
+  Ministry's own release on data.gov.ma: public external debt (US$ m, MAD m,
+  % GDP); Treasury external, domestic and total debt (MAD m, % GDP). A second,
+  OLDER vintage beside morocco.yaml's 2022 workbooks, kept under its own
+  series_code. Years are taken from the English sheet's header (the French
+  header omits 2013); both sheets' figures are asserted identical each run.
