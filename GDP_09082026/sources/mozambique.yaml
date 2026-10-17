@@ -24,6 +24,14 @@ discover:
   save_as: INE_MZ_Anuario_Estatistico_2025.pdf
   download_timeout: 600
 
+# The Anuário 2019 (2015-2019, constant 2014 prices -- pre-rebasing, never
+# chained to the 2019-price rows): parsers/mozambique_ine_anuario2019.py.
+# Its current-price imports cells repeat the constant ones and are refused.
+extras_cache: true
+extra_urls:
+  - url: "https://www.ine.gov.mz/documents/20119/195504/Anuario%20Estatistico-%202019%20-%20Web%20Cpl.pdf/d7756176-ce2e-9d57-f734-a1a06589ab55?version=1.0&t=1694236105006&download=true"
+    save_as: INE_MZ_Anuario_Estatistico_2019.pdf
+
 parser: mozambique_ine_gdp
 geography: National
 

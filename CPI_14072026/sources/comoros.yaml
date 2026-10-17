@@ -11,10 +11,12 @@ frequency: monthly
 # monthly bulletin is a CMS record rather than a PDF, so there is no file to hunt
 # for: this one query IS the discovery — newest IHPC publication first, with its
 # paragraphs (which carry Tableau 1) populated. Strapi's filter/sort keeps the URL
-# stable, so `static_url` is enough.
+# stable, so `static_url` is enough. pageSize=100 returns the WHOLE archive in one
+# record (81 bulletins, March 2016 - August 2026, on 2026-10-13; ~3.8 MB) and the
+# parser reads every one -- newest bulletin wins on a shared period.
 discover:
   method: static_url
-  url: "https://www.inseed-comores.org/backend/api/publications?filters[publicationSlug][$contains]=ihpc&sort=parutionDate:desc&pagination[pageSize]=1&populate[paragraphs][populate]=*"
+  url: "https://www.inseed-comores.org/backend/api/publications?filters[publicationSlug][$contains]=ihpc&sort=parutionDate:desc&pagination[pageSize]=100&populate[paragraphs][populate]=*"
   save_as: comoros_ihpc_latest.json    # the URL carries no filename
 
 parser: comoros_inseed
@@ -34,6 +36,11 @@ notes: >
   '❖ Boissons alcoolisées et tabac' is function 02, so rows are matched on known
   function labels instead. The base year is read from the Tableau 1 title so a
   rebase is picked up automatically.
+  BACK SERIES (2026-10-13): every bulletin in the CMS is read, so the index runs
+  2015-03 -> 2026-08 (133 months; each bulletin's m-12 column reaches a year back).
+  Months with no bulletin in the CMS and not covered by a later m-12/m-3 column
+  stay absent (no imputation). Older bulletins date columns 'Nov. 19', 'Déc 15';
+  the parser accepts unambiguous abbreviations.
   Not used, but available in the same CMS record: `graphics[].datafile.url`
   (/backend/uploads/*.csv) publishes an all-items index series back to 2021 plus
   MoM/YoY history. Wiring it in would need a second fetch, which would break the

@@ -8,15 +8,23 @@ frequency: quarterly
 verify_ssl: false
 
 # --- discover ---
-# ZimStat lists the national-accounts files on one page; the quarterly GDP (ZWG)
-# workbooks carry a DD_MM_YYYY date in the filename, so we take the newest by date.
+# ZimStat lists the national-accounts files on one page. Until Q3 2025 the
+# quarterly workbooks carried 'Quarterly_GDP' + 'ZWG' + a DD_MM_YYYY stamp
+# (latest_dmy_file); the Q4 2025 release is 'GDP_ESTIMATES_2023-2025ZWG_Q4_2025
+# .xlsx' -- no stamp, no 'Quarterly_GDP' -- so discovery would have kept
+# returning the Q3 file. Pinned to the Q4 2025 workbook (2026-10-13); re-point
+# when ZimStat posts Q1 2026.
 discover:
-  method: latest_dmy_file
-  page_url: "https://www.zimstat.co.zw/national-accounts/"
-  link_contains:
-    - "quarterly_gdp"
-    - "zwg"
-    - ".xlsx"
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/NationalAccounts/2025/GDP_ESTIMATES_2023-2025ZWG_Q4_2025.xlsx"
+
+# Back series (see the parser docstring): the annual GDP tables 2019-2024
+# (June 2025 revision; ZWL 2019-2023 and ZWG 2023-2024, three approaches) and
+# the previous 2012-base series in US$ (GDP Trends 2009-2018).
+extras_cache: true
+extra_urls:
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/NationalAccounts/2025/GDP_Tables_2019_2024_June2025_rev.xlsx"
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/NationalAccounts/Publications/GDP_Trends_2009to2018.xls"
 
 parser: zimbabwe_zimstat_gdp
 geography: National
@@ -29,3 +37,6 @@ notes: >
   Verified: real GDP growth 2025 Q1-Q3 = 5.1% / 11.2% / 9.6% (post-drought
   recovery). The 2.x tables (2019-2023 in the old ZWL currency) and the provincial
   GDP files are left for a later pass. Everything as published; nothing derived.
+  2026-10-13: Table 1.4 is a percent distribution (share), not a contribution
+  to growth; constant base_period is now '2023 prices' and the deflator's
+  '2023=100'. Regenerate out/zimbabwe_gdp.csv from scratch (identity change).

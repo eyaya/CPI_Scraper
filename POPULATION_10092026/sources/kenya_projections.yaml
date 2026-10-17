@@ -1,0 +1,32 @@
+country: Kenya
+iso3: KEN
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+publication_code: 2019 KPHC Analytical Report on Population Projections
+frequency: annual
+verify_ssl: false
+
+# A SECOND Kenya descriptor beside kenya.yaml (the 2019 census volumes):
+# KNBS's 2019 KPHC Analytical Report on Population Projections, listed at
+# knbs.or.ke/reports/kenya-census-2019/. (A 2024 "Vol-XVI" re-upload of the
+# same report also exists; this is the 2023 posting.)
+discover:
+  method: static_url
+  url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/2019-Kenya-population-and-Housing-Census-Analytical-Report-on-Population-Projections.pdf"
+  save_as: kenya_kphc2019_projections.pdf
+
+parser: knbs_kenya_projection
+geography: Total country
+
+notes: >
+  KNBS projections, Appendix 5: Kenya and 47 counties by five-year age group
+  (0-4 .. 80+, All Ages) x sex, 2020-2035 annually plus 2040 and 2045 (Kenya
+  2020 48,817,537; 2045 70,179,943 -- same as the Summary Report). Counties
+  sum to Kenya every year. County names as printed here (Taita-Taveta,
+  Trans-Nzoia, Elgeyo-Marakwet) differ in punctuation from the census volumes.
+  Defects handled: Busia 2030 80+ Female printed 3,120 in one of three tables
+  (5,799 in the other two, which satisfy M+F=T; majority kept); Kiambu's
+  2026-2030 open band mislabelled "80-84". Part B (components by period) and
+  the sex-ratio columns deferred. 16.7 MB.

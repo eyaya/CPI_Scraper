@@ -6,7 +6,7 @@ both files are read from Wayback Machine `id_` captures of INSAE's OWN uploads
 aggregator: these are the NSO's published workbooks.
 
 PRIMARY -- "Série_PIB_1999-2021.xlsx" (sheet "SYNTHESE_COMPETS ANNUELS"),
-annual, billion XAF (FCFA), four blocks:
+annual, billion XOF (FCFA -- Benin is in the WAEMU franc zone, XOF; this read XAF until 2026-10-15), four blocks:
   * Ventilation du PIB courant par secteurs d'activités     -> production, current
   * Ventilation du PIB à prix constants par secteurs        -> production, constant
   * Evolution des emplois du PIB à prix courants            -> expenditure, current
@@ -28,7 +28,7 @@ IDENTITIES CHECKED, not enforced by editing: in every year, sectors sum to their
 sector totals, total VA + net taxes = PIB, and PIB (Emploi) = PIB. A gap above
 1 billion raises; smaller rounding gaps are left as published. Nothing derived.
 
-CROSS-CHECK (billion XAF): 1999 PIB current 2 263,3; 2015 PIB current =
+CROSS-CHECK (billion XOF): 1999 PIB current 2 263,3; 2015 PIB current =
 constant = 6 732,8; 2021 PIB current 9 809,7; 2018-Q1 PIB constant 1 701,8.
 """
 from __future__ import annotations
@@ -41,7 +41,7 @@ import pandas as pd
 _OUT_COLS = ["approach", "category", "category_group", "series_code", "geography",
              "period", "frequency", "price_basis", "seasonal_adjustment",
              "measure", "value", "unit", "base_period"]
-_UNIT = "XAF billion"
+_UNIT = "XOF billion"
 _BASE = "Constant 2015 prices (SCN 2008 rebased)"
 
 

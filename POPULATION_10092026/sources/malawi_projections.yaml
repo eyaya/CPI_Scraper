@@ -1,0 +1,29 @@
+country: Malawi
+iso3: MWI
+indicator: Population
+tier: 2
+source_type: pdf
+agency: National Statistical Office (NSO)
+publication_code: Population Projections 2018-2050 (2018 MPHC thematic report)
+frequency: annual
+verify_ssl: false
+
+# A SECOND Malawi descriptor beside malawi.yaml (the 2018 census Series A
+# workbook): NSO's 2018-2050 projections, listed on cms.nsomalawi.mw/api/web/
+# census/2018 under Thematic Reports.
+discover:
+  method: static_url
+  url: "https://cms.nsomalawi.mw/api/download/262/Population-Projections-2018-2050.pdf"
+  save_as: malawi_projections_2018_2050.pdf
+
+parser: nso_malawi_projection
+geography: Total country
+
+notes: >
+  NSO Malawi Population Projections 2018-2050. Annex 1: national projection by
+  five-year age group (0-4 .. 95+) and NSO's special age groups (Less than 1,
+  1-4, 6-13, 14-17, 0-14, 15-24, 15-44, 15-49, 15+, 18+, 50+, 60+) x sex,
+  2018-2050 (2018 total 17,563,749 = census; 2050 33,619,332). Annex 2: 32
+  districts/cities by age group x sex, 2018-2043 (district names as printed in
+  this report: "Lilongwe Rural", "Blantyre Rural"). Mangochi 2042-2043 is
+  printed without year headers and is skipped. Table 4.1 (indicators) deferred.

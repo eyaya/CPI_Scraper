@@ -139,3 +139,28 @@ assertion written for it — the weight leak surfacing as
 
 The shared discovery/download/validation/output harness lives in `core/`; this folder
 only holds what is CPI-specific.
+
+## Standardised columns (added 2026-10-15)
+
+Seven columns are appended after the published ones by `standardise.py`, recomputed on
+every write (`Pipeline.standardise`) and backfilled with `py -3 -m tools.standardise cpi`:
+`coicop_version`, `coicop_std`, `base_year`, `geography_level`, `unit_std`, `series_id`,
+`is_preferred`. They exist for consumers that build identifiers (the Africa Data Commons app).
+
+**Two traps they close.** (1) *The same code changes meaning at a rebase*: COICOP 1999's
+division 12 is "Miscellaneous goods and services", COICOP 2018's is "Insurance and financial
+services" (its 13 is "Personal care, social protection and miscellaneous"). Mali, Mauritius,
+Nigeria, Togo and Guinea-Bissau publish 12 with both meanings under one merge key, so the
+version is decided per row — 12 by its own label, 08/09/13 by whether that country-month
+publishes a division 13 — and is part of `series_id` (`CPI_C1999_12_...` vs `CPI_C2018_12_...`).
+(2) *Index levels compare only within one base*: the base year is in an index's `series_id`;
+an unprinted base is `BU`, never guessed. Index levels never compare across countries — use
+`inflation_yoy`/`inflation_mom` for that.
+
+**Verified** (`tests/test_standardise.py`, mutation-checked 3/3): within each index
+`series_id`, the 12-month change reproduces the published YoY rate within 0.2 points for
+89.8% of 19,286 pairs (26 countries). Cameroon (2024) and Comoros (2018) publish rebase-year
+rates that their own new-base index does not reproduce — kept, named as known.
+
+**Merge-key caveat found on the way:** `base_period` is not in CPI's merge key, so where an
+old-base and a new-base index overlap in time (Mali 2024-01..05), only one survives per month.

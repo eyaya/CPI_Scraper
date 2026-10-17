@@ -20,6 +20,15 @@ discover:
   base_url: https://microdata.nigerianstat.gov.ng/index.php
   inner_suffix: ".xlsx"
 
+# The 2019-2024 REBASED BACK SERIES (same 2019 base as the quarterly reports,
+# annual only), released with the 2025 rebasing. Read for the years the current
+# report does not print; labels kept as published, category_group names it.
+# Immutable, so a complete local copy is reused.
+extras_cache: true
+extra_urls:
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/147/download/1257"
+    save_as: NBS_2019-2024_rebased_figures.xlsx
+
 parser: nbs_nigeria_gdp
 geography: National
 

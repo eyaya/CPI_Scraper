@@ -211,7 +211,17 @@ def _rates(path, survey, headline: dict) -> list[dict]:
                 loc, loc_lab = ("urban" if k.startswith("urban") else "rural"), lab
                 block_kind = "cut"
             elif block == "sexo":
-                sex = "male" if k.startswith("homem") else "female"
+                # The workbooks print the PLURAL ("Homens" / "Mulheres"). The
+                # old test, k.startswith("homem"), never matched "homens", so
+                # every men's row was filed as female until 2026-10-15 --
+                # 123 rows, e.g. 2019 unemployment 28,7 (men) beside 31,7
+                # (women) both as "female". Match both forms; refuse others.
+                if re.match(r"hom(?:em|ens)\b|masculino", k):
+                    sex = "male"
+                elif re.match(r"mulher(?:es)?\b|feminino", k):
+                    sex = "female"
+                else:
+                    raise ValueError(f"{survey} {sheet}: sex row {lab!r}")
                 block_kind = "cut"
             elif block in ("grupos etarios", "outros grupos etarios"):
                 m = re.match(r"(\d+)\s*(?:-\s*(\d+)|ou mais)", k)

@@ -96,7 +96,10 @@ def numbers_in(text: str, decimal: str = ".", keep_dash: bool = False,
         # `space_thousands: False` and gets five numbers back.
         pat = r"-?\d+,\d+|-?\d+"
     elif decimal == ",":
-        pat = rf"-?\d{{1,3}}(?:[{_SPACES}]\d{{3}})+(?:,\d+)?|-?\d+,\d+|-?\d+"
+        # A thousands group is exactly three digits: never followed by another
+        # digit. Without (?!\d), HCP Morocco's "1052 569 1333 288 1621" read as
+        # [1052, 569133, 3288162, 1] (2026-10-15).
+        pat = rf"-?\d{{1,3}}(?:[{_SPACES}]\d{{3}}(?!\d))+(?:,\d+)?|-?\d+,\d+|-?\d+"
     else:
         pat = r"-?\d{1,3}(?:,\d{3})+(?:\.\d+)?|-?\d+\.\d+|-?\d+"
     if keep_dash:

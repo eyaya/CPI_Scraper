@@ -22,7 +22,15 @@ discover:
   url: "https://stat-niger.org/wp-content/uploads/rapport_enquete/Niger_ERI-ESI_RapportFinal.pdf"
   save_as: niger_eriesi_2017.pdf
 
-parser: niger_pdf
+# YOUTH PANEL (2026-10-14; parser niger_youth_bulletin): INS Niger's quarterly
+# "Bulletin national de suivi de l'emploi et du chômage des jeunes" (15-35,
+# telephone panel). The newest issue's Annexe 1 prints every quarter since
+# 2T 2025; replace this URL with each new issue's. Not chained to ERI-ESI.
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/BULLETIN_SUIVI_EMPLOI_ET_CHOMAGE_DES_JEUNES_T4_2025_VF.pdf"
+    save_as: ins_niger_bulletin_jeunes_2025T4.pdf
+parser: niger_youth_bulletin
 geography: Total country
 
 notes: >

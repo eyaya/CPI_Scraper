@@ -24,6 +24,62 @@ notes: >
   CEMAC harmonised CPI (INHPC), base 2022, covering eight cities. 'Tableau 2' lists
   the 12 COICOP-1999 functions (Roman I–XII) + INDICE GLOBAL, with detailed
   sub-items (I.1, I.1.1, …) interleaved: (weight +) five monthly indices then 1-/3-/
-  12-month variations, so current index = nums[-4], MoM nums[-3], YoY nums[-1].
+  12-month variations, so the five indices are nums[-8:-3], MoM nums[-3], YoY nums[-1].
   Functions are identified by a leading Roman numeral (a following '.' marks a
   sub-item). Report month is the latest 'mois-YY' token in the table.
+
+# BACK ISSUES (added 2026-10-13): every bulletin INSEED's API lists, 2024-01 on
+# (2024-07/08 and 2025-01..04 are not posted). Each issue prints five monthly
+# indices (m-12, m-3, m-2, m-1, m), dated from the table's own header; the
+# issues to 12-2024 are base 2019, from 2025 base 2022 (base_period per row).
+# The newest issue wins on overlap.
+extras_cache: true
+extra_urls:
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1784892519103-482843586.pdf"
+    save_as: Bulletin_INHPC_06-2026.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1783020002442-576551415.pdf"
+    save_as: Bulletin_INHPC_05-2026.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1779900395902-346933855.pdf"
+    save_as: Bulletin_INHPC_04-2026.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1777891520801-326701549.pdf"
+    save_as: Bulletin_INHPC_03-2026.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1774946648427-898460506.pdf"
+    save_as: Bulletin_INHPC_02-2026.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1771267776231-617254679.pdf"
+    save_as: Bulletin_INHPC_01-2026.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1769589261444-478836191.pdf"
+    save_as: Bulletin_INHPC_12-2025.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766399219014-359270915.pdf"
+    save_as: Bulletin_INHPC_11-2025.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1769418755572-885076332.pdf"
+    save_as: Bulletin_INHPC_10-2025.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1767095345832-688763786.pdf"
+    save_as: Bulletin_INHPC_09-2025.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766401723191-285220093.pdf"
+    save_as: Bulletin_INHPC_08-2025.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766407641581-210532596.pdf"
+    save_as: Bulletin_INHPC_07-2025.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766407723517-919835855.pdf"
+    save_as: Bulletin_INHPC_06-2025.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766407797472-273554743.pdf"
+    save_as: Bulletin_INHPC_05-2025.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766407884215-265841495.pdf"
+    save_as: Bulletin_INHPC_12-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766407958233-412053167.pdf"
+    save_as: Bulletin_INHPC_11-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766408942323-312057478.pdf"
+    save_as: Bulletin_INHPC_10-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766409279739-927294948.pdf"
+    save_as: Bulletin_INHPC_09-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766409440249-618789204.pdf"
+    save_as: Bulletin_INHPC_06-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766409506850-909361832.pdf"
+    save_as: Bulletin_INHPC_05-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766409602649-838427156.pdf"
+    save_as: Bulletin_INHPC_04-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766409746934-992978477.pdf"
+    save_as: Bulletin_INHPC_03-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766409864903-504521208.pdf"
+    save_as: Bulletin_INHPC_02-2024.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1766409928719-757016167.pdf"
+    save_as: Bulletin_INHPC_01-2024.pdf

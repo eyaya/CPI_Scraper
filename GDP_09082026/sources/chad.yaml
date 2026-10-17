@@ -15,6 +15,20 @@ discover:
   api_base: "https://inseed.ssn-tchad.td"
   title_contains: "COMPTES NATIONAUX TRIMESTRIELS"
 
+# ANNUAL back series (extras; parsers/chad_inseed_annual.py), all SNA 2008 /
+# base 2017, each report its own vintage (category_group names it): the
+# 2005-2017 retropolation, the 2019-2022 accounts (2017-2022) and the 2023
+# provisional accounts (2018-2023). The 2024 provisional report carries only
+# narrative tables and is not read.
+extras_cache: true
+extra_urls:
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1767699826721-826202208.pdf"
+    save_as: "INSEED_Retropolation_2005-2017_base2017.pdf"
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1767700144986-669413631.pdf"
+    save_as: "INSEED_Comptes_2019-2022_base2017.pdf"
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1767699973124-3691623.pdf"
+    save_as: "INSEED_Comptes_provisoires_2023.pdf"
+
 parser: chad_inseed_gdp
 geography: National
 

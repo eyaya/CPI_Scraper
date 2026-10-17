@@ -18,6 +18,14 @@ discover:
     - "comptes_nationaux_trimestriels"
     - ".pdf"
 
+# Annual back series (parsers/guinea_ins_annual.py): INS's note on the final and
+# rapid annual accounts 2018-2024 -- GDP by activity and by expenditure at
+# current and previous-year prices, growth, deflator, contributions. Tagged in
+# category_group; annual, so never overlapping the quarterly rows.
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CN/Note_analyse_des_comptes_nationaux_definitifs_et_rapides_2018_2024_VC.pdf"
+
 parser: guinea_ins_gdp
 geography: National
 

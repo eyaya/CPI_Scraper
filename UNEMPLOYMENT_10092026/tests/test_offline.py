@@ -896,7 +896,7 @@ def _angola_books(repeat_rate: float) -> tuple[str, str]:
                        ("Taxa de desemprego", repeat_rate)):
         ws = wb.create_sheet(sheet)
         for r in [[sheet]] + hdr + [["Angola", val], ["Sexo", None],
-                                    ["Homens", 18.42]]:
+                                    ["Homens", 18.42], ["Mulheres", 22.08484316625105]]:
             ws.append(r)
     quadros = os.path.join(d, "4.QUADROS COMPLEMETARES_IEA (NOVA).xlsx")
     wb.save(quadros)
@@ -918,8 +918,14 @@ def test_angola_repeated_headline():
     check("ao one national rate", len(ur), 1)
     check("ao series value kept", round(ur[0]["value"], 3), 20.211)
     check("ao male cut kept",
-          [r["value"] for r in cuts if r["topic"] == "unemployment_rate"],
+          [r["value"] for r in cuts if r["topic"] == "unemployment_rate" and r["sex"] == "male"],
           [18.42])
+    # INE prints the PLURAL "Homens"/"Mulheres"; until 2026-10-15 the parser
+    # tested startswith("homem"), so every men's row was filed as FEMALE.
+    check("ao sex read from the plural labels",
+          sorted((r["series_label"].split(" — ")[1], r["sex"]) for r in cuts
+                 if r["topic"] == "unemployment_rate"),
+          [("Homens", "male"), ("Mulheres", "female")])
 
     _, far = _angola_books(21.5)
     try:
@@ -932,6 +938,22 @@ def test_angola_repeated_headline():
 # ---------------------------------------------------------------------------
 # Liberia -- Table 3.1 read by position, proved by its own arithmetic
 # ---------------------------------------------------------------------------
+def test_mauritania_zones_are_not_the_milieu():
+    """ENTE annexes list Milieu (Urbain / Rural) AND Strate (seven sampling
+    zones) in one table. Filed as urban/rural, a zone was indistinguishable
+    from its milieu total: 2024-Q1 rural SU1 carried four values (Rural 10,53,
+    Fleuve 16,87, oasis 7,67, Autre rural 5,19). Zones are "other"."""
+    from indicators.unemployment.parsers import mauritania_unemployment as M
+    check("mr milieu", [M._ctx("Rural"), M._ctx("Urbain")],
+          [{"locality": "rural", "locality_label": "Rural"},
+           {"locality": "urban", "locality_label": "Urbain"}])
+    check("mr zones are other",
+          [M._ctx(f"Zone « {z} »")["locality"] for z in
+           ("Nouakchot", "Nouadhibou", "Zoueiratt", "Autre urbain", "Fleuve", "oasis", "Autre rural")],
+          ["other"] * 7)
+    check("mr Nouakchot spelling joined", M._ctx("Zone « Nouakchot »")["locality_label"], "Nouakchott")
+
+
 def test_liberia_positional_rows_are_proved():
     """The LISGIS copy wraps labels so badly that Table 3.1 is read by row
     POSITION. That is only safe because the mapping is checked: a slipped row
@@ -963,8 +985,64 @@ def test_liberia_positional_rows_are_proved():
         L._table_3_1_lines = orig
 
 
+MA_T3 = """ACTIVITÉ, EMPLOI ET CHOMAGE Année 2025
+Tableau 3 : Les indicateurs du chômage selon le milieu de résidence et le sexe
+Indicateurs Masculin Féminin Urbain Rural National
+Population active en
+1052 569 1333 288 1621
+chômage (en milliers)
+Taux de féminisation de
+la population active en 37,6 23,6 35,1
+chômage (%)
+Taux de chômage (en %) 10,8 20,5 16,4 6,6 13,0
+Taux de chômage selon le
+diplôme (en %)
+Sans diplôme 4,6 4,8 6,7 2,9 4,7"""
+
+MA_T11 = """Tableau 11 : Indicateurs trimestriels d'activité, d’emploi et de chômage par milieu
+Population active en chômage (en milliers) 1 630 1 595 1 629 1 647 1 621
+Taux de chômage (%) 13,3 12,8 13,1 12,9 13,0"""
+
+
+def test_morocco_unemployed_from_tableau_3():
+    """HCP Morocco, verbatim from the 2025 annual report. The unemployed COUNT
+    was wrong while the RATE was right (fixed 2026-10-15): the thousands rule
+    read "1052 569 1333 288 1621" as four numbers ([1052, 569133, 3288162, 1]),
+    so the row was skipped -- and because excluding "diplôme" had excluded
+    Tableau 3's own page, the engine scanned every page and took Tableau 11's
+    five QUARTERLY national counts as Masculin..National. Each count over its
+    labour force reproduces the published rate (1052/9717 = 10.8 ...)."""
+    df = run_layout("morocco", MA_T3, [MA_T11])
+    u = df[df.topic == "unemployed"].set_index(["sex", "locality"]).value
+    check("ma unemployed by sex/milieu", [u.get(k) for k in
+          [("male", "all"), ("female", "all"), ("total", "urban"), ("total", "rural"), ("total", "all")]],
+          [1052.0, 569.0, 1333.0, 288.0, 1621.0])
+    check("ma men + women = national", u.get(("male", "all")) + u.get(("female", "all")), 1621.0)
+    # the thousands rule must not glue "569 1333" into 569133
+    check("ma numbers_in unglued", C.numbers_in("x 1052 569 1333 288 1621", decimal=","),
+          [1052.0, 569.0, 1333.0, 288.0, 1621.0])
+
+
+def test_selector_miss_raises():
+    """A table whose page selector matches nothing must read NOTHING. The
+    engine used to fall back to EVERY page, which is how Morocco's old
+    "diplôme" exclusion (it hit Tableau 3's own page) let Tableau 11's
+    quarterly counts fill Tableau 3's cells. Replays that layout against the
+    same two pages: no rows, and in particular not Tableau 11's 1 630."""
+    import copy
+    cfg = copy.deepcopy(LAYOUTS["morocco"])
+    tbl = cfg["tables"][1]
+    tbl["page_excludes"] = ["sommaire", "diplôme"]
+    got, matched = P._parse_table([MA_T3, MA_T11], cfg, tbl, "2025", "2025")
+    check("selector miss reads no page", (len(got), sorted(matched)), (0, []))
+    # A table with no selector at all still reads every page.
+    bare = {k: v for k, v in tbl.items() if k not in ("page_contains", "page_excludes")}
+    got, _ = P._parse_table([MA_T3], cfg, bare, "2025", "2025")
+    check("no selector reads all pages", len(got) > 0, True)
+
+
 def main() -> int:
-    for fn in (test_numbers, test_periods, test_namibia, test_zambia,
+    for fn in (test_morocco_unemployed_from_tableau_3, test_selector_miss_raises, test_numbers, test_periods, test_namibia, test_zambia,
                test_nigeria, test_ghana_pxweb, test_niger_blocks,
                test_liberia_wide, test_botswana_typos_and_bases,
                test_rwanda_period_columns, test_tunisia_html_parser,
@@ -977,6 +1055,7 @@ def main() -> int:
                test_validator_rejects_garbage,
                test_no_silent_undated_output,
                test_angola_repeated_headline,
+               test_mauritania_zones_are_not_the_milieu,
                test_liberia_positional_rows_are_proved):
         try:
             fn()

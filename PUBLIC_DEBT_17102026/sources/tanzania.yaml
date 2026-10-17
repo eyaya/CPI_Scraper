@@ -1,0 +1,69 @@
+country: Tanzania
+iso3: TZA
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Bank of Tanzania (BoT), with the Ministry of Finance
+publication_code: Monthly Economic Review -- Table A10 National Debt Developments
+frequency: monthly
+coverage: "National debt: external debt public and private (split by borrower) + government domestic debt"
+verify_ssl: false
+
+# --- discover ---
+# BoT's publications filter 1 ("Monthly Economic Review", ?lang=en) lists the
+# issues newest first under /Publications/Regular/Monthly Economic Review/en/
+# <timestamp>.pdf; the first link is the latest issue. Table A10 is a 13-month
+# rolling window, so history accumulates by merge-on-write.
+discover:
+  method: page_scrape
+  page_url: "https://www.bot.go.tz/Publications/Filter/1?lang=en"
+  link_contains:
+    - "monthly economic review/en/"
+    - ".pdf"
+  download_timeout: 300
+
+# BACK ISSUES -- each MER's Table A10 is a 13-month window, so one issue per
+# year back gives a continuous monthly series (June 2022 onward). Ids from the
+# listing page (all 279 issues are on /Publications/Filter/1?lang=en&page=2).
+# Earlier issues are image-only (2022, "A9") or a different layout with a
+# misprinted header (2021, "A7") and are not read -- see the parser.
+extra_urls:
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2025092511492836.pdf"   # "Aug 2025" issue: Jul-24..Jul-25 (bridges 2025-07)
+    save_as: BoT_MER_Aug2025.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2025081914421927.pdf"   # "Jul 2025": Jul-24..Jun-25
+    save_as: BoT_MER_Jul2025.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2025020315531757.pdf"   # "Jul 2024": Jun-23..Jun-24
+    save_as: BoT_MER_Jul2024.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2023082110050216.pdf"   # "Jul 2023": Jun-22..Jun-23
+    save_as: BoT_MER_Jul2023.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2022072210075247.pdf"
+    save_as: BoT_MER_Jun2022.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2022011809011400.pdf"
+    save_as: BoT_MER_Dec2021.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2020081416444464.pdf"
+    save_as: BoT_MER_Jul2020.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/20200609220056468.pdf"
+    save_as: BoT_MER_Dec2019.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2020021122483035257.pdf"
+    save_as: BoT_MER_Jan2019.pdf
+  - url: "https://www.bot.go.tz/Publications/Regular/Monthly%20Economic%20Review/en/2020021122483080263.pdf"
+    save_as: BoT_MER_Jul2018.pdf
+extras_cache: true
+
+parser: tanzania_bot_debt
+geography: National
+
+notes: >
+  BoT Monthly Economic Review, Table A10 (USD million, 13 monthly columns):
+  external debt committed / disbursed / undisbursed; disbursed external debt
+  by creditor, borrower (central government, public corporations, private
+  sector), currency and use of funds; external arrears; external, domestic and
+  total debt stock. Flows (disbursements, debt service, net flows) are not
+  collected. Revised/provisional months are replaced by the next issue.
+  BACK ISSUES (2026-10-14): Jun 2022 and Dec 2021 read whole (Nov 2020 -
+  May 2022); Jul 2020, Dec 2019, Jan 2019 and Jul 2018 (Tables A7/A9, other
+  section structures) read for headline stocks only -- external, domestic,
+  total debt stock -- Jun 2017 - Jun 2020. Jul-Oct 2020 missing: the issue
+  that prints them misprints its month header (Aug 2021). Pre-2018 issues
+  carry no National Debt Developments text table.
+  CROSS-CHECK: Aug-26p total 52,224.4; external 36,731.5; domestic 15,493.0.

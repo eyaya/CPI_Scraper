@@ -1,0 +1,23 @@
+# =====================================================================
+# NOT COLLECTABLE (checked 2026-10-08 and 2026-10-12) -- Libya.
+#
+# * Central Bank of Libya (cbl.gov.ly) answers 403 to every client; its Q1
+#   2026 Economic Bulletin (102 pp) has no public-debt table.
+# * Ministry of Finance (mof.gov.ly) publishes monthly "transparency reports"
+#   (2023) on budget execution only -- no debt section (the only "دين" hits
+#   are inside "دينار").
+#
+# THIRD PASS (2026-10-12): cbl.gov.ly now answers HTTP 200 (was 403). Its
+# /statistic-book/ page links the CBL statistical booklet 1966-2017
+# ("الكتيب الإحصائي 1966-2017", /micifaf/2022/08/..., 161 pp, 771 776 bytes,
+# fetched). Its contents list 24 tables -- monetary base, monetary survey,
+# money supply, CBL and bank balance sheets, specialised banks' loans,
+# interest and exchange rates, balance of payments -- and NO public-finance or
+# public-debt table; "الدين العام" occurs only in the methodology glossary
+# (p.4). The /economic-bulletin/ page links a Q3-2023 bulletin, not opened
+# (quick-check budget). Still blocked.
+# =====================================================================
+country: Libya
+iso3: LBY
+indicator: Public_Debt
+blocked_reason: no published public-debt statistics reachable

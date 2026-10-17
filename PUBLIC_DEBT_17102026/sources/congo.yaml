@@ -1,0 +1,57 @@
+country: Congo
+iso3: COG
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Caisse Congolaise d'Amortissement (CCA), published by the Ministère des Finances (finances.gouv.cg)
+publication_code: Bulletin Statistique de la Dette Publique (trimestriel)
+frequency: quarterly
+verify_ssl: false
+coverage: "Administration centrale"
+
+# --- discover ---
+# The Ministry of Finance's home page links the newest bulletin's article
+# ("/fr/bulletin-statistique-de-la-dette-<n>ème-trimestre-<YYYY>"), and the
+# article links the PDF under /sites/default/files/documents/.
+discover:
+  method: two_hop_scrape
+  index_url: "https://www.finances.gouv.cg/"
+  page_link_contains:
+    - "bulletin-statistique-de-la-dette"
+  file_link_contains:
+    - "sites/default/files"
+    - "Bulletin_Statistique_Dette"
+    - ".pdf"
+
+# BACK ISSUE: the 1er trimestre 2025 bulletin (window 2024T1-2025T1), found
+# through the site's own search (/fr/search/node?keys=bulletin+statistique+dette).
+# Only its Tableau 1 is read (older caption "(en milliards)"; Tableaux 2-3 laid
+# out differently) -- see the parser's `_tableau1_legacy`.
+extra_urls:
+  - url: "https://www.finances.gouv.cg/sites/default/files/documents/Bulletin_Statistique_2025T1.pdf"
+    save_as: Bulletin_Statistique_2025T1.pdf
+  # 2024 issues (site search, 2026-10-14). The 4th-quarter 2024 bulletin's
+  # Tableau 1 (end-2023 + 2024T1-T4) is read by `_tableau1_legacy`; the n°01
+  # (2019-2023) and 2nd-quarter 2024 bulletins have no stock Tableau 1, and
+  # their Tableau 2 stock rows are read by `_tableau2_encours` under their own
+  # series code.
+  - url: "https://www.finances.gouv.cg/sites/default/files/documents/Bulletin_Statistique_Dette_RoC_Trim4__01_04_2025-1.pdf"
+    save_as: Bulletin_Statistique_2024T4.pdf
+  - url: "https://www.finances.gouv.cg/sites/default/files/documents/Bulletin%20Statistique%20Novembre_2024%20VF_3%20relu.pdf"
+    save_as: Bulletin_Statistique_2024T2.pdf
+  - url: "https://www.finances.gouv.cg/sites/default/files/documents/Bulletin%20Statistique%20n%C2%B001%20v3.pdf"
+    save_as: Bulletin_Statistique_n01_2019-2023.pdf
+
+extras_cache: true
+parser: congo_cca_debt
+geography: National
+
+notes: >
+  CCA quarterly debt bulletin: Tableau 1 (external/domestic, arrears vs
+  outstanding, total; milliards USD and milliards FCFA as printed), Tableau 2
+  (creditor classes, market debt, latest-quarter shares), Tableau 3 (external
+  debt by currency). Five quarters per issue; merge-on-write accumulates.
+  Q2 2026 bulletin heads its 2026T1 column "2025T1" in Tableaux 1-2: pinned
+  as a header misprint, periods taken from Tableau 3. The ministry also posts
+  a monthly "Situation mensuelle de la dette" (not read).
+  CROSS-CHECK 2026T2: total 9 564,28 milliards FCFA (16,61 Md USD).

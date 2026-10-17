@@ -1,0 +1,48 @@
+country: Mali
+iso3: MLI
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Direction Générale de la Dette Publique (DGDP), Ministère de l'Economie et des Finances, Mali
+publication_code: Bulletin Statistique de la Dette Publique (semestriel), "Chiffres clés"
+frequency: quarterly
+verify_ssl: false
+coverage: "Dette publique (DGDP; perimeter not restated in the key-figure box)"
+
+# --- discover ---
+# finances.ml/dette-publique/bulletins lists each bulletin as a node page
+# linking one PDF. Pinned to the newest (1st semester 2026, node 680).
+discover:
+  method: static_url
+  url: "https://finances.ml/sites/default/files/2026-10/BULL_STATISTIQUE_DETTE_SEMES_1_2026.pdf"
+  save_as: DGDP_bulletin_2026_S1.pdf
+  download_timeout: 300
+
+# Earlier bulletins with a text key-figure box (nodes 505-646). Not listed:
+# 2019 and 2020 (no key-figure box; tables are images), the 2nd-semester
+# 2023 and 1st-semester 2024 issues (not posted), and both 2025 issues (the
+# PDFs open with no readable page).
+extras_cache: true
+extra_urls:
+  - url: "https://finances.ml/sites/default/files/2025-05/BULLETIN_STATISTIQUE_DETTE_MALI_2_SEMESTRE%202024_FINAL.pdf"
+    save_as: DGDP_bulletin_2024_S2.pdf
+  - url: "https://finances.ml/sites/default/files/2023-09/BULL_STAT_DETTE_1er_SEM_2023_FINAL.pdf"
+    save_as: DGDP_bulletin_2023_S1.pdf
+  - url: "https://finances.ml/sites/default/files/2023-04/BULTIN_STATI_DGDP_MALI_2e_SEMESTRE%202022.pdf"
+    save_as: DGDP_bulletin_2022_S2.pdf
+  - url: "https://finances.ml/sites/default/files/2022-10/BULLETIN_1ER_SEMESTRE%202022.pdf"
+    save_as: DGDP_bulletin_2022_S1.pdf
+  - url: "https://finances.ml/sites/default/files/2022-05/BULLETIN%20MALI%20deuxi%C3%A8me%20semestre%202021_OK.pdf"
+    save_as: DGDP_bulletin_2021_S2.pdf
+  - url: "https://finances.ml/sites/default/files/2022-03/BULLETIN_premier%20semestre%202021.pdf"
+    save_as: DGDP_bulletin_2021_S1.pdf
+
+parser: mali_dgdp_keyfigures
+geography: National
+
+notes: >
+  Beside mali.yaml (INSTAT yearbook reprint of DGDP stocks, 2020-2024). Ratios
+  only, as printed in each bulletin's key-figure box: public and external debt
+  in % of GDP, external and domestic shares of the total. The stock tables
+  are images and are not read (no OCR). CROSS-CHECK: end-December 2024
+  public debt 49,7 % of GDP (external 25,7); end-June 2026 38,3 %.

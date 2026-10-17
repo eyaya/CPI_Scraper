@@ -1,0 +1,67 @@
+country: Somalia
+iso3: SOM
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministry of Finance, Federal Government of Somalia -- Debt Management Department
+publication_code: Quarterly Public Debt Bulletin -- Table 1 Stock of debt
+frequency: quarterly
+coverage: "Federal government external public debt (by creditor; no domestic debt stock published)"
+verify_ssl: false
+
+# --- discover ---
+# mof.gov.so lists its debt publications newest first; each quarterly bulletin
+# has a page "/publications/quarterly-public-debt-bulletins-quarter-<n>-<year>"
+# linking the PDF under /sites/default/files/Publications/. Two hops: the
+# newest bulletin page, then its PDF.
+discover:
+  method: two_hop_scrape
+  index_url: "https://mof.gov.so/publications/debt-management-reports"
+  page_link_contains:
+    - "quarterly-public-debt-bulletins"
+  file_link_contains:
+    - ".pdf"
+  download_timeout: 300
+
+# Back issue in the same layout as the current one (see the parser: Q1/Q2 2025
+# and Q4 2025 / Q1 2026 differ and are not read).
+extra_urls:
+  - url: "https://mof.gov.so/sites/default/files/Publications/Debt%20bulletine%20Q3%2C%202025.pdf"
+    save_as: SO_QPDB_2025-Q3.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/Public%20debt%20bulletin%20report_QI%2C%202023.pdf"
+    save_as: SO_QPDB_2023-Q1.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/QUARTERLY%20PUBLIC%20DEBT%20BULLETIN%20%28QUARTER%20II%2C%202023%29_0.pdf"
+    save_as: SO_QPDB_2023-Q2.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/PUBLIC%20DEBT%20BULLETIN%20REPORT_QIII%2C%202023.pdf"
+    save_as: SO_QPDB_2023-Q3.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/Quarterly%20%20Public%20Debt%20%20Bulletin%20Quarter%20%202024-compressed.pdf"
+    save_as: SO_QPDB_2024-Q1.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/Public%20debt%20bulletin%20report_QII%2C%202024.pdf"
+    save_as: SO_QPDB_2024-Q2.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/QUARTERLY%20PUBLIC%20DEBT%20BULLETIN%20%28QUARTER%20III%2C%202024%29.pdf"
+    save_as: SO_QPDB_2024-Q3.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/QUARTERLY%20PUBLIC%20DEBT%20BULLETINS%20%28QUARTER%20IV%2C%202024%29.pdf"
+    save_as: SO_QPDB_2024-Q4.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/QUARTERLY%20PUBLIC%20DEBT%20BULLETIN%20%28QUARTER%201%2C%202025%29_0.pdf"
+    save_as: SO_QPDB_2025-Q1.pdf
+  - url: "https://mof.gov.so/sites/default/files/Publications/QUARTERLY%20PUBLIC%20DEBT%20BULLETINS%20%28QUARTER%202%2C%202025%29.pdf"
+    save_as: SO_QPDB_2025-Q2.pdf
+extras_cache: true
+
+parser: somalia_mof_debt
+geography: National
+
+notes: >
+  MoF FGS Quarterly Public Debt Bulletin, Table 1 (USD million): external debt
+  stock by creditor and creditor category (commercial, multilateral,
+  non-Paris Club, Paris Club), with face value, interest arrears, other fee
+  arrears and total; grand total. Iraq and Libya penalty-interest arrears are
+  provisional per MoF's own footnotes. One quarter per bulletin, accumulated
+  by merge-on-write. BACK ISSUES (extras, 2026-10-14): every bulletin on
+  mof.gov.so whose Table 1 passes the parser's checks -- 2023 Q1-Q3, 2024
+  Q1-Q4, 2025 Q1-Q3. The 2023 issues print the previous quarter beside their
+  own; only the bulletin's own quarter is read. Not readable (skipped, never
+  misread): Q4 2020-Q4 2022 (other layouts, comma decimals, split cells), Q4
+  2023, Q4 2025 and Q1 2026 (letter-spaced text layer). The 'Q1 2021' page
+  links the Q4 2020 file.
+  CROSS-CHECK (Q2 2026): grand total 1,479.81; Non-Paris Club 800.44.

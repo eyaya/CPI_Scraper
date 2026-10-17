@@ -17,6 +17,50 @@ discover:
     - "consumer price index"
     - ".pdf"
 
+# BACK ISSUES. The listing page shows only the newest reports, but older ones
+# stay at /sites/default/files/publications/Consumer Price Index <Month>
+# <Year>.pdf. These 35 (Feb 2020 - Jul 2026) were found to exist on
+# 2026-10-12 by probing every month; Statistics Botswana did not upload every
+# month. Each issue dates ~5 months, so together they give the monthly series
+# from 2019-02 (base Dec 2018 = 100). Reused from disk when complete.
+extras_cache: true
+extra_urls:
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20February%202020.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20June%202020.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20January%202021.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20April%202021.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20July%202021.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20July%202022.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20December%202022.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20August%202023.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20October%202023.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20November%202023.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20December%202023.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20January%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20February%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20May%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20June%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20July%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20August%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20September%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20November%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20December%202024.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20January%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20February%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20March%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20April%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20May%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20June%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20August%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20September%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20October%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20November%202025.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20January%202026.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20March%202026.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20May%202026.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20June%202026.pdf"
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Consumer%20Price%20Index%20July%202026.pdf"
+
 parser: botswana_stats
 geography: National
 expect_divisions: 13          # All items + 12 COICOP-1999 groups

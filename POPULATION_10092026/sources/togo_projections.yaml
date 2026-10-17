@@ -1,0 +1,32 @@
+country: Togo
+iso3: TGO
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED)
+publication_code: Perspectives démographiques du Togo 2011-2031 (Edition 2015)
+frequency: annual
+verify_ssl: false
+
+# A SECOND Togo descriptor beside togo.yaml (RGPH-5 2022 census). INSEED's own
+# file, listed on inseed.tg/statistiques-demographiques/ ("Perspectives
+# démographiques du Togo (de 2011 à 2031)"); served by the WordPress download
+# manager as Perspectives-demographiques-final-2016-05.pdf. The "1950 à 2100"
+# files on the same page are UN WPP 2025 (an aggregator) -- not used.
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/2471/"
+  save_as: inseed_togo_perspectives_2011_2031.pdf
+  impersonate: [chrome124, safari17_0]
+
+parser: inseed_togo_projection
+geography: Total country
+
+notes: >
+  RGPH-4 (2010) based projections, MEDIUM scenario only, national, in
+  thousands (unit thousand_persons), at 1 JANUARY of each year (as the report
+  states; series_code says 1JAN): totals by sex 2011-2031 (Tableau 2.1) and
+  5-year age group (0-4 .. 80+) x sex 2011-2031 (annex). Low / high
+  scenarios not read.
+
+  CROSS-CHECK: 1 Jan 2011 6 202 thousand; 2020 7 706; 2031 9 767.

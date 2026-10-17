@@ -1,0 +1,35 @@
+country: Gabon
+iso3: GAB
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Gabon (INSTAT), reprinting the Direction Générale de la Dette (DGD)
+frequency: annual
+coverage: "Public direct and guaranteed debt (dette publique directe et garantie)"
+verify_ssl: false
+
+# --- discover ---
+# new.instatgabon.org/annuaires-statistiques-du-gabon lists one edition, the
+# 2016-2020 yearbook; pinned.
+discover:
+  method: static_url
+  url: "https://new.instatgabon.org/uploads/folder_1/autres_publications/ANNUAIRE-DU-GABON-2020.pdf"
+  save_as: INSTAT_Annuaire_Gabon_2016-2020.pdf
+  download_timeout: 300
+
+parser: gabon_instat_debt
+geography: National
+
+notes: >
+  INSTAT Annuaire statistique 2016-2020, Tableau V.1.2.1 (debt stock: external
+  and domestic, direct and guaranteed, total; FCFA milliards) and the debt/GDP
+  row of V.1.2.5, both "Source : DGD". Flows (V.1.2.2-4) not collected. Total
+  vs external + domestic rounding gaps pinned for 2018 (-0,10) and 2020 (-0,20).
+
+  EARLIER EVIDENCE (was sources_blocked, 2026-10-08/12): economie.gouv.ga and
+  dgd.ga do not resolve; Wayback has the ministry's "Direction générale de la
+  dette / rapport d'exécution" pages but no usable PDF (objects 653/654
+  empty); BEAC's "depief_gabon.xlsx" carries debt only as ratios from a joint
+  "Administrations nationales et BEAC" compilation (outside the policy). The
+  2020 yearbook had been searched for GDP only; its debt chapter is what
+  unblocked Gabon (2026-10-12).

@@ -21,6 +21,18 @@ discover:
 extra_urls:
   - url: "https://www.inseed-comores.org/backend/uploads/national_accounts_2022_graph2_20663d3da5.csv"
     save_as: "comoros_na_2022_expenditure_contributions.csv"
+  # The data workbooks attached to the four national-accounts notes (Strapi
+  # publications 259, 258, 257, 256): 2007-2025, each edition its own vintage
+  # (parsers/comoros_inseed_annual.py).
+  - url: "https://www.inseed-comores.org/backend/uploads/national_accounts_data_2021_9ffdc6cb94.xlsx"
+    save_as: "INSEED_CN_def2021_prov2022_data.xlsx"
+  - url: "https://www.inseed-comores.org/backend/uploads/national_accounts_data_2022_05894fa685.xlsx"
+    save_as: "INSEED_CN_def2022_prov2023_data.xlsx"
+  - url: "https://www.inseed-comores.org/backend/uploads/national_accounts_data_535032f42b.xlsx"
+    save_as: "INSEED_CN_def2023_prov2024_data.xlsx"
+  - url: "https://www.inseed-comores.org/backend/uploads/national_accounts_data_2023_b18ed3b9eb.xlsx"
+    save_as: "INSEED_CN_def2024_prov2025_data.xlsx"
+extras_cache: true
 
 parser: comoros_inseed_gdp
 geography: National

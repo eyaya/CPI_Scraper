@@ -22,6 +22,16 @@ discover:
   impersonate: [chrome124, safari17_0]
   download_timeout: 300
 
+# The 2001-2007 edition of the same Annuaire (Wayback `id_` copy of
+# stat-gabon.org's own file; the live host serves a placeholder HTML page for
+# it): current-price tables V.1.1.1 / V.1.2.1 only (parsers/
+# gabon_dgs_annuaire0107.py). The 2005-2009 edition's accounts tables are
+# images (no OCR); the Comptes rapides 2010 likewise.
+extras_cache: true
+extra_urls:
+  - url: "https://web.archive.org/web/20120305175029id_/http://www.stat-gabon.org/documents/PDF/Donnees%20stat/Compteannuaire/Ann0107d.pdf"
+    save_as: "DGS_Annuaire_2001-2007.pdf"
+
 parser: gabon_dgs_gdp
 geography: National
 

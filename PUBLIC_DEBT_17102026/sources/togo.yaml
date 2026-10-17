@@ -1,0 +1,35 @@
+country: Togo
+iso3: TGO
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Direction de la Dette Publique et du Financement (DDPF), Direction Générale du Trésor et de la Comptabilité Publique, Ministère de l'Economie et des Finances
+publication_code: Bulletin statistique de la dette de l'Administration centrale du Togo (1ère édition, 2013-2017)
+frequency: annual
+verify_ssl: false
+coverage: "Dette de l'Administration centrale (intérieure et extérieure)"
+
+# --- discover ---
+# finances.gouv.tg/documentation/ is a file browser over
+# /wp-content/uploads/files/<YYYY>/<MM - Mois>/. The DDPF's statistical
+# bulletin is the only debt-statistics file posted there; the first (and only)
+# edition covers 2013-2017. Checked 2026-10-12: no later bulletin on the
+# ministry's domain; the WordPress media API returns HTTP 500; the DDPF and
+# dette.gouv.tg hosts do not answer. Re-check the documentation browser for a
+# newer edition.
+discover:
+  method: static_url
+  url: "https://finances.gouv.tg/wp-content/uploads/files/2018/11%20-%20Novembre/BULLETIN%20STATISTIQUE%202013-2017(1).pdf"
+  save_as: TG_DDPF_bulletin_statistique_dette_2013-2017.pdf
+
+parser: togo_ddpf_debt
+geography: National
+
+notes: >
+  Tableau 1: year-end stocks of total, external and domestic debt of the
+  central administration, USD million and XOF million, 2013-2017 (total =
+  external + domestic checked every year, both currencies). Tableau 21: debt /
+  GDP and external debt / GDP, percent, as printed. Flows not read.
+
+  CROSS-CHECK: Dette totale 2017 2 017 948,83 XOF m (3 685,58 USD m), 73,66 %
+  of GDP; 2013 1 146 600,62.

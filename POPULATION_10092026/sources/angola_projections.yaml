@@ -1,0 +1,28 @@
+country: Angola
+iso3: AGO
+indicator: Population
+tier: 2
+source_type: excel
+agency: Instituto Nacional de Estatística (INE)
+publication_code: Projecções da População 2014-2050
+frequency: annual
+verify_ssl: false
+
+# A SECOND Angola descriptor beside angola.yaml (the 2024 census): INE's
+# 2014-2050 projections and its 1940-2025 national series. The folder walker
+# prefers an exact folder name (core/discover.py), since "População" is also a
+# substring of its parent "População e Sociedade".
+discover:
+  method: ine_ao_directory_files
+  index_url: "https://www.ine.gov.ao/Publicacoes/Todas"
+  dirs:
+    - "População e Sociedade"
+    - "População"
+    - "Projecções da População"
+  files:
+    - ["PROJECTADA", "PROV"]       # Quadro 1, primary
+    - ["PROJECTADA", "GRUPOS"]     # age sheets
+    - ["1940"]                     # 1940-2025 national series
+
+parser: ine_angola_projection
+geography: Total country

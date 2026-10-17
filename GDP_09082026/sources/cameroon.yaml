@@ -22,6 +22,25 @@ discover:
     - "CNT"
     - ".pdf"
 
+# BACK ISSUES (INS media library, 2014 onward). Each note prints six quarters;
+# the parser reads newest first and takes from each note only the quarters no
+# newer note gave, tagged in category_group. 2012-2016 notes in an older layout
+# (CNT-4T2012, T4_2013, T4_2014, T3_2015, T4_2016) are not read -- the parser
+# refuses them -- so 2015-Q2..2016-Q1 is a gap. Immutable, cached when complete.
+extras_cache: true
+extra_urls:
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/CNT_INS_Cameroun_T1_2015.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/CNT_T2_2017.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/Note_Analyse_CNT_T4_2020_Revision_10_-mai_-2021_Final-1.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/Note_analyse_CNT_T3_2017.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/Note_d_analyse_des_CNT_T1_2019_final.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note_danalyse_CNT_T1_2023_F.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note_danalyse_CNT_T1_2024_Final.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/Note_danalyse_CNT_T3_2018_version_du_18_01_2019.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note_danalyse_CNT_T3_2020.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/Note_danalyse_CNT_T3_2021.pdf"
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/Note_danalyse_CNT_T4_2021.pdf"
+
 parser: cameroon_ins_gdp
 geography: National
 

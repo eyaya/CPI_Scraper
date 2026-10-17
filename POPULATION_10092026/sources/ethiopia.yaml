@@ -20,6 +20,13 @@ discover:
     - "projected_population"
     - ".pdf"
 
+# Earlier edition: the July-2023 projection (zones and weredas, total M/F/T
+# only -- no residence split), linked on the same ESS page. Dated by its own
+# title, so it never collides with the current edition.
+extra_urls:
+  - url: "https://ess.gov.et/wp-content/uploads/2023/09/Population-of-Zones-and-Weredas-Projected-as-of-July-2023.pdf"
+    save_as: ess_projected_population_july2023.pdf
+
 parser: ess_ethiopia_population
 geography: Total country
 

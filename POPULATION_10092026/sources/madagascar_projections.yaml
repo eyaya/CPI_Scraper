@@ -1,0 +1,32 @@
+country: Madagascar
+iso3: MDG
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Madagascar)
+publication_code: RGPH-3 2018 - Projections démographiques (rapport thématique, juillet 2023)
+frequency: annual
+verify_ssl: false
+
+# A SECOND Madagascar descriptor beside madagascar.yaml (RGPH-3 census).
+# INSTAT's own file, linked from instat.mg/p/rgph-3-rapport-thematique-
+# theme-18-projections-demographiques (411 pages, 21 MB).
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT-RGPH3_Projectionsdemographiques.pdf"
+  save_as: madagascar_rgph3_projections_2018_2050.pdf
+  download_timeout: 900
+
+parser: instat_madagascar_projection
+geography: Total country
+
+notes: >
+  MEDIUM variant (VM) only: Tableau 3.1 mid-year population by sex 2018-2050
+  (persons, every year); national 5-year age group x sex for 2018-2025, 2030,
+  2035, 2040, 2045, 2050 (Tableaux 3.2-3.26, even numbers). 2018 = the
+  projection's adjusted mid-year base (25 729 337), not the census count
+  (25 674 196, madagascar.yaml). Deferred: regional age x sex tables (22
+  regions, same years), components tables, low/high variants.
+
+  CROSS-CHECK: 2021 28 177 762 (the INSTAT leaflet's figure); 2050
+  59 470 566.

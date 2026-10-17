@@ -206,4 +206,12 @@ def parse_positional(path: str) -> _pd.DataFrame:
     return _pd.DataFrame(out)
 
 
-parse = parse_positional
+def parse(path: str, extras: list[str] | None = None) -> _pd.DataFrame:
+    """The 2016-17 report, plus the LFS 2010 report when passed as an extra
+    (see `liberia_lfs2010`)."""
+    frames = [parse_positional(path)]
+    from .liberia_lfs2010 import parse_2010
+    for extra in extras or []:
+        if "2010" in extra:
+            frames.append(_pd.DataFrame(parse_2010(extra)))
+    return _pd.concat(frames, ignore_index=True)

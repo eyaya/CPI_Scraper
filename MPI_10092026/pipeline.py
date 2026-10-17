@@ -9,6 +9,7 @@ import os
 from core.run import Pipeline, run_cli
 from . import parsers
 from . import schema
+from .standardise import standardise
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,6 +29,10 @@ CONFIG = Pipeline(
     merge_keys=["mpi_type", "measure_name", "metric", "dimension",
                 "mpi_indicator", "topic", "characteristic", "sex", "age_group",
                 "geography", "locality", "locality_label", "period"],
+    # Cross-country columns derived from the published ones (2026-10-15):
+    # breakdown codes, M0 on one scale, a series_id that carries the MEASURE
+    # (national MPIs are separate designs). See standardise.py.
+    standardise=standardise,
 )
 
 if __name__ == "__main__":

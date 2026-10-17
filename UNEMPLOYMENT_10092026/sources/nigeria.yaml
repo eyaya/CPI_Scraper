@@ -55,8 +55,18 @@ discover:
 extra_urls:
   - url: "https://www.nigerianstat.gov.ng/pdfuploads/Annual_Nigerian_Labour_Force_Survey_Report.pdf"
     save_as: nigeria_nlfs_annual_2023.pdf
+  # BACK ISSUES (2026-10-14; parser nigeria_nlfs_back): the earlier quarterly
+  # reports under the 2022 methodology, NBS e-library ids 1241455 (Q3 2023)
+  # and 1241562 (Q1 2024). The Q1 2024 report's "Labour Market Indicators by
+  # Quarters" table supplies 2022 Q4 - 2023 Q2 nationally. The 2016-2020
+  # reports use the old national definition and are deliberately not listed.
+  - url: "https://nigerianstat.gov.ng/download/1241455"
+    save_as: nigeria_nlfs_2023Q3.pdf
+  - url: "https://nigerianstat.gov.ng/download/1241562"
+    save_as: nigeria_nlfs_2024Q1.pdf
+extras_cache: true
 
-parser: nigeria_pdf
+parser: nigeria_nlfs_back
 geography: Total country
 
 notes: >

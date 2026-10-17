@@ -78,6 +78,13 @@ from . import zimbabwe_labour
 from . import uganda_labour
 from . import zambia_labour
 from . import sudan_labour
+from . import mauritius_hs_labour
+from . import zambia_lfs_back_labour
+from . import zimbabwe_qlfs_back_labour
+from . import uganda_nlfs_back_labour
+from . import malawi_lfs_labour
+from . import egypt_labour_backissues
+from . import tunisia_ins_backseries
 
 REGISTRY = {
     # --- Tier 1: API ------------------------------------------------------
@@ -289,6 +296,20 @@ REGISTRY = {
     # (10+, 15+) and 2008 census E2 industry / E3 occupation / E4 status counts
     # for NORTHERN Sudan and its 15 states, by residence (incl. nomad) and sex.
     "sudan_labour": sudan_labour.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "mauritius_hs_labour": mauritius_hs_labour.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "zambia_lfs_back_labour": zambia_lfs_back_labour.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "zimbabwe_qlfs_back_labour": zimbabwe_qlfs_back_labour.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "uganda_nlfs_back_labour": uganda_nlfs_back_labour.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "malawi_lfs_labour": malawi_lfs_labour.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "egypt_labour_backissues": egypt_labour_backissues.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "tunisia_ins_backseries": tunisia_ins_backseries.parse,
     # --- HTML theme pages -------------------------------------------------
     # INS Tunisie: employed by branch of economic activity, from the same
     # server-rendered pages `unemployment` reads. The only HTML source in the

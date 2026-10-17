@@ -20,6 +20,18 @@ discover:
     - "activité, emploi et chômage"
   save_as: morocco_activite_emploi_chomage.pdf
 
+# BACK ISSUES (2026-10-14): the 2022-2024 editions of the same annual report,
+# same Tableaux 4 and 5, each dating itself. 2021 is not read (its occupation
+# block wraps differently). HCP /file/<id>/ links, from the "Enquête nationale
+# sur l'emploi" downloads tag.
+extras_cache: true
+extra_urls:
+  - url: "https://www.hcp.ma/file/237307/"
+    save_as: morocco_aec_annuel_2022.pdf
+  - url: "https://www.hcp.ma/file/242461/"
+    save_as: morocco_aec_annuel_2023.pdf
+  - url: "https://www.hcp.ma/file/244731/"
+    save_as: morocco_aec_annuel_2024.pdf
 parser: morocco_labour
 geography: Total country
 

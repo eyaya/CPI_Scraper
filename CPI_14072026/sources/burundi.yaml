@@ -14,7 +14,9 @@ verify_ssl: false
 discover:
   method: insbu_latest
   api_url: "https://api.insbu.bi/api/publications"
-  title_contains: "Bulletin mensuel des prix"   # INSBU folded the IPC note into this bulletin
+  # The standalone monthly IPC note is posted ~5 weeks before the 'Bulletin
+  # mensuel des prix' that reprints its table, so it is the primary (2026-10-14).
+  title_contains: "Indice des Prix à la Consommation des ménages au Burundi"
   save_as: INSBU_IPC_Burundi.pdf
 
 parser: burundi_insbu
@@ -24,8 +26,59 @@ expect_divisions: 13          # Ensemble + 12 COICOP-1999 functions
 notes: >
   Monthly IPC report, base 100 = 2016/2017, COICOP-1999. 'Tableau 1' gives 'TOUS
   LES PRODUITS' (code 0) + the 12 functions with three monthly indices then three
-  inflation columns (moyenne annuelle, mensuel, glissement annuel), so current
-  index = nums[-4], MoM nums[-2], YoY nums[-1]. Functions carry a leading code
+  inflation columns (moyenne annuelle, mensuel, glissement annuel): indices
+  m-12, m-1, m = nums[-6:-3], MoM nums[-2], YoY nums[-1]. Functions carry a leading code
   digit (wrapped 04/05 show only the digit); dotted sub-items and analytical
   aggregates are skipped. Report month from the header. The old ISTEEBU domain
   (isteebu.bi) is now a parked/hijacked domain — insbu.bi is the live NSO site.
+
+# BACK ISSUES (added 2026-10-14) from the INSBU publications API. Each prints
+# m-12, m-1 and m, dated from the report month and checked against the printed
+# monthly and annual variations. Notes 2025-02 .. 2026-08; bulletins only where
+# no note reads (2024, 2025-07, 2026-02) -- read from their first 25 pages.
+# Not listed (table unreadable: wrapped 04/05 labels or an image table; their
+# months are reprinted as m-1 by the next issue): notes 2025-03, 2025-05,
+# 2025-08, 2026-02, 2026-04; bulletins 2024-03, -06, -07, -08, -09, -10. The
+# API's "janvier 2025" note is the February file, so it is not listed.
+extras_cache: true
+extra_urls:
+  - url: "https://api.insbu.bi/storage/documents/01KMYY4QB6WKJVZGNZCCS8WFVC.pdf"
+    save_as: insbu_note_2025-02.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KMYXEZWHJ5T7Z7C9H0QSH8G4.pdf"
+    save_as: insbu_note_2025-04.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KMYX9P8087R7GAZ3DM57GBR7.pdf"
+    save_as: insbu_note_2025-06.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KMYNE7QG4MK0PKJWKB3W2FSW.pdf"
+    save_as: insbu_note_2025-09.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KMYN9GCBPAVN6GDH7K8NXA5F.pdf"
+    save_as: insbu_note_2025-10.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KMYN6XDPB2KQT5VQC01S01JJ.pdf"
+    save_as: insbu_note_2025-11.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KMQZFBCSF71XHN3Y566V4PRW.pdf"
+    save_as: insbu_note_2025-12.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KMQZBP1AT6CZHH80ZB3Y5317.pdf"
+    save_as: insbu_note_2026-01.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KP5BX08PYRM93KEA6J55NNMJ.pdf"
+    save_as: insbu_note_2026-03.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KTX44CAR3E0AE3NER3Q7FV3Y.pdf"
+    save_as: insbu_note_2026-05.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KXA8X2AW68W280TB00BS9B5G.pdf"
+    save_as: insbu_note_2026-06.pdf
+  - url: "https://api.insbu.bi/storage/documents/01M1RRCE34VP7HPKVVN5RH1VYT.pdf"
+    save_as: insbu_note_2026-07.pdf
+  - url: "https://api.insbu.bi/storage/documents/01M289NR44TBRXY23GK30TFFY3.pdf"
+    save_as: insbu_note_2026-08.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KN73XM52D343MQZM35VAJQVG.pdf"
+    save_as: insbu_bull_2024-01.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KN742GV58M3FRPN1Q9QSAZJ2.pdf"
+    save_as: insbu_bull_2024-02.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KN747CREBW32AHYAH326RYCY.pdf"
+    save_as: insbu_bull_2024-04.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KN74QB2XYWS68C0TSTNJSTX8.pdf"
+    save_as: insbu_bull_2024-11.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KN74T6YEVFS8QRY8FK0PZAF4.pdf"
+    save_as: insbu_bull_2024-12.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KNKHK0HGNP7WD9Q54THKR7J4.pdf"
+    save_as: insbu_bull_2025-07.pdf
+  - url: "https://api.insbu.bi/storage/documents/01KNKWW8VD6MYEQMGHZBTA6M8T.pdf"
+    save_as: insbu_bull_2026-02.pdf

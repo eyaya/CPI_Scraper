@@ -39,8 +39,12 @@ _TOLERANCE = 5
 
 _TITLE_YEAR = re.compile(r"Population\s+Size\s+by\s+Sex.*?:\s*\w+\s+(?P<year>\d{4})", re.I | re.S)
 _NUM = r"[\d,]{1,15}"
-# a data row ends in nine counts: total M/F/T, urban M/F/T, rural M/F/T
+# A data row ends in nine counts (total M/F/T, urban M/F/T, rural M/F/T) in
+# the 2025 edition, or in THREE (total M/F/T only) in the July-2023 edition,
+# which prints no residence split. Nine is tried first so a 9-count row is
+# never read as its last three numbers.
 _ROW = re.compile(rf"^(?P<label>.+?)\s+(?P<nums>(?:{_NUM}\s+){{8}}{_NUM})$")
+_ROW3 = re.compile(rf"^(?P<label>.+?)\s+(?P<nums>(?:{_NUM}\s+){{2}}{_NUM})$")
 _ZONE_NAME = re.compile(r"^(?P<name>[^\d,]{3,60}?)\s*-?\s*Zone\s*\**$", re.I)
 _ZONE_TOTAL = re.compile(r"^Zone\s+Total\**$", re.I)
 # Most regions print their NAME on its own line and their counts on a generic
@@ -56,7 +60,14 @@ def _int(tok: str):
     return int(tok) if tok.isdigit() else None
 
 
-def parse(local_path: str) -> pd.DataFrame:
+def parse(local_path: str, extras: list[str] | None = None) -> pd.DataFrame:
+    """The current edition plus any earlier editions passed as extras -- each
+    dated by its own title, so editions never collide on the merge key."""
+    frames = [_parse_one(p) for p in [local_path, *(extras or [])]]
+    return pd.concat(frames, ignore_index=True)
+
+
+def _parse_one(local_path: str) -> pd.DataFrame:
     with pdfplumber.open(local_path) as pdf:
         pages = [p.extract_text() or "" for p in pdf.pages]
     text = "\n".join(pages)
@@ -82,19 +93,19 @@ def parse(local_path: str) -> pd.DataFrame:
             pending_region = f"{region.group('name').strip(' -')} Region"
             continue
 
-        row = _ROW.match(line)
+        row = _ROW.match(line) or _ROW3.match(line)
         if not row:
             continue
         label = row.group("label").strip(" -")
         nums = [_int(t) for t in row.group("nums").split()]
-        if len(nums) != 9 or any(v is None for v in nums):
+        if len(nums) not in (3, 9) or any(v is None for v in nums):
             continue
 
         male, female, total = nums[0], nums[1], nums[2]
         if abs(male + female - total) > _TOLERANCE:
             continue
         # urban + rural must reproduce the total block, else the row mis-parsed
-        if abs((nums[5] + nums[8]) - total) > _TOLERANCE:
+        if len(nums) == 9 and abs((nums[5] + nums[8]) - total) > _TOLERANCE:
             continue
 
         if _ZONE_TOTAL.match(label):

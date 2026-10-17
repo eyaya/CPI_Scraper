@@ -65,6 +65,14 @@ KNOWN_IDENTITY_BREAKS = {
     # the 80+ row prints 129 + 125 = 244. A published misprint, pinned in
     # ons_algeria_population.py and collected as printed.
     ("algeria_population", "estimate", "80 ans et plus", "Total country", "2002"),
+    # INS Congo Annuaire 2014, 2011 age table: M + F misses the printed total
+    # (5-9 by -1000, 30-34 by -500, 50-54 by +500).
+    ("congo_population", "estimate", "5-9", "Total country", "2011"),
+    ("congo_population", "estimate", "30-34", "Total country", "2011"),
+    ("congo_population", "estimate", "50-54", "Total country", "2011"),
+    # Cuvette 2014: male from the 2014 edition, female and total from the 2018
+    # edition, whose total is misprinted (196 330; the 2014 edition: 196 930).
+    ("congo_population", "estimate", "Total", "Cuvette", "2014"),
 }
 # Stats SA's mid-year estimates are published by province only.
 NO_NATIONAL_TOTAL = {"south_africa_population"}
@@ -219,7 +227,12 @@ def test_sex_identity_holds():
         if d.empty:
             continue
         d["value"] = pd.to_numeric(d["value"], errors="coerce")
-        piv = d.pivot_table(index=["series_type", "age_group", "geography", "period"],
+        # UNIT IS PART OF THE KEY: CAPMAS (Egypt) prints totals in persons
+        # and the sex split in thousands; summing across units is meaningless.
+        unit = d["unit"].fillna("") if "unit" in d.columns else ""
+        d["_unit"] = unit
+        piv = d.pivot_table(index=["series_type", "age_group", "geography", "period",
+                                   "_unit"],
                             columns="sex", values="value", aggfunc="sum")
         if not {"male", "female", "total"} <= set(piv.columns):
             continue
@@ -230,7 +243,23 @@ def test_sex_identity_holds():
         # A tenth of a percent, plus one, absorbs published rounding.
         tol = piv["total"].abs() * 0.001 + 1
         for idx in piv.index[diff > tol]:
-            breaks.append((name, *[str(x) for x in idx]))
+            breaks.append((name, *[str(x) for x in idx[:-1]]))
+
+    # WHOLE-TABLE PUBLISHED BREAKS, pinned by count rather than one by one:
+    # * INS RDC Annuaire 2015, Tableaux 2.1-2.2 (2010-2012): the sexes miss the
+    #   printed totals in 129 cells, mostly by 2-4 thousand (Kinshasa 0-4 2010:
+    #   M 914 + F 905 = 1819, Total printed 1815 -- checked on page 128), plus
+    #   the large ones pinned in parsers/ins_drc_backseries.py.
+    # * INS Niger: totals are filed from the NEWEST yearbook edition that
+    #   prints the year (later editions revise), the sex split from the one
+    #   edition that prints it (that year's own). Mixed vintages, each as
+    #   published: 2017 M/F sum to the 2013-2017 edition's 20 651 070, the
+    #   filed total is the revised 20 407 944. See parsers/ins_niger_annuaire.py.
+    WHOLE_TABLE = {"dr_congo_population": 129, "niger_population": 7}
+    for out, n in WHOLE_TABLE.items():
+        got = [b for b in breaks if b[0] == out and b not in KNOWN_IDENTITY_BREAKS]
+        check(f"{out}: pinned published identity breaks", len(got), n)
+    breaks = [b for b in breaks if b[0] not in WHOLE_TABLE]
 
     new = sorted(set(breaks) - KNOWN_IDENTITY_BREAKS)
     check("no NEW break in male+female=total", new, [])
@@ -259,7 +288,10 @@ def test_overlapping_geographies_are_not_summable():
     df = pd.read_csv(path, dtype=str, low_memory=False)
     df["value"] = pd.to_numeric(df["value"], errors="coerce")
     sel = ((df.sex == "total") & (df.age_group == "Total") &
-           (df.measure == "count"))
+           (df.measure == "count") &
+           # Several projection years are collected (2023 and 2025); the
+           # overlap check is about one year's geographies.
+           (df.period == "2025"))
     nat = df[sel & (df.geography == "Total country")]["value"]
     subs = df[sel & (df.geography != "Total country")]
 

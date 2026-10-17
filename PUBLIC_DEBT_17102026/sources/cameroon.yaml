@@ -1,0 +1,62 @@
+country: Cameroon
+iso3: CMR
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Caisse Autonome d'Amortissement (CAA), Cameroon
+publication_code: Conjoncture Mensuelle de la Dette Publique du Cameroun
+frequency: monthly
+verify_ssl: false
+# Tableau 1 spans several perimeters; the parser sets coverage per row
+# (central government, SOEs, CTDs, contingent liabilities, public sector).
+coverage: "Per row: see parser (central government / SOEs / CTDs / contingent liabilities / public sector)"
+
+# --- discover ---
+# caa.cm is WordPress. Its home page links the newest monthly note's POST
+# first (conjoncture-mensuelle-de-la-dette-publique-7/ ...), and that post
+# links only the full note. The WordPress media API is NOT used: it also lists
+# a 2-page "Résumé" edition (no tables) under the same name, and sorts it first.
+discover:
+  method: two_hop_scrape
+  index_url: "https://caa.cm/"
+  page_link_contains:
+    - "conjoncture-mensuelle-de-la-dette-publique"
+  file_link_contains:
+    - "wp-content/uploads"
+    - "conjoncture-mensuelle"
+    - ".pdf"
+
+
+# BACK ISSUES (caa.cm wp/v2/media, 2026-10-14), NEWEST FIRST: the parser
+# reads the primary first and keeps the first printing of each month.
+# Not listed: the March 2026 issue (one row splits into 3 of 5 cells),
+# superseded by the primary for every month but 2025-03, which the March
+# 2025 issue prints; the 2-page "Résumé" editions; the 2021-2024 quarterly
+# NDC notes (a different publication).
+extras_cache: true
+extra_urls:
+  - url: "https://caa.cm/wp-content/uploads/2025/10/Conjoncture-Mensuelle-de-la-Dette-Publique_du-Cameroun-N%C2%B009_Septembre-2025_du-311025_trfin.pdf"
+    save_as: CAA_conjoncture_2025_09.pdf
+  - url: "https://caa.cm/wp-content/uploads/2025/07/Conjoncture-Mensuelle-de-la-Dette-Publique-du-Cameroun-N%C2%B006_juin-2025_du-310725_trfinal.pdf"
+    save_as: CAA_conjoncture_2025_06.pdf
+  - url: "https://caa.cm/wp-content/uploads/2025/05/Conjoncture-Mensuelle-de-la-Dette-Publique-du-Cameroun-N%C2%B003_Mars-2025_du-090525.pdf"
+    save_as: CAA_conjoncture_2025_03.pdf
+  - url: "https://caa.cm/wp-content/uploads/2025/03/Conjoncture_Dette-Publique-du-Cameroun-_Quatrieme-Trimestre-2024_N-12-Decembre-2024_-du-18-Mars-2025.pdf"
+    save_as: CAA_conjoncture_2024_12.pdf
+parser: cameroon_caa_debt
+geography: National
+
+notes: >
+  CAA monthly debt note, Tableau 1 "Encours de la dette du secteur public":
+  29 rows x 8 end-of-month columns (year-earlier month, previous December,
+  current half), FCFA milliards as printed; per-row coverage. Merge-on-write
+  accumulates months across issues; the newest issue wins on revisions
+  (columns flagged provisoire / semi-définitif / définitif).
+
+  BACK ISSUES (Dec 2024 - Sep 2025) print Tableau 1 with fewer rows (26-28)
+  and 5, 9 or 11 columns; the parser finds the stated rows present, in order,
+  and the sum checks confirm the alignment. The 2021-2024 quarterly "NDC"
+  notes are a different publication and are not read.
+
+  CROSS-CHECK (juin 2026): total public debt 15 607 (44,2% of GDP per the
+  text); central government 14 659; external 9 453; SOE 923; PPP 4 895.

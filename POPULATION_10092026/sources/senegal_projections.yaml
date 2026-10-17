@@ -1,0 +1,33 @@
+country: Senegal
+iso3: SEN
+indicator: Population
+tier: 2
+source_type: excel
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: Projections démographiques 2023-2050 (RGPH-5)
+frequency: annual
+verify_ssl: false
+
+# A SECOND Senegal descriptor beside senegal.yaml (RGPH-5 Chapter 1): ANSD's
+# projections workbook, linked from ansd.sn/Indicateur/donnees-de-population.
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2024-11/Projections-demographiques_2023-2050.xlsx"
+  save_as: senegal_projections_2023_2050.xlsx
+
+# The report on the same page carries the national 2023-2073 series by sex.
+extra_urls:
+  - url: "https://www.ansd.sn/sites/default/files/2024-12/Projections-demographiques_2023-2073-.pdf"
+    save_as: senegal_projections_2023_2073.pdf
+
+parser: ansd_senegal_projection
+geography: Total country
+
+notes: >
+  ANSD projections workbook: 14 regions and 46 départements x sex (HOMME /
+  FEMME / ENSEMBLE), 2023-2050. The 2023 column is headed "RGPH-5 2023" and
+  is filed as census (regions sum to the national 18,126,390); 2024-2050 are
+  projection. No national row in the workbook; the extra (report PDF) adds
+  the national series by sex for every year 2023-2073 (2023 base 18,126,390;
+  2050 35,256,848 = the workbook's regions; 2073 57,449,684). Deferred: the
+  report's policy age-target tables and commune annexes.

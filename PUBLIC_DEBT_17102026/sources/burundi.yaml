@@ -1,0 +1,45 @@
+country: Burundi
+iso3: BDI
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: "INSBU (Annuaire statistique), from the Ministère des Finances / BRB"
+frequency: annual
+coverage: "State debt, domestic + external (perimeter not stated by INSBU)"
+verify_ssl: false
+
+# --- discover ---
+# Same route as labour/GDP/CPI: api.insbu.bi/api/publications (newest first);
+# the yearbook is titled "ANNUAIRE STATISTIQUE DU BURUNDI ÉDITION <YYYY>".
+discover:
+  method: insbu_latest
+  api_url: "https://api.insbu.bi/api/publications"
+  title_contains: "ANNUAIRE STATISTIQUE DU BURUNDI"
+  download_timeout: 300
+
+# The 2021 edition adds 2013-2014 to Tableau 15.06 and 2012-2014 to 15.07
+# (whole millions). The newest edition wins each year both print.
+extra_urls:
+  - url: "https://api.insbu.bi/storage/documents/01KNPCJ8ZPKVPN6J1B5W0T56MB.pdf"
+    save_as: INSBU_Annuaire_2021.pdf
+
+parser: burundi_insbu_debt
+geography: National
+
+notes: >
+  INSBU Annuaire statistique, chapter 15: Tableau 15.06 "Dette publique"
+  (domestic: bons du trésor, avances de la BRB, autres; external: directe,
+  indirecte; total) and Tableau 15.07 "Dette publique extérieure par secteurs",
+  millions de FBU, annual 2012-2024. Source lines credit the Ministère des
+  Finances (from 2013) and the BRB.
+
+  PUBLISHED DEFECTS: the 2024 edition's 2024 column of 15.06 copies Tableau
+  15.05's interest-payment lines (domestic 2 306 226,1; external 799 747,3;
+  dette directe 0,0) and is refused, pinned so a correction is noticed.
+  "Autres dettes intérieures" prints a blank cell; its cells are placed by
+  domestic = bons + avances + autres, and the 2018/2019 cells, which that
+  identity cannot tell apart, are not emitted. 15.06 and 15.07 disagree on
+  external debt from 2022; both are kept (separate series_code).
+
+  CROSS-CHECK: Total 2015 1 761 807,3; Dette intérieure 2023 3 772 534,8;
+  15.07 Dette exterieur 2024 1 871 420,1; Total 2013 (2021 edition) 1 213 669.

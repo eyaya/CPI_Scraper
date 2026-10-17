@@ -1113,6 +1113,95 @@ def test_mali_copied_national_row():
         check("ml correction noticed", "no longer copies" in str(e), True)
 
 
+# --- Mali: the Milieu block's urban sub-strata ------------------------------
+# Tab4.6 of the EMOP 2020 and 2022 workbooks, VERBATIM (2020: labels in column
+# A, no stub; 2022: labels in column B, with a stub and a formula Total).
+_MALI_2020_TAB46 = [
+    ("Tableau 4.6: Répartition de la population en emploi par région, milieu, sexe et niveau d’instruction selon le statut salarial (%)", None, None, None),
+    (None, "Salariés", "Patron, travailleur indépendant", "Apprenti, aide familiale"),
+    ("Région", None, None, None),
+    ("Kayes", 3.9, 64.7, 31.3),
+    ("Bamako", 41.5, 51.4, 7.1),
+    ("Milieu", None, None, None),
+    ("Urbain", 30.6, 58.1, 11.3),
+    ("        'Bamako", 41.5, 51.4, 7.1),
+    ("        'Autres Villes", 17.6, 66, 16.4),
+    ("Rural", 4, 69.2, 26.8),
+    ("Sexe", None, None, None),
+    ("Masculin", 12.5, 62.6, 24.9),
+    ("Féminin", 5.9, 72.8, 21.3),
+    ("Ensemble", 9.8, 66.8, 23.4),
+    ("Source : EMOP-2020, passage 1 (avril-juin)", None, None, None),
+]
+_MALI_2022_TAB46 = [
+    ("Tableau 4.6: Répartition de la population en emploi par région, milieu, sexe et niveau d’instruction selon le statut salarial (%)", None, None, None, None),
+    (None, "Caractéristiques sociodémographiques", "Salariés", "Patron, travailleur indépendant", "Apprenti, aide familiale", "Total"),
+    (None, "Région", None, None, None, None),
+    (None, "Kayes", 5.247701827532159, 75.79128658634492, 18.961011586122535, 99.99999999999962),
+    (None, "Bamako", 38.27908788838137, 56.91747264239589, 4.803439469223045, 100.00000000000031),
+    (None, "Milieu", None, None, None, None),
+    (None, "Urbain", 28.26843037842714, 61.10344938420701, 10.628120237365591, 99.99999999999974),
+    (None, "        'Bamako", 38.31751070632952, 56.87422834905654, 4.808260944614233, 100.00000000000028),
+    (None, "        'Autres Villes", 21.635673134483874, 64.03344506268007, 14.330881802836096, 100.00000000000006),
+    (None, "Rural", 6.376629020345007, 73.06012810160723, 20.563242878047898, 100.00000000000014),
+    (None, "Sexe", None, None, None, None),
+    (None, "Masculin", 17.4646505127264, 65.85698341666884, 16.67836607060566, 100.0000000000009),
+    (None, "Féminin", 7.3269321953701105, 74.23173313450881, 18.441334670121506, 100.00000000000043),
+    (None, "Ensemble", 13.366493459371625, 69.2424631224397, 17.39104341818762, 99.99999999999895),
+    (None, "Source : EMOP 2022, passage 2 (Avril-juin)", None, None, None, None),
+]
+
+
+# 2023: Milieu Bamako repeats Région Bamako in every PUBLISHED cell, but the
+# formula "Total" column differs in float residue (...001 vs ...028).
+_MALI_2023_TAB46 = [
+    ('Tableau 4.6: Répartition de la population en emploi par région, milieu, sexe et niveau d’instruction selon le statut salarial (%)', None, None, None, None, None),
+    (None, 'Caractéristiques sociodémographiques', 'Salariés', 'Patron, travailleur indépendant', 'Apprenti, aide familiale', 'Total'),
+    (None, 'Région', None, None, None, None),
+    (None, 'Kayes', 3.739991982502141, 69.17184400092559, 27.08816401657348, 99.99999999999962),
+    (None, 'Bamako', 37.802504869796735, 55.28851517811805, 6.9089799520852955, 100.00000000000001),
+    (None, 'Milieu', None, None, None, None),
+    (None, 'Urbain', 29.731987796247033, 59.163093892530284, 11.104918311222868, 99.99999999999974),
+    (None, "        'Bamako", 37.802504869796735, 55.28851517811805, 6.9089799520852955, 100.00000000000028),
+    (None, "        'Autres Villes", 21.185330529791397, 63.266262998326425, 15.548406471883183, 100.00000000000006),
+    (None, 'Rural', 5.322330561341179, 66.73271765229806, 27.9449517863603, 100.00000000000014),
+    (None, 'Sexe', None, None, None, None),
+    (None, 'Masculin', 13.561026950224978, 60.43885062771981, 26.000122422056183, 100.0000000000009),
+    (None, 'Féminin', 5.850741966320629, 72.14988353936194, 21.999374494318555, 100.00000000000043),
+    (None, 'Ensemble', 10.467831100547036, 65.1370580835184, 24.395110815932057, 99.99999999999895),
+    ('Source : EMOP 2023, passage 2 (Avril-juin)', None, None, None, None, None),
+]
+
+
+def test_mali_urban_substrata():
+    """The Milieu block is Urbain, its sub-strata 'Bamako and 'Autres Villes,
+    then Rural. All three urban rows were once filed as locality "urban" and
+    differed only in locality_label, so one series held three values a quarter
+    (2020 salariés 30,6 / 41,5 / 17,6). Urbain must stay urban, Autres Villes
+    become stratum "other", and Milieu Bamako be dropped when it repeats the
+    Région Bamako row (2020) -- but KEPT as a stratum when INSTAT prints
+    different numbers for it (2022: 38,318 vs 38,279)."""
+    from indicators.labour.parsers import mali_labour as M
+
+    def sal(rows, year, label):
+        got = M._read_sheet(_mali_sheet(rows, "Tab4.6"), year, "ref")
+        return [(r["locality"], round(r["value"], 3)) for r in got
+                if r["locality_label"] == label and r["characteristic"] == "Salariés"]
+    check("ml20 Urbain urban", sal(_MALI_2020_TAB46, "2020", "Urbain"), [("urban", 30.6)])
+    check("ml20 Autres Villes other", sal(_MALI_2020_TAB46, "2020", "Autres Villes"), [("other", 17.6)])
+    check("ml20 Milieu Bamako dropped (repeats the region)", sal(_MALI_2020_TAB46, "2020", "Bamako"), [])
+    got = M._read_sheet(_mali_sheet(_MALI_2020_TAB46, "Tab4.6"), "2020", "ref")
+    check("ml20 region Bamako kept", [round(r["value"], 1) for r in got
+          if r["geography"] == "Bamako" and r["characteristic"] == "Salariés"], [41.5])
+    urban_like = [r for r in got if r["locality"] == "urban" and r["characteristic"] == "Salariés"]
+    check("ml20 one urban value", len(urban_like), 1)
+    check("ml22 Milieu Bamako differs -> kept as stratum",
+          sal(_MALI_2022_TAB46, "2022", "Bamako"), [("other", 38.318)])
+    # Only the formula Total differs (float residue): still the region repeated.
+    check("ml23 Milieu Bamako dropped despite Total residue",
+          sal(_MALI_2023_TAB46, "2023", "Bamako"), [])
+
+
 # --- Chad: a wrapped row whose values are split across the wrap -----------
 # ECOSIT4 Tableau 7.08, lines VERBATIM as pdfplumber renders page 195.
 CHAD_T708 = """Tableau 7.08 : Caractéristiques des emplois principaux par branche institutionnelle
@@ -1193,6 +1282,17 @@ def test_merge_keeps_literal_na_category():
     check("merge NA labels kept", sorted(map(str, merged["characteristic"])),
           ["A", "N/A", "NA", "None"])
 
+    # AN EMPTY KEY CELL MUST MATCH ITSELF across runs: written as "", read
+    # back as NaN, it once failed to match this run's "" and every such row
+    # was duplicated (GDP Nigeria/Niger, 2026-10-12).
+    blank = new.copy()
+    blank["locality_label"] = ""
+    with tempfile.TemporaryDirectory() as td:
+        out = os.path.join(td, "y_labour.csv")
+        blank.to_csv(out, index=False)
+        merged = R._merge_with_existing(blank.copy(), out, "Replay")
+    check("merge empty key no growth", len(merged), 4)
+
 
 def main() -> int:
     for fn in (test_numbers, test_periods, test_row_refuses_category_without_scheme,
@@ -1208,7 +1308,7 @@ def main() -> int:
                test_gambia_long_label_is_read,
                test_lesotho_icse18_headings_are_barriers,
                test_liberia_label_below_numbers,
-               test_mali_copied_national_row,
+               test_mali_copied_national_row, test_mali_urban_substrata,
                test_chad_split_wrapped_row,
                test_merge_keeps_literal_na_category):
         try:

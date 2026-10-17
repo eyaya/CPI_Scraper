@@ -19,8 +19,9 @@ Two tables per workbook:
 Each ROW is a population group and its values are that group's distribution
 across the categories (they sum to 100), so every row is a column-%
 distribution in this schema's sense, not a row percentage. The group sits in
-the matching column: Région -> geography, Milieu -> locality (the indented
-'Bamako / 'Autres Villes rows are urban sub-strata, kept as locality_label),
+the matching column: Région -> geography, Milieu -> locality (Urbain -> urban,
+Rural -> rural; the indented 'Autres Villes sub-stratum -> other; the indented
+'Bamako row repeats the Région Bamako row and is dropped -- see _read_sheet),
 Sexe -> sex, Niveau d'instruction -> education, Ensemble -> the national row.
 
 PUBLISHED DEFECTS, HANDLED EXPLICITLY, NOT SMOOTHED:
@@ -195,13 +196,32 @@ def _read_sheet(ws, year: str, reference: str) -> list[dict]:
                 raise ValueError(f"EMOP {year} {ws.title}: Ensemble {cat} {e} lies "
                                  f"outside Masculin {a} / Féminin {b}")
 
+    # THE MILIEU BLOCK IS NOT THREE "URBAN" ROWS. It prints Urbain, then its
+    # two sub-strata 'Bamako and 'Autres Villes, then Rural. Filed as
+    # locality "urban" all three shared every dimension and differed only in
+    # locality_label (2020 salariés: 30,6 / 41,5 / 17,6), so one series held
+    # three values per quarter (found 2026-10-15). Now: Urbain -> urban,
+    # Autres Villes -> other (a stratum), and the Milieu "Bamako" row is
+    # DROPPED when it repeats the Région "Bamako" row value for value (it is
+    # the same District, already carried as geography "Bamako"); if a year
+    # ever differs, it is kept as stratum "other" rather than lost.
+    # (Compared on the PUBLISHED category columns only: the "Total" column is a
+    # formula sum whose float residue can differ between the two rows. 2022's
+    # Milieu Bamako genuinely differs -- 38,318 vs 38,279 salariés -- and is kept.)
+    region_bamako = by_label.get(("geography", "Bamako"))
+    pub = [i for i, (_, cat) in enumerate(cols) if cat != "Total"]
+
+    def _same(a, b) -> bool:
+        return all(a[i] is not None and b[i] is not None and abs(a[i] - b[i]) < 1e-9 for i in pub)
     out = []
     for section, lab, vals in parsed:
         ctx = {}
         if section == "geography":
             ctx["geography"] = lab
         elif section == "locality":
-            ctx["locality"] = "rural" if lab == "Rural" else "urban"
+            if lab == "Bamako" and region_bamako is not None and _same(vals, region_bamako):
+                continue
+            ctx["locality"] = {"Urbain": "urban", "Rural": "rural"}.get(lab, "other")
             ctx["locality_label"] = lab
         elif section == "sex":
             ctx["sex"] = C.normalise_sex(lab)

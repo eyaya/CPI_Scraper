@@ -1,0 +1,45 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministry of Finance -- Zimbabwe Public Debt Management Office (ZPDMO); tables sourced "ZPDMO and the Reserve Bank of Zimbabwe"
+frequency: monthly
+coverage: "Total public and publicly guaranteed (PPG) debt"
+verify_ssl: false
+
+# --- discover ---
+# zimtreasury.gov.zw (WordPress) answers 404 at its root and for its uploads
+# (checked 2026-10-08), so the ZPDMO's own "Public Debt Report 2023" is read
+# from the Wayback Machine's `id_` capture -- the original bytes of the file
+# the Treasury published, not an aggregator copy. The CDX index of
+# zimtreasury.gov.zw lists the earlier ZPDMO annual public-debt bulletins
+# (2021, 2022) and quarterly Treasury bulletins as further leads.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20240405094645id_/http://www.zimtreasury.gov.zw/wp-content/uploads/2024/01/Public-Debt-Report-2023.pdf"
+  save_as: ZPDMO_Public_Debt_Report_2023.pdf
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 300
+
+# ZPDMO Annual Public Debt Bulletin, end-December 2021 (with Table 2's 2020
+# column): Wayback id_ copy of zimtreasury.gov.zw (CDX listing). Read by
+# parsers/zimbabwe_pdmo_annual.py. The 2020 bulletin's tables differ and the
+# 2018 capture is truncated, so neither is listed.
+extra_urls:
+  - url: "https://web.archive.org/web/20221031135954id_/http://www.zimtreasury.gov.zw/wp-content/uploads/2022/07/ZWE-2021-Annual-Public-Debt-Bulletin.pdf"
+    save_as: ZPDMO_Annual_Public_Debt_Bulletin_2021.pdf
+extras_cache: true
+
+parser: zimbabwe_pdmo_debt
+geography: Total country
+
+notes: >
+  ZPDMO Public Debt Report 2023: PPG debt stock at end-September 2023
+  (preliminary, as the report says), Table 1 in Z$ billions and Table 2 in
+  US$ millions, each row by DOD / principal arrears / interest arrears /
+  penalties / arrears+penalties / total; plus Table 5's breakdown of the
+  liabilities on the RBZ balance sheet. Checked: external + domestic = total.
+
+  CROSS-CHECK: total PPG US$17 691 m (external 12 688, domestic 5 003);
+  Z$96 714 bn.

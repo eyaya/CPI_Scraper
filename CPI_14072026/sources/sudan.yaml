@@ -26,6 +26,32 @@ parser: sudan_cbos
 geography: National
 expect_divisions: 1           # PARTIAL: all-items only, no COICOP breakdown
 
+
+# --- back issues (2026-10-13) ---
+# The 4th-quarter 'Economic & Financial Statistics Review' of earlier years
+# carries the same Table (20) -- monthly for the review year and the year
+# before, plus earlier Decembers -- on the same base 2007 = 100. Listed: the Q4
+# reviews that read (2011, 2015, 2016, 2018, 2019, 2021, 2022). Not read: Q4
+# 2014 (no Table 20 found), Q4 2017 and Q4 2020 (table layout yields no rows),
+# Q4 2013 (the CBOS file is empty, 0 bytes). Gaps: 2012-13, 2017-18 (Jan-Nov),
+# 2020 (Jan-Nov), 2023 (Jan-Nov).
+extras_cache: true
+extra_urls:
+  - url: "https://cbos.gov.sd/sites/default/files/%D8%A7%D9%84%D8%B9%D8%B1%D8%B6%20%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A%20Q4-2022.pdf"
+    save_as: "CBOS_review_4th-quarter-2022.pdf"
+  - url: "https://cbos.gov.sd/sites/default/files/economic%20%26%20financial%20review%20q4.pdf"
+    save_as: "CBOS_review_4th-quarter-2021-0.pdf"
+  - url: "https://cbos.gov.sd/sites/default/files/%D8%A7%D9%84%D8%B9%D8%B1%D8%B6%20%D8%A7%D9%84%D8%A7%D9%82%D8%AA%D8%B5%D8%A7%D8%AF%D9%8A%20%D8%A7%D9%84%D8%B1%D8%A8%D8%B9%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%202019.pdf"
+    save_as: "CBOS_review_4th-quarter-2019.pdf"
+  - url: "https://cbos.gov.sd/sites/default/files/Q4%202018.pdf"
+    save_as: "CBOS_review_4th-quarter-2018-0.pdf"
+  - url: "https://cbos.gov.sd/sites/default/files/q04_16.pdf"
+    save_as: "CBOS_review_4th-quarter-2016.pdf"
+  - url: "https://cbos.gov.sd/sites/default/files/q4_2015.pdf"
+    save_as: "CBOS_review_4th-quarter-2015.pdf"
+  - url: "https://cbos.gov.sd/sites/default/files/q04_11.pdf"
+    save_as: "CBOS_review_4th-quarter-2011.pdf"
+
 notes: >
   CENTRAL-BANK FALLBACK, and PARTIAL. Sudan's NSO — the Central Bureau of
   Statistics — has no reachable website (cbs.gov.sd does not resolve), so the CPI

@@ -1,0 +1,34 @@
+country: Mauritius
+iso3: MUS
+indicator: Labour
+tier: 2
+source_type: excel
+agency: Statistics Mauritius (Ministry of Finance)
+publication_code: HS_Labour
+frequency: annual
+
+# --- discover ---
+# The BACK-SERIES. Statistics Mauritius's "Historical Series on Labour"
+# workbook (HS_Labour_Yr90-Yr<yy>_<ddmmyy>.xls) is linked directly from the
+# Labour subject page; its date stamp changes with each update, so the link is
+# scraped, never templated. Same workbook as the other indicator's
+# mauritius_hs descriptor. (2026-10-14: HS_Labour_Yr90-Yr25_250926.xls.)
+discover:
+  method: page_scrape
+  page_url: "https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/Labour/SB_Labour.aspx"
+  link_contains:
+    - "HS_Labour"
+    - ".xls"
+
+parser: mauritius_hs_labour
+geography: Total country
+
+notes: >
+  Statistics Mauritius Historical Series on Labour: employment by industrial group and sex 1990-2025 (Tables 1.2a-f, three classification eras kept apart), by sector (Table 1.4) and sector shares (Table 1.5).
+  RECONCILED estimates (CMPHS + Survey of Employment and Earnings +
+  administrative sources) that INCLUDE FOREIGN WORKERS -- a different series
+  from the CMPHS quarterly workbook read by mauritius.yaml, labelled apart and
+  annual, so the two never share a merge key. Working-age base as the workbook
+  states it: 16+ from 2000, 12+ for 1990-1999 (and not stated before 1990).
+  Values as displayed (cells rounded to their number format). See the parser
+  docstring for the published inconsistencies pinned.

@@ -1,0 +1,37 @@
+country: Ghana
+iso3: GHA
+indicator: Public_Debt
+tier: 1
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+publication_code: Debt Data
+frequency: monthly
+# GSS labels the series only "Total public debt" and does not state the
+# perimeter (central government, guarantees, SOEs) -- recorded as such rather
+# than assumed.
+coverage: "Public debt (perimeter not stated by GSS)"
+verify_ssl: false
+
+# --- API (PxWeb / JSON-stat2), single table ---
+# Public debt stock by component, monthly. All months, all 16 components (total;
+# external + its creditor-class breakdown; domestic + its maturity and holder
+# breakdowns).
+api:
+  table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Macroeconomic Indicators/Fiscal Sector/debt_data.px"
+  save_as: ghana_debt.json
+  dimensions:
+    Month: ["*"]
+    Variable: ["*"]
+
+parser: ghana_pxweb_debt
+geography: National
+
+notes: >
+  Ghana GSS StatsBank public debt (debt_data.px), monthly 2014-2024, in US$ million
+  (total public debt mid-2024 = 50,929.4 = US$50.9bn). 16 components: total public
+  debt; external debt and its creditor-class breakdown (multilateral, bilateral,
+  export, commercial, international capital market, other concessional); domestic
+  debt and its breakdown by maturity (short/medium/long term, standard loans) and
+  by holder (banking, non-bank, foreign). External + domestic = total. First country
+  of the new Public_Debt indicator. Same StatsBank PxWeb backend as Ghana's other
+  economic indicators.

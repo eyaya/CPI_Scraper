@@ -1,0 +1,37 @@
+country: Ethiopia
+iso3: ETH
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Central Statistical Agency (CSA; now Ethiopian Statistical Service, ESS)
+publication_code: Population Projections for Ethiopia 2007-2037 (July 2013), Medium Variant
+frequency: annual
+verify_ssl: false
+
+# A SECOND Ethiopia descriptor beside ethiopia.yaml (ESS projections for July
+# 2023 and 2025). csa.gov.et is gone (now ess.gov.et, which does not carry
+# this report); this is the Wayback Machine's unmodified (id_) copy of CSA's
+# OWN download (census-report/population-projections, download id 936),
+# captured 2023-04-13.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20230413055528id_/http://www.csa.gov.et/census-report/population-projections/category/368-population-projection-2007-2037?download=936"
+  save_as: CSA_Population_Projections_Ethiopia_2007_2037.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 600
+
+parser: csa_ethiopia_projection
+geography: Total country
+
+notes: >
+  Medium-variant projections, 2008-2037, in THOUSANDS: the country and its
+  eleven regions / city administrations, Total / Male / Female (Urban + Rural
+  columns only). 2023 and 2025 are not filed -- ESS's newer projections for
+  those years are in ethiopia.yaml. Low and High variants, age tables and the
+  2007 base population not read. Region labels as the report prints them.
+
+  PUBLISHED, NOT RECONCILED: the country is projected on its own; the
+  regions sum 0.13-0.17 % below it every year (100 thousand in 2008, 177
+  thousand in 2037).
+
+  CROSS-CHECK: 2008 75 719 (M 38 215 / F 37 504); 2022 105 166; 2037 136 792.

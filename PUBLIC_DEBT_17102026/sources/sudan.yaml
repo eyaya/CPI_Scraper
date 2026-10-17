@@ -1,0 +1,36 @@
+country: Sudan
+iso3: SDN
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Central Bank of Sudan (CBOS) — External Debt Unit, 58th Annual Report 2018
+frequency: annual
+coverage: "Sudan external debt, all sources of financing (CBOS External Debt Unit) -- excludes South Sudan"
+verify_ssl: false
+
+# --- discover ---
+# The same CBOS annual report the GDP descriptor reads (indicators/gdp/sources/
+# sudan.yaml). CBOS's English annual reports stop at 2018; the 2015/2016
+# editions wrap their labels differently and are not laid out. Sudan's
+# statistics office (cbs.gov.sd) no longer resolves.
+discover:
+  method: static_url
+  url: "https://cbos.gov.sd/sites/default/files/CBOS%20-%2058th%20Annual%20Report%202018.pdf"
+  save_as: CBOS_58th_Annual_Report_2018.pdf
+  download_timeout: 300
+
+parser: sudan_cbos_debt
+geography: National
+
+notes: >
+  Table (10-7): Sudan's external debt by creditor group, US$ billion -- 2017
+  totals; 2018 principal, contractual interest, delay interest, total and
+  weight (%). Table (10-8): total debt to GDP 2017 and 2018. Checked:
+  components sum to each 2018 total, groups sum to the Total, weights to 100.
+
+  PUBLISHED CONTRADICTION KEPT OUT, NOT RESOLVED: the report's chapter-1
+  summary prints external debt at 39.4% (2017) / 103.3% (2018) of GDP against
+  Table (10-8)'s 45 / 98.9; only the External Debt Unit's table is collected.
+
+  CROSS-CHECK: total 48.2 (2017) and 49.9 (2018) US$ bn; 2018 delay interest
+  25.4; Paris Club 15.7 (31.5%); debt/GDP 98.9% (2018).

@@ -1,0 +1,44 @@
+country: DR_Congo
+iso3: COD
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS RDC)
+publication_code: Annuaire statistique 2015 de la RDC, section 2.1.1 Etat de la population (Tableaux 2.1-2.6)
+frequency: annual
+verify_ssl: false
+
+# A SECOND DR Congo descriptor beside drc.yaml: the SAME yearbook (same
+# Wayback `id_` capture of INS's own file -- ins-rdc.org answers 403; see
+# drc.yaml), read for its 2010-2014 back-series. Same save_as, so the 37 MB
+# file is shared with drc.yaml in source_data/.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20171021163944id_/http://www.ins-rdc.org/sites/default/files/Annuaire%20statistique%202015%20Web.pdf"
+  save_as: INS_RDC_Annuaire_statistique_2015.pdf
+  impersonate: [chrome124, safari17_0]
+  download_timeout: 900
+
+parser: ins_drc_backseries
+geography: Total country
+
+notes: >
+  Official population ESTIMATES 2010-2014 (series_type estimate, thousands,
+  unit thousand_persons as printed): Tableau 2.1 province x sex, and Tableaux
+  2.2-2.6 province x sex x 5-year age group (0-4 .. 75+), 26 provinces + RDC.
+  2015 (Tableau 2.1's last column, Tableau 2.7) is left to drc.yaml, which
+  reads the same figures from Tableaux 1.29-1.56.
+
+  The rotated duplicate in the text layer (why drc.yaml skipped these tables)
+  is dropped by reading horizontal lines only. Age-table blocks are matched to
+  provinces by their printed total against Tableau 2.1.
+
+  PUBLISHED INCONSISTENCIES, pinned in the parser and filed as printed:
+  Tableau 2.1 2010 M + F != Total for Sud Kivu (its M/F are Nord Kivu's),
+  Sud Ubangi and RDC; RDC 2011 25-29 (5773, out of trend) makes the bands
+  overshoot by 402; 2012 15-19 printed far below trend for Haut-Katanga,
+  Haut-Lomami, Lualaba, Tanganyika. RDC 2013 65-69 (both sexes) is printed
+  over two lines and is NOT collected (not reassembled from fragments).
+
+  CROSS-CHECK: RDC 2010 72 884 thousand, 2014 83 197; Kinshasa 2010 8 683;
+  Kinshasa 2010 0-4 males 914.

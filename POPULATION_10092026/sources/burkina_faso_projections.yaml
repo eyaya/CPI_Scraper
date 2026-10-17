@@ -1,0 +1,30 @@
+country: Burkina Faso
+iso3: BFA
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Demographie (INSD)
+publication_code: RGPH 2019 Projections démographiques 2020-2035 (éd. 2)
+frequency: annual
+verify_ssl: false
+
+# A SECOND Burkina Faso descriptor beside burkina_faso.yaml (the 2019 census
+# report): INSD's 5e RGPH Volume 4, "Projections démographiques 2020-2035",
+# édition 2, janvier 2023 (11 MB, 520 pages).
+discover:
+  method: static_url
+  url: "https://www.insd.bf/fr/file-download/download/public/2156"
+  save_as: burkina_projections_2020_2035.pdf
+
+parser: insd_burkina_projection
+geography: Total country
+
+notes: >
+  INSD projections 2020-2035, MEDIUM scenario (low/high not read: no scenario
+  column). National by single year of age 0-79, 80+ x sex (Tableau A2.2,
+  Ensemble columns; 2020 total 20,818,036); 13 regions and 45 provinces by
+  INSD's age groups (0, 1-4, 3-5, 6-11, 12-15, 16-18, 5-9 .. 75-79, 80+) x sex.
+  Regions sum to the national total every year. Defects pinned: A2.2 2025
+  Rural columns repeat 2020 (Ensemble unaffected); Oudalan 2031 Ensemble column
+  repeats 2029 Homme (both-sexes not emitted for it); Zondoma's 2032-2034
+  Total cells wrap onto two lines.

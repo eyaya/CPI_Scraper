@@ -30,3 +30,27 @@ notes: >
   nums[-1]. Wrapped-function labels are matched on a prev+own+next window while
   sub-items are matched on their own label, so the two never collide. Report month
   is read from the bulletin text.
+
+# BACK SERIES (added 2026-10-14). (1) ICASEES's monthly long table 2015-2026
+# (xlsx): 2020+ from sheet 'Données' (base 2019), 2015-2019 from
+# 'Archive_Base1981_Brute' (original base 1981) -- never the chained 2015-19
+# cells of 'Données'. (2) the back bulletins still linked from the home page
+# (2024-11 .. 2025-05; the 06-2025 link serves an HTML page). Bulletins win
+# where they print a month. No extras_cache: the workbook is revised in place.
+extra_urls:
+  - url: "https://www.icasees.org/index.php/component/edocman/indice-des-prix-a-la-consommation-ihpc-mensuel-de-2015-2026/download?Itemid=0"
+    save_as: JD_ODP_IPC_Mensuel_National_RCA_ODP1.0.xlsx
+  - url: "https://www.icasees.org/index.php/component/edocman/ihpc-bulletin-mensuel-des-prix-des-menages-n-11-novembre-2024/download?Itemid=0"
+    save_as: car_ihpc_n-11-novembre-2024.pdf
+  - url: "https://www.icasees.org/index.php/component/edocman/ihpc-bulletin-mensuel-des-prix-des-menages-n-12-decembre-2024/download?Itemid=0"
+    save_as: car_ihpc_n-12-decembre-2024.pdf
+  - url: "https://www.icasees.org/index.php/component/edocman/ihpc-bulletin-mensuel-des-prix-des-menages-n-01-janvier-2025/download?Itemid=0"
+    save_as: car_ihpc_n-01-janvier-2025.pdf
+  - url: "https://www.icasees.org/index.php/component/edocman/ihpc-bulletin-mensuel-des-prix-des-menages-n-02-fevrier-2025/download?Itemid=0"
+    save_as: car_ihpc_n-02-fevrier-2025.pdf
+  - url: "https://www.icasees.org/index.php/component/edocman/ihpc-bulletin-mensuel-des-prix-des-menages-n-03-mars-2025/download?Itemid=0"
+    save_as: car_ihpc_n-03-mars-2025.pdf
+  - url: "https://www.icasees.org/index.php/component/edocman/ihpc-bulletin-mensuel-des-prix-des-menages-n-04-avril-2025/download?Itemid=0"
+    save_as: car_ihpc_n-04-avril-2025.pdf
+  - url: "https://www.icasees.org/index.php/component/edocman/ihpc-bulletin-mensuel-des-prix-des-menages-n-05-mai-2025/download?Itemid=0"
+    save_as: car_ihpc_n-05-mai-2025.pdf

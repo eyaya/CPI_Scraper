@@ -23,7 +23,12 @@ import pdfplumber
 import pandas as pd
 
 _PERIOD_RE = re.compile(r"T([1-4])[_ ]?(20\d\d)")
-_FRNUM_RE = re.compile(r"\d{1,3}(?:\s\d{3})*(?:,\d+)?|\d+,\d+")
+# A French number: digits, optional space-grouped thousands, optional decimal
+# comma, optional sign. NOT r"\d{1,3}(?:\s\d{3})*...": the current-price tables
+# print levels WITHOUT a thousands space ("6972,9"), which that pattern split
+# into "697" + "2,9" -- current FCE/FBCF/exports were published as 2.9/3.8/6.6
+# (fixed 2026-10-15). The sign matters for levels like changes in inventories.
+_FRNUM_RE = re.compile(r"(?<![\w,])-?\d+(?:\s\d{3})*(?:,\d+)?")
 
 _OUT_COLS = ["approach", "category", "category_group", "series_code", "geography",
              "period", "frequency", "price_basis", "seasonal_adjustment",
@@ -88,7 +93,8 @@ def _parse_table(tb, approach, basis, seasonal, base):
         label = re.match(r"^([^\d]+?)\s*(?=\d)", joined)
         if not label:
             continue
-        label = label.group(1).strip(" .:")
+        # a trailing "-" is the SIGN of the first number ("SIFIM -20,6"), not label
+        label = label.group(1).strip(" .:-")
         low = label.lower()
         # skip title / header / prose rows (only real economic categories pass)
         if (not label or _PERIOD_RE.search(label) or len(label) < 3
@@ -116,7 +122,50 @@ def _parse_table(tb, approach, basis, seasonal, base):
     return rows
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
+    """The current note, plus OLDER NOTES (extras) for quarters it does not print.
+
+    Each quarterly note prints only six quarters, so the series is built from
+    the back issues INS keeps in its media library (2014 onward). Extras are
+    read newest note first, and a note contributes ONLY the quarters no newer
+    note already gave -- so every quarter comes from the latest note that prints
+    it, and older vintages never overwrite revisions. `category_group` names the
+    note each row came from. A note whose layout this reader does not know
+    (several 2013-2016 notes) raises in `_parse_one` and is skipped with a
+    message rather than misread. The chained-volume reference year stays in
+    `base_period`, so a rebase never chains silently.
+    """
+    df = _parse_one(pdf_path)
+    have = set(df["period"])
+    for ex in sorted(extras or [], key=_note_key, reverse=True):
+        try:
+            old = _parse_one(ex)
+        except ValueError as e:
+            print(f"  [cameroon] skipped {ex.replace(chr(92), '/').rsplit('/', 1)[-1]}: {e}")
+            continue
+        old = old[~old["period"].isin(have)]
+        if old.empty:
+            continue
+        y, q = _note_key(ex)
+        old["category_group"] = f"INS CNT note T{q} {y}"
+        have |= set(old["period"])
+        df = pd.concat([df, old], ignore_index=True)
+    return df
+
+
+def _note_key(path: str) -> tuple[int, int]:
+    """(year, quarter) of a note, from INS's file names: '_T1_2024',
+    '3eme_Trim_2019', 'CNT-4T2012', 'T4_2020_Revision'."""
+    name = path.replace("\\", "/").rsplit("/", 1)[-1]
+    for rx in (r"T([1-4])[_-]?(20\d\d)", r"([1-4])(?:eme|er|e)?_?Trim_?(20\d\d)",
+               r"([1-4])T(20\d\d)"):
+        m = re.search(rx, name, re.I)
+        if m:
+            return int(m.group(2)), int(m.group(1))
+    return 0, 0
+
+
+def _parse_one(pdf_path: str) -> pd.DataFrame:
     rows = []
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:

@@ -29,3 +29,12 @@ notes: >
   consistent (current > constant, implicit deflator ~120). The 'taux de
   croissance' growth tables are left for a later pass. Everything as published;
   nothing derived.
+
+# The note prints ~9 quarters; INSTAT's back-series workbook beside it carries
+# the whole quarterly series from T1 2004 (production + expenditure; chained
+# volume ref. 2015, current, previous-year prices; y/y growth; deflators
+# 2015=100). Rows tagged 'INSTAT back-series workbook (T2 2026)'; its levels
+# fill only quarters the note does not print.
+extras_cache: true
+extra_urls:
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/tab-pib-2t2026_pub.xlsx"

@@ -20,6 +20,12 @@ discover:
     - "activité, emploi et chômage"
   save_as: morocco_activite_emploi_chomage.pdf
 
+# HCP's retropolated 2017-2025 quarters on the EMO basis (a methodology break
+# from the ENE report above; carried as its own survey, never chained).
+extra_urls:
+  - url: "https://www.hcp.ma/file/248688/"
+    save_as: morocco_retropole_emo.xlsx
+
 parser: morocco_pdf
 geography: Total country
 
@@ -34,11 +40,13 @@ notes: >
   Q2 2026's 9,5%. This descriptor collects the ANNUAL ENE report. Do not chain
   it to an EMO quarterly note without a level-shift flag.
 
-  TIER-2 UPGRADE AVAILABLE: HCP publishes the retropolated 2017-2025 bridge on
-  the EMO basis as a workbook at https://www.hcp.ma/file/248688/ ("Principaux
-  indicateurs trimestriels rétropolés provisoires du marché du travail selon la
-  méthodologie EMO"). That file is the right long-run backbone once its sheet
-  layout has been read; it could not be opened during this build.
+  EMO RETROPOLATION (added 2026-10-12, `morocco_hcp_retro`, extra_urls):
+  HCP's workbook "Principaux indicateurs trimestriels rétropolés provisoires
+  du marché du travail selon la méthodologie EMO, 2017-2025" -- 36 quarters x
+  48 series (chômage strict, emploi contre revenu, participation, and levels;
+  by milieu, sexe, âge). Its own survey and series labels ("[EMO, rétropolé
+  provisoire]"), so the ENE 2025 quarters stay as they are. CROSS-CHECK
+  2017-Q1 chômage 10,0; 2025-Q4 11,5.
 
   SPARSE ROWS ARE REAL: the "Taux de féminisation" and "selon le sexe" sub-rows
   print only THREE of the five cells (Masculin and Féminin are empty and the

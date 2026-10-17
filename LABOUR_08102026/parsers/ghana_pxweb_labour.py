@@ -13,8 +13,19 @@ import json
 import os
 import pandas as pd
 
-_COMMON = {"Geographic_Area", "Locality", "Age", "Sex", "Education"}
-_SEX = {"Both sexes": "total", "Male": "male", "Female": "female"}
+_COMMON = {"Geographic_Area", "Region", "Date", "Locality", "Age", "Sex", "Education"}
+_SEX = {"Both sexes": "total", "Both Sexes": "total", "Male": "male", "Female": "female"}
+
+# AHIES (Annual Household Income and Expenditure Survey) -- added 2026-10-12.
+# The same StatsBank holds GSS's QUARTERLY household-survey composition tables
+# (industry, occupation, employment status, employment sector, informality,
+# 2022-Q1 onward), with a `Date` dimension ("2022Q1") and `Region` in place of
+# the census's `Geographic_Area`. A table carrying `Date` is read as AHIES: the
+# period comes from each cell's Date, never from the census constants. AHIES
+# names no classification scheme against these tables, so its categories are
+# National unless the descriptor's table entry says otherwise
+# (`classification:`).
+_AHIES_SURVEY = "Annual Household Income and Expenditure Survey (AHIES)"
 _LOCALITY = {"All Locality Types": "all", "Rural": "rural", "Urban": "urban"}
 
 
@@ -46,7 +57,7 @@ CLASSIFICATION = {
 _LOCALITY_LABEL = {"all": "Total", "urban": "Urban", "rural": "Rural"}
 
 
-def _parse_table(path: str, topic: str) -> list[dict]:
+def _parse_table(path: str, topic: str, classification: str | None = None) -> list[dict]:
     with open(path, "r", encoding="utf-8") as f:
         d = json.load(f)
     dims, sizes, values = d["id"], d["size"], d["value"]
@@ -73,12 +84,12 @@ def _parse_table(path: str, topic: str) -> list[dict]:
         coords = _decode_coords(int(flat), sizes)
         codes = {dim: pos2code[dim][coords[i]] for i, dim in enumerate(dims)}
 
-        area = str(codes["Geographic_Area"]).strip()
+        area = str(codes.get("Geographic_Area", codes.get("Region", "Ghana"))).strip()
         geography = "Total country" if area == "Ghana" else area
         sex = _SEX.get(str(codes["Sex"]).strip(), "total") if has_sex else "total"
         if has_age:
             age = str(codes["Age"]).strip()
-            age_group = "Total" if age in ("All ages", "Total") else age
+            age_group = "Total" if age in ("All ages", "All Ages", "Total") else age
         else:
             age_group = "Total"
         locality = _LOCALITY.get(str(codes.get("Locality", "")).strip(), "all")
@@ -97,18 +108,31 @@ def _parse_table(path: str, topic: str) -> list[dict]:
                 f"of employment, not headline rates. Add it to the "
                 f"`unemployment` indicator instead.")
         characteristic = str(codes[char_var]).strip()
+        education = str(codes.get("Education", "Total")).strip() or "Total"
+        if education == "All Educational Levels":
+            education = "Total"
+        if "Date" in dims:                       # an AHIES quarterly table
+            q = str(codes["Date"]).strip()       # "2022Q1"
+            stamp = dict(period=f"{q[:4]}-Q{q[-1]}", reference_period=q,
+                         survey=_AHIES_SURVEY, frequency="quarterly",
+                         classification=classification or "National")
+        else:                                    # the PHC 2021 census tables
+            stamp = dict(period="2021", reference_period="PHC 2021",
+                         survey="Population and Housing Census 2021",
+                         frequency="annual",
+                         classification=CLASSIFICATION.get(topic, "National"))
 
         rows.append({
             "topic": topic, "characteristic": characteristic,
-            "classification": CLASSIFICATION.get(topic, "National"),
+            "classification": stamp["classification"],
             "sex": sex, "age_group": age_group,
-            "education": str(codes.get("Education", "Total")).strip() or "Total",
+            "education": education,
             "geography": geography,
             "locality": locality, "locality_label": _LOCALITY_LABEL.get(locality, "Total"),
             "working_age_base": "15+",
-            "period": "2021", "reference_period": "PHC 2021",
-            "survey": "Population and Housing Census 2021",
-            "frequency": "annual",
+            "period": stamp["period"], "reference_period": stamp["reference_period"],
+            "survey": stamp["survey"],
+            "frequency": stamp["frequency"],
             "measure": "count", "value": float(val), "unit": "persons",
             "series_code": series_code,
         })
@@ -118,7 +142,7 @@ def _parse_table(path: str, topic: str) -> list[dict]:
 def parse(tables: list[dict]) -> pd.DataFrame:
     rows = []
     for t in tables:
-        rows.extend(_parse_table(t["path"], t["topic"]))
+        rows.extend(_parse_table(t["path"], t["topic"], t.get("classification")))
     if not rows:
         raise ValueError("ghana_pxweb_labour: no rows decoded")
     return pd.DataFrame.from_records(rows)

@@ -1,0 +1,41 @@
+country: Algeria
+iso3: DZA
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: "Banque d'Algérie (Rapport annuel, statistical annex), from the Direction Générale du Trésor"
+frequency: annual
+coverage: "Domestic public debt of the central government (Administration Centrale)"
+verify_ssl: false
+
+# --- discover ---
+# The Banque d'Algérie lists every annual report on
+#   https://www.bank-of-algeria.dz/rapports-annuels/
+# under /stoodroa/<YYYY>/<MM>/ with no stable naming ("Rapport-2024-fr.pdf",
+# "Rapport-annuel-2023-Fr.pdf", "Rapport-BA-2022-Fr.pdf"), so editions are
+# pinned, newest first. The Ministry of Finance (mf.gov.dz) answers HTTP 500
+# and publishes no debt statistics (checked 2026-10).
+discover:
+  method: static_url
+  url: "https://www.bank-of-algeria.dz/stoodroa/2025/09/Rapport-2024-fr.pdf"
+  save_as: Rapport-BA-2024-fr.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.bank-of-algeria.dz/stoodroa/2023/11/Rapport-BA-2022-Fr.pdf"
+    save_as: Rapport-BA-2022-Fr.pdf
+
+parser: algeria_ba_debt
+geography: National
+
+notes: >
+  Annex table "Dette publique intérieure de l'Administration Centrale"
+  (Tableau 7 of the 2024 report, Tableau 11 of the 2022 report), source
+  Direction Générale du Trésor: total domestic debt and its nested components
+  (current debt -- Treasury bills; restructuring debt -- BA long-term credits,
+  bought-back claims and their six lines, bank recapitalisation; national
+  loan; CCP debt), DZD billion, 2018-2024, plus domestic debt as % of GDP.
+  Sum identities checked each year. Cross-check: total 2024 17 243,4 (48,2 %
+  of GDP); 2018 7 436,2. Economy-wide external debt (not public debt) is not
+  collected. The 2019 report's table has a letter-spaced text layer and is
+  not read.

@@ -1,0 +1,36 @@
+country: Mali
+iso3: MLI
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali), reprinting the Direction Générale des Dettes Publiques (DGDP)
+frequency: annual
+coverage: "Public debt (central government; perimeter not stated by INSTAT/DGDP)"
+verify_ssl: false
+
+# --- discover ---
+# The Ministry of Finance hosts give no response (finances.gouv.ml,
+# dgdp.finances.gouv.ml, www.dgdp.ml, dgtcp.gouv.ml -- 2026-10-08 and
+# 2026-10-12). INSTAT's yearbook page lists every edition as
+# /laravel-filemanager/files/shares/pub/anuair<YY>_pub.pdf, OLDEST FIRST, so a
+# first-match scrape would take 2010; the newest edition is pinned and the
+# next one is a one-line change.
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair24_pub.pdf"
+  save_as: instat_mali_annuaire_2024.pdf
+
+parser: mali_instat_debt
+geography: National
+
+notes: >
+  INSTAT Annuaire statistique 2024, Tableau 80 "Statistiques de la dette
+  publique", credited to the DGDP: public debt at end of period, external and
+  domestic debt outstanding, FCFA milliards, 2020-2024. Debt service (flows)
+  and IMF drawings not collected.
+
+  PUBLISHED INCONSISTENCY: 2024 external + domestic = 6 799,3 vs total
+  6 809,3 (pinned). Older editions (2014-2021) are internally contradictory
+  and not used -- see the parser.
+
+  CROSS-CHECK: 2024 total 6 809,3; 2020 total 4 756,9949.

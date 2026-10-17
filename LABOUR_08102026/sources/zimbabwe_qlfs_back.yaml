@@ -1,0 +1,47 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Labour
+tier: 3
+source_type: pdf
+agency: Zimbabwe National Statistics Agency (ZIMSTAT)
+publication_code: Quarterly Labour Force Survey 2021-2024
+frequency: quarterly
+verify_ssl: false
+
+# --- discover ---
+# The BACK-SERIES: four earlier QLFS reports linked from
+# https://zimstat.co.zw/labour-statistic/ (several hrefs there carry a stray
+# leading TAB; the files are served at the plain names used here). Each report's
+# "Table 1: Key findings" prints its own quarter and the one before it. The
+# Q3 2024 report is the primary; the rest are extras. The current quarter is
+# read by zimbabwe.yaml.
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Labor-force/2024_Third_Quarter_QLFS_Report.pdf"
+  save_as: "2024_Third_Quarter_QLFS_Report.pdf"
+  download_timeout: 300        # slow host, as zimbabwe.yaml
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Labor-force/2024_First_Quarter_QLFS_Report.pdf"
+    save_as: "2024_First_Quarter_QLFS_Report.pdf"
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Labor-force/QLFS_SecondQter2022.pdf"
+    save_as: "QLFS_SecondQter2022.pdf"
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Labor-force/Fourth_Quarter_Labour_Force_Report_2021.pdf"
+    save_as: "Fourth_Quarter_Labour_Force_Report_2021.pdf"
+
+parser: zimbabwe_qlfs_back_labour
+geography: Total country
+
+notes: >
+  ZIMSTAT QLFS key findings for 2021 Q3, 2021 Q4, 2022 Q1, 2022 Q2, 2023 Q4,
+  2024 Q1 and 2024 Q3 (two quarters per report). This descriptor reads
+  the "Sector of Employment" block (formal / informal non-agriculture, agriculture, household -- counts and percents); the other indicator's zimbabwe_qlfs_back.yaml reads the rest of the
+  same table. Working-age base as printed: 15+ (youth 15-34) for 2021-2022,
+  16+ (youth 15-35) from 2023 Q4 -- never aligned. A quarter printed twice is
+  taken from the newer report and every difference between the printings is
+  pinned in the parser. The first QLFS report (Labour_Force_Report_2021.pdf,
+  2021 Q3) is not read: its quarter is reprinted by the Q4 report, and it
+  prints the two youth unemployment counts swapped. Not found on the site:
+  the 2022 Q3-Q4, 2023 Q1-Q3, 2024 Q2/Q4 and 2025 Q1/Q3/Q4 reports (no link,
+  and the obvious file names redirect).

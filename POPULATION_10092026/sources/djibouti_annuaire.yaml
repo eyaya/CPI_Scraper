@@ -1,0 +1,34 @@
+country: Djibouti
+iso3: DJI
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique de Djibouti (INSTAD)
+publication_code: Annuaire Statistique Edition 2023, Tableaux 2.1.2-2.1.3
+frequency: annual
+verify_ssl: false
+
+# A SECOND Djibouti descriptor beside djibouti.yaml (2024 census). The 2023
+# yearbook is the last edition to print the INSTAD-FNUAP projection series
+# (2024 and 2025 editions print the 2024 census instead). INSTAD's own file
+# on its Firebase storage bucket (the same link the public_debt descriptor
+# uses; the site's SPA lists it under Annuaire statistique / 2023).
+discover:
+  method: static_url
+  url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2023%2FAnnuaire_Statistique_2023.pdf?alt=media&token=c74335fa-0881-4b4f-93c6-357e0aba2d85"
+  save_as: Annuaire_Statistique_2023.pdf
+
+parser: instad_djibouti_annuaire
+geography: Total country
+
+notes: >
+  INSTAD-FNUAP population PROJECTIONS (series_type projection), national,
+  persons. Tableau 2.1.2: 2012-2022 by sex + annual growth rate (percent).
+  Tableau 2.1.3: 2010-2022 by 5-year age group (0-4 .. 80+) x sex. Where both
+  tables print a year's total by sex (2012-2022) they differ by a few
+  persons; 2.1.2's printing is filed, 2.1.3's Total row only for 2010-2011.
+  Age labels "05-sept" / "oct-14" (spreadsheet date mangling in the PDF) are
+  filed as 5-9 / 10-14.
+
+  CROSS-CHECK: 2010 total 835 450; 2022 total 1 013 181, males 533 170,
+  growth 1.17 percent.

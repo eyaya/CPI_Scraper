@@ -1,0 +1,32 @@
+country: South Sudan
+iso3: SSD
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Bank of South Sudan (BoSS), reprinting the Ministry of Finance and Planning and the Ministry of Petroleum
+frequency: quarterly
+coverage: "Central government external debt"
+verify_ssl: false
+
+# --- discover ---
+# BoSS posts each quarterly Macroeconomic Review as its own WordPress post;
+# the Q1-2025 review (uploaded 2026-10) is pinned. The bank's media API
+# returns nothing for "debt", so a newer issue is found from the post listing.
+discover:
+  method: static_url
+  url: "https://boss.gov.ss/wp-content/uploads/2026/10/Bank-of-South-Sudan-Macroeconomic-Review-Report-Q1-2025.pdf"
+  save_as: BoSS_Macroeconomic_Review_Q1-2025.pdf
+
+parser: south_sudan_boss_debt
+geography: National
+
+notes: >
+  BoSS Macroeconomic Review Q1 2025, Table 6 "South Sudan Outstanding Public
+  Debt" (source: Ministry of Petroleum and Ministry of Finance and Planning):
+  external debt by creditor, USD million, 2024-Q3. Creditor rows sum to the
+  total (2 432). Table 5 (net claims on central government) is a monetary
+  aggregate, not a debt stock, and is not collected.
+
+  The MoFP's own domestic-debt table is a separate descriptor
+  (south_sudan_mofp.yaml). The MoFP report's EXTERNAL table contradicts
+  itself and is refused (see that parser).

@@ -29,3 +29,46 @@ notes: >
   decimals only drops it; front-anchored current index = nums[3], MoM nums[4],
   YoY nums[5]. Labels wrap across up to three lines (carried forward). We scope to
   the national 'par fonction' page and emit index + inflation_mom + inflation_yoy.
+
+# BACK ISSUES (added 2026-10-12): the INS 'publications infra-annuelles / IHPC'
+# page, every note from Aug 2023 whose Tableau 2 reads as text. Each gives its
+# report month (parsers/guinea_ins.py). Not listed: notes before Aug 2023 (the
+# table is an image, or the 2022 'IHPC_*' layout lacks four functions), Feb 2024
+# (its footer says 'Février 2023' -- the parser refuses it) and Feb 2026 (the
+# link answers 404). Complete copies are reused.
+extras_cache: true
+extra_urls:
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Aout_2025_Guinee.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Avril_2025_Guine_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Decembre_2025_Guinee_VF.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Juil_2025_Guinee.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Juin_2025_Guinee.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Mars_2025_Guinee_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Nov_2025_Guinee_V2.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Oct_2025_Guinee_V2.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2025/Note_INHPC_Sept_2025_Guinee_V2.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2026/Note_INHPC_Avril_2026_Guinee_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2026/Note_INHPC_Jan_2026_Guinee_VF.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2026/Note_INHPC_Juillet_Guinee_2026_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2026/Note_INHPC_Juin_2026_Guinee_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2026/Note_INHPC_Mai_2026_Guinee_V2.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/INHPC_2026/Note_INHPC_Mars_2026_Guinee_V2.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Aout_2023_Guine_V3-1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Aout_2024_Guine.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Avril_2024_Guine_vf.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Dcembre_2023_Guine.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Decembre_2024_Guinee.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Fvrier_2025_Guinee.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Janvier_2024_Guine.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Janvier_2025_Guine_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Mai_2024_Guinee.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Mai_2025_Guinee.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Mars_2024_Guine_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Novembre_2023_Guine_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Novembre_2024_Guinee_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Octobre_2023_Guinee_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Octobre_2024_Guinee.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Septembre_2023_Guine.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_Septembre_2024_Guine_V1.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_juil_2024_Guine.pdf"
+  - "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/Note_INHPC_juin_2024_Guinee.pdf"

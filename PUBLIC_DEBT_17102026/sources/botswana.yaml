@@ -1,0 +1,35 @@
+country: Botswana
+iso3: BWA
+indicator: Public_Debt
+tier: 2
+source_type: excel
+agency: Bank of Botswana (BoB) -- table sourced "Ministry of Finance and Bank of Botswana"
+frequency: quarterly
+coverage: "Central government debt"
+verify_ssl: false
+
+# --- discover ---
+# BoB's "Botswana Economic and Financial Statistics" page links the newest
+# monthly BEFS workbook ("Botswana Economic and Financial Statistics - <Month>
+# <Year>  .xlsx" -- note the double space BoB leaves before the extension).
+discover:
+  method: page_scrape
+  page_url: "https://www.bankofbotswana.bw/botswana-economic-and-financial-statistics"
+  link_contains:
+    - "economic%20and%20financial%20statistics"
+    - ".xlsx"
+  save_as: bob_befs_latest.xlsx
+
+parser: botswana_bob_debt
+geography: Total country
+
+notes: >
+  BEFS Table 7.5 "Public Debt Outstanding" (P million): external debt by
+  creditor, domestic debt by instrument, total government debt; government
+  guaranteed debt (domestic, external, total) and the grand total, each with
+  its own coverage. Fiscal years 2014/15..2022/23 dated to the year the
+  fiscal year ends; quarter ends from 2023/24 dated to calendar quarters.
+  "…" and "-" skipped. Checked: external + domestic = total.
+
+  CROSS-CHECK: 2014/15 total 25 449.4; 2026-Q1 83 937.9; 2026-Q2 86 325.85;
+  2026-Q1 government + guaranteed 92 610.58.

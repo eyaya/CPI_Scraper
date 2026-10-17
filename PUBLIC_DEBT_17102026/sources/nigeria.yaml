@@ -1,0 +1,163 @@
+country: Nigeria
+iso3: NGA
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Debt Management Office (DMO), Nigeria
+publication_code: "Nigeria's Total Public Debt as at <date> (quarterly)"
+frequency: quarterly
+coverage: "Public debt of the Federal Government, 36 States and FCT (row labels state each component's own perimeter)"
+verify_ssl: false
+
+# --- discover ---
+# dmo.gov.ng/debt-profile/total-public-debt lists one single-page PDF per
+# quarter (newest first, 20 per page, ?limit=20&limitstart=N). Each link is
+# /<id>-<slug>/file and the id rises with every upload, so the newest report
+# is the largest id among "public-debt" links (Eurobond price sheets on the
+# same page carry no "public-debt" in their slug). The DMO's WAF refuses a
+# short user-agent as "Malware detected"; the harness's full browser UA passes.
+discover:
+  method: largest_id_link
+  page_url: "https://www.dmo.gov.ng/debt-profile/total-public-debt"
+  link_contains:
+    - "public-debt"
+    - "/file"
+  save_as: nigeria_dmo_total_public_debt_latest.pdf
+
+# Every earlier quarter, December 2012 to the previous quarter. Each URL ends
+# in "/file", so each needs its own save_as. Merge-on-write keeps these once
+# read; they are listed so a fresh checkout rebuilds the whole series.
+extra_urls:
+  - url: "https://www.dmo.gov.ng/49-public-debt-stock-as-at-30th-june-2013/file"
+    save_as: "49-public-debt-stock-as-at-30th-june-2013.pdf"
+  - url: "https://www.dmo.gov.ng/50-public-debt-stock-30-06-2014/file"
+    save_as: "50-public-debt-stock-30-06-2014.pdf"
+  - url: "https://www.dmo.gov.ng/51-public-debt-stock-as-at-30th-september-2013/file"
+    save_as: "51-public-debt-stock-as-at-30th-september-2013.pdf"
+  - url: "https://www.dmo.gov.ng/52-public-debt-stock-as-at-31st-march-2014/file"
+    save_as: "52-public-debt-stock-as-at-31st-march-2014.pdf"
+  - url: "https://www.dmo.gov.ng/53-public-debt-stock-31-12-2012/file"
+    save_as: "53-public-debt-stock-31-12-2012.pdf"
+  - url: "https://www.dmo.gov.ng/54-total-public-debt-stock-as-at-30th-june-2015/file"
+    save_as: "54-total-public-debt-stock-as-at-30th-june-2015.pdf"
+  - url: "https://www.dmo.gov.ng/55-total-public-debt-stock-as-at-30th-september-2014/file"
+    save_as: "55-total-public-debt-stock-as-at-30th-september-2014.pdf"
+  - url: "https://www.dmo.gov.ng/56-total-public-debt-stock-as-at-30th-september-2015/file"
+    save_as: "56-total-public-debt-stock-as-at-30th-september-2015.pdf"
+  - url: "https://www.dmo.gov.ng/57-total-public-debt-stock-as-at-31-march-2013/file"
+    save_as: "57-total-public-debt-stock-as-at-31-march-2013.pdf"
+  - url: "https://www.dmo.gov.ng/58-total-public-debt-stock-as-at-31st-december-2014/file"
+    save_as: "58-total-public-debt-stock-as-at-31st-december-2014.pdf"
+  - url: "https://www.dmo.gov.ng/59-total-public-debt-stock-as-at-31st-december-2014-1/file"
+    save_as: "59-total-public-debt-stock-as-at-31st-december-2014-1.pdf"
+  - url: "https://www.dmo.gov.ng/60-total-public-debt-stock-as-at-31st-december-2015/file"
+    save_as: "60-total-public-debt-stock-as-at-31st-december-2015.pdf"
+  - url: "https://www.dmo.gov.ng/61-total-public-debt-stock-as-at-31st-december-2013/file"
+    save_as: "61-total-public-debt-stock-as-at-31st-december-2013.pdf"
+  - url: "https://www.dmo.gov.ng/62-total-public-debt-stock-as-at-31st-march-2015/file"
+    save_as: "62-total-public-debt-stock-as-at-31st-march-2015.pdf"
+  - url: "https://www.dmo.gov.ng/1538-total-public-debt-as-at-30th-june-2016/file"
+    save_as: "1538-total-public-debt-as-at-30th-june-2016.pdf"
+  - url: "https://www.dmo.gov.ng/1539-total-public-debt-as-at-31st-march-2016/file"
+    save_as: "1539-total-public-debt-as-at-31st-march-2016.pdf"
+  - url: "https://www.dmo.gov.ng/1973-total-public-debt-as-at-30th-september-2016/file"
+    save_as: "1973-total-public-debt-as-at-30th-september-2016.pdf"
+  - url: "https://www.dmo.gov.ng/1974-total-public-debt-as-at-31st-december-2016/file"
+    save_as: "1974-total-public-debt-as-at-31st-december-2016.pdf"
+  - url: "https://www.dmo.gov.ng/2075-total-public-debt-stock-as-at-31st-march-2017/file"
+    save_as: "2075-total-public-debt-stock-as-at-31st-march-2017.pdf"
+  - url: "https://www.dmo.gov.ng/2170-total-public-debt-as-at-30th-june-2017/file"
+    save_as: "2170-total-public-debt-as-at-30th-june-2017.pdf"
+  - url: "https://www.dmo.gov.ng/2255-total-public-debt-as-at-30th-september-2017/file"
+    save_as: "2255-total-public-debt-as-at-30th-september-2017.pdf"
+  - url: "https://www.dmo.gov.ng/2380-total-public-debt-as-at-31st-december-2017/file"
+    save_as: "2380-total-public-debt-as-at-31st-december-2017.pdf"
+  - url: "https://www.dmo.gov.ng/2470-nigeria-s-public-debt-stock-as-at-march-31-2018/file"
+    save_as: "2470-nigeria-s-public-debt-stock-as-at-march-31-2018.pdf"
+  - url: "https://www.dmo.gov.ng/2529-nigeria-s-public-debt-stock-as-at-june-30-2018/file"
+    save_as: "2529-nigeria-s-public-debt-stock-as-at-june-30-2018.pdf"
+  - url: "https://www.dmo.gov.ng/2663-nigeria-s-public-debt-stock-as-at-september-30-2018/file"
+    save_as: "2663-nigeria-s-public-debt-stock-as-at-september-30-2018.pdf"
+  - url: "https://www.dmo.gov.ng/2765-nigeria-s-total-public-debt-stock-as-at-december-2018/file"
+    save_as: "2765-nigeria-s-total-public-debt-stock-as-at-december-2018.pdf"
+  - url: "https://www.dmo.gov.ng/2849-nigeria-s-total-public-debt-portfolio-as-at-march-31-2019/file"
+    save_as: "2849-nigeria-s-total-public-debt-portfolio-as-at-march-31-2019.pdf"
+  - url: "https://www.dmo.gov.ng/2950-nigeria-s-public-debt-as-at-june-30-2019/file"
+    save_as: "2950-nigeria-s-public-debt-as-at-june-30-2019.pdf"
+  - url: "https://www.dmo.gov.ng/3043-nigeria-s-total-public-debt-stock-as-at-september-30-2019/file"
+    save_as: "3043-nigeria-s-total-public-debt-stock-as-at-september-30-2019.pdf"
+  - url: "https://www.dmo.gov.ng/3123-nigeria-s-total-public-debt-stock-as-at-december-31-2019/file"
+    save_as: "3123-nigeria-s-total-public-debt-stock-as-at-december-31-2019.pdf"
+  - url: "https://www.dmo.gov.ng/3235-nigeria-s-public-debt-stock-as-at-march-31-2020/file"
+    save_as: "3235-nigeria-s-public-debt-stock-as-at-march-31-2020.pdf"
+  - url: "https://www.dmo.gov.ng/3305-nigeria-public-debt-as-at-june-30-2020/file"
+    save_as: "3305-nigeria-public-debt-as-at-june-30-2020.pdf"
+  - url: "https://www.dmo.gov.ng/3411-nigeria-s-total-public-debt-stock-as-at-september-30-2020/file"
+    save_as: "3411-nigeria-s-total-public-debt-stock-as-at-september-30-2020.pdf"
+  - url: "https://www.dmo.gov.ng/3491-nigeria-s-total-public-debt-stock-as-at-december-31-2020/file"
+    save_as: "3491-nigeria-s-total-public-debt-stock-as-at-december-31-2020.pdf"
+  - url: "https://www.dmo.gov.ng/3591-nigeria-s-total-public-debt-stock-as-at-march-31-2021/file"
+    save_as: "3591-nigeria-s-total-public-debt-stock-as-at-march-31-2021.pdf"
+  - url: "https://www.dmo.gov.ng/3690-nigeria-s-total-public-debt-as-at-june-30-2021/file"
+    save_as: "3690-nigeria-s-total-public-debt-as-at-june-30-2021.pdf"
+  - url: "https://www.dmo.gov.ng/3758-nigeria-s-total-public-debt-as-at-september-30-2021/file"
+    save_as: "3758-nigeria-s-total-public-debt-as-at-september-30-2021.pdf"
+  - url: "https://www.dmo.gov.ng/3856-nigeria-s-total-public-debt-stock-as-at-december-31-2021/file"
+    save_as: "3856-nigeria-s-total-public-debt-stock-as-at-december-31-2021.pdf"
+  - url: "https://www.dmo.gov.ng/3938-nigeria-s-total-public-debt-as-at-march-31-2022/file"
+    save_as: "3938-nigeria-s-total-public-debt-as-at-march-31-2022.pdf"
+  - url: "https://www.dmo.gov.ng/4041-nigeria-s-total-public-debt-as-at-june-30-2022/file"
+    save_as: "4041-nigeria-s-total-public-debt-as-at-june-30-2022.pdf"
+  - url: "https://www.dmo.gov.ng/4123-nigeria-s-total-public-debt-stock-as-at-september-30-2022/file"
+    save_as: "4123-nigeria-s-total-public-debt-stock-as-at-september-30-2022.pdf"
+  - url: "https://www.dmo.gov.ng/4233-nigeria-s-total-public-debt-stock-as-at-december-31-2022/file"
+    save_as: "4233-nigeria-s-total-public-debt-stock-as-at-december-31-2022.pdf"
+  - url: "https://www.dmo.gov.ng/4324-nigeria-s-total-public-debt-as-at-march-31-2023/file"
+    save_as: "4324-nigeria-s-total-public-debt-as-at-march-31-2023.pdf"
+  - url: "https://www.dmo.gov.ng/4404-nigeria-s-total-public-debt-as-at-june-30-2023/file"
+    save_as: "4404-nigeria-s-total-public-debt-as-at-june-30-2023.pdf"
+  - url: "https://www.dmo.gov.ng/4499-nigeria-s-total-public-debt-as-at-september-30-2023/file"
+    save_as: "4499-nigeria-s-total-public-debt-as-at-september-30-2023.pdf"
+  - url: "https://www.dmo.gov.ng/4591-nigeria-s-total-public-debt-stock-as-at-december-31-2023/file"
+    save_as: "4591-nigeria-s-total-public-debt-stock-as-at-december-31-2023.pdf"
+  - url: "https://www.dmo.gov.ng/4731-nigeria-s-total-public-debt-stock-as-at-march-31-2024/file"
+    save_as: "4731-nigeria-s-total-public-debt-stock-as-at-march-31-2024.pdf"
+  - url: "https://www.dmo.gov.ng/4971-nigeria-s-total-public-debt-as-at-june-30-2024/file"
+    save_as: "4971-nigeria-s-total-public-debt-as-at-june-30-2024.pdf"
+  - url: "https://www.dmo.gov.ng/5080-nigeria-s-total-public-debt-as-at-september-30-2024/file"
+    save_as: "5080-nigeria-s-total-public-debt-as-at-september-30-2024.pdf"
+  - url: "https://www.dmo.gov.ng/5215-total-public-debt-as-at-december-31-2024/file"
+    save_as: "5215-total-public-debt-as-at-december-31-2024.pdf"
+  - url: "https://www.dmo.gov.ng/5363-nigeria-s-total-public-debt-stock-as-at-march-31-2025/file"
+    save_as: "5363-nigeria-s-total-public-debt-stock-as-at-march-31-2025.pdf"
+  - url: "https://www.dmo.gov.ng/5541-nigeria-s-total-public-debt-as-at-june-30-2025/file"
+    save_as: "5541-nigeria-s-total-public-debt-as-at-june-30-2025.pdf"
+  - url: "https://www.dmo.gov.ng/5732-nigeria-s-total-public-debt-as-at-september-30-2025/file"
+    save_as: "5732-nigeria-s-total-public-debt-as-at-september-30-2025.pdf"
+  - url: "https://www.dmo.gov.ng/5818-nigeria-s-total-public-debt-as-at-december-31-2025/file"
+    save_as: "5818-nigeria-s-total-public-debt-as-at-december-31-2025.pdf"
+  - url: "https://www.dmo.gov.ng/6002-nigeria-s-total-public-debt-as-at-march-31-2026/file"
+    save_as: "6002-nigeria-s-total-public-debt-as-at-march-31-2026.pdf"
+
+parser: nigeria_dmo_debt
+geography: National
+
+notes: >
+  DMO quarterly Total Public Debt reports, December 2012 to the latest quarter
+  (55 quarters as of 2026-Q2): stocks in US$ and N (as printed: millions;
+  September 2023 in US$ billion and N trillion) and, from late 2018, each
+  component's % of total. Labels kept as printed -- the perimeter of "Total"
+  changed (June 2013 "Total" = FGN external + FGN domestic only, excluding
+  states' domestic debt; from 2014 "Grand-Total (A+B)" adds states' domestic
+  debt; from December 2018 "Total Public Debt (A+B)" covers FGN + 36 States +
+  FCT, external and domestic). States' domestic debt is often as at an earlier
+  date than the quarter (each report's footnote).
+
+  NOT COLLECTED: state-by-state stocks (the DMO's separate sub-national
+  reports; the schema has no geography column and the series is not needed
+  for the national total). Debt service.
+
+  CROSS-CHECK: 2026-Q2 total US$120,932.71m / N166,788,480.19m; 2013-Q2
+  "Total" US$50,905.65m; 2022-Q4 domestic FGN N22,210,364.60m; 2018-Q1
+  "Total (A+D)" N22,707,203.79m. External + domestic = total holds in every
+  quarter that prints all three.

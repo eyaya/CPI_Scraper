@@ -18,6 +18,27 @@ discover:
     - "gdp"
     - ".pdf"
 
+# Back series (extra; parsers/sierraleone_stats_rebased.py): Stats SL's
+# 'Rebased GDP Report, 2018 base year and revised series', 2018-2023, all in
+# OLD leone (unit 'SLL million (pre-2022 leone)', never converted). Wayback
+# `id_` copy of statistics.sl's own file: the live host serves a challenge
+# page to every client (2026-10), which is not bypassed -- so discovery above
+# fails until it is lifted.
+extras_cache: true
+extra_urls:
+  - url: "https://web.archive.org/web/20240711072009id_/https://www.statistics.sl/images/StatisticsSL/Documents/gdp/gdp_2023/Rebased_GDP_Report_2018_base_year_and_revised_series.pdf"
+    save_as: StatsSL_Rebased_GDP_Report_2018_base.pdf
+
+
+# FALLBACK (2026-10-14): statistics.sl serves a bot-challenge page to every client, which
+# is not bypassed. When live discovery fails, the run reads the copy of the
+# last-discovered primary retained in source_data/ (recorded with its published
+# URL) so the back-series extras can still be read. Live discovery is always
+# tried first.
+fallback:
+  discover:
+    method: retained_copy
+    url: "https://www.statistics.sl/images/StatisticsSL/Documents/gdp/gdp_2024/GDP-Report_2024_Final_Publish.pdf"
 parser: sierraleone_stats_gdp
 geography: National
 

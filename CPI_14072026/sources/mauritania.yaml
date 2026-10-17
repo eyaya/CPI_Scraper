@@ -26,6 +26,262 @@ notes: >
   Monthly INPC note. 'Tableau 2 : Evolution de l'indice par fonction' gives the 12
   COICOP-1999 functions (function 02 is 'Tabac et stupéfiants' — no alcohol) +
   Indice général, each with weight, five monthly indices and four variations
-  (monthly, 3-month, year-on-year, 12-month). We emit current index = nums[-5],
-  MoM nums[-4], YoY (glissement annuel) nums[-2]; sub-item rows (prefixed 'v') are
-  skipped. Report month is read from the note text; the base year is not stated.
+  (monthly, 3-month, year-on-year, 12-month). Indices are the unsigned figures,
+  variations the signed ones; every printed month is emitted, dated from the
+  report month and checked against the printed 1/3/12-month variations; MoM and
+  YoY are variations 1 and 3. Sub-item rows (prefixed 'v') are skipped. Report
+  month = latest month named in the note; base read per issue (empty if unstated).
+
+# BACK ISSUES (added 2026-10-14): every monthly note in ANSADE's media library,
+# 2016-01 .. 2026-08 (wp-json/wp/v2/media?search=INPC). Three layouts (base 2014
+# to 2022-07, base 2019 after) read by one reader; each printed month is dated
+# from the report month and checked against the printed variations. Not listed:
+# 2020-05 and 2020-10 (their 3-month and annual variations do not match their own indices;
+# its months are reprinted by the 2020-06 and later notes), 2023-07 (a scanned
+# image, no text) and 2025-06 (function table is an image). Saved short: MAX_PATH.
+extras_cache: true
+extra_urls:
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-janvier-2016.pdf"
+    save_as: mauritania_inpc_2016-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-fevrier-2016.pdf"
+    save_as: mauritania_inpc_2016-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-mars-2016.pdf"
+    save_as: mauritania_inpc_2016-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-avril-2016.pdf"
+    save_as: mauritania_inpc_2016-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-mai-2016.pdf"
+    save_as: mauritania_inpc_2016-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-juin-2016.pdf"
+    save_as: mauritania_inpc_2016-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-juillet-2016.pdf"
+    save_as: mauritania_inpc_2016-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-aout-2016.pdf"
+    save_as: mauritania_inpc_2016-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-septembre-2016.pdf"
+    save_as: mauritania_inpc_2016-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-octobre-2016.pdf"
+    save_as: mauritania_inpc_2016-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-novembre-2016.pdf"
+    save_as: mauritania_inpc_2016-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-dcembre-2016.pdf"
+    save_as: mauritania_inpc_2016-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-janvier-2017.pdf"
+    save_as: mauritania_inpc_2017-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-fevrier-2017.pdf"
+    save_as: mauritania_inpc_2017-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-mars-2017.pdf"
+    save_as: mauritania_inpc_2017-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-avril-2017.pdf"
+    save_as: mauritania_inpc_2017-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-mai-2017.pdf"
+    save_as: mauritania_inpc_2017-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-juin-2017.pdf"
+    save_as: mauritania_inpc_2017-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-juillet-2017.pdf"
+    save_as: mauritania_inpc_2017-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-aout-2017.pdf"
+    save_as: mauritania_inpc_2017-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-sept-2017.pdf"
+    save_as: mauritania_inpc_2017-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-oct-2017.pdf"
+    save_as: mauritania_inpc_2017-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-nov-2017.pdf"
+    save_as: mauritania_inpc_2017-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-dec-2017.pdf"
+    save_as: mauritania_inpc_2017-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-janv-2018.pdf"
+    save_as: mauritania_inpc_2018-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-fevr-2018.pdf"
+    save_as: mauritania_inpc_2018-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-mars-2018.pdf"
+    save_as: mauritania_inpc_2018-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-avril-2018.pdf"
+    save_as: mauritania_inpc_2018-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-mai-2018.pdf"
+    save_as: mauritania_inpc_2018-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-juin-2018.pdf"
+    save_as: mauritania_inpc_2018-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-juillet-2018.pdf"
+    save_as: mauritania_inpc_2018-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-aout-2018.pdf"
+    save_as: mauritania_inpc_2018-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-sept-2018.pdf"
+    save_as: mauritania_inpc_2018-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-oct-2018.pdf"
+    save_as: mauritania_inpc_2018-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-nov-2018.pdf"
+    save_as: mauritania_inpc_2018-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-dec-2018.pdf"
+    save_as: mauritania_inpc_2018-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-janv-2019.pdf"
+    save_as: mauritania_inpc_2019-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-fevr-2019.pdf"
+    save_as: mauritania_inpc_2019-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-mars-2019.pdf"
+    save_as: mauritania_inpc_2019-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-avril-2019.pdf"
+    save_as: mauritania_inpc_2019-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-mai-2019.pdf"
+    save_as: mauritania_inpc_2019-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-juin-2019.pdf"
+    save_as: mauritania_inpc_2019-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_-juillet-2019.pdf"
+    save_as: mauritania_inpc_2019-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_aout-2019.pdf"
+    save_as: mauritania_inpc_2019-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_sept-2019.pdf"
+    save_as: mauritania_inpc_2019-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_oct-2019.pdf"
+    save_as: mauritania_inpc_2019-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_nov-2019.pdf"
+    save_as: mauritania_inpc_2019-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_dec-2019-1.pdf"
+    save_as: mauritania_inpc_2019-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_janv-2020.pdf"
+    save_as: mauritania_inpc_2020-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_fevr-2020-1.pdf"
+    save_as: mauritania_inpc_2020-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_mars-2020.pdf"
+    save_as: mauritania_inpc_2020-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_avril-2020.pdf"
+    save_as: mauritania_inpc_2020-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_juin-2020.pdf"
+    save_as: mauritania_inpc_2020-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_juillet-2020.pdf"
+    save_as: mauritania_inpc_2020-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_aout-2020.pdf"
+    save_as: mauritania_inpc_2020-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_sept-2020.pdf"
+    save_as: mauritania_inpc_2020-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_nov-2020.pdf"
+    save_as: mauritania_inpc_2020-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_dec-2020.pdf"
+    save_as: mauritania_inpc_2020-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_janv-2021.pdf"
+    save_as: mauritania_inpc_2021-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_mars-2021.pdf"
+    save_as: mauritania_inpc_2021-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_avril-2021-2.pdf"
+    save_as: mauritania_inpc_2021-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_mai-2021.pdf"
+    save_as: mauritania_inpc_2021-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_juin-2021.pdf"
+    save_as: mauritania_inpc_2021-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_juillet-2021-1.pdf"
+    save_as: mauritania_inpc_2021-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_sept-2021.pdf"
+    save_as: mauritania_inpc_2021-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_oct-2021.pdf"
+    save_as: mauritania_inpc_2021-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_nov-2021.pdf"
+    save_as: mauritania_inpc_2021-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_dec-2021.pdf"
+    save_as: mauritania_inpc_2021-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_janv-2022.pdf"
+    save_as: mauritania_inpc_2022-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_fevr-2022.pdf"
+    save_as: mauritania_inpc_2022-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_mars-2022.pdf"
+    save_as: mauritania_inpc_2022-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_avril-2022.pdf"
+    save_as: mauritania_inpc_2022-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_mai-2022.pdf"
+    save_as: mauritania_inpc_2022-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_juin-2022.pdf"
+    save_as: mauritania_inpc_2022-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Publication-INPC_juillet-2022.pdf"
+    save_as: mauritania_inpc_2022-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-aout-2022_FR_VF.pdf"
+    save_as: mauritania_inpc_2022-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-septembre-2022_FR_VF.pdf"
+    save_as: mauritania_inpc_2022-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-octobre-2022_FR_VF.pdf"
+    save_as: mauritania_inpc_2022-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-novembre-2022_FR_VF.pdf"
+    save_as: mauritania_inpc_2022-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-decembre-2022_FR_VF-2.pdf"
+    save_as: mauritania_inpc_2022-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-janvier-2023_FR_VF-1.pdf"
+    save_as: mauritania_inpc_2023-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-fevrier-2023_FR_VF-2.pdf"
+    save_as: mauritania_inpc_2023-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-mars-2023_FR_VF-1.pdf"
+    save_as: mauritania_inpc_2023-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-avril-2023_FR_VF-1.pdf"
+    save_as: mauritania_inpc_2023-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-mai-2023_FR_VF.pdf"
+    save_as: mauritania_inpc_2023-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-juin-2023_FR_VF.pdf"
+    save_as: mauritania_inpc_2023-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-aout-2023_FR_VF.pdf"
+    save_as: mauritania_inpc_2023-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-Septembre-2023_FR_VF.pdf"
+    save_as: mauritania_inpc_2023-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-oct-2023_FR_VF.pdf"
+    save_as: mauritania_inpc_2023-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-Novembre-2023_FR_VF.pdf"
+    save_as: mauritania_inpc_2023-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-Decembre-2023_FR_VF.pdf"
+    save_as: mauritania_inpc_2023-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-Janvier-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-fevr-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-mars-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-avril-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-mai-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-Juin-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-juillet-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-aout-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-sept-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-oct-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-nov-2024_FR_VF.pdf"
+    save_as: mauritania_inpc_2024-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-dec-2024_FR.pdf"
+    save_as: mauritania_inpc_2024-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-janv-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-fevr-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-mars-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-avril-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-mai-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-juillet-2025_FR_VF-1.pdf"
+    save_as: mauritania_inpc_2025-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-aout-2025_FR_VF-2.pdf"
+    save_as: mauritania_inpc_2025-08.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-septembre-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-09.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-octobre-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-10.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-novembre-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-11.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Note-INPC-decembre-2025_FR_VF.pdf"
+    save_as: mauritania_inpc_2025-12.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/02/Note-INPC-janvier-2026_FR_VF.pdf"
+    save_as: mauritania_inpc_2026-01.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/03/Note-INPC-fevrier-2026_FR_VF.pdf"
+    save_as: mauritania_inpc_2026-02.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/04/Note-INPC-mars-2026_FR_VF.pdf"
+    save_as: mauritania_inpc_2026-03.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/05/Note-INPC-avril-2026_FR-1.pdf"
+    save_as: mauritania_inpc_2026-04.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/06/Note-mensuelle-de-lIndice-National-des-Prix-a-la-Consommation-INPC-mai-2026.pdf"
+    save_as: mauritania_inpc_2026-05.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/07/Note-mensuelle-de-lIndice-National-des-Prix-a-la-Consommation-INPC-juin-2026.pdf"
+    save_as: mauritania_inpc_2026-06.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/08/Note-mensuelle-de-lIndice-National-des-Prix-a-la-Consommation-INPC-Juillet-2026.pdf"
+    save_as: mauritania_inpc_2026-07.pdf
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/09/Note-mensuelle-de-lIndice-National-des-Prix-a-la-Consommation-INPC-Aout-–-2026.pdf"
+    save_as: mauritania_inpc_2026-08.pdf

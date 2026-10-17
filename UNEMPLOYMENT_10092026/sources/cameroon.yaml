@@ -21,7 +21,15 @@ discover:
   method: static_url
   url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/EESI3_Depliant_Emploi_FR_28_09_2023-2.pdf"
 
-parser: cameroon_pdf
+# EARLIER ROUND (2026-10-14; parser cameroon_eesi2_back): EESI2 2010 phase 1
+# main report, Tableaux 4.1 and 5.1. Wayback `id_` copy of INS's own file on
+# its former site statistics-cameroon.org (not hosted on ins-cameroun.cm).
+# 13th ICLS, age 10+ -- not comparable with EESI3 (19th ICLS, 14+).
+extras_cache: true
+extra_urls:
+  - url: "http://web.archive.org/web/20121012023905id_/http://www.statistics-cameroon.org/downloads/EESI2/Rapport_Principal_de_la_phase_1_EESI_2_du_20_03_2012.pdf"
+    save_as: ins_cameroun_eesi2_2010_rapport_principal.pdf
+parser: cameroon_eesi2_back
 geography: Total country
 
 notes: >

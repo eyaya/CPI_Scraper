@@ -1,0 +1,50 @@
+country: Ethiopia
+iso3: ETH
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministry of Finance of Ethiopia, Debt Management Directorate (DMD-MoF)
+publication_code: Public Sector Debt Statistical Bulletin -- Table 25 Total Public Debt Outstanding
+frequency: quarterly
+coverage: "Public sector debt: central government and state-owned enterprises, external and domestic"
+verify_ssl: false
+
+# --- discover ---
+# The live host is mofed.gov.et (mof.gov.et does not answer). Resources >
+# "Debt Bulletin" (/resources/bulletin/) lists the numbered bulletins newest
+# first under /media/filer_public/.../public_sector_debt_statistical_bulletin
+# _no<NN>.pdf; the first match is the latest. Earlier numbers (49-54) are on
+# the same page and could be added as extra_urls for more history.
+discover:
+  method: page_scrape
+  page_url: "https://www.mofed.gov.et/resources/bulletin/"
+  link_contains:
+    - "public_sector_debt_statistical_bulletin"
+    - ".pdf"
+  download_timeout: 300
+
+
+# BACK ISSUES (2026-10-14), newest first; the newer bulletin wins on overlap.
+# No. 48 (wrapped label the other way round) does not read and is not listed.
+extras_cache: true
+extra_urls:
+  - url: "https://www.mofed.gov.et/media/filer_public/1c/4e/1c4edc39-5a42-43b7-bc39-8311d6a7133d/public_sector_debt_statistical_bulletin_no_44.pdf"
+    save_as: MoF_PSDSB_No44.pdf
+  - url: "https://www.mofed.gov.et/media/filer_public/ac/76/ac76c29b-6c83-4dfd-bf34-bba53ca3000e/public_sector_debt_statistical_bulletin_no_39.pdf"
+    save_as: MoF_PSDSB_No39.pdf
+  - url: "https://www.mofed.gov.et/media/filer_public/95/7c/957c702d-c423-4d42-a2ae-f18372f8b979/public_sector_debt_statistical_bulletin_no_34_2015-16___-____2019-20.pdf"
+    save_as: MoF_PSDSB_No34.pdf
+  - url: "https://www.mofed.gov.et/media/filer_public/6a/dd/6addf52a-e603-4c0e-8433-eac4e6891b23/public_sector_debt_statistical_bulletin_no_29.pdf"
+    save_as: MoF_PSDSB_No29.pdf
+parser: ethiopia_mof_debt
+geography: National
+
+notes: >
+  MoF Public Sector Debt Statistical Bulletin, Table 25 (USD million and % of
+  total): total public debt, external and domestic, each split central
+  government / SOEs, for four fiscal years (dated to the year they end; FY
+  ends 7 July) and the latest quarter-end. Domestic debt converted to USD by
+  MoF at end-period rates. With the back issues (Nos. 44, 39, 34, 29):
+  fiscal years 2014/15 onward and quarter-ends 2019-03, 2020-06, 2021-09,
+  2022-12.
+  CROSS-CHECK (No. 56): 31/12/2025 total 52,121.32; 2021/22 total 57,665.75.

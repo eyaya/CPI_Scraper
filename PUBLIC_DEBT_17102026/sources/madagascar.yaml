@@ -1,0 +1,41 @@
+country: Madagascar
+iso3: MDG
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: "Banky Foiben'i Madagasikara (BFM), Rapport Annuel -- from the Direction de la Dette Publique (MEF/DDP)"
+frequency: annual
+coverage: "External debt of the public sector (MEF/DDP) and of the central bank (IMF)"
+verify_ssl: false
+
+# --- discover ---
+# banky-foibe.mg is an Angular SPA over a WordPress back end. The annual
+# report list is page 2755, readable without the SPA at
+#   https://www.banky-foibe.mg/admin/?rest_route=/bfm/page&url=_rapport-annuel
+# (the /admin/wp-json/ form 404s; the ?rest_route= form works). Editions are
+# pinned, newest first; add a new edition at the top when BFM posts it.
+# The Ministry (mef.gov.mg) publishes no debt statistics and tresor.mg does
+# not resolve (checked 2026-10), which is why the central bank's credited
+# reprint of the DDP's figures is used.
+discover:
+  method: static_url
+  url: "https://www.banky-foibe.mg/admin/wp-content/uploads/2023/10/Rapport-Annuel-2022-BFM.pdf"
+  save_as: Rapport-Annuel-2022-BFM.pdf
+  download_timeout: 300
+
+extra_urls:
+  - url: "https://www.banky-foibe.mg/admin/wp-content/uploads/2022/12/RAPPORT-ANNUEL-BFM-2021-OK.pdf"
+    save_as: RAPPORT-ANNUEL-BFM-2021-OK.pdf
+  - url: "https://www.banky-foibe.mg/admin/wp-content/uploads/2020/06/Rapport-annuel-2019.pdf"
+    save_as: Rapport-annuel-2019.pdf
+
+parser: madagascar_bfm_debt
+geography: National
+
+notes: >
+  Stock of external public debt and of BFM (IMF), by creditor group and
+  creditor, 2017-2022 from three editions (2022: 2020-22 in SDR million; 2021:
+  2019-21 in USD million; 2019: 2017-19 in SDR million). Unit and structure
+  change between editions and are kept as printed (see the parser). Last year
+  of each edition is provisional. Cross-check: 2022 total 3 429,1 DTS m,
+  public 2 964,5, IDA 1 535,2, IMF 426,5; 2021 total US$ 3 811,7 m.

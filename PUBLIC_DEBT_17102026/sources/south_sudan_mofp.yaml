@@ -1,0 +1,32 @@
+country: South Sudan
+iso3: SSD
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministry of Finance and Planning (MoFP), South Sudan
+frequency: annual
+coverage: "Central government domestic debt (all held by the Bank of South Sudan)"
+verify_ssl: false
+
+# --- discover ---
+# mofp.gov.ss is WordPress; /wp-json/wp/v2/media?search=debt lists the 2025
+# Debt Policy and Medium-Term Debt Strategy report (uploaded 2025-06-26).
+discover:
+  method: wp_media_named
+  api_url: "https://mofp.gov.ss/wp-json/wp/v2/media?search=debt&per_page=50"
+  name_contains: "Debt-Policy-and-Medium-term-Debt-Strategy"
+  extension: ".pdf"
+  download_timeout: 300
+
+parser: south_sudan_mofp_debt
+geography: National
+
+notes: >
+  MoFP Debt Policy and MTDS report (2025), Table 3 "Domestic Debt Outstanding
+  as at December 31, 2022": advances from BSS, BSS capital restoration bonds,
+  BSS USD borrowing and overdrafts (both 0), total SSP 426 915 173 225,49,
+  with shares. Sums exactly.
+
+  REFUSED: the report's Table 2 (external debt by creditor) -- its commercial
+  creditors sum to 1 095,49 against a subtotal of 2 050,21, its subtotals to
+  2 526,91 against a grand total of 2 059,21, and the prose gives 1 700,48.

@@ -78,7 +78,7 @@ def _is_aggregate(label):
         or "valeur ajout" in low or low.startswith("imp") or "taxes net" in low
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
     rows = []
     periods = []
     with pdfplumber.open(pdf_path) as pdf:
@@ -142,5 +142,13 @@ def parse(pdf_path: str) -> pd.DataFrame:
                         })
     if not rows:
         raise ValueError("no GDP rows parsed from INSBU Burundi note")
-    return pd.DataFrame.from_records(rows)[_OUT_COLS].drop_duplicates(
+    df = pd.DataFrame.from_records(rows)[_OUT_COLS].drop_duplicates(
         ["approach", "category", "period", "measure", "price_basis"])
+    # ANNUAL back series (extra; see burundi_insbu_annual): the yearbook's
+    # national-accounts chapter, 2016-2023, tagged per table in category_group.
+    from .burundi_insbu_annual import read as _annual
+    annual = _annual(extras)
+    if annual:
+        df = pd.concat([df, pd.DataFrame.from_records(annual, columns=_OUT_COLS)],
+                       ignore_index=True)
+    return df

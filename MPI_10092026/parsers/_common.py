@@ -67,7 +67,10 @@ def numbers_in(text: str, decimal: str = ".") -> list[float]:
     more than the magnitude, and no magnitude-based filtering is applied here.
     """
     if decimal == ",":
-        pat = rf"-?\d{{1,3}}(?:[{_SPACES}]\d{{3}})+(?:,\d+)?|-?\d+,\d+|-?\d+"
+        # A thousands group is exactly three digits: never followed by another
+        # digit. Without (?!\d), HCP Morocco's "1052 569 1333 288 1621" read as
+        # [1052, 569133, 3288162, 1] (2026-10-15).
+        pat = rf"-?\d{{1,3}}(?:[{_SPACES}]\d{{3}}(?!\d))+(?:,\d+)?|-?\d+,\d+|-?\d+"
     else:
         pat = r"-?\d{1,3}(?:,\d{3})+(?:\.\d+)?|-?\d+\.\d+|-?\d+"
     out = []

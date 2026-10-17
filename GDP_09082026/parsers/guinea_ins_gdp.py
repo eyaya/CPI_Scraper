@@ -34,7 +34,7 @@ def _spec(caption: str):
     return None                                   # tableau 2 = deflator variation
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
     rows, spec, periods = [], None, None
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
@@ -73,5 +73,14 @@ def parse(pdf_path: str) -> pd.DataFrame:
                     })
     if not rows:
         raise ValueError("no GDP rows parsed from INS Guinea note")
-    return pd.DataFrame.from_records(rows)[_OUT_COLS].drop_duplicates(
+    df = pd.DataFrame.from_records(rows)[_OUT_COLS].drop_duplicates(
         ["approach", "category", "period", "measure"])
+    # ANNUAL back series (extra; see guinea_ins_annual): levels, growth and the
+    # deflator 2018-2024, tagged in category_group. Annual periods never share
+    # an identity with this note's quarters.
+    from .guinea_ins_annual import read as _annual
+    annual = _annual(extras)
+    if annual:
+        df = pd.concat([df, pd.DataFrame.from_records(annual, columns=_OUT_COLS)],
+                       ignore_index=True)
+    return df

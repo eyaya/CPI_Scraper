@@ -18,6 +18,34 @@ discover:
   file_base: "https://anstat.ci/assets/publications/files"
   title_contains: "COMPTES NATIONAUX TRIMESTRIELS"
 
+# ANNUAL back series (extras; parsers/ci_ins_annual.py): the former INS's own
+# national-accounts workbooks. ins.ci is offline, so these are Wayback `id_`
+# copies of the INS files themselves. Three vintages, none chained: 1996-2015
+# synthesis (SNA 2008 base 2015 retropolated AND SNA 1993 base 1996
+# definitive, side by side), 2015-2022 accounts (2021 definitive, 2022
+# provisional), 1996-2016 constant 2009 prices. A fourth file
+# (compte_nationaux_2019.xls) has only a corrupt capture and is not used.
+# anstat.ci itself now sits behind a Cloudflare challenge (2026-10-13): the
+# quarterly discovery above will fail until it is lifted; not bypassed.
+extras_cache: true
+extra_urls:
+  - url: "https://web.archive.org/web/20231028063213id_/http://www.ins.ci/documents/cnt/SYNTHESE%20DES%20COMPTES%20NATIONAUX%201996_2015%20RETROPOLES.xlsx"
+    save_as: "INS_CI_Synthese_Comptes_Nationaux_1996_2015_retropoles.xlsx"
+  - url: "https://web.archive.org/web/20240906122516id_/https://www.ins.ci/documents/compte_nationaux_2021CD_2022CP.xlsx"
+    save_as: "INS_CI_comptes_nationaux_2021CD_2022CP.xlsx"
+  - url: "https://web.archive.org/web/20211123011254id_/http://www.ins.ci/documents/ComptesNationauxAnnuel_prix2009.xlsx"
+    save_as: "INS_CI_ComptesNationauxAnnuel_prix2009.xlsx"
+
+
+# FALLBACK (2026-10-14): anstat.ci serves a bot-challenge page to every client, which
+# is not bypassed. When live discovery fails, the run reads the copy of the
+# last-discovered primary retained in source_data/ (recorded with its published
+# URL) so the back-series extras can still be read. Live discovery is always
+# tried first.
+fallback:
+  discover:
+    method: retained_copy
+    url: "https://anstat.ci/assets/publications/files/File_val_indicateur1774993334.pdf"
 parser: ci_anstat_gdp
 geography: National
 

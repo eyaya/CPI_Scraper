@@ -302,3 +302,19 @@ countries that have no MPI at all — invented table numbers, invented figures.
 Every value now in `parsers/<country>_mpi.py` as a cross-check was read off a
 document that was actually opened. Where a report could not be opened, the
 country is in `PENDING.md` with the reason, not in `sources/` with a guess.
+
+## Standardised columns (added 2026-10-15)
+
+Appended by `standardise.py` (backfill: `py -3 -m tools.standardise mpi`): `breakdown_code`, `sex_code`,
+`geography_level`, `unit_std`, `value_std`, `series_id`, `is_preferred`.
+
+- Every national MPI is its own design, so **the measure is part of `series_id`**
+  (`MPI_GHANA_MPI_PHC_2021_INCIDENCE_H_T_T`): two countries' "MPI" never share an ID.
+- `breakdown_code`: `HEAD_F/HEAD_M`, `Q1..Q5`, `LOC_U/LOC_R`, `AGE_<band>`, `IND_<indicator>`; education
+  and disability categories are national and stay blank.
+- `value_std` puts M0 on one 0-1 scale (INS Guinea prints it x100, recorded as percent on purpose).
+- **Verified** (`tests/test_standardise.py`, mutation-checked 3/3): M0 = H x A for all 957 triples in 16
+  countries within 0.051 (Ghana prints H and A to one decimal; the rest within 0.005).
+- `tests/rebuild_ghana_offline.py` now merges and standardises like a real run. Until 2026-10-15 it wrote
+  straight over `out/ghana_mpi.csv` and deleted the 164 rows of `ghana_report.yaml`'s second measure
+  every time it was run.

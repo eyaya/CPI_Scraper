@@ -25,6 +25,34 @@ discover:
   require_text: true          # skip issues published as a pure scan (see notes)
   lookback: 6
 
+# BACK ISSUES (added 2026-10-12): every base-2023 note (IHPCB2023_*) on INS's
+# IHPC page. Each prints five months of index. Notes published as a pure scan
+# (no text layer, e.g. Juillet 2026) are skipped with a message; base-2014
+# notes (IHPCB2014_*, to 2024-12) use another layout and are not read.
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Aout_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Aout_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Avril_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Avril_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Decembre_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Fevrier_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Fevrier_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Janvier_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Janvier_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Juillet_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Juillet_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Juin_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Juin_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Mai_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Mai_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Mars_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Mars_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Novembre_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Octobre_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Septembre_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/indices/indice_harmonise_prix_consommation/IHPCB2023_Septembre_2026_VF.pdf"
+
 parser: niger_ins_ihpc
 geography: National
 expect_divisions: 14          # Indice global (All items) + 13 COICOP-2018 divisions

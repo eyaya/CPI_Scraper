@@ -1,0 +1,37 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministère de l'Economie et des Finances — Direction Générale du Trésor et de la Comptabilité Publique (DGTCP), Direction de la Dette Publique
+publication_code: Bulletin statistique de la dette publique (trimestriel)
+frequency: quarterly
+verify_ssl: false
+# Default perimeter; the parser also emits the whole-public-debt line under
+# its own coverage value (AC + guarantees + non-guaranteed debt of the
+# State's dependent bodies), as the bulletin's "Champ de couverture" states.
+coverage: "Administration centrale"
+
+# --- discover ---
+# finances.gov.bf lists no bulletins to a crawler (its documents page is
+# rendered client-side), so the issues are pinned. File names are not
+# regular ("Bulletin_statistique_de_la_dette_N__1-..." vs
+# "..._dette_publique_N__2-..."): probe the next number by hand.
+discover:
+  method: static_url
+  url: "https://www.finances.gov.bf/fileadmin/user_upload/storage/fichiers/Bulletin_statistique_de_la_dette_publique_N__2-_2025_VF.pdf"
+  save_as: BF_bulletin_dette_N2_2025.pdf
+
+extra_urls:
+  - url: "https://www.finances.gov.bf/fileadmin/user_upload/storage/fichiers/Bulletin_statistique_de_la_dette_N__1-_2025_VF.pdf"
+    save_as: BF_bulletin_dette_N1_2025.pdf
+
+parser: burkina_faso_dgtcp_debt
+geography: National
+
+notes: >
+  Tableaux 1-1 (milliards FCFA) and 1-2 (millions USD): AC debt stock
+  (total / external / domestic) and the dette publique totale line; Tableau 2
+  debt/GDP with and without arrears. Year-ends 2019-2024 and quarters 2024-Q1,
+  2025-Q1. An orange watermark is filtered out before reading.
+  CROSS-CHECK: end-March 2025 AC debt 8 201,18 milliards FCFA; 60,1 % of GDP.

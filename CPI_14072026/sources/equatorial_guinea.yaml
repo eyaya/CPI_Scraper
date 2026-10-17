@@ -33,6 +33,104 @@ parser: equatorial_guinea_inege
 geography: National
 expect_divisions: 13          # IPC general + 12 CEMAC/NCAC (COICOP-1999) functions
 
+
+# --- back issues (2026-10-13) ---
+# INEGE files its monthly reports in a WP File Download library; the search page
+# (?s=IPC) lists each with an admin-ajax download link, served (via the same
+# browser impersonation) as the PDF itself. May 2022 - Dec 2025 issues use the
+# older per-geography layout (one 'Índices de precios mensuales de la ciudad de
+# <City>' / '... a nivel nacional' table each, previous + report month), which
+# the parser reads as a fallback. Left out: the quarterly/annual reports
+# 2015-2021 (no monthly index table), 'ENERO 2022' (the file is the January 2024
+# report, mislabelled), and Jan/Feb/Mar 2026 (an interim grid whose caption and
+# table the reader cannot pair -- not read rather than guessed).
+extras_cache: true
+extra_urls:
+  - url: "https://inege.org/wp-content/uploads/2026/08/ipc-agosto-2026.pdf"
+    save_as: "INEGE_POST_ipc-agosto-2026.pdf"
+  - url: "https://inege.org/wp-content/uploads/2026/08/Informe__IPC_Julio_2026-.pdf"
+    save_as: "INEGE_POST_Informe__IPC_Julio_2026.pdf"
+  - url: "https://inege.org/wp-content/uploads/2023/10/Informe-IPC-abril_2023_Final-1.pdf"
+    save_as: "INEGE_POST_Informe-IPC-abril_2023.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=123&wpfd_file_id=17164"
+    save_as: "INEGE_TASA_DE_INFLACION_JUNIO_2026_17164.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=123&wpfd_file_id=17165"
+    save_as: "INEGE_TASA_DE_INFLACION_MAYO_2026_17165.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=123&wpfd_file_id=16321"
+    save_as: "INEGE_TASA_DE_INFLACION_ABRIL_2026_16321.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=16006"
+    save_as: "INEGE_TASA_DE_INFLACION_DICIEMBRE_2025_16006.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=8851"
+    save_as: "INEGE_TASA_DE_INFLACION_NOVIEMBRE_2025_8851.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=8850"
+    save_as: "INEGE_TASA_DE_INFLACION_OCTUBRE_2025_8850.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=7670"
+    save_as: "INEGE_TASA_DE_INFLACION_SEPTIEMBRE_2025_7670.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=7599"
+    save_as: "INEGE_TASA_DE_INFLACION_AGOSTO_2025_7599.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=7600"
+    save_as: "INEGE_TASA_DE_INFLACION_JULIO_2025_7600.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=7601"
+    save_as: "INEGE_TASA_DE_INFLACION_JUNIO_2025_7601.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=7062"
+    save_as: "INEGE_TASA_DE_INFLACION_MAYO_2025_7062.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=7063"
+    save_as: "INEGE_TASA_DE_INFLACION_DE_ABRIL_2025_7063.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=6971"
+    save_as: "INEGE_TASA_DE_INFLACION_MARZO_2025_6971.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=6918"
+    save_as: "INEGE_TASA_DE_INFLACION_FEBRERO_2025_6918.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=118&wpfd_file_id=6917"
+    save_as: "INEGE_TASA_DE_INFLACION_ENERO_2025_6917.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=6745"
+    save_as: "INEGE_TASA_DE_INFLACION_DICIEMBRE_2024_6745.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=6703"
+    save_as: "INEGE_TASA_DE_INFLACION_NOVIEMBRE_2024_6703.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=6367"
+    save_as: "INEGE_TASA_DE_INFLACION_SEPTIEMBRE_2024_6367.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=6330"
+    save_as: "INEGE_TASA_DE_INFLACION_AGOSTO_2024_6330.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=6329"
+    save_as: "INEGE_TASA_DE_INFLACION_JULIO_2024_6329.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=5862"
+    save_as: "INEGE_TASA_DE_INFLACION_JUNIO_2024_5862.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=5822"
+    save_as: "INEGE_TASA_DE_INFLACION_MAYO_2024_5822.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=5819"
+    save_as: "INEGE_TASA_DE_INFLACION_ABRIL_2024_5819.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=5781"
+    save_as: "INEGE_TASA_DE_INFLACION_MARZO_2024_5781.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=5821"
+    save_as: "INEGE_TASA_DE_INFLACION_FEBRERO_2024_5821.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=106&wpfd_file_id=5820"
+    save_as: "INEGE_TASA_DE_INFLACION_ENERO_2024_5820.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=103&wpfd_file_id=4942"
+    save_as: "INEGE_TASA_DE_INFLACION_NOVIEMBRE_2023_4942.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=103&wpfd_file_id=4781"
+    save_as: "INEGE_TASA_DE_INFLACION_SEPTIEMBRE_2023_4781.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=103&wpfd_file_id=5006"
+    save_as: "INEGE_TASA_DE_INFLACION_AGOSTO_2023_5006.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=103&wpfd_file_id=4778"
+    save_as: "INEGE_TASA_DE_INFLACION_JULIO_2023_4778.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=103&wpfd_file_id=4771"
+    save_as: "INEGE_TASA_DE_INFLACION_JUNIO_2023_4771.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=103&wpfd_file_id=4780"
+    save_as: "INEGE_TASA_DE_INFLACION_MAYO_2023_4780.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=103&wpfd_file_id=4782"
+    save_as: "INEGE_TASA_DE_INFLACION_ABRIL_2023_4782.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=113&wpfd_file_id=6332"
+    save_as: "INEGE_TASA_DE_INFLACION_NOVIEMBRE_2022_6332.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=113&wpfd_file_id=5813"
+    save_as: "INEGE_TASA_DE_INFLACION_SEPTIEMBRE_2022_5813.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=113&wpfd_file_id=5815"
+    save_as: "INEGE_TASA_DE_INFLACION_AGOSTO_2022_5815.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=113&wpfd_file_id=6335"
+    save_as: "INEGE_TASA_DE_INFLACION_JULIO_2022_6335.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=113&wpfd_file_id=5814"
+    save_as: "INEGE_TASA_DE_INFLACION_JUNIO_2022_5814.pdf"
+  - url: "https://inege.org/wp-admin/admin-ajax.php?juwpfisadmin=false&action=wpfd&task=file.download&wpfd_category_id=113&wpfd_file_id=6333"
+    save_as: "INEGE_TASA_DE_INFLACION_MAYO_2022_6333.pdf"
+
 notes: >
   Spanish-language monthly note, base period 2008 (weights from the January 2006
   EEH household survey), Laspeyres, computed on AFRISTAT's PHOENIX since Jan 2017.

@@ -15,9 +15,17 @@
      Annexe9  sous-utilisation (SU4)       -> labour_underutilisation_rate, broad
 
    each by Sexe, Groupe d'âge (14-35 / 36-64), Niveau d'instruction, Milieu
-   and Strate (seven sampling zones: four urban, three rural -> locality with
-   the zone in locality_label). The "Ensemble" closing every section must be
+   and Strate (seven sampling zones: four urban, three rural -> locality
+   "other" with the zone in locality_label; see SAMPLING ZONES below). The "Ensemble" closing every section must be
    the same number in every section -- it is checked, and emitted once.
+
+   SAMPLING ZONES ARE "other", NOT "urban"/"rural" (fixed 2026-10-15). Filed
+   as urban/rural they were indistinguishable from the Milieu totals: one
+   quarter's rural SU1 carried four values (Rural 10,53, Fleuve 16,87, oasis
+   7,67, Autre rural 5,19) under the same coarse key, and a consumer joining
+   on `locality` -- or the standardised series_id -- could not tell the zone
+   from the milieu. A zone is a sub-stratum of its milieu, the same thing
+   other countries file as "other" ("Autres urbains", "Outros urbanos").
 
    ZONE SPELLINGS: the annexes print "Nouakchott" and "Nouakchot"
    interchangeably (Annexe6 vs Annexe7 of the same note). The one sampling
@@ -107,10 +115,8 @@ def _ctx(label: str) -> dict:
     z = re.match(r"^Zone\s*«\s*(.*?)\s*»$", label)
     if z:
         name = "Nouakchott" if z.group(1) == "Nouakchot" else z.group(1)
-        if name in _URBAN_ZONES:
-            return {"locality": "urban", "locality_label": name}
-        if name in _RURAL_ZONES:
-            return {"locality": "rural", "locality_label": name}
+        if name in _URBAN_ZONES or name in _RURAL_ZONES:
+            return {"locality": "other", "locality_label": name}
     raise ValueError(f"ENTE: unclassifiable row label {label!r}")
 
 

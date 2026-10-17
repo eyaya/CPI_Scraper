@@ -269,7 +269,19 @@ def _parse_table(pages: list[str], cfg: dict, tbl: dict,
     once = tbl.get("first_match_only", True)
     blocks = tbl.get("blocks", [])
 
-    scoped = _select(pages, tbl) or pages
+    # A SELECTOR THAT MATCHES NOTHING READS NOTHING -- never "every page".
+    # The old `_select(...) or pages` fell back silently to the whole report,
+    # and on HCP Morocco that let Tableau 11's quarterly national counts fill
+    # Tableau 3's Masculin..National cells (2026-10-17). The table now yields
+    # no rows, its row specs surface in the "no match" report below, and a
+    # report where nothing matches still raises. No production layout relied
+    # on the fallback (probe over every retained report, 2026-10-17). A table
+    # with no page_contains/page_excludes still reads every page.
+    scoped = _select(pages, tbl)
+    if not scoped and (tbl.get("page_contains") or tbl.get("page_excludes")):
+        print(f"[pdf_key_indicators] no page matched page_contains="
+              f"{tbl.get('page_contains')!r} page_excludes="
+              f"{tbl.get('page_excludes')!r}; table skipped")
     rows: list[dict] = []
     matched: set[int] = set()
     seen: set[tuple] = set()          # (row index, block index) already taken

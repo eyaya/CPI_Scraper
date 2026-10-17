@@ -102,8 +102,15 @@ def _parse_table(tb, basis, seasonal, base):
     return rows
 
 
-def parse(pdf_path: str) -> pd.DataFrame:
+def parse(pdf_path: str, extras: list[str] | None = None) -> pd.DataFrame:
     rows = []
+    # ANNUAL back series (extras): the former INS's own national-accounts
+    # workbooks, each its own vintage and base -- see ci_ins_annual.
+    from .ci_ins_annual import parse_workbook
+    for ex in extras or []:
+        if ex.lower().endswith(".xlsx"):
+            rows.extend(parse_workbook(ex))
+    n_back = len(rows)
     with pdfplumber.open(pdf_path) as pdf:
         for page in pdf.pages:
             spec = _spec(_caption(page))
@@ -112,8 +119,9 @@ def parse(pdf_path: str) -> pd.DataFrame:
             for tb in page.extract_tables():
                 if len(tb) >= 10:
                     rows.extend(_parse_table(tb, *spec, "reference 2015 prices"))
-    if not rows:
+    if len(rows) == n_back:
         raise ValueError("no GDP rows parsed from ANStat CNT")
     out = pd.DataFrame.from_records(rows)[_OUT_COLS]
-    return out.drop_duplicates(["approach", "category", "period", "measure",
-                                "price_basis", "seasonal_adjustment"])
+    return out.drop_duplicates(["approach", "category", "category_group", "period",
+                                "frequency", "measure", "price_basis",
+                                "seasonal_adjustment"])

@@ -1,0 +1,45 @@
+country: Gambia
+iso3: GMB
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministry of Finance and Economic Affairs (MoFEA), The Gambia -- Directorate of Loans and Debt Management
+publication_code: Quarterly Debt Bulletin
+frequency: quarterly
+coverage: "Central government public debt: external debt, domestic debt securities (book value) and the SSHFC standard loan"
+verify_ssl: false
+
+# --- discover ---
+# mofea.gov.gm is WordPress; its media API lists every bulletin upload. The
+# newest PDF whose name contains "DEBT-BULLETIN" (by upload date) is the
+# current issue (2026-SECOND-QUARTER-DEBT-BULLETIN.pdf at 2026-10-08).
+discover:
+  method: wp_media_named
+  api_url: "https://mofea.gov.gm/wp-json/wp/v2/media?search=debt%20bulletin&per_page=100"
+  name_contains: "DEBT-BULLETIN"
+  extension: ".pdf"
+
+# The 2026 Q1 issue carries the debt-to-GDP comparison for 2025 Q4 and the
+# external-debt tables by creditor category and interest type.
+extra_urls:
+  - url: "https://mofea.gov.gm/wp-content/uploads/2026/08/2026-FIRST-QUARTER-DEBT-BULLETIN-FINAL.pdf"
+    save_as: 2026-FIRST-QUARTER-DEBT-BULLETIN-FINAL.pdf
+
+parser: gambia_mofea_debt
+geography: National
+
+notes: >
+  MoFEA quarterly Debt Bulletin. Read wherever they appear, by caption:
+  "Composition of the public debt portfolio" (GMD and US$ billion, % of
+  total, % of GDP), "Debt to GDP comparison" (domestic / external / total,
+  GMD billion -- unit from the bulletin's own text -- and debt/GDP), external
+  debt by creditor category (US$ billion) and by interest type (US$ million).
+  2025 Q4 to 2026 Q2 as of 2026-10-08; merge-on-write accumulates new
+  quarters. Bulletins before 2026 lay their tables out differently in every
+  issue and are not read.
+
+  PUBLISHED INCONSISTENCY KEPT: 2026 Q2 debt/GDP 68.96% (Table 1) vs 68.98%
+  (comparison table and text); two series codes.
+
+  CROSS-CHECK: end-June 2026 total GMD 141.41bn / US$1.96bn, 68.96% of GDP;
+  2026 Q1 total 140.46, debt/GDP 68.52; 2025 Q4 140.32 (70.97).

@@ -21,6 +21,7 @@ import sys
 import pandas as pd
 import yaml
 
+import core.run as R
 from indicators.mpi import schema
 from indicators.mpi.parsers import ghana_pxweb_mpi as G
 from indicators.mpi.pipeline import CONFIG
@@ -74,6 +75,17 @@ def main() -> int:
 
     out = os.path.join(PKG, "out", "ghana_mpi.csv")
     os.makedirs(os.path.dirname(out), exist_ok=True)
+    # WRITE THE WAY A REAL RUN DOES: merge into the existing output and append
+    # the standardised columns. Writing this frame straight over the file
+    # (as this script did until 2026-10-15) silently deleted the 164 rows of
+    # ghana_report.yaml's second measure ("Ghana MPI (GLSS7/MICS)") every time
+    # the test suite was run.
+    if os.path.exists(out):
+        R.configure(CONFIG)
+        df = R._merge_with_existing(df, out, d["country"])
+    if CONFIG.standardise is not None:
+        df = CONFIG.standardise(df)
+    df = df.sort_values(CONFIG.sort_cols, kind="mergesort")
     df.to_csv(out, index=False)
     print(f"wrote {out}: {len(df)} rows x {len(df.columns)} columns")
     print(f"national contributions: {len(nat)} indicators summing to {total}%")

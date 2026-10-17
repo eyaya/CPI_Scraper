@@ -1,0 +1,63 @@
+country: Liberia
+iso3: LBR
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Ministry of Finance and Development Planning (MFDP), Liberia -- Debt Management Unit
+publication_code: Quarterly Public Debt Management Report
+frequency: quarterly
+coverage: "Public and publicly guaranteed (PPG) debt of the Government of Liberia"
+verify_ssl: false
+
+# --- discover ---
+# mfdp.gov.lr is a Next.js site over a JSON API. The reports are listed by
+#   GET https://mfdp.gov.lr/api/content?category=quarterly-debt-and-management-report&page=N&pageSize=20
+# (pageSize <= 100; meta.hasNext pages it), each item carrying `title`,
+# `publishedAt` and `filePath` (/edocman/<file>.pdf, served from
+# https://mfdp.gov.lr). No existing discovery method reads this API, so the
+# current report is pinned; a small `mfdp_lr_latest` method (newest item by
+# publishedAt, return https://mfdp.gov.lr + filePath) would make it live.
+# LIVE: `mfdp_lr_latest_report` (core/discover.py) reads MFDP's document
+# library API and takes the most recently PUBLISHED "Public Debt Management
+# Report" PDF (file names follow no pattern). The file keeps its own name. The
+# extras below are earlier reports; merge-on-write keeps every quarter read.
+discover:
+  method: mfdp_lr_latest_report
+  api_url: "https://mfdp.gov.lr/api/content?category=quarterly-debt-and-management-report"
+  title_contains: "Public Debt Management Report"
+  base_url: "https://mfdp.gov.lr"
+
+# Earlier reports in the same table layout, each printing four quarters
+# (2024-Q4 onward). Older reports (2022 and before) lay the stock out
+# differently and are not read.
+extra_urls:
+  - url: "https://mfdp.gov.lr/edocman/2nd%20Quarter%20Public%20Debt%20Management%20Report%20FY2025%20(April%2001%E2%80%93%20June%2030%2C%202025).pdf"
+    save_as: "2nd Quarter Public Debt Management Report FY2025.pdf"
+  - url: "https://mfdp.gov.lr/edocman/3rd%20Quarter%20Public%20Debt%20Management%20Report%20FY2025%20(July%2001%E2%80%93%20September%2030%2C%202025).pdf"
+    save_as: "3rd Quarter Public Debt Management Report FY2025.pdf"
+  - url: "https://mfdp.gov.lr/edocman/Fourth%20Quarter%202025%20Public%20Debt%20Management%20Report.pdf"
+    save_as: "Fourth Quarter 2025 Public Debt Management Report.pdf"
+  # BACK ISSUES (2026-10-14): FY2023 Q2 and Q4 reports (2022-Q3..2023-Q4).
+  # Reports before Q2 2023 print no 'Public Debt Stock by Creditors/Holders'
+  # table and are not listed.
+  - url: "https://mfdp.gov.lr/edocman/Final%20Quarter%20Two%20(April%201%20-%20June%2030)%20of%20%20FY%202023%20Public%20Debt%20Report%20%20.pdf"
+    save_as: LR_PDMR_2023_2nd_quarter.pdf
+  - url: "https://mfdp.gov.lr/edocman/Quarter%20Four(October%201%20-%20December%2031)%20of%20%20FY%202023%20Public%20and%20Publicly%20Guaranteed%20Debt%20Management%20Report.pdf"
+    save_as: LR_PDMR_2023_4th_quarter.pdf
+
+extras_cache: true
+
+parser: liberia_mfdp_debt
+geography: National
+
+notes: >
+  MFDP Debt Management Unit quarterly report, "Public Debt Stock by
+  Creditors/Holders (Millions USD)": domestic (CBL, commercial banks --
+  promissory note, treasury bills, treasury bonds -- other institutions,
+  court and non-court claims), external (multilateral, bilateral, commercial
+  / Bank Leumi) and total, quarterly 2024-Q4 to 2026-Q1. Newest report wins
+  on overlapping quarters (reports revise earlier quarters: 2025-Q2 total
+  2,685.23 -> 2,691.00 -> 2,674.05).
+
+  CROSS-CHECK: 2026-Q1 total US$2,833.48m, external 1,649.99m, domestic
+  1,183.49m, CBL 726.91m.

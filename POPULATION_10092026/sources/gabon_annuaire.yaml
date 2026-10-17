@@ -1,0 +1,39 @@
+country: Gabon
+iso3: GAB
+indicator: Population
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Gabon (INSTAT, ex-DGS/DGSEE)
+publication_code: Annuaire Statistique du Gabon 2016-2020 (Tableaux II.1.1-II.1.2) + Annuaire 2004-2008 (Tableau II.1.1.1)
+frequency: annual
+verify_ssl: false
+
+# A SECOND Gabon descriptor beside gabon.yaml (EGEP II 2017 synthesis).
+# Primary: INSTAT's own 2016-2020 yearbook (the public_debt descriptor's link).
+# Extra: the 2004-2008 yearbook -- stat-gabon.org is gone; the Wayback
+# Machine's `id_` capture returns the DGSEE's original file unchanged (the
+# gdp/sources/gabon.yaml precedent).
+discover:
+  method: static_url
+  url: "https://new.instatgabon.org/uploads/folder_1/autres_publications/ANNUAIRE-DU-GABON-2020.pdf"
+  save_as: INSTAT_Annuaire_Gabon_2016-2020.pdf
+
+extras_cache: true
+extra_urls:
+  - url: "https://web.archive.org/web/20120305180609id_/http://www.stat-gabon.org/documents/PDF/Donnees%20stat/Compteannuaire/Annu0408.pdf"
+    save_as: Annuaire_statistique_Gabon_2004-2008.pdf
+    impersonate: [chrome124, safari17_0]
+
+parser: instat_gabon_annuaire
+geography: Total country
+
+notes: >
+  Population ESTIMATES (series_type estimate), persons, by sex. National:
+  2001-2002 (2004-2008 yearbook; 2003-2008 printed ".."), 2016 (RGPL 2013
+  base), 2018-2020 (EGEP II 2017 base). Provinces (9): 2017-2020. 2017
+  national is left to gabon.yaml (II.1.1 prints males 952 947 against 952 974
+  in II.1.2 and the EGEP II synthesis -- pinned). Urban/rural not collected
+  (no locality column). The 2016 -> 2017 change of base (RGPL 2013 -> EGEP II)
+  is visible in series_code: 2016 males 1 026 093, 2017 952 974.
+
+  CROSS-CHECK: 2001 1 236 657; 2020 2 119 907; Estuaire 2020 1 048 423.

@@ -9,25 +9,42 @@ verify_ssl: false
 
 # --- discover ---
 # INS rebuilt its site in 2026: the WordPress Download-Monitor route this source
-# used ('/statistiques-des-prix/' with /download/<slug>/ links) is gone — that path
-# now 404s — and the bulletins are plain files listed on publications.html, whose
-# names carry a French month + year in several casings
-# ('Bulletin-INHPC_Fevrier-2026_23_03_26.pdf', 'BULLETIN-INHPC_JANVIER_2026_VF-…').
-# NOTE the rebuild also LOST months: the new site's newest INHPC bulletin is
-# February 2026, while March–May 2026 had already been collected from the old site,
-# so out/congo_cpi.csv is deliberately left at its richer May 2026 vintage and this
-# descriptor will pick the newer bulletins up as INS re-uploads them.
-# ins-congo.cg is WordPress with a 'Download Monitor' plugin: the monthly INHPC
-# bulletin lives on a /download/<slug>/ landing page whose real file link carries
-# a ?wpdmdl=<id> token. We union the price + search listings, pick the newest
-# dated 'inhpc' slug, and resolve its wpdmdl link.
+# used ('/statistiques-des-prix/' with /download/<slug>/ links) is gone, and by
+# 2026-10 publications.html no longer links any file either -- its 'stat-prix'
+# page is filled by a JSON API (assets/js/ins-data-secteur.js ->
+# backend/api/publications/list.php?sous_secteur=stat-prix), newest first, each
+# item with download_url 'backend/api/publications/download.php?id=<n>' (JSON
+# escapes the slashes, so the pattern takes only the 'download.php?id=<n>' tail
+# and resolves it against base_url). The first item is the newest INHPC bulletin
+# today; if INS posts something else in 'stat-prix' first, the parser fails loudly.
 discover:
-  method: latest_named_month_link
-  page_url: "https://ins-congo.cg/publications.html"
-  lang: fr
-  link_contains:
-    - "inhpc"
-    - ".pdf"
+  method: regex_on_page
+  page_url: "https://ins-congo.cg/backend/api/publications/list.php?sous_secteur=stat-prix&per_page=50&page=1"
+  pattern: 'download\.php\?id=\d+(?=")'
+  base_url: "https://ins-congo.cg/backend/api/publications/"
+  save_as: Bulletin_INHPC_Congo.pdf
+  download_timeout: 600       # ins-congo.cg serves ~1.5 MB slowly (one 290 s timeout seen)
+
+# BACK ISSUES (added 2026-10-14): the bulletins the same API serves (2026-01 ..
+# 2026-07). Its 2024-25 entries (ids 85-99) answer 404 'Fichier introuvable'.
+# Each prints five monthly indices (m-12, m-3, m-2, m-1, m), all emitted when the
+# printed variations match them -- so 2025-01..08 come in as m-12 columns.
+extras_cache: true
+extra_urls:
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=128"
+    save_as: congo_inhpc_2026-07.pdf
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=127"
+    save_as: congo_inhpc_2026-06.pdf
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=126"
+    save_as: congo_inhpc_2026-05.pdf
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=125"
+    save_as: congo_inhpc_2026-04.pdf
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=124"
+    save_as: congo_inhpc_2026-03.pdf
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=123"
+    save_as: congo_inhpc_2026-02.pdf
+  - url: "https://ins-congo.cg/backend/api/publications/download.php?id=122"
+    save_as: congo_inhpc_2026-01.pdf
 
 parser: congo_ins
 geography: National
@@ -36,7 +53,7 @@ expect_divisions: 13          # INDICE GLOBAL + 12 COICOP-1999 functions
 notes: >
   CEMAC harmonised CPI (INHPC), base 100 = 2018. 'Tableau 1.1 … par fonction' —
   one row per COICOP-1999 function + INDICE GLOBAL, with weight, five monthly
-  indices, then 1-/3-/12-month variations (current index nums[-4], MoM nums[-3],
+  indices, then 1-/3-/12-month variations (indices nums[-8:-3], MoM nums[-3],
   YoY nums[-1]). Function labels wrap above and below the number row, so each is
   matched on a prev+own+next line window. Report month is read from the bulletin
   text. We emit index + inflation_mom + inflation_yoy for the national table.

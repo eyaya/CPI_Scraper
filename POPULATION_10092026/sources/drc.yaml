@@ -37,8 +37,8 @@ notes: >
   adds up to. Kongo Central's printed male shares sum to 103.12 (shares not
   collected).
 
-  NOT READ: Tableaux 2.1-2.7 (2010-2015 by province) -- a second rotated copy
-  of each table is interleaved into the text layer past the first page.
+  NOT READ HERE: Tableaux 2.1-2.7 (2010-2015 by province). Their 2010-2014
+  figures are read by drc_backseries.yaml (added 2026-10-13).
 
   TWO-UP PAGES: from page 97 the PDF is a spread repeating the previous table
   on the left; the parser crops each such page to its own table.

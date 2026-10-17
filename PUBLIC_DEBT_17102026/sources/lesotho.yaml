@@ -1,0 +1,59 @@
+country: Lesotho
+iso3: LSO
+indicator: Public_Debt
+tier: 3
+source_type: pdf
+agency: Central Bank of Lesotho (CBL) -- table sourced "CBL and Ministry of Finance"
+frequency: quarterly
+coverage: "Total public debt (external + domestic; net terms, as CBL states)"
+verify_ssl: false
+
+# --- discover ---
+# CBL is a WordPress site; its reviews sit under /wp-content/uploads/ with
+# irregular names (QII-2025-Quarterly-Economic-Review-1.pdf,
+# Q4-2025-Quarterly-Review.pdf, Dec_2023_QIV_...) and re-uploads of OLD
+# issues get NEW upload dates, so neither the name nor the upload date orders
+# them. The newest issue is pinned; each issue dates its own five quarters
+# from the table header, so a stale pin still collects correctly and history
+# accumulates on merge. To advance, point `url` at the newest
+# "Quarterly ... Review" in /wp-json/wp/v2/media?search=quarterly.
+discover:
+  method: static_url
+  url: "https://centralbank.org.ls/wp-content/uploads/Q4-2025-Quarterly-Review.pdf"
+  save_as: CBL_Q4-2025_Quarterly_Review.pdf
+
+extra_urls:
+  - url: "https://centralbank.org.ls/wp-content/uploads/QIV-2024-Quarterly-Review.pdf"
+    save_as: CBL_Q4-2024_Quarterly_Review.pdf
+  # Back issues (listed by CBL's WordPress media API, search "quarterly
+  # review"); each prints five quarters, so together they run from 2022-Q4.
+  # The Q2 2024 review's table header differs and is skipped by the parser.
+  - url: "https://centralbank.org.ls/wp-content/uploads/QIII-2025-Quarterly-Economic-Review-1.pdf"
+    save_as: CBL_Q3-2025_Quarterly_Review.pdf
+  - url: "https://centralbank.org.ls/wp-content/uploads/QII-2025-Quarterly-Economic-Review-1.pdf"
+    save_as: CBL_Q2-2025_Quarterly_Review.pdf
+  - url: "https://centralbank.org.ls/wp-content/uploads/QI-2025-Quarterly-Review-2.pdf"
+    save_as: CBL_Q1-2025_Quarterly_Review.pdf
+  - url: "https://centralbank.org.ls/wp-content/uploads/Mar_2024_QI_Quarterly_Economic_Review.pdf"
+    save_as: CBL_Q1-2024_Quarterly_Review.pdf
+  - url: "https://centralbank.org.ls/wp-content/uploads/Dec_2023_QIV_Quarterly_Economic_Review.pdf"
+    save_as: CBL_Q4-2023_Quarterly_Review.pdf
+extras_cache: true
+
+parser: lesotho_cbl_debt
+geography: Total country
+
+notes: >
+  CBL Quarterly Economic Review, "Public Debt Stock (Million Maloti)":
+  2023-Q4..2025-Q4 from two issues. External (bilateral, multilateral,
+  financial institutions, suppliers' credit, each concessional /
+  non-concessional) and domestic (banks, non-bank, by maturity) stocks; the
+  latest quarter's debt-to-GDP column; total debt-to-GDP, external share and
+  concessional share. Newest issue wins on revisions (2023-Q4 total revised
+  24 387.00 -> 23 117.53). Growth columns and debt-service ratios not
+  collected. Older issues (Q4 2023 and earlier) use a different hierarchy and
+  are not read. The Monthly Economic Review appendix also prints monthly
+  total/external/domestic debt -- not yet read.
+
+  CROSS-CHECK: 2025-Q4 total 22 480.80, external 17 881.43, domestic
+  4 599.37, debt-to-GDP 52.9.

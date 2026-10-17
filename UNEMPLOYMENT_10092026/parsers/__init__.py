@@ -86,6 +86,17 @@ from . import algeria_unemployment
 from . import gambia_unemployment
 from . import lesotho_unemployment
 from . import malawi_unemployment
+from . import mauritius_hs_unemp
+from . import zambia_lfs_back
+from . import namibia_lfs_back
+from . import zimbabwe_qlfs_back
+from . import uganda_nlfs_back
+from . import egypt_lfs_backissues
+from . import tunisia_ins_backseries
+from . import nigeria_nlfs_back
+from . import niger_youth_bulletin
+from . import cameroon_eesi2_back
+from . import burkina_ense_back
 
 REGISTRY = {
     # --- Tier 1: API ------------------------------------------------------
@@ -210,6 +221,28 @@ REGISTRY = {
     # NSO Malawi LFS 2024 full report (broad unemployment, LU2-LU4, NEET, by
     # group and district) plus 2018 census Series D counts.
     "malawi_unemployment": malawi_unemployment.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "mauritius_hs_unemp": mauritius_hs_unemp.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "zambia_lfs_back": zambia_lfs_back.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "namibia_lfs_back": namibia_lfs_back.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "zimbabwe_qlfs_back": zimbabwe_qlfs_back.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "uganda_nlfs_back": uganda_nlfs_back.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "egypt_pdf_backissues": egypt_lfs_backissues.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "tunisia_ins_backseries": tunisia_ins_backseries.parse,
+    # Earlier survey rounds (depth round, 2026-10-14); see the module docstring.
+    "nigeria_nlfs_back": nigeria_nlfs_back.parse,
+    # Earlier/later survey rounds (depth round, 2026-10-14); see the module docstring.
+    "niger_youth_bulletin": niger_youth_bulletin.parse,
+    # Earlier/later survey rounds (depth round, 2026-10-14); see the module docstring.
+    "cameroon_eesi2_back": cameroon_eesi2_back.parse,
+    # Earlier/later survey rounds (depth round, 2026-10-14); see the module docstring.
+    "burkina_ense_back": burkina_ense_back.parse,
     # --- Read by position, not by line ------------------------------------
     "mali_pdf": mali_pdf_bulletin.parse,
 

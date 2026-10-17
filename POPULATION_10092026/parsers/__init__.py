@@ -53,6 +53,31 @@ from . import guinea_ins_population
 from . import anstat_civ_population
 from . import inseed_comoros_population
 from . import ansade_mauritania_population
+from . import ine_angola_projection
+from . import nso_malawi_projection
+from . import knbs_kenya_projection
+from . import gbos_gambia_abstract
+from . import statsbots_projection
+from . import insd_burkina_projection
+from . import nsa_namibia_projection
+from . import ansd_senegal_projection
+from . import ins_drc_backseries
+from . import instat_mali_annuaire
+from . import instad_djibouti_annuaire
+from . import instat_gabon_annuaire
+from . import capmas_egypt_projection
+from . import instat_madagascar_projection
+from . import ins_niger_annuaire
+from . import lisgis_liberia_projection
+from . import inseed_togo_projection
+from . import inseed_comoros_backseries
+from . import ins_congo_annuaire
+from . import icasees_car_prefectures
+from . import anstat_civ_chiffres_cles
+from . import cbs_sudan_projection
+from . import csa_ethiopia_projection
+from . import statssl_projection
+from . import nbs_seychelles_timeseries
 
 REGISTRY = {
     "instat_mali_population": instat_mali_population.parse,  # INSTAT RGPH-5 2022: 20 regions + 21 age bands x sex
@@ -143,4 +168,56 @@ REGISTRY = {
     # ANSADE Mauritania RGPH-5 2023 wilayas x age x sex, censuses 1988-2023 by
     # wilaya + growth, national projections 2023-2053.
     "ansade_mauritania_population": ansade_mauritania_population.parse,
+    # INE Angola projections 2014-2050 by province x sex x age + 1940-2025 national
+    # series (census 1940-70, estimates 1980-2013); Moxico/Cuando Cubango/Benguela
+    # age sheets refused (published defects).
+    "ine_angola_projection": ine_angola_projection.parse,
+    # Population back-series (round 2, 2026-10-13); see the module docstring.
+    "nso_malawi_projection": nso_malawi_projection.parse,
+    # Population back-series (round 2, 2026-10-13); see the module docstring.
+    "knbs_kenya_projection": knbs_kenya_projection.parse,
+    # Population back-series (round 2, 2026-10-13); see the module docstring.
+    "gbos_gambia_abstract": gbos_gambia_abstract.parse,
+    # Population back-series (round 2, 2026-10-13); see the module docstring.
+    "statsbots_projection": statsbots_projection.parse,
+    # Population back-series (round 2, 2026-10-13); see the module docstring.
+    "insd_burkina_projection": insd_burkina_projection.parse,
+    # Population back-series (round 2, 2026-10-13); see the module docstring.
+    "nsa_namibia_projection": nsa_namibia_projection.parse,
+    # Population back-series (round 2, 2026-10-13); see the module docstring.
+    "ansd_senegal_projection": ansd_senegal_projection.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "ins_drc_backseries": ins_drc_backseries.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "instat_mali_annuaire": instat_mali_annuaire.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "instad_djibouti_annuaire": instad_djibouti_annuaire.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "instat_gabon_annuaire": instat_gabon_annuaire.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "capmas_egypt_projection": capmas_egypt_projection.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "instat_madagascar_projection": instat_madagascar_projection.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "ins_niger_annuaire": ins_niger_annuaire.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "lisgis_liberia_projection": lisgis_liberia_projection.parse,
+    # Population back-series (round 3, 2026-10-14); see the module docstring.
+    "inseed_togo_projection": inseed_togo_projection.parse,
+    # Population back-series (round 4, 2026-10-14); see the module docstring.
+    "inseed_comoros_backseries": inseed_comoros_backseries.parse,
+    # Population back-series (round 4, 2026-10-14); see the module docstring.
+    "ins_congo_annuaire": ins_congo_annuaire.parse,
+    # Population back-series (round 4, 2026-10-14); see the module docstring.
+    "icasees_car_prefectures": icasees_car_prefectures.parse,
+    # Population back-series (round 4, 2026-10-14); see the module docstring.
+    "anstat_civ_chiffres_cles": anstat_civ_chiffres_cles.parse,
+    # Population back-series (round 4, 2026-10-14); see the module docstring.
+    "cbs_sudan_projection": cbs_sudan_projection.parse,
+    # Population back-series (round 4, 2026-10-14); see the module docstring.
+    "csa_ethiopia_projection": csa_ethiopia_projection.parse,
+    # Population back-series (round 4, 2026-10-14); see the module docstring.
+    "statssl_projection": statssl_projection.parse,
+    # Population back-series (round 4, 2026-10-14); see the module docstring.
+    "nbs_seychelles_timeseries": nbs_seychelles_timeseries.parse,
 }

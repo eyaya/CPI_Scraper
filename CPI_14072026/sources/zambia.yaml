@@ -17,6 +17,23 @@ discover:
     - "monthly"
     - ".pdf"
 
+# December bulletins in the PRE-2023 layout, each printing its own year and
+# the two before on the 2009 basket (base 2009 = 100): 2011..2022 together.
+# Read by parsers/zambia_zamstats_legacy.py; the 2021 issue carries no table
+# with month rows and is covered by the 2020 and 2022 issues. Back issues never
+# change, so complete copies on disk are reused.
+extras_cache: true
+extra_urls:
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-117-2012-The-Monthly-December.pdf"
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-140-2014-The-Monthly-December.pdf"
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-152-2015-The-Monthly-December.pdf"
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-164-2016-The-Monthly-December.pdf"
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-176-2017-The-Monthly-December.pdf"
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-189-2018-The-Monthly-December.pdf"
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-201-2019-The-Monthly-December.pdf"
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-213-2020-The-Monthly-December.pdf"
+  - url: "http://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-237-of-2022-The-Monthly-December.pdf"
+
 parser: zambia_zamstats
 geography: National
 expect_divisions: 13          # All items + 12 COICOP-1999 divisions

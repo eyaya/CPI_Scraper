@@ -176,4 +176,10 @@ def parse(path: str, extras: list[str] | None = None) -> pd.DataFrame:
                 "Quadro 5.4.1 Indicadores macroeconómicos",
                 "Anuário Q5.4.1", y, "current", "per_capita", _num(tok), unit)
     doc.close()
+    # The 2019 edition (extra): 2015-2019 on the old 2014 base -- see
+    # mozambique_ine_anuario2019.
+    from .mozambique_ine_anuario2019 import parse_anuario
+    for ex in extras or []:
+        if "2019" in ex:
+            rows.extend(parse_anuario(ex))
     return pd.DataFrame.from_records(rows)[_OUT_COLS]

@@ -15,6 +15,17 @@ discover:
   method: static_url
   url: "https://www.ansd.sn/sites/default/files/2026-06/Tableaux-publication_30_06_2026_Base2021.xlsx"
 
+# Back series (parsers/senegal_ansd_backseries.py), each tagged in category_group:
+# the base-2021 accounts retropolated to 2014 + 2025 provisional (production by
+# activity and the goods-and-services balance; only the years the primary does
+# not print), and the PREVIOUS base 2014 edition 1999-2023 (separate base,
+# billion FCFA, emitted whole). Listed on ansd.sn/Indicateur/comptes-nationaux-
+# du-senegal-base-2021.
+extras_cache: true
+extra_urls:
+  - url: "https://www.ansd.sn/sites/default/files/2026-09/Tableaux-publication_CN2025_provisoire_MAJ_1_22-09-2026.xlsx"
+  - url: "https://www.ansd.sn/sites/default/files/2024-12/CN_Edition_1999_2023_vf.xlsx"
+
 parser: senegal_ansd_gdp
 geography: National
 

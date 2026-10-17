@@ -1,0 +1,52 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: Public_Debt
+tier: 2
+source_type: excel
+agency: Ministry of Finance, Public Debt Management Division (PDMD), Sierra Leone
+publication_code: Updated Public Debt Stock and New Debt (annual workbook)
+frequency: annual
+coverage: "Central government public debt (PDMD), domestic and external"
+verify_ssl: false
+
+# --- discover ---
+# mof.gov.sl is WordPress; its media API lists every upload. The newest
+# xlsx whose FILE NAME contains "Public-Debt-Stock" is the current edition
+# (June 2026: Updated-Public-Debt-Stock-and-New-Debt-2025-_June-2026.xlsx).
+# The PDMD also publishes semi-annual and annual Public Debt Bulletins (PDF);
+# the workbook is used because it carries the same stocks as data.
+discover:
+  method: wp_media_named
+  api_url: "https://mof.gov.sl/wp-json/wp/v2/media?search=public%20debt%20stock&per_page=50"
+  name_contains: "Public-Debt-Stock"
+  extension: ".xlsx"
+  # mof.gov.sl's WAF refuses `requests` by its TLS fingerprint (HTTP 403 with an
+  # HTML page, 2026-10-12) and lets a browser fingerprint through.
+  impersonate: [chrome124, safari17_0]
+
+parser: sierra_leone_mof_debt
+geography: National
+
+notes: >
+  PDMD workbook. "Public_Debt_Stock": end-year domestic, external (NLe and
+  US$ million) and total public debt, Actual columns only (2021-2025 in the
+  June 2026 edition; projections refused). "Domestic Debt FY<year>": stock by
+  holder (Bank of Sierra Leone, commercial banks, non-bank public) and
+  instrument/tenor, plus domestic arrears, two year-ends, NLe million, with
+  % of total -- a table that EXCLUDES zero-coupon bonds and Ways and Means
+  (its rows carry that coverage). The two sheets reconcile: 31,736.48 +
+  1,096.18 + 600.66 = 33,433.31 (end-2025).
+
+  BACK SERIES (2026-10-14): the "Public Debt Stock <year>" sheet (Annex 15),
+  columns 2007, 2010, 2012, FY2016-FY2020 -- domestic by instrument, external
+  by creditor group, totals. The sheet is titled "Million New Leones" but its
+  columns to FY2019 are in OLD leones (every row breaks ~1,000x at FY2020,
+  the 2022 redenomination): unit "SLL million (pre-2022 leone)" to FY2019,
+  "NLe million" for FY2020, set per column and checked, never converted.
+
+  NOT READ: Annex 15's FY2021+ columns (read from Public_Debt_Stock instead);
+  external debt by creditor (misaligned two-row header); GDP ratios (not
+  alignable); flows and loan terms.
+
+  CROSS-CHECK: total public debt end-2024 NLe 69,866.75m; external end-2024
+  US$1,829.76m; commercial banks' holdings end-2025 NLe 18,614.43m (58.65%).
