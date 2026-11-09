@@ -1,0 +1,37 @@
+country: Ghana
+iso3: GHA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ghana Statistical Service (GSS)
+publication_code: Ghana Census-Based Poverty Map - District and Sub-District level Results (2005; edited by GSS 2015)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 1100
+
+# --- discover ---
+# Wayback `id_` copy of GSS's own file (statsghana.gov.gh/docfiles/publications);
+# the current gssmain/fileUpload/Living conditions path returns 404 (2026-11-05).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20160626203639id_/http://www.statsghana.gov.gh:80/docfiles/publications/Ghana%20Poverty%20Map%20Report_2005_Edited%20by%20GSS_2015.pdf"
+  save_as: "Ghana Poverty Map Report_2005_Edited by GSS_2015.pdf"
+  download_timeout: 400
+
+parser: ghana_map2005_poverty
+geography: Total country
+
+notes: >
+  GSS / DfID census-based poverty map (H. Coulombe, May 2005; GSS edition
+  2015): small-area estimates from the 2000 Census and GLSS 4 (1998/99) at
+  the GLSS 4 upper poverty line. Every index is printed on a 0-1 scale (unit
+  index, kept as printed). Table 3: P0/P1/P2 for the seven strata, GLSS 4
+  actual (filed as "GLSS 4 1998/99 (poverty-map strata, new urban/rural
+  definition)" -- the map redefines urban/rural, so these differ slightly
+  from GSS's published GLSS 4 profile) and Census 2000 predicted. Annexe 3:
+  P0/P1/P2 for 10 regions and 110 districts by total / urban / rural ("n/a"
+  where a district has no urban or rural part). Period 2000 = the census
+  population the estimates describe. Standard errors and populations not read.
+  CROSS-CHECK: Urban Forest 0.176 actual / 0.208 predicted; Rural Savannah
+  0.695 / 0.690; Western 0.325 / 0.106 / 0.049; Upper West rural 0.839;
+  Accra district 0.052; Nadawili (rural only) 0.855.

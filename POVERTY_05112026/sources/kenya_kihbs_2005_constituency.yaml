@@ -1,0 +1,46 @@
+country: Kenya
+iso3: KEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+publication_code: Constituency Report on Well-being in Kenya (KIHBS 2005/06)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 900
+
+# --- discover ---
+# The 2008 report is no longer on knbs.or.ke; the Wayback CDX index of the
+# domain holds KNBS's own file (/pdf/Constituency Report on Well Being.pdf,
+# captured 2011-11-13), fetched in its `id_` form.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20111113145438id_/http://www.knbs.or.ke/pdf/Constituency%20Report%20on%20Well%20Being.pdf"
+  save_as: KNBS_Constituency_Report_Well_Being_2005_06.pdf
+  download_timeout: 900
+
+parser: kenya_kihbs_2005_constituency_poverty
+geography: Total country
+
+notes: >
+  KNBS Constituency Report on Well-being (KIHBS 2005/06), overall poverty
+  line KSh 1,562 rural / 2,913 urban per adult equivalent per month.
+  Table 3: 8 provinces (survey KIHBS 2005/06) and 210 constituencies
+  (SMALL-AREA ESTIMATES, KIHBS model on census populations -- own survey
+  label): number of poor, P0, contribution to national poverty, plus the
+  1999 P0 (1999-census small-area estimate on the 1997 WMS-III lines KSh
+  1,239 / 2,648, as republished here -- period 1999). Appendix 5: poor
+  individuals and poor households for Kenya, the rural part of each province
+  and district, and the urban areas (Nairobi, Mombasa, Kisumu, Nakuru, other
+  urban). Places carry their level: "<X> Province", "<X> (district)",
+  "<X> (constituency)", "<X> (city)".
+
+  PUBLISHED DEFECTS: "Turkana Central" is printed twice in Table 3 with
+  different figures (60.9 and 96.9) -- both dropped. Appendix 5's Nyeri row
+  carries 5 of its 6 numbers in the text layer -- dropped (the district rows
+  then sum 218,660 short of rural Kenya, which is exactly Nyeri's poor).
+
+  CROSS-CHECK: Kenya 16,562,550 poor individuals / 2,671,201 households;
+  rural provinces sum exactly to rural Kenya (14,099,834); urban areas sum to
+  2,462,717 vs 2,462,716 printed; Nairobi Province 22.0 (1999: 43.9);
+  Kajiado North 10.7; North Eastern 74.0.

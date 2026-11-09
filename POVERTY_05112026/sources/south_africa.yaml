@@ -1,0 +1,59 @@
+country: South_Africa
+iso3: ZAF
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Statistics South Africa (Stats SA)
+publication_code: Poverty Trends in South Africa 2006-2023 (Report 03-10-06, 2025)
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 1900
+
+# --- discover ---
+# statssa.gov.za answers plain requests with an Incapsula JavaScript challenge
+# (HTTP 200, 212-byte "_Incapsula_Resource" page). The browser-fingerprint
+# fetch other South Africa descriptors use was NOT used here. The file is the
+# Wayback Machine's `id_` capture of Stats SA's own PDF (found through the CDX
+# index of statssa.gov.za/publications/*) -- an archive of the NSO's
+# publication, not an aggregator (the DR Congo precedent). Wayback answers a
+# burst of id_ fetches with 429; core.fetch.download backs off and retries.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20251211175057id_/https://www.statssa.gov.za/publications/Report-03-10-06/Report-03-10-062023.pdf"
+  save_as: Report-03-10-062023.pdf
+  download_timeout: 600
+
+parser: south_africa_poverty
+geography: Total country
+
+notes: >
+  Stats SA "Poverty Trends in South Africa: An examination of absolute poverty
+  between 2006 and 2023" (PTR 2025). Five rounds on the rebased NPL 2023 line
+  series: IES 2005/06, LCS 2008/09, IES 2010/11, LCS 2014/15, IES 2022/23,
+  which the report dates 2006 / 2009 / 2011 / 2015 / 2023 (periods are the
+  rounds' first years, 2005 / 2008 / 2010 / 2014 / 2022). Lines per
+  person per month (Table 1.4.1): FPL (extreme) R228..R777, LBPL (other; the
+  NDP's official line) R461..R1 300, UBPL (overall) R1 054..R2 635.
+
+  Collected: national P0/P1/P2 on all three lines (2.1.1-2.1.3); FPL P0 by
+  province (2.2.4.1); LBPL P0/P1/P2 and poverty shares of persons by sex, age,
+  education (18+), province, settlement type, household size and metro (3.x)
+  and of households by sex, age and education of the head, province,
+  settlement type, household size and metro (4.x); household P0 on all three
+  lines (4.1.1); 95% confidence limits of P0 by sex and province on each line
+  (6.8.1-3, 6.8.7-9), with the FPL/UBPL-by-sex and UBPL-by-province P0 they
+  alone print.
+
+  Not collected: population group (no schema topic), counts of poor (printed
+  in MILLIONS), Gini, coefficients of variation. Published inconsistency kept
+  out: Table 4.5.1's national household P0 2006 prints 42,2 against 42,1 in
+  4.1.1 and every other table (the characteristic tables' national rows are
+  not read). The superseded editions (PTR 2014: 2006-2011; PTR 2017:
+  2006-2015) re-estimate the SAME rounds on older lines and are collected by
+  south_africa_ptr2014.yaml / south_africa_ptr2017.yaml under their own
+  survey labels.
+
+  CROSS-CHECK: LBPL P0 57,5 / 55,7 / 45,8 / 46,7 / 37,9; FPL 27,4 / 31,7 /
+  20,8 / 22,4 / 17,6; UBPL 78,7 / 76,2 / 71,0 / 71,1 / 66,7; LBPL P1 2023
+  14,4; Limpopo 2006 75,1; households LBPL 2023 22,9; female-headed 29,8;
+  provincial shares of the poor sum to 99,9-100,0.

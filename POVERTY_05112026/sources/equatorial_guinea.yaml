@@ -1,0 +1,31 @@
+country: Equatorial_Guinea
+iso3: GNQ
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estadística de Guinea Ecuatorial (INEGE)
+publication_code: ENH2 informe definitivo (noviembre 2024), sección 9.2
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 30
+
+# --- discover ---
+# Same file labour/ and unemployment/ already collect (INEGE WordPress uploads).
+discover:
+  method: static_url
+  url: "https://inege.org/wp-content/uploads/2024/12/Informe-Definitivo-de-la-ENH2.pdf"
+  save_as: Informe-Definitivo-de-la-ENH2.pdf
+  download_timeout: 600
+
+parser: equatorial_guinea_poverty
+geography: Total country
+
+notes: >
+  ENH2 2023: P0 / P1 (brecha) / P2 (severidad) nationally, urban/rural and for
+  the 7 provinces, from Gráfico 33's text data labels (name and three values on
+  one line); P0s agree with the Anuario Estadístico 2026 Tabla 160 table. Line
+  810 022 FCFA per person per year. International PPP rates are prose only.
+
+  CROSS-CHECK: 50,7 / 18,5 / 8,9 national; urban 46,7, rural 59,7; Bioko Norte
+  30,7 (P1 8,0); Wele Nzas 65,8 / 27,0 / 13,9.

@@ -1,0 +1,32 @@
+country: Madagascar
+iso3: MDG
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+publication_code: EPM 2002 rapport principal (novembre 2003, chapitre 4)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 200
+
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_Epm02_11-2003.pdf"
+  save_as: INSTAT_Epm02_11-2003.pdf
+  download_timeout: 900
+
+parser: madagascar_epm2002_poverty
+geography: Total country
+
+notes: >
+  EPM 2002 poverty tables (person level, national line) -- see the parser
+  module's docstring for the tables collected and skipped. Former provinces
+  are named "<name> (province)". Not comparable with EPM 2021-22 (INSTAT).
+
+  Tableau 37 republishes 1999 and 2001 P0/P1 by province x milieu, filed as
+  "EPM <year> (as republished in EPM 2002)". Its 2001 urban province cells
+  differ slightly from EPM 2005's Tableau 178 (Mahajanga urbain 49,8 vs 50,7;
+  Antananarivo urbain P1 10,4 vs 21,1); both are kept under their own labels.
+
+  CROSS-CHECK: 80,7 / 47,6; 13 293 000 poor; 1999 71,3 / 32,8.

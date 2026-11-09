@@ -1,0 +1,37 @@
+country: Eswatini
+iso3: SWZ
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Central Statistical Office (CSO), with UNDP
+publication_code: 2009/10 SHIES - Poverty in a decade of slow economic growth - Swaziland in the 2000's
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 300
+
+# --- discover ---
+# www.gov.sz (Ministry of Economic Planning / CSO) times out; CSO's old site
+# swazistats.org.sz no longer resolves. This is the Wayback `id_` capture
+# (2017-12-09) of CSO's own file, found via the CDX index of swazistats.org.sz.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20171209144315id_/http://www.swazistats.org.sz:80/images/reports/Swaziland%20-%20Poverty%20Profile%20Report%202010.pdf"
+  save_as: Swaziland_Poverty_Profile_Report_2010.pdf
+  download_timeout: 900
+
+parser: eswatini_poverty
+geography: Total country
+
+notes: >
+  CSO SHIES poverty profile: SHIES 2000/01 and 2009/10 on one line fixed in
+  real terms (January 2010 prices): E461 per adult equivalent per month
+  (overall), food line E215 (extreme). Appendix 1 Tables A1.1-A1.5: P0, P1,
+  P2, population share and contributions to P0/P1/P2 by region, urban/rural,
+  region x urban/rural, main economic activity (2009/10) and sex of head; A1.2
+  on the extreme line. The EHIES 2016/17 poverty report (the round the
+  earlier block named) is still not found on any host or capture -- gov.sz
+  times out and its CDX listings hold no EHIES file.
+
+  CROSS-CHECK: 69.0 -> 63.0; P1 32.4 -> 30.4; P2 18.4 -> 18.1; extreme 30.0 ->
+  28.8; Shiselweni 82.0 -> 68.3; female-headed 71.9 -> 67.1; contributions
+  sum to 100.0.

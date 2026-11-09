@@ -1,0 +1,29 @@
+country: Mauritania
+iso3: MRT
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Office National de la Statistique (ONS, now ANSADE)
+publication_code: Profil de la pauvreté en Mauritanie 1996, Volume 1 (EIDSA / EPCV, mai 1997)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 30
+
+# --- discover --- Wayback id_ copy of ONS's own file (www.ons.mr/francais/publications/profil.pdf).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20040326213522id_/http://www.ons.mr:80/francais/publications/profil.pdf"
+  save_as: ONS_profil_publications.pdf
+  download_timeout: 600
+
+parser: mauritania_profil1996_poverty
+geography: Total country
+
+notes: >
+  ONS 1996 profile (EIDSA 1995-96). Tableau 8 only: P0 P1 P2 nationally and
+  by zone for 1990 and 1996 (line 32 800 UM in 1990, 53 841 UM in 1996,
+  construction spending excluded in both). Other tables are interleaved with
+  prose and lose cells in the text layer. The report's own figures differ
+  between tables and text (1996 national 50,5 here, 50,0 in the text; Rural
+  autre 1990 69,3 vs 69,2 in the text); the table is kept. CROSS-CHECK: 1990
+  56,6 / 28,2 / 18,1; 1996 50,5 / 18,5 / 9,2.

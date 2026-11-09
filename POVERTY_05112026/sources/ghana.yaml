@@ -1,0 +1,46 @@
+country: Ghana
+iso3: GHA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ghana Statistical Service (GSS)
+publication_code: Poverty Trends in Ghana 2005-2017 (GLSS 7 poverty profile, 2018)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 1300
+
+# --- discover ---
+# GSS's rebuilt site (Next.js) lists "Poverty Profile Report" (2018) under
+# /publications/survey-reports but with fileUrl "#" -- no file attached (same
+# state as the MPI report; see mpi/sources/ghana_report.yaml). The file GSS
+# served at its old /gssmain/fileUpload/pressrelease/ path now 404s, so the
+# Wayback `id_` capture of GSS's own file (2019-02-14, 2.1 MB) is used.
+# If GSS attaches the file again, point `url` at it.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20190214153625id_/http://www.statsghana.gov.gh:80/gssmain/fileUpload/pressrelease/Poverty%20Profile%20Report_2005%20-%202017.pdf"
+  save_as: ghana_poverty_profile_2005_2017.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: ghana_poverty
+geography: Total country
+
+notes: >
+  GLSS 5/6/7 on one methodology (consumption per adult equivalent, Greater
+  Accra January 2017 prices); upper line GH¢1,314, extreme GH¢792.05 per adult
+  equivalent per year. Appendix A1 tables: strata, regions, sex / employment /
+  education of head, both lines, P0-P2 with contributions; Tables 3.1/3.2 for
+  Urban and Rural.
+
+  PUBLISHED DEFECTS (handled in the parser): A1.3 2005/06 Rural row repeats the
+  Urban P-cells (12.4 3.7 1.6) -- Rural P0/P1 taken from Table 3.1 (43.7/15.4);
+  Table 3.1 and A1.1a disagree for three 2016/17 strata (Accra 2.0 vs 0.8,
+  Urban Coastal 8.3 vs 5.3, Rural Coastal 29.9 vs 25.8; extreme: 0.9 vs 0.4,
+  6.9 vs 5.9) -- appendix values kept; A1.7 2005/06 national extreme P0 20.2 vs
+  16.5 elsewhere -- national rows from A1.1a/A1.2a only.
+
+  CROSS-CHECK: P0 23.4 / 24.2 / 31.9 (2016/17, 2012/13, 2005/06); extreme 8.2 /
+  8.4 / 16.5; Upper West 70.9; Northern C0 26.1; Rural Savannah 67.7;
+  female-headed 17.6 (2016/17); regional C0 sums 99.9-100.1.

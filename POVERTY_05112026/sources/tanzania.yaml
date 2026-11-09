@@ -1,0 +1,37 @@
+country: Tanzania
+iso3: TZA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS), Tanzania
+publication_code: 2017-18 Household Budget Survey -- Key Indicators Report (Tanzania Mainland)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 200
+
+# --- discover ---
+# NBS uploads path, listed by nbs.go.tz/search?q=household+budget+survey
+# (checked 2026-11-04). The full HBS 2017-18 final report and the 2011-12
+# report are ZIP archives on the same path; the IHBS 2025 is in analysis.
+discover:
+  method: static_url
+  url: "https://www.nbs.go.tz/uploads/statistics/documents/en-1705504261-2017_18_HBS_Key_Indicators_Report_Engl.pdf"
+  save_as: 2017_18_HBS_Key_Indicators_Report_Engl.pdf
+  impersonate: ["chrome124"]
+  download_timeout: 400
+
+parser: tanzania_poverty
+geography: Tanzania Mainland
+
+notes: >
+  HBS 2017-18, TANZANIA MAINLAND ONLY (Zanzibar is surveyed separately by
+  OCGS) -- rows carry geography "Tanzania Mainland", never "Total country".
+  Consumption per adult equivalent per month; basic needs line TZS 49,320,
+  food line TZS 33,748 (food poverty = extreme). Tables 4.3 (rural/urban, 26
+  regions), 4.4 (household size; columns Food | Basic Needs, reversed), 4.5
+  (sex of head), 4.6 (children under five).
+
+  CROSS-CHECK: 26.4 / 6.2 / 2.1, food 8.0 / 1.4 / 0.4; rural 31.3, urban 15.8;
+  Rukwa 45.0 (food 19.8); Dar es Salaam 8.0; 7+ members 38.7; female-headed
+  27.4.

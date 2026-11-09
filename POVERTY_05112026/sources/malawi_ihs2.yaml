@@ -1,0 +1,36 @@
+country: Malawi
+iso3: MWI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Statistical Office (NSO) Malawi
+publication_code: Integrated Household Survey 2004-2005 report, chapter 12 (Poverty)
+frequency: ad_hoc
+expect_metrics: 5
+expect_rows: 200
+
+# --- discover ---
+# Wayback `id_` capture (2022-06-08) of NSO's own IHS2 report on nsomalawi.mw.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20220608181425id_/http://www.nsomalawi.mw/images/stories/data_on_line/economics/ihs/IHS2/IHS2_Report.pdf"
+  save_as: IHS2_Report.pdf
+  download_timeout: 600
+
+parser: malawi_ihs2_poverty
+geography: Total country
+
+notes: >
+  IHS2 2004/05 report ch. 12 ("preliminary findings of the poverty profile"):
+  Tables 12.3 / 12.4 P0 and ultra-poverty P0 with 95% CI by national,
+  urban/rural, rural region and 31 survey strata (results "revised from
+  previous estimates"; Dowa imputed, as printed); Table 12.2 shares of the
+  poor and of the population by rural region and urban; the national "$1/day
+  (PPP adjusted)" rate, whose PPP base year the report does not print. Lines
+  MK 16,165 (poor) / 10,029 (ultra poor) per person per year. Strata names
+  harmonised with later reports (Lilongwe Urban -> Lilongwe City, Nkhotako ->
+  Nkhotakota, Chiradzu -> Chiradzulu ...). Note the later IHS3/IHS4 method
+  does NOT republish 2004/05, so this round is on the IHS2 method only.
+
+  CROSS-CHECK: P0 52.4 (CI 50.5-54.4); ultra 22.4; rural 55.9; Nsanje 76.0;
+  Machinga 73.7; Blantyre Urban 23.6; $1/day 28.0; poor shares sum to 100.0.

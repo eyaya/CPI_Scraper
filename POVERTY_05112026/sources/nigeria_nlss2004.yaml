@@ -1,0 +1,39 @@
+country: Nigeria
+iso3: NGA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+publication_code: Poverty Profile for Nigeria (NLSS 2003/04; NCS 1980-1996 trends)
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 450
+
+# Wayback `id_` capture (2006-08-28) of NBS's own file; the path no longer exists.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20060828194853id_/http://www.nigerianstat.gov.ng:80/Connections/poverty/PovertyProfile2004.pdf"
+  save_as: nbs_poverty_profile_2004.pdf
+  download_timeout: 600
+
+parser: nigeria_nlss2004_poverty
+geography: Total country
+
+notes: >
+  NLSS 2003/04 (period 2003) with the National Consumer Survey rounds 1980,
+  1985, 1992, 1996 as republished. Four lines: RELATIVE (NBS headline then,
+  line_type relative; Appendix A Table 6 gives P0, P1, P2 [0-1 indices],
+  population share and C0 for nation, sector, 6 zones, 37 states), relative
+  CORE poor (lower relative line, level extreme), ABSOLUTE food-energy-intake
+  line N30,128 per adult equivalent (national overall; Tables 3.2, A.2) and
+  US$1 a day at adjusted 2002 PPP (Tables 3.3, A.3). Trend tables 1.6, 3.8,
+  3.9, 3.10, 3.13, 3.14 and Appendix Table 1 (1996 states). Zones are filed
+  as "<zone> zone" geographies. Subjective poverty not read.
+
+  PUBLISHED INCONSISTENCIES: rural 1996 relative 69.3 (Table 3.8) vs 69.8
+  (Table 1.7) vs 68.8 (prose) -- 3.8 read. Dollar Total 51.6 (3.3) vs 51.55
+  (A.3) -- A.3 read.
+
+  CROSS-CHECK: relative 54.41 / 0.2180 / 0.1191 (2004); 27.2 / 46.3 / 42.7 /
+  65.6 (1980-1996); Jigawa 95.07; absolute 54.7; dollar 51.55; core poor 1996
+  29.3; North East 1996 70.1.

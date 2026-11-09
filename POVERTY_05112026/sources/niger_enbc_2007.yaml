@@ -1,0 +1,29 @@
+country: Niger
+iso3: NER
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Niger)
+publication_code: Tendances de la pauvreté au Niger (QUIBB 2005, ENBC 2007/08)
+frequency: ad_hoc
+expect_rows: 200
+
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20190920074853id_/http://www.stat-niger.org/statistique/file/TendancesPauvreteNiger.pdf"
+  save_as: ne_tendances_pauvrete.pdf
+  download_timeout: 600
+
+parser: niger_enbc_poverty
+geography: Total country
+
+notes: >
+  INS "Tendances de la pauvreté" (Wayback id_ copy of INS's file). Tableau
+  3.1: ENBC 2007/08 P0 P1 P2, population weight and contribution by region,
+  milieu, sex / age / education of the head, household size, socio-economic
+  group (lines 150 933 urban / 110 348 rural FCFA). Its "Homme" row prints
+  P2 = 84.5 (> P0) and is dropped. Tableau 2.2's 2005 columns: QUIBB 2005 as
+  recomputed for the comparison, Zinder and Diffa separate (survey "QUIBB
+  2005 (républié, Tendances 2005-2007/08)").
+
+  CROSS-CHECK: 59.5 / 19.6 / 8.4; Maradi 73.4; 2005 62.1 / 24.1 / 12.3.

@@ -1,0 +1,44 @@
+country: Botswana
+iso3: BWA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Statistics Botswana
+publication_code: Botswana Multi-Topic Household Survey 2015/16 Poverty Stats Brief (January 2018)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 5
+expect_rows: 190
+
+# --- discover ---
+# Found through the site search (statsbots.org.bw/search/node?keys=poverty);
+# the brief's landing page is /botswana-multi-topic-household-survey-201516-
+# poverty-stats-brief-2018. The BMTHS 2024/25 preliminary-poverty pages
+# (/preliminary-poverty-incidence-202425-bmths, /bmths-2025-poverty-
+# preliminary-results) carry NO file as of 2026-11-04 -- re-check: that is the
+# next round to add.
+discover:
+  method: static_url
+  url: "https://www.statsbots.org.bw/sites/default/files/publications/BMTHS%20POVERTY%20STATS%20BRIEF%202018.pdf"
+  save_as: BMTHS_POVERTY_STATS_BRIEF_2018.pdf
+
+parser: botswana_poverty
+geography: Total country
+
+notes: >
+  Household-specific Poverty Datum Line (PDL) on total consumption incl. aid
+  and in-kind; no single line amount is printed. Rounds HIES 2002/03, BCWIS
+  2009/10, BMTHS 2015/16 (results called preliminary in the brief).
+  Collected: T1 strata x rounds (persons' headcount, household incidence,
+  persons below PDL), T2 26 census districts (the table prints 26 rows though
+  the methodology speaks of 27) headcount + poor persons 2009/10 and 2015/16,
+  T3 share of poor households by sex of head by stratum, T5 "one Dollar a
+  day" ($1.90 PPP per the text) headcount + counts x 3 rounds, T6/T7 gap and
+  severity on the PDL and the dollar line. Strata Cities/towns and Urban
+  villages are Botswana's own (locality other); T6/T7 "Urban" = both.
+  Not collected: T4 (without government aid -- counterfactual welfare), Gini,
+  consumption shares, Table 9 food-insecurity worry.
+  CROSS-CHECK: headcount 30.6 / 19.3 / 16.3; household incidence 21.7 / 10.8 /
+  9.0; poor persons 499,467 / 362,116 / 337,410 (districts sum to 362,116 and
+  337,411); Kweneng West 50.6, Sowa Town 5.0; dollar-a-day 23.4 / 6.4 / 5.8;
+  PDL gap 6.2 -> 4.2, severity 2.9 -> 1.7; dollar gap 1.8 -> 1.2.

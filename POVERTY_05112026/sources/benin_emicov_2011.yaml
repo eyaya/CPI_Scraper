@@ -1,0 +1,24 @@
+country: Benin
+iso3: BEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de l'Analyse Economique (INSAE, now INStaD)
+publication_code: Note sur la pauvreté au Bénin en 2011 (EMICoV 2009, EMICoV 2011)
+frequency: ad_hoc
+expect_rows: 100
+
+# --- discover ---
+# INSAE's own file on insae-bj.org (the pre-INStaD domain, no longer served);
+# Wayback `id_` copy found via the CDX index.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20121113150001id_/http://www.insae-bj.org/2012/doc/Publications/Note_sur_la_pauvrete_au_Benin_en_2011.pdf"
+  save_as: bj_note_pauvrete_2011.pdf
+  download_timeout: 600
+
+parser: benin_emicov_2011_poverty
+geography: Total country
+
+notes: >
+  EMICoV 2009 (suivi) and EMICoV 2011: P0 / P1 / P2 by milieu and 12 departments (P1, P2 printed on 0-1: unit index), and monetary P0 by education, household size and sex of the head. Non-monetary poverty columns not taken. CROSS-CHECK: 2009 35,21 / 0,104 / 0,045; 2011 36,20 / 0,098 / 0,039; Couffo 2011 46,58.

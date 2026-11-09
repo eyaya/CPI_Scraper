@@ -1,0 +1,26 @@
+country: Namibia
+iso3: NAM
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Namibia Statistics Agency (NSA)
+publication_code: NHIES 2009/2010 Summary (June 2012)
+frequency: ad_hoc
+expect_rows: 2
+
+# --- discover ---
+# The old nsa.org.na file store is gone; Wayback `id_` capture (2012-08-24) of NSA's own file.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20120824060850id_/http://www.nsa.org.na:80/files/downloads/88d_NHIES%20Executive%20Summary.pdf"
+  save_as: 88d_NHIES_Executive_Summary.pdf
+  download_timeout: 600
+
+parser: namibia_summary_2009_poverty
+geography: Total country
+
+notes: >
+  NHIES 2009/10 Summary, Table 6: share of HOUSEHOLDS poor (UBPL) 19.5% and
+  severely poor (LBPL) 9.6% in 2009/10. The 2003/04 column (27.6 / 13.8)
+  repeats the 2008 review and is not read. The promised 2009/10 comparative
+  poverty report was not found on any NSA host or capture.

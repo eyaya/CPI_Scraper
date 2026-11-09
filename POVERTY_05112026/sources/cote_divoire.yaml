@@ -1,0 +1,37 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique / Agence Nationale de la Statistique (ANStat)
+publication_code: Profil de pauvreté 2021 (EHCVM 2021), chapitre 3
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 500
+
+# --- discover ---
+# Same file labour/ and unemployment/ already collect from (see their
+# descriptors). ANStat is behind a Cloudflare interactive challenge, so the
+# only copy is the Wayback Machine's `id_` capture of ANStat's own file -- an
+# archive of the NSO's publication, not an aggregator (the DR Congo precedent).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20260327133040id_/https://www.anstat.ci/assets/projet/ehcvm2021.pdf"
+  save_as: ANStat_EHCVM2021_profil_pauvrete.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: cote_divoire_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2021 poverty profile, chapter 3. National line 369 516 FCFA per person
+  per year (1 012 FCFA a day), up 6,9% on 2018's 345 520; welfare =
+  consumption per capita. P0/P1/P2 nationally, by milieu (Abidjan urbain /
+  autre urbain / rural) with contributions, by 33 regions for 2018 and 2021
+  (the 2018 values are EHCVM 2018/19 as republished in Tableau 3-3), and P0 by
+  household size, type and characteristics of the head and of individuals 15+.
+
+  CROSS-CHECK: P0 37,5 / P1 10,4 / P2 4,1 (2021); 39,4 / 11,6 / 4,7 (2018);
+  Bounkani 71,6, Abidjan 6,8.

@@ -1,0 +1,34 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL)
+publication_code: 2011 Integrated Household Survey Report, Table 12.5.8
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 4
+
+# Wayback `id_` capture (2019-11-13) of Stats SL's own file.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20191113163108id_/https://www.statistics.sl/images/StatisticsSL/Documents/sierra_leone_integrated_household_survey_2011-1.pdf"
+  save_as: slihs_2011_report.pdf
+  download_timeout: 900
+
+parser: sierra_leone_slihs2011_poverty
+geography: Total country
+
+notes: >
+  The original national headcounts of SLIHS 2003/04 and SLIHS 2011 (Table
+  12.5.8): absolute line 66.4 / 53.9, food line 31.3 / 13.9. Distinct from
+  the 2018 report's re-estimated 2011 (survey "SLIHS 2011 (aggregate
+  comparable with 2018)"). The prose gives 47.7 for the 2011 food-line rate;
+  the table (13.9) is read. No sub-national breakdown is printed for these.
+
+  The statistics.sl file "poverty_profile_for_sierra_leone.pdf" turned out
+  to be the 2014 joint Stats SL / World Bank profile (re-estimates of SLIHS
+  2003/04 and 2011), collected by sierra_leone_profile2014.yaml. No separate
+  2004/05 profile was found on statistics.sl or its Wayback CDX index; the
+  SLIHS 2003/04 statistical report (Publications/More/slihs_report.pdf)
+  has no monetary-poverty table.

@@ -1,0 +1,32 @@
+country: Comoros
+iso3: COM
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Etudes Economiques et Démographiques (INSEED)
+publication_code: EHCVM 2024 - Principaux résultats de l'enquête sur la pauvreté (actualisé 1 avril 2026)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 21
+
+# --- discover ---
+# INSEED's NADA catalogue, study 15 (EHCVM 2024), related materials.
+discover:
+  method: static_url
+  url: "https://www.nada.inseed-comores.org/index.php/catalog/15/download/146"
+  save_as: comoros_ehcvm2024_principaux_resultats.pdf
+  download_timeout: 600
+
+parser: comoros_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2024 (fieldwork May-Nov 2024), Tableau 1: P0/P1/P2 national, by island
+  (Moroni / rest of Ngazidja / Ndzuwani / Mwali) and urban/rural. No line amount
+  printed. Not collected: 2020 (chart/prose only; the 2020 note's 44,8 % is on
+  a non-comparable method). EIM 2004 / EBC 1995: see comoros_eim2004.yaml. EESIC 2013/14: see comoros_eesic2013.yaml. NADA study 9 (EHCVM 2020) also lists "Rapport d'évaluation de la
+  pauvreté et de l'équité aux Comores" -- a World Bank assessment, not used.
+
+  CROSS-CHECK: P0 46.1 / P1 12.9 / P2 5.0; Moroni 40.7; rest of Ngazidja 35.6;
+  Ndzuwani 55.2; Mwali 57.0; urban 41.1; rural 48.3.

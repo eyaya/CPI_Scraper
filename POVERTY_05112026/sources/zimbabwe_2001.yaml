@@ -1,0 +1,37 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Central Statistical Office (CSO), now Zimbabwe National Statistics Agency (ZIMSTAT)
+publication_code: Poverty in Zimbabwe - 2001 ICES (published April 2007)
+frequency: ad_hoc
+expect_rows: 200
+
+# --- discover ---
+# Listed on ZIMSTAT's own poverty-statistics page (wp-content/uploads/Macro/Poverty_Statistics/).
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Poverty_Statistics/Poverty_Report_2001_Published_2007.pdf"
+  save_as: Poverty_Report_2001_Published_2007.pdf
+  download_timeout: 600
+
+parser: zimbabwe_2001_poverty
+geography: Total country
+
+notes: >
+  ICES 2001 poverty report. TPL (overall) and FPL (extreme); P1/P2 FGT on the
+  TPL; consumption per capita; HOUSEHOLD figures except Table 2.2.1's People
+  block. Tables 2.2.1, 2.3.1 (provinces, with share of poor households),
+  2.4.2 (headship incl. female-headed types), 2.4.3 (main activity of head x
+  residence), 2.4.4 (sector of employment of head x residence), 3.1.1 (rural
+  provinces), 3.1.2 (land-use areas), 3.1.3 (natural regions), 3.3.1
+  (education of head; printed as FRACTIONS under a "(%)" caption, kept as
+  printed with unit index) and 3.3.2 (education of head x rural/urban). The PICES 2017
+  report republishes the 2001 national figures under survey "ICES 2001";
+  these are the 2001 report's own and carry "(2001 poverty report)".
+
+  CROSS-CHECK: households 60.6 / 32.2 / 28.3 / 16.5; people 70.9 / 41.5 /
+  35.4 / 21.4; Matabeleland North 75.4; Harare 29.3; resettlement areas 87.8;
+  provincial shares of poor households sum to 100.1; 3.3.1 None 0.810 /
+  0.523 / 0.433 / 0.273; 3.3.2 rural none 82.6, urban post-secondary 11.0.

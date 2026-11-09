@@ -1,0 +1,31 @@
+country: Mali
+iso3: MLI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: Profil et déterminants de la pauvreté au Mali (EHCVM 2018/2019)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 190
+
+# --- discover ---
+# Listed on INSTAT's EHCVM page beside the 2021 profile (see mali.yaml).
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/profil-det-pauv-2018-2019_pub.pdf"
+  save_as: mali_profil_det_pauv_2018_2019_pub.pdf
+  download_timeout: 900
+
+parser: mali_2018_2019_poverty
+geography: Total country
+
+notes: >
+  The ORIGINAL EHCVM 2018/2019 poverty profile (line 269 485 FCFA, food 166 443).
+  The 2021 profile republishes this round RE-ESTIMATED (Tombouctou 39,0 vs
+  46,8 here; Gao 42,5 vs 42,7), so the two are separate surveys:
+  "EHCVM 2018/2019" (this report) and "EHCVM 2018/2019 (republié, profil 2021)".
+  P0/P1/P2 only from 3-3, 3-4, 3-5, 3-6, 3-11 (the milieu-share columns'
+  universe is not stated). 3-11's Ensemble prints P1 11,68 against 3-3's 11,86.
+
+  CROSS-CHECK: 42,1 / 11,86 / 4,62; Kidal 4,5; Tombouctou 46,8; female head 27,6.

@@ -1,0 +1,42 @@
+country: Niger
+iso3: NER
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Niger)
+publication_code: Rapport sur le profil de pauvreté, EHCVM 2021/2022
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 350
+
+# --- discover ---
+# Linked from stat-niger.org's EHCVM survey page
+# (?rapport_enquete=enquete-harmonisee-sur-les-conditions-de-vie-des-menages-ehcvm)
+# and its "publication récente" post; fixed path under /rapport_enquete/EHCVM/.
+# The site's wp-json API is 404, so the page is the route.
+discover:
+  method: static_url
+  url: "https://www.stat-niger.org/wp-content/uploads/rapport_enquete/EHCVM/rapport_profil_pauvrete.pdf"
+  save_as: niger_ehcvm_profil_pauvrete.pdf
+
+parser: niger_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2021/2022 poverty profile (fieldwork Nov 2021 - Feb 2022 and Jun - Aug
+  2022). National line 195 760 FCFA per person per year (Tableau 2 "Seuil
+  global", food 134 844 + non-food 60 916); zone lines (urbain, three rural
+  agro-ecological zones) are printed but not collected (no line-value metric).
+  Tableau 3 republishes the trend 2011 / 2014 (ECVMA) / 2018 (EHCVM 2018/19) /
+  2021 by milieu, each filed under its own survey.
+
+  Tableau 5's milieu lines are NOT read: "Urbain 15,2 602 544 3,2 1 503 005 ..."
+  runs P2 (1) into mean consumption (503 005); Tableau 3's 2021 rows carry the
+  same values. Women (T8) and children under 18 (T10, T12) are collected;
+  T9/T11 cross those groups with characteristics of the head and are not.
+
+  CROSS-CHECK: P0 41,2 / P1 9,9 / P2 3,4, 9 932 800 poor (2021); 40,8 / 11,2 /
+  4,3 (2018); 48,2 (2011); 45,4 (2014, printed "45, 4"); Tillabéri 52,7;
+  Niamey 4,9; female-headed 36,4; women 40,6; children 45,8. The 8 regions'
+  poor sum to 9 932 800 exactly.

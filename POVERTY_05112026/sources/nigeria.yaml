@@ -1,0 +1,38 @@
+country: Nigeria
+iso3: NGA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+publication_code: 2019 Poverty and Inequality in Nigeria - Executive Summary (NLSS 2018-19), May 2020
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 180
+
+# --- discover ---
+# NBS e-library entry /elibrary/read/1092 links its file as /download/1092
+# (10.9 MB PDF, checked 2026-11-04). The full report "will be published at a
+# later date" per the cover; this executive summary is the published release.
+discover:
+  method: static_url
+  url: "https://nigerianstat.gov.ng/download/1092"
+  save_as: nbs_poverty_inequality_2019.pdf
+  download_timeout: 300
+
+parser: nigeria_poverty
+geography: Total country
+
+notes: >
+  NLSS 2018-19 (Sep 2018 - Oct 2019, 22,110 households). Official (upper) line
+  137,430 Naira per person per year; food line 81,767, lower 124,948 (Table 2).
+  ALL ESTIMATES EXCLUDE BORNO, including the national 40.09% -- Borno's sample
+  covered accessible areas only. Not comparable with NLSS 2003-04 / HNLSS
+  2009-10 (CAPI vs PAPI, 7-day recall vs diary).
+
+  Annex Tables 4-7: P0/P1/P2 national, urban, rural and 36 states + FCT; P0 by
+  head's education x sex, head's income-generating activity x sex, household
+  size, each for Nigeria / Urban / Rural.
+
+  CROSS-CHECK: 40.09 / 12.85 / 5.63; Urban 18.04; Rural 52.10; Sokoto 87.73;
+  Lagos 4.50; Taraba P2 24.44; 20+ person households 77.66; ~82.9 million poor.

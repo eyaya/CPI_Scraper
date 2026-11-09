@@ -1,0 +1,45 @@
+country: Liberia
+iso3: LBR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+publication_code: Household Income and Expenditure Survey 2016 - Statistical Abstract, chapter 3
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 150
+
+# --- discover ---
+# LISGIS's rebuilt site (lisgis.gov.lr) lists "Household Income & Expenditure
+# Survey 2024" under /api/publications with fileUrl null, and its NADA entries
+# LBR_2016_HIES / LBR_2014_HIES expose no files (checked 2026-11-04). The HIES
+# 2016 Statistical Abstract LISGIS published on its OLD host (lisgis.net,
+# /pg_img/) is used via its Wayback `id_` capture (2021-04-25, 7.9 MB).
+# When the HIES 2024 report gets a file, switch to it.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20210425123843id_/http://www.lisgis.net/pg_img/HIES%202016_StatisticalAbstract_Final_final.pdf"
+  save_as: lisgis_hies2016_statistical_abstract.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 400
+
+parser: liberia_poverty
+geography: Total country
+
+notes: >
+  HIES 2016 (Jan 2016 - Jan 2017), consumption per adult equivalent. Absolute
+  line LD 65,383.58, food line LD 37,151.95 per adult equivalent per year.
+  Three headcounts: absolute (overall), extreme (total consumption below the
+  food line), food poverty (food consumption below the food line; line_level
+  other). No P1/P2 published. Tables 3.1-3.3: residence, 6 regions, 14
+  counties (county "Monrovia/Montserrado" = the Montserrado region, read once),
+  numbers of poor, head's sex / age / education / employment sector.
+
+  NOT read: the half-year 2014 vs 2016 comparison (Figures 6-7 only; a
+  different measure, 54.1 -> 61.2 on the 2014 line). HIES 2014 (Ebola-halted,
+  half year) is not comparable with 2016 (report, section 3.6).
+
+  CROSS-CHECK: 50.9 / 39.1 / 16.5; rural 71.6, urban 31.5; Maryland 84.0 /
+  71.5 / 47.5; 2,157,861 poor (regions sum exactly); female head 46.3;
+  self-employed (agriculture) 79.6; age-of-head shares sum to 100.0.

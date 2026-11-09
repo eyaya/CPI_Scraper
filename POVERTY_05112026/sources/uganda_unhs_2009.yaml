@@ -1,0 +1,27 @@
+country: Uganda
+iso3: UGA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Uganda Bureau of Statistics (UBOS)
+publication_code: "UNHS 2009/10 socio-economic report (UNHS IV)"
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+expect_rows: 60
+
+# --- discover ---
+# UBOS publication listing ?pagename=explore-publications&p_id=23 (UNHS).
+discover:
+  method: static_url
+  url: "https://www.ubos.org/wp-content/uploads/publications/03_2018UNHS_2009_2010_socio-economic_Report.pdf"
+  save_as: UNHS_2009_10_socio_economic_report.pdf
+  download_timeout: 1800
+
+parser: uganda_unhs_2009_poverty
+geography: Total country
+
+notes: >
+  Official national poverty line (Appleton 2001 cost of basic needs, the
+  series UBOS has used since 1992/93), real consumption per adult equivalent.
+  T6.8 (national, residence, regions, region x residence) and T6.9 (10 sub-regions of the time: Central 1/2, East central, Eastern sub-region, Mid-northern, North-east, West Nile, Mid-western, South-western, Kampala). CROSS-CHECK: 24.5 / 6.8 / 2.8; Northern 46.2; North-east 75.8; Kampala 4.0.

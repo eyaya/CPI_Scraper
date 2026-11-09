@@ -1,0 +1,22 @@
+country: Senegal
+iso3: SEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: La pauvreté au Sénégal de 1994 à 2001-2002 (ESAM I et II)
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 140
+
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20091113153132id_/http://www.ansd.sn/publications/rapports_enquetes_etudes/etudes/Pauvrete_Senegal_1994_2002.pdf"
+  save_as: sn_pauvrete_1994_2002.pdf
+  download_timeout: 900
+
+parser: senegal_esam_poverty
+geography: Total country
+
+notes: >
+  DPS (now ANSD) study comparing ESAM I 1994/95 and ESAM II 2001/02 on one method (Wayback id_ copy of ansd.sn). Tableau 3: P0 P1 P2 at HOUSEHOLD and PERSON level, national and three strata, both rounds; Tableaux 4-9: household P0, poor households and contributions by milieu (both rounds), region, sex, age, marital status, education of the head (2001/02). CROSS-CHECK: persons 67,9 / 57,1; households 61,4 / 48,5; 515 238 poor households.

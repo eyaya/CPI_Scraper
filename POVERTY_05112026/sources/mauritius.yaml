@@ -1,0 +1,48 @@
+country: Mauritius
+iso3: MUS
+indicator: Poverty
+tier: 2
+source_type: xlsx
+agency: Statistics Mauritius (Ministry of Finance)
+publication_code: Data series on Poverty Statistics (HBS 1996/97-2023) + Poverty Analysis Report 2023
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 100
+
+# --- discover ---
+# Both files sit on the Poverty subject page (same page the MPI descriptor
+# scrapes). The workbook's name carries a publish stamp (Oct26-20102026), so
+# a re-issue will need the name updated -- or switch to page_scrape on
+# "HS_Poverty_" once a second issue shows the pattern.
+discover:
+  method: static_url
+  url: "https://statsmauritius.govmu.org/Documents/Statistics/By_Subject/Poverty/HS_Poverty_Oct26-20102026.xlsx"
+  save_as: HS_Poverty_Oct26-20102026.xlsx
+extra_urls:
+  - url: "https://statsmauritius.govmu.org/Documents/Statistics/By_Subject/Poverty/Poverty_Analysis_Report%20_Yr23_100225.pdf"
+    save_as: Poverty_Analysis_Report_Yr23_100225.pdf
+
+parser: mauritius_poverty
+geography: Total country
+
+notes: >
+  Six HBS rounds, 1996/97-2023. Mauritius has NO official absolute poverty
+  line: the national measure is RELATIVE (half the median monthly household
+  INCOME per adult equivalent), tracked over time with that line held fixed
+  in real terms (1996/97 and 2023 bases) and alongside World Bank lines of
+  US$3.00 / 4.20 / 8.30 a day (2021 PPP) on per-capita consumption.
+  Counts are the workbook's REVISION to the 2022 Census household base; they
+  differ from the 2023 report's own Table 1 (Census 2011 base), which is not
+  read. Rodrigues: report Table 25 (Rodrigues-specific relative line).
+
+  Not collected: income gap ratio (mean shortfall of the poor -- not FGT),
+  income/expenditure averages (Tables 3-4), deprivation and HDI tables,
+  report Table 23 (older $2.15 / $6.85 2017-PPP lines, superseded in the
+  workbook), the annex distributions of the poor (composition, not rates),
+  and the age/sex rates that appear only in charts.
+
+  CROSS-CHECK (workbook): RPL 2023 Rs 12,378; households 7.3% (27,200);
+  persons 8.4% (101,200); poverty gap ratio 1.8%; 1996/97 RPL Rs 2,004,
+  households 8.7%; $8.30 line 2023 11.4%; 1996/97 fixed threshold 2023 1.2%
+  of persons. Rodrigues 2023: RPL Rs 9,719, households 17.4%, persons 19.3%.

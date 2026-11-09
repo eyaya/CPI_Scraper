@@ -1,0 +1,48 @@
+country: Congo
+iso3: COG
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Centre National de la Statistique et des Études Économiques (CNSEE), now Institut National de la Statistique (INS)
+publication_code: Profil de pauvreté au Congo en 2005 (ECOM 2005), chapitre 2
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 280
+
+# --- discover ---
+# Same file labour/ and unemployment/ already collect from (see their
+# descriptors). cnsee.org is dead and ins-congo.cg does not host the ECOM
+# reports, so the only copy is the Wayback Machine's `id_` capture of CNSEE's
+# own PDF -- an archive of the NSO's publication, not an aggregator.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20060617195633id_/http://www.cnsee.org/Donnees/Enquete/PDF/ECOM.pdf"
+  save_as: CNSEE_ECOM_2005_Profil_pauvrete.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: congo_poverty
+geography: Total country
+
+notes: >
+  ECOM 2005 (collected June-August 2005) poverty profile, chapter 2. One
+  national line: the LOWER line (food + minimal non-food, cost of basic needs
+  at 2 450 Kcal) = 306 400 F CFA per adult equivalent per year; welfare =
+  consumption per adult equivalent (FAO scale).
+
+  Tableau 2.2.1 gives every index over HOUSEHOLDS (P0 42,3) and over PERSONS
+  (P0 50,1) -- both kept, by unit_of_analysis. 2.2.2 (stratum x sex of head)
+  and 2.2.3 (head characteristics) are household-level. 2.2.2's Ensemble
+  columns skipped: they repeat 2.2.3's national figures and disagree by 0,1
+  for female heads (45,2 vs 45,3, both published).
+
+  NOT COLLECTED: 2.2.4 (poor-household counts, mean expenditure) -- space-
+  grouped numbers printed against each other, cell boundaries unrecoverable
+  from the text layer; 2.3.1 (income shares by quartile); 2.3.2 (Gini/GE,
+  inequality indicator).
+
+  CROSS-CHECK: households P0 42,3 / P1 15,3 / P2 7,6; persons 50,1 / 18,9 /
+  9,6; Pointe-Noire 23,5 (households) / 32,2 (persons); semi urbain 55,1;
+  female heads 45,3; head with no education 53,7. Strata contributions sum
+  to 99,9.

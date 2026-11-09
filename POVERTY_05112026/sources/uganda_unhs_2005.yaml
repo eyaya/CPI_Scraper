@@ -1,0 +1,27 @@
+country: Uganda
+iso3: UGA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Uganda Bureau of Statistics (UBOS)
+publication_code: "UNHS 2005/06 report (UNHS III) -- with full-coverage IHS 1992/93"
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+expect_rows: 60
+
+# --- discover ---
+# UBOS publication listing ?pagename=explore-publications&p_id=23 (UNHS).
+discover:
+  method: static_url
+  url: "https://www.ubos.org/wp-content/uploads/publications/03_2018UNHSReport20052006.pdf"
+  save_as: UNHS_2005_06_report.pdf
+  download_timeout: 1800
+
+parser: uganda_unhs_2005_poverty
+geography: Total country
+
+notes: >
+  Official national poverty line (Appleton 2001 cost of basic needs, the
+  series UBOS has used since 1992/93), real consumption per adult equivalent.
+  T6.9 (2005/06), T6.10b (IHS 1992/93 FULL coverage, first published here: 56.4), A1(a) (2005/06 comparable coverage, 28.9), T6.15/6.16 sector of head 2005/06 and 2002/03 (full coverage, 10 groups), T6.17 employment status of head 2005/06 and 2002/03. Not read: T6.10a, A1(b)-(d) (republish the 2002/03 report). CROSS-CHECK: 31.1 / 8.7 / 3.5; Northern 60.7; IHS 1992/93 56.4 / 20.9 / 10.3; crop agriculture 36.8 (2002/03 48.9).

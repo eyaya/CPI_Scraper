@@ -1,0 +1,36 @@
+country: Rwanda
+iso3: RWA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: Rwanda Poverty Profile Report EICV5 2016/17
+frequency: ad_hoc
+expect_metrics: 4
+expect_rows: 60
+
+# --- discover ---
+# Wayback `id_` copy of NISR's own file (statistics.gov.rw bot check).
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20250510181421id_/http://www.statistics.gov.rw/sites/default/files/documents/2025-01/EICV5%20Rwanda%20Poverty%20Profile.pdf"
+  save_as: EICV5_Rwanda_Poverty_Profile.pdf
+  download_timeout: 900
+
+parser: rwanda_eicv5_poverty
+geography: Total country
+
+notes: >
+  EICV5 poverty profile (Oct 2016 - Oct 2017), same line as EICV4 (RWF
+  159,375 / 105,064, January 2014 prices). Table 1: P0 and gap EICV3-EICV5.
+  Table 16: total and extreme P0 by urban/rural and province, EICV4 and
+  EICV5. Table 17: distribution of the poor and of the population. Table 26:
+  P0 of adult men/women and boys/girls under 16. Not read: Table 3 (earlier
+  print of Table 16, EICV4 rural 43.8 vs 43.7), Table 18 (P0 x share), panel
+  matrices, characteristics of the poor.
+
+  THE 2016/17 ROUND EXISTS TWICE: 38.2 here (EICV4 line) and NISR's re-
+  prediction on the EICV7 basis (rwanda.yaml, own survey label and line).
+
+  CROSS-CHECK: 38.2 / gap 11.7; extreme 16.0; urban 15.8, rural 43.1; Kigali
+  City 13.9 (2013/14 20.9); boys 44.2; distributions of the poor sum to 100.0.

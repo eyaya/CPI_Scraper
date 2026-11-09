@@ -1,0 +1,47 @@
+country: Guinea_Bissau
+iso3: GNB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE Guiné-Bissau)
+publication_code: ILAP 2010 - Evaluation de la pauvreté (version provisoire, décembre 2010)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 280
+
+# --- discover ---
+# Listed on INE's Publicações / Relatórios page
+# (Menu_principal/Pubicações/relatorios.html) under ILAP, beside the 2002
+# profile (ILAP/perfil_pbreza_2002.pdf, not yet laid out). The host flaps for
+# hours at a time -- retry before concluding it is down.
+discover:
+  method: static_url
+  url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/ILAP/perfil_pbreza_2010.pdf"
+  save_as: gnb_ilap2_perfil_pobreza_2010.pdf
+  download_timeout: 600
+
+parser: guinea_bissau_poverty
+geography: Total country
+
+notes: >
+  INE-hosted ILAP 2010 poverty evaluation, PROVISIONAL, written by a
+  consultant (M. B. Sylla, ANSD Senegal, for the World Bank). INTERNATIONAL
+  LINES ONLY: US$1 PPA a day (extreme, 110 400 FCFA/person/year) and US$2 PPA
+  (220 800); the PPP base year is not printed. P0 for Bissau / other regions
+  / national in 2010 and 2002 (ILAP 2002), and for 2010 P0, number of poor and
+  share of the poor by sex, age and education of the head, household size
+  (each for Bissau / other regions / national) and 8 regions.
+
+  NEWER ROUND NOT COLLECTABLE FROM INE: EHCVM 2018/19 results appear on
+  stat-guinebissau.com only as a Chart.js script (canvas1/resultadoIHCVAF20182019.js)
+  whose arrays are placeholders (P1 "10000", P2 "5989" ...) -- refused. No
+  EHCVM report is listed (checked 2026-11-04).
+
+  Not read: Tableau 5's counts (three-digit groups fuse in the text layer),
+  S.A.B / TOTAL / "Outros" rows of Tableaux 6-7 (same fusion), Tableaux 8.x
+  (distributions).
+
+  CROSS-CHECK: US$2 P0 69,3 (2010), 64,7 (2002); US$1 33,0 / 20,8; Bissau 51,0
+  / 13,2; Gabu 83,5 (161 037 poor, 15,9%); female head 65,3. Regional shares
+  + S.A.B's printed 18,7 / 10,1 sum to 100.

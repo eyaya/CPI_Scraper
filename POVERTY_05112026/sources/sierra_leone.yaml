@@ -1,0 +1,43 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL)
+publication_code: Sierra Leone Integrated Household Survey (SLIHS) 2018 report, chapter 9 and appendices 1-2
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+expect_rows: 240
+
+# --- discover ---
+# Linked from Stats SL's SLIHS page (/index.php/sierra-leone-integrated-
+# household-survey-slihs.html); 8.3 MB, 365 pages (checked 2026-11-04).
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/StatisticsSL/Documents/SLIHS2018/SLIHS_2018_New/sierra_leone_integrated_household_survey2018_report.pdf"
+  save_as: sierra_leone_integrated_household_survey2018_report.pdf
+  download_timeout: 300
+
+parser: sierra_leone_poverty
+geography: Total country
+
+notes: >
+  SLIHS 2018, chapter 9 (written by Stats SL with World Bank co-authors,
+  published by Stats SL). National line Le 3,921,000 and food (extreme) line
+  Le 2,125,000 per adult equivalent per year, old leones. Appendix 1: P0/P1/P2
+  both lines for national, rural/urban, Greater Freetown/other urban, 5
+  provinces, 14 districts + Western Area Rural + Freetown. Table 9.1: P0 both
+  lines + population share by head's characteristics. Appendix 2: 2011 P0 on a
+  welfare aggregate made comparable with 2018 (2018 column not read: different
+  aggregate, would collide with Appendix 1).
+
+  THE PROSE DISAGREES WITH THE TABLES (extreme 12.9 vs 13.7; rural 73.9 vs
+  73.6; Greater Freetown 22.8 vs 23.5; P2 7.5 vs 7.6) -- only tables are read.
+  Official 2011 rate 52.9% is not comparable (Box 2) and is prose only.
+  Also on statistics.sl: "A Poverty Profile for Sierra Leone" (2013) and a
+  poverty-assessment summary -- both WORLD BANK documents, not read.
+
+  CROSS-CHECK: 56.8 / 18.0 / 7.6; extreme 13.7 / 2.8 / 0.8; Tonkolili 84.4;
+  Pujehun extreme 30.8; Freetown 16.7; 8+ member households 71.5; university
+  head 5.3; 2011 comparable 62.4; household-size population shares sum to 100.

@@ -1,0 +1,43 @@
+country: Gambia
+iso3: GMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Gambia Bureau of Statistics (GBoS)
+publication_code: Integrated Household Survey 2003/04 report, Appendix 2
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 330
+
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/523-integrated-household-survey-report-2003-2004"
+  save_as: gambia_ihs2003_04_report.pdf
+  download_timeout: 600
+
+parser: gambia_ihs2003_poverty
+geography: Total country
+
+notes: >
+  IHS 2003/04, GBoS downloads category "IHS 2003-2004". Two lines (lower =
+  food + minimal non-food; upper = nutritional requirement actually met) and,
+  nationally (Tables 1-4), two welfare measures: per capita and per adult
+  equivalent, carried in line_name. Profile tables are per capita (the report
+  prefers per-capita lines; area and education tables reproduce the
+  per-capita national figure). Upper per-capita line = line_level overall;
+  the other three = other.
+
+  Read: national; urban/rural; 8 LGAs; 14 LGA x urban/rural strata; domains
+  (Banjul+Kanifing, other urban); age, occupation, industry, marital status,
+  education, literacy of head; household size -- P0, P1, P2, both lines.
+
+  PUBLISHED DEFECT, not read: Tables 10/24 (sex of head) print male 34.8 /
+  female 53.5 (lower) under a national 51.2 -- that needs 88% of people in
+  female-headed households; swapped labels give 11%. The 2010 report repeats
+  the printed reading in prose. Not read either: ethnicity, union type,
+  housing and subjective status (no topic), groundnut tables, Watts index,
+  standard errors.
+
+  CROSS-CHECK: national 51.2 / 20.9 / 11.1 (lower, per capita); 58.0 (upper,
+  per capita); 39.8 / 46.4 (lower / upper, per AE); Kuntaur 90.0 (lower);
+  Banjul 7.6 (upper); rural 60.6 / 67.8.

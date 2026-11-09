@@ -1,0 +1,25 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Carte de la pauvreté 2007. Rapport"
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 600
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231443/"
+  save_as: HCP_carte_pauvrete_2007_rapport.pdf
+
+parser: morocco_carte2007_poverty
+geography: Total country
+
+notes: >
+  Annexe 2: P0 / P1 / P2 (%) for 16 regions and the provinces, national,
+  urban and rural. Commune tables (pp. 27-121) NOT read: province and commune
+  names wrap across lines in both columns. CROSS-CHECK: Gharb 15,6 / 3,1 / 0,9;
+  Jerada 22,8; national map total 9,5 (ENNVM 2007 survey: 8,9).

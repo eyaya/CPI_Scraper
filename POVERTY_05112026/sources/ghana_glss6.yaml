@@ -1,0 +1,37 @@
+country: Ghana
+iso3: GHA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ghana Statistical Service (GSS)
+publication_code: Poverty Profile in Ghana 2005-2013 (GLSS 6, 2014), Appendix 5
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 400
+
+# --- discover ---
+# Wayback `id_` capture (2015-02-13) of GSS's own file at /docfiles/glss6/;
+# the live GSS site (Next.js rebuild) no longer serves it.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20150213082243id_/http://www.statsghana.gov.gh:80/docfiles/glss6/GLSS6_Poverty%20Profile%20in%20Ghana.pdf"
+  save_as: "GLSS6_Poverty Profile in Ghana.pdf"
+  download_timeout: 300
+
+parser: ghana_glss6_poverty
+geography: Total country
+
+notes: >
+  Appendix 5 only: GLSS 5 (2005/06) and GLSS 6 (2012/13) on the ORIGINAL
+  2005/06 lines (GH¢370.89 upper, GH¢288.47 extreme per adult equivalent per
+  year) -- the method of GSS's pre-rebasing 28.5% (2005/06). Filed under
+  line_level "other" with the old line's name so it never shares an ID with
+  the rebased GH¢1,314 series. Appendix 1 (new lines) repeats the GLSS 7
+  profile and is not read.
+
+  PUBLISHED DEFECT: A5.1's 2005/06 regional block is a copy of A5.2's (extreme
+  line): regions weight to 18.2 = A5.2's 18.1, under a printed 28.5. Not read.
+
+  CROSS-CHECK: 2005/06 28.5 / 9.6 / 4.6 (upper), 18.1 (extreme); 2012/13 21.4
+  (upper), 9.6 (extreme); Rural Savannah 60.3 (2005/06); Upper West 67.8
+  (2012/13, upper).

@@ -1,0 +1,33 @@
+country: Mauritania
+iso3: MRT
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Office National de la Statistique (ONS, now ANSADE)
+publication_code: Profil de pauvreté en Mauritanie 2004 (EPCV 2004)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 450
+
+# --- discover --- (ANSADE WordPress media API, plain request: /wp-json/wp/v2/media?search=pauvret)
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/08/PROFIL-DE-LA-PAUVRETE-EN-MAURITANIE-2004.pdf"
+  save_as: ONS_Profil_Pauvrete_2004.pdf
+  download_timeout: 900
+
+parser: mauritania_profil2004_poverty
+geography: Total country
+
+notes: >
+  ONS 2004 profile. Annex A.1.1-A.1.8: P0 P1 P2 C0 C1 C2 by wilaya, zone,
+  milieu, extreme line (zone/milieu/wilaya), education / sex / socio-economic
+  group of the head; Tableau 12 relative poverty (86 357 UM); A.2.15/A.2.16 the
+  EPCV 2000 columns (wilaya/milieu on both lines; socio-economic group). Lines
+  94 600 / 71 550 UM as printed here (the 2008 profile gives 94 650 / 70 400).
+  PUBLISHED DEFECT: A.2.15's 2004 urban/rural cells (13,3 / 37,8) contradict
+  A.1.3 (28,9 / 59,0); only its 2000 columns are read. Rows carry survey
+  'EPCV 2004 (Profil de pauvreté 2004)' / 'EPCV 2000 (Profil de pauvreté
+  2004)', beside the 2014 profile's republication. CROSS-CHECK: 46,7 / 15,3 /
+  6,9; extreme 28,8; Tagant 70,3; 2000 51,0 / 19,3 / 9,6.

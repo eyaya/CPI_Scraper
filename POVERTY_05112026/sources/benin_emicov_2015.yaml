@@ -1,0 +1,24 @@
+country: Benin
+iso3: BEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de l'Analyse Economique (INSAE, now INStaD)
+publication_code: Note sur la pauvreté (EMICoV 2011 et 2015)
+frequency: ad_hoc
+expect_rows: 100
+
+# --- discover ---
+# INSAE's own file on insae-bj.org (the pre-INStaD domain, no longer served);
+# Wayback `id_` copy found via the CDX index.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20170925140800id_/http://insae-bj.org:80/autres_publ.html?file=files/publications/Autres+publications/Note+sur+la+pauvrete_final.pdf"
+  save_as: bj_note_pauvrete_final.pdf
+  download_timeout: 600
+
+parser: benin_emicov_2015_poverty
+geography: Total country
+
+notes: >
+  EMICoV 2015 and EMICoV 2011 as republished (identical values, own survey label): P0 / P1 / P2 by milieu and department, monetary P0 by education, size and sex of the head. CROSS-CHECK: 2015 40,08 / 0,18 / 0,12; Littoral 25,73.

@@ -1,0 +1,33 @@
+country: Ghana
+iso3: GHA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ghana Statistical Service (GSS)
+publication_code: Ghana Poverty Map (2015) -- PHC 2010 + GLSS 6 small-area estimates
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 1000
+
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20151028052645id_/http://www.statsghana.gov.gh:80/docfiles/publications/POVERTY%20MAP%20FOR%20GHANA-05102015.pdf"
+  save_as: "POVERTY MAP FOR GHANA-05102015.pdf"
+  download_timeout: 600
+
+parser: ghana_map2010_poverty
+geography: Total country
+
+notes: >
+  Small-area (ELL) estimates combining the 2010 Population and Housing Census
+  with GLSS 6, upper line GH¢1,314: 10 regions and 245 districts and
+  sub-metros (Tables A1.1-A1.10) -- P0, P1, P2 and estimated number of poor.
+  MODEL-BASED, not direct survey estimates: the survey label says so, and the
+  census-based regional P0 differs from GLSS 6's direct one (Northern 44.2 vs
+  50.4). Sub-metros (Tema West/East, Tamale South/Central ...) are listed
+  under their metropolis; both levels are kept as printed, so district poor
+  counts must not be summed across levels. Standard errors and Gini not read.
+  Table A1.10 is captioned "Upper East" in the report but its rows are Upper West.
+
+  CROSS-CHECK: Western 19.2 / 5.5 / 2.3, 443,479 poor; Jomoro 30.7; Wa West
+  92.4; Kumasi Metropolis 5.3 (88,935 poor); Shai Osudoku 55.1; Adaklu 89.7.

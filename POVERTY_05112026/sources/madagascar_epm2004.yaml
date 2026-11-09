@@ -1,0 +1,27 @@
+country: Madagascar
+iso3: MDG
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+publication_code: EPM 2004 rapport principal (janvier 2006, chapitre XII)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 95
+
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_Epm04_01-2006.pdf"
+  save_as: INSTAT_Epm04_01-2006.pdf
+  download_timeout: 900
+
+parser: madagascar_epm2004_poverty
+geography: Total country
+
+notes: >
+  EPM 2004 poverty tables (person level, national line) -- see the parser
+  module's docstring for the tables collected and skipped. Former provinces
+  are named "<name> (province)". Not comparable with EPM 2021-22 (INSTAT).
+
+  CROSS-CHECK: 72,1 / 31,6; Fianarantsoa rural 87,5; Petit exploitant 84,3.

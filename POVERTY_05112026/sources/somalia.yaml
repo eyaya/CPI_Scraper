@@ -1,0 +1,38 @@
+country: Somalia
+iso3: SOM
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Somalia National Bureau of Statistics (SNBS)
+publication_code: Somalia Poverty Report 2023 (SIHBS 2022)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+expect_rows: 120
+
+# --- discover ---
+# SNBS WordPress media API (wp-json/wp/v2/media?search=poverty), checked
+# 2026-11-04.
+discover:
+  method: static_url
+  url: "https://nbs.gov.so/wp-content/uploads/2024/08/Somalia-Poverty-Report-2023.pdf"
+  save_as: Somalia-Poverty-Report-2023.pdf
+  impersonate: ["chrome124"]
+  download_timeout: 400
+
+parser: somalia_poverty
+geography: Total country
+
+notes: >
+  SIHBS 2022 poverty report. Real consumption per person per year in USD;
+  poverty line USD 754, food (extreme) line USD 425. Three residence strata
+  (urban, rural, NOMADIC = locality other). Tables 4.1 (17 regions over two
+  pages), 4.2 (gap), 5.1 (sex of head x residence), 5.2 (marital status x sex
+  of head).
+
+  The SNBS "District-Level Poverty Estimates in Somalia" note (2025) is
+  collected separately: sources/somalia_district2025.yaml.
+
+  CROSS-CHECK: 54.4 / extreme 20.9 / gap 19.8; urban 46.1, rural 65.5,
+  nomadic 78.4; Middle Shabelle 87.4 / 54.7; regional population shares sum
+  to 100.2, shares of the poor to 99.9 (both lines).

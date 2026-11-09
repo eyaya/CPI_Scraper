@@ -1,0 +1,43 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zimbabwe National Statistics Agency (ZIMSTAT)
+publication_code: Poverty and Poverty Datum Line Analysis in Zimbabwe 2011/12 (PICES 2011/12, April 2013)
+frequency: ad_hoc
+expect_metrics: 4
+expect_rows: 500
+
+# --- discover ---
+# Listed on ZIMSTAT's own "Poverty Statistics" page beside the 2017 and 2001
+# reports (wp-content/uploads/Macro/Poverty_Statistics/).
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Poverty_Statistics/Zimbabwe_Poverty_Report_2011_published_17032013.pdf"
+  save_as: Zimbabwe_Poverty_Report_2011_published_17032013.pdf
+  download_timeout: 600
+
+parser: zimbabwe_pices2011_poverty
+geography: Total country
+
+notes: >
+  PICES 2011/12 poverty report. Its Times New Roman text layer is
+  font-shifted (code c draws character c-2: "Vcdng" = "Table"); the parser
+  maps it back with a character map, NOT OCR -- proven from the font's own
+  /Widths (every code 34..126 has the width of character c-2 in standard
+  Times New Roman, and no other shift fits) and by the decoded text
+  reproducing the 2011/12 figures the PICES 2017 report prints in plain
+  text (households 62.6, people 72.3). TCPL (overall) and FPL (extreme);
+  P1/P2 on the TCPL; consumption per capita; households except Table 2.4's
+  People block and Table 2.8. Tables 2.4, 2.7, 2.8, 2.10, 2.13-2.17, 3.1,
+  3.2, 3.4, 3.6, 3.22-3.25. Tables 3.1 and 3.2 print P2 before P1 under a
+  header that says the opposite; the 3.1 Total row equals Table 2.4's rural
+  row (P1 36.1, P2 20.6), so the columns are read in their real order.
+  Survey "PICES 2011/12 (2011/12 poverty report)", apart from the 2017
+  report's republished "PICES 2011/12" national rows (same values).
+
+  CROSS-CHECK: households 62.6 / 16.2 / 27.7 / 15.2; people 72.3 / 22.5 /
+  34.1 / 19.6; Matabeleland North households 81.7, people 89.9; Harare
+  35.7; widowed female heads 68.9; communal lands 79.4; provincial shares
+  of poor households sum to 100.0.

@@ -1,0 +1,24 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Pauvreté, développement humain et développement social au Maroc. Données cartographiques et statistiques. 2004"
+frequency: ad_hoc
+expect_metrics: 2
+expect_rows: 100
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231444/"
+  save_as: HCP_pauvrete_dev_humain_2004.pdf
+
+parser: morocco_carte2004_poverty
+geography: Total country
+
+notes: >
+  Annexe 2, Tableau 1: P0 and P2 (%) for 61 provinces (no P1 printed). Commune
+  tables not read (wrapped two-column labels). CROSS-CHECK: Zagora 33,58 /
+  4,76; Rabat 2,38 / 0,22.

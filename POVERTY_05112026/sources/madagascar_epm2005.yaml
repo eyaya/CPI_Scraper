@@ -1,0 +1,30 @@
+country: Madagascar
+iso3: MDG
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+publication_code: EPM 2005 rapport principal (juin 2006), chapitre XIII Pauvreté
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 5
+expect_rows: 550
+
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_Epm05_06-2006.pdf"
+  save_as: INSTAT_Epm05_06-2006.pdf
+  download_timeout: 900
+
+parser: madagascar_epm2005_poverty
+geography: Total country
+
+notes: >
+  EPM 2005: P0/P1/P2 x milieu for the nation, 6 former provinces and 22
+  regions (Tableau 177), by household size, GSE and sex of the head (179-181),
+  P0 confidence bounds (182), P0/P1 at 75% of the line (Tableau 7, the 2005
+  report's "extrême"), and Tableau 178's 2001/2002/2004 province values
+  (filed "EPM <year> (as republished in EPM 2005)"; its national block has
+  swapped cells and is not read).
+
+  CROSS-CHECK: 68,7 / 26,8 / 13,4; Androy 83,3; CI 66,6-70,9.

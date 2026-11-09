@@ -1,0 +1,36 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zimbabwe National Statistics Agency (ZIMSTAT), joint report with the World Bank
+publication_code: Zimbabwe Poverty Update 2017-19 (Mini-PICES 2019)
+frequency: ad_hoc
+expect_rows: 35
+
+# --- discover ---
+# Listed on ZIMSTAT's own poverty-statistics page. A JOINT ZIMSTAT / World
+# Bank report on ZIMSTAT's own survey (the Mini-PICES 2019, run by a PICES
+# Technical Committee chaired by ZIMSTAT) -- collected as NSO-co-authored;
+# flagged for review (the Seychelles WB-only assessment was refused).
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Poverty_Statistics/Zimbabwe_PovertyUpdate_2017-2019_WEBB_Final.pdf"
+  save_as: Zimbabwe_PovertyUpdate_2017-2019_WEBB_Final.pdf
+  download_timeout: 600
+
+parser: zimbabwe_update_poverty
+geography: Total country
+
+notes: >
+  Rebased 2017 lines (US$ per person per month: food 29.80 = extreme, lower
+  bound 45.60 = other, upper bound 66.10 = overall). Table 4.1 rebased 2017
+  P0 on the three lines by national / rural / urban; Table 4.2 extreme-P0
+  95% CIs for 2017 (rebased) and Apr-May 2019; Table 4.3 extreme poverty gap
+  2017 / 2019; Table 4.5 extreme P0 by education of individuals 2017 / 2019.
+  The 2019 point headcounts are printed only as chart labels (Figures 4.1,
+  E.1) and are not collected. The Mini-PICES 2019 consumption is
+  SWIFT-assisted; both rounds' survey labels say so.
+
+  CROSS-CHECK: rebased 2017 30.4 / 54.2 / 70.4; extreme gap 7.8 (2017) ->
+  12.8 (2019); 2019 extreme CI 30.1-40.4.

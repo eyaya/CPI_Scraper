@@ -1,0 +1,36 @@
+country: Rwanda
+iso3: RWA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: Rwanda Poverty Profile Report 2013/14 (EICV4), with EICV1-EICV3
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 150
+
+# --- discover ---
+# statistics.gov.rw answers plain requests with a bot check (not
+# circumvented). The Wayback CDX index of the domain holds NISR's own file;
+# fetched in its `id_` form.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20250510181510id_/http://www.statistics.gov.rw/sites/default/files/documents/2025-01/Rwanda_Poverty_Profile_Report_0_0.pdf"
+  save_as: Rwanda_Poverty_Profile_Report_0_0.pdf
+  download_timeout: 900
+
+parser: rwanda_eicv4_poverty
+geography: Total country
+
+notes: >
+  EICV4 poverty profile. Line RWF 159,375 (extreme 105,064) per adult
+  equivalent per year, January 2014 prices. Table 9: national P0/P1/P2 for
+  EICV1 2000/01, EICV2 2005/06, EICV3 2010/11, EICV4 2013/14. Table 8: 30
+  districts 2013/14 (poverty, extreme). C.1/C.2: provinces (and urban/rural
+  for 2005/06, 2010/11) EICV1-3. C3: 30 districts 2010/11. Period = END year
+  of the round (2001 ... 2014), the convention the existing Rwanda rows use.
+  Not read: C.4 (depth among the poor, P1/P0), C.5 (Gini), Watts index.
+  CROSS-CHECK: 58.9 / 56.7 / 44.9 / 39.1; gap 24.4 / 22.3 / 14.8 / 12.0;
+  severity 13 / 11.4 / 6.6 / 5.2; extreme 40 / 35.8 / 24.1; Nyamasheke 62.0
+  (extreme 39.2); Nyamagabe 2010/11 73.3. Identical to the EICV3 Main
+  Indicators Report Tables 8.1.1/8.1.2 (retained, not parsed).

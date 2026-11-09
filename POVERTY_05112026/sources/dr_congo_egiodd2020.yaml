@@ -1,0 +1,39 @@
+country: DR_Congo
+iso3: COD
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS) with the Observatoire Congolais du Développement Durable (OCDD)
+publication_code: Enquête par Grappes à Indicateurs des ODD (EGI-ODD) 2020, rapport final
+frequency: ad_hoc
+verify_ssl: true
+expect_metrics: 3
+expect_rows: 240
+
+# --- discover ---
+# INS's own WordPress upload. ins.cd refused connections from here on
+# 2026-11-04 (ConnectionError); the Wayback `id_` copy of the same path was
+# fetched instead -- the pinned URL below.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/2022id_/https://ins.cd/wp-content/uploads/2022/04/EGI-ODD-2020-Rapport-final.pdf"
+  save_as: EGI-ODD-2020-Rapport-final.pdf
+  download_timeout: 900
+
+parser: dr_congo_egiodd2020_poverty
+geography: Total country
+
+notes: >
+  EGI-ODD 2020: P0/P1/P2 (persons) on the national line for urban/rural and
+  the 26 provinces, P0 by characteristics of the head; and on the
+  international "1,9$ par jour" line (PPP base not stated in the report) for
+  the 26 provinces, milieu and head characteristics. No line amount printed.
+
+  Tableau 5.12 (2012 vs 2020) is NOT collected: its 2012 column assigns the
+  Enquête 1-2-3 2012 provincial values to the wrong provinces (national,
+  urban and rural cells do match), and its 2020 column regroups provinces
+  into the 11 former ones under colliding names. 2012 comes from INS's own
+  1-2-3 report (dr_congo.yaml).
+
+  CROSS-CHECK: 56,2 / 22,3 / 11,6; urban 45,2; rural 65,4; Kinshasa 17,6;
+  $1,90 74,7 / 36,3 / 21,4.

@@ -1,0 +1,24 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Les Indices de la pauvreté 1990-1991 (ENNVM 1990/91)"
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 200
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231671/"
+  save_as: HCP_indices_pauvrete_1990_1991.pdf
+
+parser: morocco_hcp_poverty
+geography: Total country
+
+notes: >
+  ENNVM 1990/91, same layout as morocco_encdm1985 plus sector, CSP and
+  diploma of the head. CROSS-CHECK: national 13,1 / 0,027 / 0,008; urban 7,6;
+  rural 18,0; Grand Casablanca 0,0 (printed).

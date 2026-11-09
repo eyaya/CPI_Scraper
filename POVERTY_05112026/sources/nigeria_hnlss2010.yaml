@@ -1,0 +1,36 @@
+country: Nigeria
+iso3: NGA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS)
+publication_code: Nigeria Poverty Profile 2010 (HNLSS 2009/10), NBS Jan 2012
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 180
+
+# Wayback `id_` capture (2015-12-03) of NBS's own /pdfuploads/ file. NBS
+# uploaded the report twice ("Nigeria Poverty Profile 2010.pdf" and
+# "poverty 2010.pdf"); the tables are identical, the second adds a page of
+# notes on the 3,000-kcal threshold -- that one is used.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20151203001928id_/http://www.nigerianstat.gov.ng/pdfuploads/poverty%202010.pdf"
+  save_as: nbs_poverty_2010.pdf
+  download_timeout: 600
+
+parser: nigeria_hnlss2010_poverty
+geography: Total country
+
+notes: >
+  HNLSS 2009/10 (period 2009). Table 10: food poverty, absolute (3,000 kcal
+  food-energy line, as 2004), relative (2/3 of regionally deflated mean per
+  capita expenditure; continues the 1980-2004 relative series) and dollar a
+  day (adjusted PPP, N150 = US$1, base year not printed) for urban/rural,
+  6 zones and 37 states. Table 3: relative core poor 2004 (22.0) and 2010
+  (38.7); Table 4: 2004 food-poor 33.6 (printed nowhere else). Not read:
+  Table 9 (2011 = forecast; prints 2004 dollar rate 62.8 vs 51.6/51.55
+  elsewhere), subjective poverty, Gini.
+
+  CROSS-CHECK: food 41.0 / absolute 60.9 / relative 69.0 / dollar 61.2
+  (national 2010); Sokoto 86.4 relative; Niger 43.6; Lagos food 14.6.

@@ -1,0 +1,22 @@
+country: Senegal
+iso3: SEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: Rapport ESPS-II 2011 (chapitre 4, pauvreté)
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 450
+
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2022-11/Rapport_ESPS-2011.pdf"
+  save_as: sn_esps_2011_rapport.pdf
+  download_timeout: 900
+
+parser: senegal_esps_poverty
+geography: Total country
+
+notes: >
+  Original ESPS-II 2011 estimates (national 46,7; the EHCVM report's re-linked 2011 series is a separate survey label). Tableau 4.3 P0 P1 P2 by region for ESPS-I 2005/06 (header misprinted 'ESPS-II -I'; its Ensemble 48,3 is the 2005-2006 rate the text gives) and ESPS-II; Tableaux 4.4-4.8 by stratum x sex, marital status, age, education, sector of the head, with contributions and poor counts. Stratum-specific lines (1 053 / 798 / 598 FCFA per adult-equivalent per day): line_value blank. CROSS-CHECK: 46,7 / 14,5 / 6,6; Kolda 76,6; ESPS-I 48,3.

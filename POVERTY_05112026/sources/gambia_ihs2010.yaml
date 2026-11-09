@@ -1,0 +1,33 @@
+country: Gambia
+iso3: GMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Gambia Bureau of Statistics (GBoS)
+publication_code: Integrated Household Survey 2010, Income and Expenditure Poverty Assessment
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 230
+
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/524-integrated-household-survey-report-2010"
+  save_as: gambia_ihs2010_report.pdf
+  download_timeout: 600
+
+parser: gambia_ihs2010_poverty
+geography: Total country
+
+notes: >
+  The 2010 round's ORIGINAL estimates, on dollar-a-day lines only: US$1 and
+  US$1.25 per person per day (GBoS calls $1.25 "the poverty line"; the PPP
+  base year is not printed, so the line names say so and the IDs are
+  wording-based). Table 5.1: headcount and distribution of the poor on both
+  lines for urban/rural, 8 LGAs, household size, sex / education / sector of
+  the head, plus the population distribution; Tables 5.15/5.16 by age group.
+  Tables 5.7-5.14 repeat the rates with SAMPLE counts -- not read. GBoS's
+  later re-estimate of 2010 on its national absolute line (IHS 2015/16
+  report) is collected separately under survey "IHS 2010".
+
+  CROSS-CHECK: 36.7 (<$1) / 48.4 (<$1.25); rural 62.1 / 73.9; Kuntaur 74.1 /
+  79.0; 10+ persons 64.5 / 76.8; LGA population shares sum to 100.0.

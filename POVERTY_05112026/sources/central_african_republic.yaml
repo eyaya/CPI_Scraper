@@ -1,0 +1,37 @@
+country: Central_African_Republic
+iso3: CAF
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut Centrafricain des Statistiques et des Etudes Economiques et Sociales (ICASEES)
+publication_code: EHCVM 2021 - Rapport sur les indicateurs de pauvreté en RCA 2021 (16 février 2023)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 5
+expect_rows: 55
+
+# --- discover ---
+# ICASEES' Phoca/edocman listing (www host; the bare host 301s there), full
+# list at /index.php/publications/liste-des-publications?limit=0. ICASEES is
+# INTERMITTENT and was seen serving cloaked spam to "bot" user agents (CPI
+# notes) -- the harness's browser UA gets the real PDF (checked 2026-11-04,
+# %PDF-1.7, 42 pp). The same listing carries "Rapport final d'évaluation de la
+# pauvreté 2023" -- a World Bank poverty assessment, not used.
+discover:
+  method: static_url
+  url: "https://www.icasees.org/publications/tableau-de-bord/ehcvm-2021-rapport-sur-les-indicateur-de-pauvrete-en-rca-2021-16-fevrier-2023-vf/download"
+  save_as: car_ehcvm2021_indicateurs_pauvrete.pdf
+  download_timeout: 600
+
+parser: central_african_republic_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2021, Tableau 2.1: P0, P1, P2, contribution to poverty and population
+  share -- national, Urban / Bangui / Other urban / Rural, and 7 regions. Line
+  722 FCFA per person per day. Number of poor (thousands) not collected (no
+  thousands unit; never rescaled). US$2.15 2017 PPP rate (65,1 %) is prose
+  only. The prose gives Other urban 71.1 % against the table's 71.2 -- table kept.
+
+  CROSS-CHECK: P0 68.8 / P1 31.1 / P2 17.4; Bangui 40.1; Haut-Oubangui 84.7;
+  Rural 74.2; regional population shares and contributions sum to 99.9.

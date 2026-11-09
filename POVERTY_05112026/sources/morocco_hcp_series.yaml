@@ -1,0 +1,35 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: xlsx
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Taux de pauvreté absolue (Tableau 11), Indices de pauvreté selon la région, Taux de pauvreté relative"
+frequency: ad_hoc
+expect_metrics: 1
+expect_rows: 40
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://docs.google.com/spreadsheets/d/1rdU9Njkb2L-_ONVj60-AoXSUeQFDjSK8A_D5fYILhQ8/export?format=xlsx&gid=0"
+  save_as: HCP_taux_pauvrete_absolue.xlsx
+extra_urls:
+  - url: "https://docs.google.com/spreadsheets/d/1HBR98Qzph3QQ7UtEtSznkp4aOwHluSUbZfqr2O01yyg/export?format=xlsx&gid=552331831"
+    save_as: HCP_indices_pauvrete_region_2001_2014.xlsx
+  - url: "https://docs.google.com/spreadsheets/d/1NceRKUPtl405YM3o645u_z-yc2rM0U8TYlFI_PjylXs/export?format=xlsx&gid=0"
+    save_as: HCP_taux_pauvrete_relative.xlsx
+
+parser: morocco_series_poverty
+geography: Total country
+
+notes: >
+  HCP indicator pages (Revenu & conditions de vie > Pauvreté et
+  vulnérabilité): absolute poverty by milieu for ENNVM 2007, ENCDM 2014, ENSR
+  2019 and ENNVM 2022/23 (2001 is collected from morocco_encdm2001); P0 for the
+  12 regions in 2001/2014/2022 (2022 has no 'Régions du Sud' row); relative
+  poverty (50% of median INCOME) 2020. HCP labels the ENSR 2019 survey year
+  '2020'; dated 2019 (HCP's 2024 note: '1,7% en 2019'). Vulnerability
+  (Tableau 12) is not a poverty measure and is not collected.
+  CROSS-CHECK: 8,9 / 4,8 / 1,7 / 3,9 national; rural 2022 6,9; Fès-Meknès 2022
+  9,0; relative 12,7.

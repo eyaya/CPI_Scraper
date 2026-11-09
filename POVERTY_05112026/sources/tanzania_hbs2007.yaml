@@ -1,0 +1,33 @@
+country: Tanzania
+iso3: TZA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS) Tanzania
+publication_code: Household Budget Survey 2007 Report (2009)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 120
+
+# --- discover ---
+# Wayback `id_` copy of NBS's own file.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20181114193036id_/http://nbs.go.tz/nbs/takwimu/hbs/hbs2007/HBS%202007%20Report%20-%20Final%20Document%206%20May%202009.pdf"
+  save_as: HBS_2007_Report.pdf
+  download_timeout: 900
+
+parser: tanzania_hbs2007_poverty
+geography: Tanzania Mainland
+
+notes: >
+  HBS 2007 report ch. 7-8. Table 7.2: food and basic-needs P0 by stratum for
+  1991/92, 2000/01, 2007; Table 7.3: population share and % of the poor
+  2000/01 and 2007; Tables 8.1, 8.3, 8.7: P0 and % of the poor by household
+  size, sex and education of the head for all three rounds. 2007 lines: food
+  TZS 10,219, basic needs 13,998 per adult equivalent per 28 days (the
+  2000/01 lines inflated by a Fisher index). Counts of the poor are in
+  thousands and not read; Table 8.2 (dependency ratio), 8.4-8.6 (income
+  sources, employees) not read -- no topic.
+  CROSS-CHECK: 33.6 / food 16.6; rural 37.6; Dar es Salaam 16.4; household
+  size 10+ 52.2; female head 33.8.

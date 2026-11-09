@@ -1,0 +1,41 @@
+country: Angola
+iso3: AGO
+indicator: Poverty
+tier: 2
+source_type: xlsx
+agency: Instituto Nacional de Estatística (INE) Angola
+publication_code: Quadros de Relatório de Pobreza para Angola - IDR 2019 (IDREA 2018-2019)
+frequency: ad_hoc
+expect_metrics: 4
+expect_rows: 200
+
+# --- discover ---
+# INE's directory tree (POST download, tokens per session), walked by folder
+# name like labour/ and population/: População e Sociedade / Pobreza Monetária
+# holds exactly one workbook (checked 2026-11-04).
+discover:
+  method: ine_ao_directory_files
+  index_url: "https://www.ine.gov.ao/Publicacoes/Todas"
+  dirs:
+    - "População e Sociedade"
+    - "Pobreza Monetária"
+  files:
+    - ["Pobreza", "IDR"]
+
+parser: angola_poverty
+geography: Total country
+
+notes: >
+  IDREA 2018-2019 poverty tables (workbook). P0 (Incidência), P1
+  (Profundidade), P2 (Intensidade = severity) and poor counts: national,
+  urban/rural, 18 provinces (Q4.3.3) and provinces x urban/rural (Q4.3.4);
+  sex, age and schooling of the household HEAD (population columns sum to the
+  national total, so the cuts are of the head); household size and labour-force
+  status of the head (Q4.3.5); employment of employed heads (Q4.3.6). Every
+  row's poor / population reproduces its printed P0 (checked in the parser).
+  Q4.3.4 swaps the Cuanza Norte / Cuanza Sul labels against Q4.3.3; those two
+  rows of Q4.3.4 are not read. No line amount in the workbook.
+
+  CROSS-CHECK: P0 40.6 / P1 10.1 / P2 4.4; poor 11 947 270 of 29 391 387;
+  urban 29.8, rural 57.2; Moxico 62.8 (rural 81.3); Luanda 20.1;
+  female-headed 40.2; no schooling 56.5; 7+ members 50.8.

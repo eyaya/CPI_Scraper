@@ -1,0 +1,42 @@
+country: Djibouti
+iso3: DJI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Direction de la Statistique et des Etudes Démographiques (DISED), now INSTAD
+publication_code: EDAM4-IS 2017 - Rapport 1 résultats
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 1
+expect_rows: 30
+
+# --- discover ---
+# INSTAD's API (instad-dj-6abc7b0eb612.herokuapp.com, /fichiers/<cat>/<year>
+# and POST /publications) carries no EDAM poverty report (checked 2026-11-04:
+# categories Rapports / Sociale empty; Annuaire 2025 has no poverty table).
+# The only copy is the Wayback capture of DISED's own file on dised.dj (the
+# predecessor NSO's site) -- the DR Congo precedent.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20190303001900id_/http://www.dised.dj:80/Rapport1_resultats_EDAM4.pdf"
+  save_as: dised_edam4_rapport1_resultats.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 600
+
+parser: djibouti_poverty
+geography: Total country
+
+notes: >
+  EDAM4-IS 2017. P0 on the extreme (111 783 FD) and global (151 391 FD) lines,
+  per adult equivalent per year: national, Djibouti ville, Autres régions,
+  Autre urbain, Rural (Tableau 4) and Djibouti ville's 5 arrondissements
+  (Tableau 8); extreme P0 of children 0-17, men and women 18+ (Tableau 5,
+  shares living in extremely poor households). The report's P1/P2 rows are NOT
+  collected -- it never says which line they use. Text layer prints the decimal
+  comma as a space ("21 1%"); repaired on Tableaux 4/8 pages only, confirmed
+  by the prose values. Encadré 1 says EDAM 2002/2012/2013 figures are not
+  comparable with EDAM4.
+
+  CROSS-CHECK: extreme 21,1 % (Djibouti ville 13,6, autres régions 45,0, rural
+  62,6); global 35,8 % (59,8 outside the capital); 4th/5th arrondissements
+  extreme 18,3 / 15,8.

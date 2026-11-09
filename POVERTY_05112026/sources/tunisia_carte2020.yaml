@@ -1,0 +1,31 @@
+country: Tunisia
+iso3: TUN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: "Carte de la pauvreté en Tunisie, Septembre 2020"
+frequency: ad_hoc
+expect_metrics: 1
+expect_rows: 300
+
+# --- discover --- (linked from www.ins.tn/publication/carte-de-la-pauvrete-en-tunisie-septembre-2020)
+discover:
+  method: static_url
+  url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Carte%20de%20la%20pauvret%C3%A9%20en%20Tunisie_final_0.pdf"
+  save_as: INS_carte_pauvrete_2020.pdf
+  download_timeout: 600
+
+parser: tunisia_carte2020_poverty
+geography: Total country
+
+notes: >
+  Small-area estimation (INS / World Bank; RGPH 2014 x EBCNV 2015). Tableau
+  A2: for 24 gouvernorats, the EBCNV 2015 survey P0 and the census-based map
+  estimate; Tableau 4: map estimates for the seven regions (its survey column
+  repeats Volume A 2021's 2015 regional rates, not read twice); Tableau A3: map
+  estimates for 264 délégations ('Ezzouhour' occurs twice and is suffixed with
+  its code). Map rows: survey 'Carte de la pauvreté 2020 (RGPH 2014 x EBCNV
+  2015)', period 2014. Standard errors not collected. CROSS-CHECK: Tunis
+  survey 3,5 / map 4,6; Kairouan 34,9 / 29,3; Sedjnane 39,9; Centre-Ouest map
+  29,3.

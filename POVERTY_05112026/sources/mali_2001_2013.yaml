@@ -1,0 +1,36 @@
+country: Mali
+iso3: MLI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: Analyse de la pauvreté monétaire et non monétaire au Mali de 2001 à 2013 -- tendances et profils
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 350
+
+# --- discover ---
+# Listed on INSTAT's EHCVM / poverty publication page beside the 2021 and
+# 2018-2019 profiles (see mali.yaml). Same file-manager path. TLS verifies.
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/profil-det-pauv-2001-2013_pub.pdf"
+  save_as: mali_profil_det_pauv_2001_2013_pub.pdf
+  download_timeout: 900
+
+parser: mali_2001_2013_poverty
+geography: Total country
+
+notes: >
+  INSTAT study re-computing four rounds on one harmonised method: EMEP 2001,
+  ELIM 2006, EMOP 2011, EMOP 2013 (each its own survey label, tagged "série
+  harmonisée, INSTAT 2001-2013"). HOUSEHOLD headcounts ("proportion des
+  ménages pauvres", p. 38). Tableau 10 (9 regions + milieu + national) and
+  Tableau 12 (sex, age, education, marital status of the head; household
+  size). EMOP 2013 did not cover Tombouctou, Gao, Kidal. Two lines per round
+  are printed (Tableau 2: seuils actualisés 147 000 / 152 000 / 176 000 /
+  177 967 FCFA vs seuils utilisés 144 000 / 149 000 / 172 000 / 173 922) and
+  the FGT tables do not say which -- line_value left blank.
+
+  CROSS-CHECK: national 58,8 / 56,1 / 35,0 / 47,7 (P0); 2001 P1 24,7, P2 13,1;
+  Kidal 2011 4,1; Bamako 2013 7,1; female head 2001 42,9.

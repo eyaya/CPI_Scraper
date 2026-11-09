@@ -1,0 +1,49 @@
+country: Chad
+iso3: TCD
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique, des Études Économiques et Démographiques (INSEED)
+publication_code: ECOSIT4 Rapport général (avril 2021), chapitre 4 + tableau récapitulatif
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+expect_rows: 200
+
+# --- discover ---
+# Same file labour/ and unemployment/ collect from. inseed.ssn-tchad.td is a
+# SPA over a Node API (`/api/publications?limit=1000` lists every publication
+# with `titre` and `fichier.url`). ECOSIT4 is a one-off round, so the file is
+# pinned; a future ECOSIT5/EHCVM report would be found in that listing.
+discover:
+  method: static_url
+  url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1767705826725-13895961.pdf"
+  save_as: tchad_ecosit4_rapport_general.pdf
+
+parser: chad_poverty
+geography: Total country
+
+notes: >
+  ECOSIT4 (7 500 households, collected Jul-Sep 2018 and Jan-Apr 2019; INSEED
+  dates it 2018). National line 241 970 FCFA per person per year (672 FCFA a
+  day); food line 153 353. Welfare = consumption per capita. The 2011 columns
+  of the recap table are ECOSIT3 (line 237 942), kept as their own survey and
+  period; INSEED notes the 2018 line method "diffère légèrement" from 2011's.
+
+  Collected: recap table (2011 national/urban/rural/sex-of-head P0 P1 P2; 2018
+  urban/rural), Tableau 4.05 (21 provinces + Total, P0 P1 P2 + share of the
+  poor), 4.06 socio-professional category of the head, 4.07 sex, 4.08 age,
+  4.09 marital status, 4.10 education of the head, 4.11 household size.
+
+  Not collected: 4.10's status-in-profession and branch blocks (topic clash
+  with 4.06, see parser); extreme poverty (charts only, labels contradict the
+  prose); charts 4.1-4.6; the count of poor (prose only); Gini.
+
+  Published inconsistency kept: urban P0 19,3 (recap table, Graphique 4.1)
+  vs 19,9 (prose p. 57). Recap prints 2011 P0 as "46, 7" -- re-joined in the
+  parser, confirmed by the prose on p. 12.
+
+  CROSS-CHECK: P0 42,3 / P1 12,6 / P2 5,2 (2018); 46,7 / 26,3 / 15,9 (2011);
+  urban 19,3, rural 49,7; N'Djamena 13,6; Mayo-Kebbi Ouest 63,1; Sila 42,3;
+  female-headed 42,1; 1 personne 3,4; provinces' shares of the poor sum to
+  100,2 (rounding).

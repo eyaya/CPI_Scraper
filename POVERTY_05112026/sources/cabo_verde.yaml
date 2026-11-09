@@ -1,0 +1,54 @@
+country: Cabo_Verde
+iso3: CPV
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE Cabo Verde)
+publication_code: Perfil da Pobreza - Evolução da Pobreza Monetária Absoluta, 2001/02, 2007 e 2015 (III IDRF) + Resultados da estimativa de pobreza SWIFT 2023
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 850
+
+# --- discover ---
+# INE's publication API (theme 21, type 2 "Publicações"): publication 1745
+# "Perfil de Pobreza - Evolução..." carries two copies of the profile; the
+# newer upload (2025-12-09) is used. The SWIFT 2023 note is publication 3480
+# (type 8). Both via /GenericFile/GetFile -> Uploads/<stamp>.pdf (checked
+# 2026-11-04). ine_cv_publication_file reads only the newest 50 items of a
+# theme and the profile is older, hence static URLs.
+discover:
+  method: static_url
+  url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20251209_085937_7ae42c40-db93-4487-bf27-54347c2032f3.pdf"
+  save_as: cv_perfil_pobreza_2001_2015.pdf
+  download_timeout: 300
+extra_urls:
+  - url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_164414_253e3b1a-1692-4bee-b89e-64ccfa767dab.pdf"
+    save_as: cv_estimativa_pobreza_swift_2023.pdf
+
+parser: cabo_verde_poverty
+geography: Total country
+
+notes: >
+  IDRF 2001/02, 2007, 2015 absolute poverty ("pobreza absoluta global") and
+  extreme poverty, consumption per person; separate urban/rural lines (2015
+  global 95.461 / 81.710 CVE, extreme 49.699 / 49.205 per person per year --
+  Tabela 16), so line_value is blank. 2015 by island, study domain, 22
+  municipalities and head/household characteristics (Tabelas 35-40, 24);
+  2001/2007 national, urban/rural and study domains (Tabelas 17-18).
+
+  SWIFT 2023: IV IDRF 2023 poverty IMPUTED from a model estimated on III IDRF
+  2015 (survey-to-survey, INE with the World Bank) -- absolute (national line)
+  and extreme on the international US$2.15 2017 PPP line; tagged in `survey`.
+  Its 2015 column (model fit, 35,50) is not read. The 2016-2022 SWIFT series
+  (IMC-based) prints its values only in a chart and is not collected.
+
+  NUMBER FORMAT: dot thousands with comma decimals -- the parser removes the
+  dots before reading. PUBLISHED: Tabela 18's 2015 block disagrees with Tabela
+  35 (Resto de Santiago 44,7 vs 44,8; Outras ilhas 26,2 vs 25,1), 2015 from
+  Tabela 35; Tabela 39 prints 663 poor unemployed heads vs 6.563 in Tabela 38
+  (kept verbatim).
+
+  CROSS-CHECK: 56,8 / 45,4 / 35,2 (2001/2007/2015); 2015 P1 11,4, P2 5,0,
+  extreme 10,6, poor 179.909 (municipal counts sum to 179.907, islands to
+  179.908); Boavista 7,5; female head 39,0; SWIFT 2023 24,75 / US$2.15 2,28.

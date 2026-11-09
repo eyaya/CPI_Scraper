@@ -1,0 +1,23 @@
+country: Zambia
+iso3: ZMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats, formerly CSO)
+publication_code: Living Conditions Monitoring Survey 2006 and 2010
+frequency: ad_hoc
+expect_rows: 300
+
+# --- discover ---
+# On ZamStats' own WordPress uploads (found via /wp-json/wp/v2/media?search=Living Conditions).
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2006-2010-Living-Conditions-Monitoring-Survey.pdf"
+  save_as: 2006-2010-Living-Conditions-Monitoring-Survey.pdf
+  download_timeout: 900
+
+parser: zambia_2010_poverty
+geography: Total country
+
+notes: >
+  LCMS 2006-2010 report: Appendix Tables A9 (2010) / A10 (2006) P0 with 95% CI by rural/urban, stratum and province; Table 12.4 overall and extreme P0 by age of head and household size x residence, 2006 and 2010; Table 12.5 (2010) by education and employment status of head. Moderate lines K100,012 (2006) / K146,009 (2010) per AE per month. The province/stratum EXTREME rates exist only as chart labels and are not read. CROSS-CHECK: 62.80 / 60.508; Western 2006 83.23; extreme 65+ 2010 52.3.

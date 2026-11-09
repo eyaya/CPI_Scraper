@@ -1,0 +1,54 @@
+country: Togo
+iso3: TGO
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Études Économiques et Démographiques (INSEED)
+publication_code: Note synthétique sur les résultats de pauvreté EHCVM 2018-2019 + Profil de pauvreté 2006-2011-2015 (QUIBB)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 7
+expect_rows: 1000
+
+# --- discover ---
+# inseed.tg serves files through the WordPress Download Monitor plugin; the
+# /wp-content/uploads/dlm_uploads/... paths return 404, the /download/<id>/
+# routes return the PDF. Ids found through the open REST endpoint
+# /wp-json/wp/v2/dlm_download?search=pauvret (1687 = "Note de synthèse sur
+# les Chiffres de Pauvreté (2018-2019)", 2633 = "Profil de pauvreté 2016").
+# EHCVM 2021/22 monetary results were presented in Dec 2024 only as slides /
+# video (no report in the listing as of 2026-11-04); 6613 is the MPI report.
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/1687/"
+  save_as: togo_ehcvm_2018_note_synthese_pauvrete.pdf
+
+extra_urls:
+  - url: "https://inseed.tg/download/2633/"
+    save_as: togo_profil_pauvrete_2016.pdf
+
+parser: togo_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2018-2019 (fieldwork Sep-Dec 2018, Apr-Jul 2019): national line
+  273 628 FCFA per person per year; P0/P1/P2, number of poor, P0 by Rural /
+  Lomé urbain / Autres urbains / Urbain, and the US$1,9 / US$3,2 (PPP 2011)
+  rates. The note's Tableau 3 prints rural 58,7 and line 273 619 against
+  Tableaux 1-2's 58,8 / 273 628; Tableaux 1-2 are kept. Tableau 2's 2017
+  column (national 53,5, line 355 638) names no survey and is filed as such.
+  Its region rows are not collected (four values for five years).
+
+  QUIBB 2006 / 2011 / 2015 (extra file, annexes 3.1-3.14): P0/P1/P2 and
+  contributions by milieu, socio-economic group, sex, education, marital
+  status and age of the head and household size, on the overall line
+  (276 400 / 323 388 / 344 408 FCFA per ADULT EQUIVALENT per year) and the
+  extreme/food line. QUIBB and EHCVM welfare aggregates differ (INSEED says
+  so); each round is its own survey. Annex 3.8's "Autre urbain" filed under
+  3.1's "Autres urbains". Annex 3.10's 2015 contributions are a copy of
+  3.2's and are skipped.
+
+  CROSS-CHECK: 2018-19 P0 45,5 / P1 15,2 / P2 6,9, 3 476 705 poor; rural
+  58,8; Lomé urbain 22,3; 2015 55,1 / 22,1 / 11,7; 2006 61,7 (rural 75,1);
+  extreme 2015 28,7; US$1,9 23,1. Shares of the poor sum to 100 (±0,5) in
+  every annex block.

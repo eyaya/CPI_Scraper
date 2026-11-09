@@ -1,0 +1,30 @@
+country: Tunisia
+iso3: TUN
+indicator: Poverty
+tier: 2
+source_type: html
+agency: Institut National de la Statistique (INS)
+publication_code: Statistiques > Pauvreté (www.ins.tn/statistiques/102)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 1
+expect_rows: 24
+
+# --- discover --- (server-rendered tables, as unemployment/ and labour/ use)
+discover:
+  method: static_url
+  url: "https://www.ins.tn/statistiques/102"
+  save_as: INS_statistiques_102_pauvrete.html
+  impersonate: ["chrome124"]
+
+parser: tunisia_web_poverty
+geography: Total country
+
+notes: >
+  Two tables, "Taux de pauvreté par milieu de résidence" and "Taux de
+  pauvreté extrême par milieu de résidence", 2000/2005/2010/2015, unit
+  percent. Only 2000 adds to tunisia.yaml (Volume A 2021); 2005-2015 are
+  identical and share its merge keys.
+
+  CROSS-CHECK: 2000 national 25,4, communal 16,6, non communal 40,4; extreme
+  7,7 / 3,4 / 15,2.

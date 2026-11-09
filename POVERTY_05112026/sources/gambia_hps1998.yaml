@@ -1,0 +1,34 @@
+country: Gambia
+iso3: GMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Central Statistics Department (now GBoS)
+publication_code: 1998 National Household Poverty Survey Report (with 1992/93 HES)
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 45
+
+# Wayback `id_` capture (2015-09-10) of the file on GBoS's former site gbos.gov.gm.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20150910180934id_/http://www.gbos.gov.gm/uploads/survey/1998%20NATIONAL%20HOUSEHOLD%20%20POVERTY%20STUDY.pdf"
+  save_as: gambia_1998_national_household_poverty_study.pdf
+  download_timeout: 600
+
+parser: gambia_hps1998_poverty
+geography: Total country
+
+notes: >
+  Persons (and, nationally / by urban category, households) below the FOOD
+  poverty line ("Extremely Poor"), 1998 and the 1992/93 Household Economic
+  Survey as republished: 7 divisions, 3 urban categories, 11 socioeconomic
+  groups + national (Tables 4.3.4.1, 4.3.5.1, 4.3.5.2, 4.2.1.1). Integer
+  percentages as printed. The OVERALL-line headcount is printed only as its
+  complement ("Non Poor") -- deriving it would be recomputation, so it is
+  not emitted. Lines per AEU per year 1998: overall D5,538.78 (Greater
+  Banjul), D3,898.15 (other urban), D3,087.55 (rural); regional, so no single
+  line_value. Per the report, persons are assigned their household's status.
+
+  CROSS-CHECK: 51% of persons / 37% of households extremely poor (1998); 15%
+  (1992); Upper River 73; Rural 71; large groundnut farmers 1992 36.

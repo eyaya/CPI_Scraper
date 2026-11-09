@@ -1,0 +1,44 @@
+country: Mali
+iso3: MLI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: Profil et déterminants de la pauvreté au Mali en 2021 (EHCVM 2021-2022)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 300
+
+# --- discover ---
+# Linked from INSTAT's publication page "Un profil de pauvreté monétaire
+# stable dans le temps au Mali" (category 73, Conditions de vie/Société).
+# The EHCVM page also lists profil-det-pauv-2018-2019_pub.pdf and
+# profil-det-pauv-2001-2013_pub.pdf (earlier rounds, not yet laid out).
+# instat-mali.org times out intermittently -- hence the long timeout.
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/profil-determinants-pauvrete-mali-2021_pub.pdf"
+  save_as: mali_profil_determinants_pauvrete_2021.pdf
+  download_timeout: 900
+
+parser: mali_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2021-2022 (fieldwork Oct-Dec 2021, Apr-Jul 2022). Line 277 173 FCFA
+  per person per year (food 172 251). Tables 3-3..3-6 print BOTH rounds; the
+  "2019" columns are EHCVM 2018/2019 (line 269 485), filed as period 2018.
+  Collected: 9 regions + milieu, age / sex / marital status of the head,
+  household composition and size, literacy and education of the head
+  (both rounds), and P0/P1/P2 by branch, sector and socio-professional
+  category of the head (2021). Health, disability, housing, shocks and
+  inequality tables are not poverty-by-group in the schema's sense.
+
+  Published discrepancy kept as tabled: urban 2021 P0 21,3 in Tableau 3-3,
+  21,2 in the prose. Tableau 3-10's Ensemble row is shifted ("42,1 42,1 45,5")
+  -- not read.
+
+  CROSS-CHECK: 2021 P0 45,5 / P1 12,9 / P2 5,0; 2018/19 42,1 / 11,9 / 4,6;
+  Mopti 57,5, Kidal 4,9, Bamako 15,8; rural 52,5; female head 31,8;
+  polygamous 58,4; agriculture 60,9.

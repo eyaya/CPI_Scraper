@@ -1,0 +1,39 @@
+country: Gabon
+iso3: GAB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT, ex-DGS)
+publication_code: Profil de pauvreté EGEP 2 (2017)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 7
+expect_rows: 500
+
+# --- discover ---
+# Linked from new.instatgabon.org/statistiques-sur-les-conditions-de-vie-des-menages
+# (the live INSTAT host; dgstat.ga is dead), beside the EGEP 2 synthesis report
+# that population/ already collects.
+discover:
+  method: static_url
+  url: "https://new.instatgabon.org/uploads/folder_1/EGEP/PROFIL-DE-PAUVRETE-FINAL.pdf"
+  save_as: gabon_egep2_profil_pauvrete.pdf
+  download_timeout: 600
+
+parser: gabon_poverty
+geography: Total country
+
+notes: >
+  EGEP 2 (2017) poverty profile, Annexes II (overall line, 840 400 FCFA per
+  inhabitant per year) and III (extreme/food line, 429 639 FCFA). P0/P1/P2,
+  population share and contributions C0/C1/C2 by milieu, 11 survey strata (+
+  "Autre Urbain" from the 5-strata table), sex, education, marital status and
+  age of the head, and household size. The P1/P0 ratio column is not collected.
+  Tableau 9's caption repeats Tableau 8's ("par scolarisation") but its rows are
+  marital statuses -- collected as marital status. Tableaux 6/16
+  (socio-economic group) NOT collected: "Privé formel" is printed twice with
+  different values.
+
+  CROSS-CHECK: P0 33,4 / P1 11,3 / P2 5,3; extreme 8,2 / 2,4 / 1,0; urban
+  29,4, rural 59,5; Libreville 21,0, Sud-Rural 67,9; 10+ persons 62,8. Strata
+  C0 sums to 100,1, population shares to 100,0.

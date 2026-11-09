@@ -1,0 +1,34 @@
+country: Botswana
+iso3: BWA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Statistics Botswana
+publication_code: Botswana Core Welfare Indicators Survey 2009/10, Main Report Volume 1 (2013)
+frequency: ad_hoc
+expect_rows: 250
+
+# --- discover ---
+# On Statistics Botswana's own site (sites/default/files), found via the Wayback CDX index.
+discover:
+  method: static_url
+  url: "http://www.statsbots.org.bw/sites/default/files/BCWIS%202009%2010%20MAIN%20REPORT.pdf"
+  save_as: BCWIS_2009_10_MAIN_REPORT.pdf
+  download_timeout: 900
+
+parser: botswana_bcwis_2009_poverty
+geography: Total country
+
+notes: >
+  BCWIS 2009/10 main report: Table 31 share of poor HOUSEHOLDS and number of
+  poor households by district (its 2002/03 columns are poverty-MAPPING
+  estimates and are not read); Table 38 headcount and number of poor by
+  district x sex; Table 39 by age group x sex (incl. the report's children /
+  youth / adults / pensioners groups). Same survey and line labels as
+  botswana.yaml (the BMTHS 2015/16 brief), whose overlapping 2009/10 rows are
+  identical. HIES 1985/86 and 1993/94 poverty reports: not found on
+  statsbots.org.bw or cso.gov.bw captures. The 2024 SWIFT note (QMTS
+  2019-2022) prints its estimates only in prose and graphs -- not collected.
+
+  CROSS-CHECK: 19.3 (male 18.1, female 20.4); poor households 10.8% (58,285);
+  Ngamiland West 46.2; age 0-4 25.7; pensioners 17.5.

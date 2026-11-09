@@ -1,0 +1,44 @@
+country: Uganda
+iso3: UGA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Uganda Bureau of Statistics (UBOS)
+publication_code: Uganda National Household Survey 2023/24 Report (2025)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 600
+
+# --- discover ---
+# Listed by UBOS's WordPress media API (search "national household") and by
+# its publication listing (?pagename=explore-publications&p_id=23).
+discover:
+  method: static_url
+  url: "https://www.ubos.org/wp-content/uploads/2025/07/Uganda-National-Household-Survey-Report-20232024x.pdf"
+  save_as: UNHS_2023_24_report.pdf
+  download_timeout: 1800
+
+parser: uganda_unhs_poverty
+geography: Total country
+
+notes: >
+  UNHS 2023/24, chapter 6. Official national line (UBOS calls it the "one US
+  dollar per person per day" line; Table 6.15 shows its 2019/20 headcount is
+  the same 20.3 as the 2019/20 report, so it is filed under the same line).
+  Table 6.8: national, rural/urban, 4 regions, region x residence, 15
+  sub-regions -- population share, P0 P1 P2 and contributions. Box 1: food
+  poverty 2023/24. Table 6.9a: the UPPER line of US$1.77 per person per day,
+  P0 P1 P2 for 2016/17, 2019/20 and 2023/24 (line_level other). Table 6.12:
+  2023/24 by employment status and industrial sector of the head. Table 6.14:
+  monetary child poverty 2016/17-2023/24 by sex, residence, sub-region
+  (age_group "Children"; band not printed).
+
+  Not collected: mean consumption, poor in millions, household enterprise
+  (6.11), bottom 40% (6.13), pre/during-COVID sub-samples (6.15),
+  wage/enterprise combinations, the 2019/20 columns of 6.12.
+
+  CROSS-CHECK: 16.1 / 4.2 / 1.6; rural 19.4, urban 10.3; Karamoja 74.2 /
+  31.5 / 16.7; Kampala 1.1; food poverty 6.8; US$1.77 26.4 / 7.4 / 3
+  (2016/17 31.6, 2019/20 30.1); child poverty 23.2 / 22.7 / 18.5.
+  Regional contributions sum to 100.0.

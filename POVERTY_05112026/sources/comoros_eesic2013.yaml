@@ -1,0 +1,45 @@
+country: Comoros
+iso3: COM
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: INSEED (survey and host); report prepared by the African Development Bank with UN Women
+publication_code: Dimensions de la pauvreté et du genre aux Comores (EESIC 2013/14 phase 3, EDMC)
+frequency: ad_hoc
+expect_metrics: 5
+expect_rows: 280
+
+# --- discover ---
+# INSEED's NADA catalogue, study 7 (DDI-COM-EESIC-PHASE3-2013), related
+# materials, "Rapports", download 62. Fetched with TLS verification on.
+discover:
+  method: static_url
+  url: "https://www.nada.inseed-comores.org/index.php/catalog/7/download/62"
+  save_as: comoros_eesic2013_dimensions_pauvrete_genre.pdf
+  download_timeout: 900
+
+parser: comoros_eesic2013_poverty
+geography: Total country
+
+notes: >
+  Hosted by INSEED; authored by AfDB (with UN Women) -- collected under the
+  NSO-hosted rule, 2026-11-05 (previously excluded as AfDB-authored). EESIC
+  2013/14 phase 3 consumption survey, fieldwork 2013-11-01 to 2014-01-31 (NADA
+  study description): period 2013, reference 2013/14 (the report says "2014").
+  Three stratum-specific lines (Tableau 7: food / low = extreme / high =
+  overall, KMF per head per year; line_value blank). Tableaux 8 (P0 by
+  milieu), 9 (P1 "Déficit" only -- its "Sévérité" column exceeds the gap in
+  every cell, so it is not FGT P2, not read), 11 (2004 P0 on the 2004 food and
+  extreme lines of the PNUD 2005 report, as "EIM 2004 (republié ...)"; 2014
+  Ngazidja), 14/15/18/20/21 (P0, population share, absolute and relative
+  contribution by stratum, sex, household type, socio-professional category,
+  education of head; ratio de priorité not read), 16 (P0 by age of head and
+  household size). Not taken: Tableau 19 (tenure x dwelling), probit models,
+  consumption tables. The 2004 "extreme" line of this report gives 44,9 % for
+  Comores, close to the EIM 2004 report's own overall-line person headcount
+  (0,448, comoros_eim2004.yaml): the line names differ, as printed.
+  CROSS-CHECK: P0 21,9 / 35,6 / 44,1; urbain 31,9, rural 52,2 (overall); P1
+  6,9 / 12,6 / 16,8; Ndzouani overall 47,9 (population 41,9, contributions
+  20,1 / 45,5); female heads 45,4; Néant food 31,3; 2004 Comores 21,6 / 44,9;
+  Ngazidja 2014 14,0 / 28,4. Strata population shares sum to 100,0; absolute
+  contributions sum to the national P0 on every line.

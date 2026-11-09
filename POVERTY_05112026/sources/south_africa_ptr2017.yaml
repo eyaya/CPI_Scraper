@@ -1,0 +1,39 @@
+country: South_Africa
+iso3: ZAF
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Statistics South Africa (Stats SA)
+publication_code: Poverty Trends in South Africa 2006-2015 (Report 03-10-06, 2017)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 1900
+
+# Wayback `id_` capture (2017-11-21) of Stats SA's own PDF (CDX index of
+# statssa.gov.za/publications/Report-03-10-06/*).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20171121192314id_/http://www.statssa.gov.za/publications/Report-03-10-06/Report-03-10-062015.pdf"
+  save_as: Report-03-10-062015.pdf
+  download_timeout: 600
+
+parser: south_africa_ptr2017_poverty
+geography: Total country
+
+notes: >
+  PTR 2017, a superseded edition: IES 2005/06, LCS 2008/09, IES 2010/11,
+  LCS 2014/15 on the rebased lines of Table 1.2 (FPL 219/318/335/441, LBPL
+  370/456/501/647, UBPL 575/709/779/992 per person per month). Survey
+  labels "... (Poverty Trends 2017)". The text layer is CID-coded (CID-keyed
+  CFF fonts, no ToUnicode); the parser maps CID N to character N -- a
+  character map, NOT OCR -- proven by all 108 printed page numbers equalling
+  the PDF page index minus 12 and by Table 2.1's published 2015 headline
+  rates. P0/P1/P2 on each of UBPL, LBPL and FPL for persons (Tables
+  3.1-3.20: sex, age, education 18+, province, settlement type) and
+  households (4.1-4.20: sex, age, education of head, province, settlement
+  type); national rows from the sex tables' Total rows, checked against
+  Tables 2.1/2.2. Population group, shares, counts in millions not collected.
+
+  CROSS-CHECK: UBPL 66,6 / 62,1 / 53,2 / 55,5; LBPL 51,0 / 47,6 / 36,4 /
+  40,0; FPL 28,4 / 33,5 / 21,4 / 25,2; UBPL P2 2015 17,0; households UBPL
+  2015 40,0; Limpopo households FPL 2009 40,0.

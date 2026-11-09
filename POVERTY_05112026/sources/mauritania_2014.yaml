@@ -1,0 +1,42 @@
+country: Mauritania
+iso3: MRT
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Office National de la Statistique (ONS, now ANSADE)
+publication_code: Profil de pauvreté de la Mauritanie 2014 (EPCV 2014)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 700
+
+# --- discover --- (WordPress media API, as for mauritania.yaml)
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/01/1508-ONS-Profil-Pauvrete-Mrt-2014-1.pdf"
+  save_as: ONS_Profil_Pauvrete_2014.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 900
+
+parser: mauritania_2014_poverty
+geography: Total country
+
+notes: >
+  EPCV 2014 poverty profile. Line 169 445 UM per person per year, extreme
+  line 126 035 UM (Annexe 3; OLD ouguiya, MRO). Welfare = deflated
+  consumption per capita. Annex tables A-1.1 (milieu, sex of head), A-1.2
+  (13 wilayas), A-1.3 (education, household type, socio-economic group and
+  branch of the head), A-1.4 (extreme line, milieu + wilaya, households AND
+  persons), A-1.6 (wilayas 2004 and 2008, with their own lines 94 650 / 129 600
+  UM), Tableau 1-4 (2008 milieu) and 1-5 (households: wilaya, milieu, sex).
+  P0 P1 P2 with contributions C0 C1 C2 wherever printed.
+
+  One text repair: every Ensemble row ends "100 100 100", which the
+  space-thousands rule reads as one number; rewritten "100,0 100,0 100,0".
+  Skipped: A-1.5 (spending structure), A-2.1.5 (deciles -- inequality), A-1.7
+  onwards (determinants, opinions), Gini tables 1-6/1-7.
+
+  CROSS-CHECK: P0 31,0 / P1 9,4 / P2 4,1; rural 44,4, urban 16,7; Guidimagha
+  49,1 / 18,8 / 9,7; households 22,3 / 6,3 / 2,6; extreme persons 16,6,
+  households 10,9; 2008 42,0 / 14,5 / 6,9; 2004 46,7 / 15,3 / 6,9. Wilaya
+  contributions sum to 100,0 (persons) and 99,9 (households).

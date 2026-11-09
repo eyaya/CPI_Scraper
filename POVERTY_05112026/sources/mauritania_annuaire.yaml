@@ -1,0 +1,36 @@
+country: Mauritania
+iso3: MRT
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Economique (ANSADE)
+publication_code: Annuaire socio-démographique 2024, Tableau 6.12
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 1
+expect_rows: 48
+
+# --- discover --- (the same yearbook mpi/sources/mauritania.yaml collects)
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Annuaire-Demographie-2.pdf"
+  save_as: ANSADE_Annuaire_Sociodemographique_2024.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 900
+
+parser: mauritania_annuaire_poverty
+geography: Total country
+
+notes: >
+  Tableau 6.12 "Prévalence (en %) de la pauvreté monétaire, 2000-2019": P0 by
+  wilaya and milieu for the EPCV rounds 2000/2004/2008/2014/2019. 2004 and
+  2008 equal the 2014 profile (collected there) and are skipped. THE 2014
+  COLUMN DIFFERS FROM THE 2014 PROFILE (national 30,9 vs 31,0; Hodh Chargui
+  29,4 vs 28,3; Nouakchott 15,6 vs 14,4) and the yearbook does not say why, so
+  it is kept under its own survey label "EPCV 2014 (série de l'Annuaire
+  2024)" rather than replacing the profile's figures. 2019 national/urban/
+  rural equal the EPCV 2019 synthesis. Wilaya names normalised to the 2014
+  profile's spellings.
+
+  CROSS-CHECK: national 51,0 (2000), 30,9 (2014), 28,2 (2019); Guidimakha
+  83,1 / 48,0 / 48,6; Nouakchott 2019 14,3.

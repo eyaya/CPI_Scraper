@@ -1,0 +1,43 @@
+country: Namibia
+iso3: NAM
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Namibia Statistics Agency (NSA); former Central Bureau of Statistics / National Planning Commission
+publication_code: NHIES 2015/16 Key Poverty Indicators (Preliminary Figures) + A Review of Poverty and Inequality in Namibia (2008)
+frequency: ad_hoc
+expect_metrics: 4
+expect_rows: 250
+
+# --- discover ---
+# Both files are attachments of nsa.org.na /document/<slug>/ pages (found via
+# the site search ?s=poverty; WP media search does not index the pre-2024
+# uploads). The full NHIES 2015/16 report is NOT on the rebuilt site.
+discover:
+  method: static_url
+  url: "https://nsa.org.na/wp-content/uploads/2024/07/NHIES_2016_Key_Poverty_Indicators_Preliminary_Figures.pdf"
+  save_as: NHIES_2016_Key_Poverty_Indicators_Preliminary_Figures.pdf
+extra_urls:
+  - url: "https://nsa.org.na/wp-content/uploads/2024/07/p19dmr33n31i1b1ko1f0016hg1jdq1.pdf"
+    save_as: review_poverty_inequality_2008.pdf
+
+parser: namibia_poverty
+geography: Total country
+
+notes: >
+  Cost-of-basic-needs lines per adult equivalent per month: FPL (food,
+  line_level extreme), LBPL ("severely poor", other), UBPL ("poor",
+  overall). 2016 release Table 4: person headcount on all three lines for
+  NHIES 2003/04, 2009/10, 2015/16 -- NSA labels these PRELIMINARY. 2008 review
+  Annex F: NHIES 2003/04 HOUSEHOLD P0/P1/P2 and poverty share on LBPL and UBPL
+  by 13 regions, urban/rural, sex and age of head (F-1, F-2) and education of
+  head (F-24). Household and person headcounts for 2003/04 differ (27.6 vs
+  37.7 on UBPL) -- both published, told apart by unit_of_analysis.
+  Not collected: F-3..F-23 (language, income source, dwelling, assets,
+  urbanisation shares, ranks), Annex I CIs, Gini, the 1993/94 NHIES report
+  (food-share indicator, not a poverty line).
+  CROSS-CHECK: persons 2015/16 FPL 5.8, LBPL 11.0, UBPL 18.0; 2009/10 7.3,
+  15.3, 28.7; lines 2015/16 N$293.1 / 389.3 / 520.8. Households 2003/04 UBPL
+  P0 27.6, P1 8.9, P2 4.1; Kavango 56.5; Khomas LBPL 2.4; female head 30.4;
+  head 65+ 47.5; no formal education 50.0. Regional poverty shares sum to
+  99.9 (LBPL) and 100.1 (UBPL).

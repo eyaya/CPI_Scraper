@@ -1,0 +1,32 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: Burkina Faso - La Pauvreté en 2003 (EBCVM / Enquête prioritaire III)
+frequency: ad_hoc
+expect_metrics: 4
+expect_rows: 120
+
+# --- discover ---
+# INSD's own file, no longer linked on the rebuilt insd.bf; Wayback `id_` copy
+# (found via the CDX index of insd.bf).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20210822062321id_/http://www.insd.bf/contenu/autres_publications/Profil_Pauvrete_2003.pdf"
+  save_as: bf_profil_pauvrete_2003.pdf
+  download_timeout: 600
+
+parser: burkina_faso_2003_poverty
+geography: Total country
+
+notes: >
+  INSD "Burkina Faso : La Pauvreté en 2003" (survey avril-juillet 2003, line
+  82 672 FCFA per person per year). Tableaux 2 (13 regions), 3 (household P0
+  by milieu), 4 (milieu), 5 (sex of the person), 6 (sex of the head), and the
+  1994 / 1998 rounds as republished in Tableaux 10-11 (lines 41 099 / 72 690).
+  Tableau 11's 2003 Ensemble prints P1 15,5 / P2 7,0 against 15,6 / 7,1
+  elsewhere; the 2003 national row is taken from Tableau 4.
+
+  CROSS-CHECK: 46,4 / 15,6 / 7,1; Nord 68,6; households 37,5; 1994 44,5.

@@ -1,0 +1,31 @@
+country: Namibia
+iso3: NAM
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Namibia Statistics Agency (NSA)
+publication_code: Namibia Household Income and Expenditure Survey (NHIES) 2015/2016 Report (final)
+frequency: ad_hoc
+expect_rows: 13
+
+# --- discover ---
+# On NSA's rebuilt site (wp-content/uploads/2024/07), found through the Wayback CDX index of nsa.org.na.
+discover:
+  method: static_url
+  url: "https://nsa.org.na/wp-content/uploads/2024/07/NHIES_2015-16.pdf"
+  save_as: NHIES_2015-16.pdf
+  download_timeout: 600
+
+parser: namibia_final_2016_poverty
+geography: Total country
+
+notes: >
+  The FINAL NHIES 2015/16 report, ch. 11: Table 11.2.1 lines (per adult
+  equivalent per month), 11.2.2 person headcount on FPL / LBPL / UBPL for
+  2003/04, 2009/10, 2015/16 -- REVISED against the preliminary 2016 release
+  (namibia.yaml), so every round carries "(final report 2018)" in `survey` --
+  and 11.2.3 P0/P1/P2 on UBPL and LBPL for 2015/16. Sex-of-head, urban/rural
+  and regional rates are charts only.
+
+  CROSS-CHECK: 6.1 / 10.7 / 17.4; 7.2 / 15.4 / 28.8; 11.0 / 21.8 / 37.5;
+  P1 6.0 / 3.4; P2 2.9 / 1.5.

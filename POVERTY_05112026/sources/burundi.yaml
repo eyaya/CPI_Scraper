@@ -1,0 +1,46 @@
+country: Burundi
+iso3: BDI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Burundi (INSBU, ex-ISTEEBU)
+publication_code: EICVMB 2019-2020 module Profil et déterminants de la pauvreté + ECVMB 2013/2014 Profil et déterminants de la pauvreté
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 450
+
+# --- discover ---
+# INSBU's publications API (api.insbu.bi/api/publications?per_page=50&page=N,
+# 515 items) -- ids 340 (EICVMB 2019-2020 poverty module) and 337 (ECVMB
+# 2013/2014 poverty profile). Stored under opaque ULID filenames, so pinned.
+discover:
+  method: static_url
+  url: "https://api.insbu.bi/storage/documents/01KNRP641RW8GETWSJN5X7J55T.pdf"
+  save_as: EICVMB_2019-2020_Profil_pauvrete.pdf
+  download_timeout: 900
+
+extra_urls:
+  - url: "https://api.insbu.bi/storage/documents/01KNRNYBK5GVH99JV7DXK85AR8.pdf"
+    save_as: ECVMB_2013-2014_Profil_pauvrete.pdf
+
+parser: burundi_poverty
+geography: Total country
+
+notes: >
+  EICVMB 2019-2020 (line 576 753 FBU per adult equivalent per year): P0/P1/P2
+  for 18 provinces, milieu and national, at HOUSEHOLD and POPULATION level
+  (Tableau 14); plus the national 2020 control survey on the 2014 method
+  (Tableau 20: 62,8 / 25,8 / 14,6), filed as its own survey.
+  ECVMB 2013/2014 (line 636 510 FBU): Tableau 9 P0/P1/P2 + contributions by
+  milieu and 17 provinces, household and population; Tableau 10 by age, sex,
+  household size, education and branch of the head; Tableau 16 the QUIBB 2006
+  province values (line 475 594 FBU).
+  The 2013/2014 report mixes decimal points and commas ("58.3 100,0 21.8");
+  points between digits are read as decimals. Province names kept as printed
+  (2020 "Bujumbura" is the renamed Bujumbura Rural province -- not merged).
+  source_file credits every row to the primary file (harness convention).
+
+  CROSS-CHECK: 2020 P0 43,7 (households) / 51,4 (population), P1 14,2 / 17,5;
+  Bujumbura Mairie 5,5; Rutana 71,5. 2014: 58,3 / 64,6; Muyinga 84,7. 2006:
+  67,1; Karusi 86,5. Contributions sum to 99,9 / 100,0.

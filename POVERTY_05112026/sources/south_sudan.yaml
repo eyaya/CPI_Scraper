@@ -1,0 +1,36 @@
+country: South_Sudan
+iso3: SSD
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS), South Sudan (formerly SSCCSE)
+publication_code: National Baseline Household Survey 2009 report, Table 10.3
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 5
+expect_rows: 70
+
+# --- discover ---
+# nbs.gov.ss/surveys/Household_Surveys.php links the NBHS 2009 report
+# (checked 2026-11-04). It is the only household consumption survey with a
+# poverty estimate on the NBS site; the 2026 Key Findings Report is MICS7
+# (no consumption module).
+discover:
+  method: static_url
+  url: "https://www.nbs.gov.ss/assets/images/National%20Baseline%20Household%20Survey%202009.pdf"
+  save_as: National_Baseline_Household_Survey_2009.pdf
+  impersonate: ["chrome124"]
+  download_timeout: 400
+
+parser: south_sudan_poverty
+geography: Total country
+
+notes: >
+  NBHS 2009 (pre-independence Southern Sudan), annex Table 10.3: P0 P1 P2,
+  population share and share of the poor for the country, urban/rural, three
+  greater regions and ten states. Per capita consumption; line SDG 72.9 per
+  person per month (Sudanese pounds -- the South Sudanese pound did not yet
+  exist). Estimates by SSCCSE, the NBS's predecessor.
+
+  CROSS-CHECK: 50.6 / 23.7 / 14.3; urban 24.4, rural 55.4; Northern Bahr Al
+  Ghazal 75.6; state population shares sum to 99.9, poor shares to 100.1.

@@ -1,0 +1,39 @@
+country: Zambia
+iso3: ZMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats)
+publication_code: 2022 Living Conditions Monitoring Survey Report
+frequency: ad_hoc
+expect_metrics: 1
+expect_rows: 38
+
+# --- discover ---
+# Found via ZamStats' open WordPress media API
+# (/wp-json/wp/v2/media?search=lcms): two uploads of the 2022 report, 2024-07
+# and 2025-07; the later one is taken. Back reports 1993-2015 are on the same
+# path (1998/2015 LCMS) -- the 2015 headline is already republished here.
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2025/07/2022-LCMS-Report.pdf"
+  save_as: 2022-LCMS-Report.pdf
+  download_timeout: 600
+
+parser: zambia_poverty
+geography: Total country
+
+notes: >
+  Chapter 12's results are all charts (values and labels in separate runs in
+  the text layer -- not paired by inference). Collected from the annex TABLES:
+  Annex VII Tables 14-15, national/rural/urban P0 on the Food (= extreme),
+  Lower (= official absolute) and Upper lines for LCMS 2015 (official) and
+  2022 (Swift OLS column, the official headline); Annex VIII, P0 on the lower
+  line for 10 provinces, 2015 and 2022. The 2022 figures are SWIFT imputations
+  made comparable with 2015 (the 2022 questionnaire changed); that is in the
+  survey name. Model variants (PMM, Deaton, non-comparable, fees-comparable
+  Table 16) are not collected. Welfare = consumption per adult equivalent.
+
+  CROSS-CHECK: 2015 54.4 / food 40.8 / upper 74.0; 2022 60.0 / food 46.1 /
+  upper 79.4; rural 78.8 (food 64.6); urban 31.9 (food 18.3); Muchinga 69.3 ->
+  82.6 (+13.3 printed); Lusaka 20.2 -> 27.0.

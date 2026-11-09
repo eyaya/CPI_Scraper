@@ -1,0 +1,27 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Les Indices de la pauvreté 1984-1985 (ENCDM 1984/85)"
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 200
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231672/"
+  save_as: HCP_indices_pauvrete_1984_1985.pdf
+
+parser: morocco_hcp_poverty
+geography: Total country
+
+notes: >
+  ENCDM 1984/85. P0 (%), P1 and P2 (0-1 indices) by milieu, 14 regions (the
+  three Saharan regions printed together) x milieu, sex / marital status / age
+  of the head, household size, activity and schooling of the head. Two rows
+  printed with a malformed cell (55-60 ans: '0,04,8'; 7 enfants et plus) are
+  dropped. CROSS-CHECK: national 21,0 / 0,055 / 0,022; urban 13,3; rural 26,8;
+  Souss-Massa-Draâ 32,3.

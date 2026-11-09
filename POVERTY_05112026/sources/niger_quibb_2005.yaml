@@ -1,0 +1,21 @@
+country: Niger
+iso3: NER
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Niger)
+publication_code: Profil de pauvreté (QUIBB 2005)
+frequency: ad_hoc
+expect_rows: 30
+
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20190916111040id_/http://www.stat-niger.org/statistique/file/Annuaire/QUIBB/Profil%20de%20pauvrete%20QUIBB.pdf"
+  save_as: ne_profil_pauvrete_quibb2005.pdf
+  download_timeout: 600
+
+parser: niger_quibb_poverty
+geography: Total country
+
+notes: >
+  QUIBB 2005 poverty profile (Wayback id_ copy of INS's file). Milieu-specific lines 144 750 (urban) / 105 827 (rural) FCFA -- no national line value. P0 P1 P2 by region (Zinder-Diffa one stratum); P0 by milieu, household size, sex of the head (persons and households). CROSS-CHECK: 62,1; Maradi 79,7 / 35,1 / 19,0; Niamey 27,1.

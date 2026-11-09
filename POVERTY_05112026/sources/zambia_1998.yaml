@@ -1,0 +1,23 @@
+country: Zambia
+iso3: ZMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats, formerly CSO)
+publication_code: Living Conditions Monitoring Survey 1998
+frequency: ad_hoc
+expect_rows: 105
+
+# --- discover ---
+# On ZamStats' own WordPress uploads (found via /wp-json/wp/v2/media?search=Living Conditions).
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2024/01/1998-Living-Conditions-Monitoring-Survey.pdf"
+  save_as: 1998-Living-Conditions-Monitoring-Survey.pdf
+  download_timeout: 900
+
+parser: zambia_1998_poverty
+geography: Total country
+
+notes: >
+  LCMS 1998 ch. 12 (126 MB scan-quality PDF with a text layer): Tables 12.1 stratum, 12.2a province, 12.2b each province's share of the poor / extremely poor, 12.2c province x residence, 12.3 sex of head and household size. Table 12.4's P1 (0.548) is not FGT -- skipped. CROSS-CHECK: 73 / 58; Western 89 / 78; Lusaka urban extreme 28; 16+ persons 88.

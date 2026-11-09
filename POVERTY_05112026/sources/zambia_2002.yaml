@@ -1,0 +1,23 @@
+country: Zambia
+iso3: ZMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats, formerly CSO)
+publication_code: Living Conditions Monitoring Survey 2002-2003
+frequency: ad_hoc
+expect_rows: 55
+
+# --- discover ---
+# On ZamStats' own WordPress uploads (found via /wp-json/wp/v2/media?search=Living Conditions).
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2002-2003-Living-Conditions-Monitoring-Survey.pdf"
+  save_as: 2002-2003-Living-Conditions-Monitoring-Survey.pdf
+  download_timeout: 900
+
+parser: zambia_2002_poverty
+geography: Total country
+
+notes: >
+  LCMS 2002/03 ch. 13: Tables 13.4 (residence, province) and 13.5 (stratum) total-poor and extremely-poor headcounts; Table 13.7 FGT P1 and P2 (averaged across the total population, printed on 0-1, unit index). Lines K92,185 moderate / K64,530 extreme per AE per month. Large-scale farmers' extreme rate prints '-' (not read). CROSS-CHECK: 67 / 46; P0 0.665 P1 0.271 P2 0.139; Northern 81; low cost extreme 39.

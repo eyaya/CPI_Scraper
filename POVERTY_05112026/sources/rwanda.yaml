@@ -1,0 +1,42 @@
+country: Rwanda
+iso3: RWA
+indicator: Poverty
+tier: 2
+source_type: excel
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: EICV7 (2023/24) Poverty Profile -- Excel tables
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 100
+
+# --- discover ---
+# Linked from NISR's EICV7 page -> "EICV7 Poverty Profile Report 2023/24"
+# (statistics.gov.rw/data-sources/surveys/EICV/integrated-household-living-
+# conditions-survey-7-eicv-7/eicv7-poverty-profile-report-202324), beside the
+# PDF report (/sites/default/files/documents/2025-07/EICV7_Poverty%20Profile.pdf).
+discover:
+  method: static_url
+  url: "https://statistics.gov.rw/sites/default/files/documents/2025-05/EICV7_Tables_Rwanda_Poverty_Profile.xlsx"
+  save_as: EICV7_Tables_Rwanda_Poverty_Profile.xlsx
+  impersonate: ["chrome124"]
+
+parser: rwanda_poverty
+geography: Total country
+
+notes: >
+  EICV7 poverty-profile workbook (Tables 5.1, 5.2, 5.4, 6.1-6.3). Lines: total
+  RWF 560,127 and extreme (food) RWF 356,432 per adult equivalent per year,
+  January 2024 prices. 2017 values are EICV5 consumption PREDICTED on the
+  EICV7 basis (multiple imputation), filed under their own survey name -- not
+  the EICV5 published 38.2%. The urban/rural definition changed (2022 vs 2012
+  census); each locality row names its definition, and Table 5.1's 2017
+  urban/rural predictions are skipped because that table's change column
+  mixes definitions.
+
+  PUBLISHED INCONSISTENCY KEPT: Table 6.1 gives P0 23.3 (male-headed) and 23.5
+  (female-headed) beside a national 27.4 -- both groups below the total.
+
+  CROSS-CHECK: P0 27.4 (CI 26.4-28.4), extreme 5.4; 2017 modelled 39.8 / 11.3;
+  Kigali 9.1, West 37.4; P1 6.06; urban 16.7 (2022 def) / 12.7 (2012 def);
+  absolute contributions 4.7 + 22.6 = 27.3 against 27.4.

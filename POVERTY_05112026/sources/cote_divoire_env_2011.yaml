@@ -1,0 +1,24 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS, now ANStat)
+publication_code: ENV 2011 (enquête zonale Abobo, Yopougon, Ouest)
+frequency: ad_hoc
+expect_rows: 45
+
+# --- discover ---
+# INS's own file on ins.ci (the pre-ANStat domain); Wayback id_ copy found
+# via the CDX index. anstat.ci itself is behind a Cloudflare challenge.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20160806075229id_/http://www.ins.ci:80/n/templates/docss/ENV2011.pdf"
+  save_as: ci_env2011.pdf
+  download_timeout: 600
+
+parser: cote_divoire_env2011_poverty
+geography: Total country
+
+notes: >
+  ZONAL survey, not national: P0 P1 P2 for Abobo and Yopougon (Abidjan) and the West (urban / rural / total), 2002, 2008 and 2011 (Tableau 4). CROSS-CHECK: Ouest 2011 57,4 / 24,6 / 13,6.

@@ -1,0 +1,36 @@
+country: Mauritania
+iso3: MRT
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Economique (ANSADE)
+publication_code: Synthèse des résultats EPCV 2019-2020
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 18
+
+# --- discover ---
+# ANSADE's site is a SPA; files on admin.ansade.mr serve only to a browser
+# fingerprint (plain requests get 404/406). Found through the WordPress media
+# API with a browser fingerprint: /wp-json/wp/v2/media?search=EPCV.
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/01/SYNTHESE-DES-RESULTATS-EPCV-2019.pdf"
+  save_as: ANSADE_EPCV2019_synthese.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 900
+
+parser: mauritania_poverty
+geography: Total country
+
+notes: >
+  EPCV 2019-2020 (fieldwork Nov 2019 - Mar 2020; the 2nd pass was cancelled
+  for Covid-19). The 13-page synthesis prints poverty only in its "Tableau
+  synoptique" (p. 5): P0/P1/P2 national, urban and rural for the overall line
+  and the extreme line. No line amount is printed. A full EPCV 2019 poverty
+  profile is not on ANSADE's media library (searched "pauvret", "EPCV",
+  "profil"); wilaya-level 2019 P0 comes from the Annuaire (mauritania_annuaire).
+
+  CROSS-CHECK: P0 28,2 / P1 7,6 / P2 3,1; urban 14,4 / 3,3 / 1,2; rural
+  41,2 / 11,7 / 4,8; extreme 12,8 / 3,2 / 1,3 (urban 4,5, rural 20,6).

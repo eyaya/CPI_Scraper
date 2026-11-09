@@ -1,0 +1,27 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Pauvreté et prospérité partagée au Maroc du troisième millénaire, 2001-2014"
+frequency: ad_hoc
+expect_metrics: 2
+expect_rows: 70
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231436/"
+  save_as: HCP_pauvrete_prosperite_partagee_2001_2014.pdf
+
+parser: morocco_prosperite_poverty
+geography: Total country
+
+notes: >
+  HCP / World Bank joint study published by HCP. Annexe E (pp. 77-78): P0 by
+  age group of the head and of the person, schooling and literacy of the head,
+  and the share of the poor by sex of the head, 2007 and 2014 x urban / rural /
+  national. Tableau 5 (p. 48): P0 by sex of the head. CROSS-CHECK: female head
+  7,4 (2007) / 3,9 (2014); children under 15 11,7 / 6,4; illiterate head 12,7 /
+  7,4.

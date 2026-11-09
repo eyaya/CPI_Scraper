@@ -1,0 +1,31 @@
+country: Mauritania
+iso3: MRT
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Economique (ANSADE)
+publication_code: "Tendances de la pauvreté monétaire et des inégalités en Mauritanie, EPCV 2019-2020 (sept. 2021)"
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 240
+
+# --- discover --- (ANSADE WordPress media API, plain request)
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Tendance-de-la-pauvrete-en-Mauritanie-20102021.pdf"
+  save_as: ANSADE_Tendance_pauvrete_2010_2021.pdf
+  download_timeout: 900
+
+parser: mauritania_tendances_poverty
+geography: Total country
+
+notes: >
+  The full EPCV 2019-2020 poverty analysis (the synthesis in mauritania.yaml
+  is its summary). 2014 and 2019: Tableau 3 milieu P0 P1 P2 + contributions,
+  Tableau 4 the 13 wilayas, Tableau 6 the extreme line, Tableau 8 sex and age
+  group; Tableau 9 age x wilaya/milieu (2019). The 2014 columns are the
+  REVISED 2014 series (30,9; = Annuaire 2024) -> survey 'EPCV 2014 (série
+  révisée)', beside the 2014 profile's 31,0. Tableau 7 (sensitivity to the
+  line) and Gini not collected. CROSS-CHECK: 28,2 / 7,6 / 3,1 (2019); 30,9 /
+  9,3 / 4,0 (2014); Guidimagha 48,6; extreme 12,8; children 32,7.

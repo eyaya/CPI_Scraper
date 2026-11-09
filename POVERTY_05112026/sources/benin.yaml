@@ -1,0 +1,40 @@
+country: Benin
+iso3: BEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INStaD)
+publication_code: Note sur la pauvreté en 2022 (EHCVM 2021-2022), octobre 2023
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 80
+
+# --- discover ---
+# INStaD publishes the note at
+#   https://instad.bj/images/docs/insae-statistiques/sociales/Pauvrete/Note_synthese_sur_la_pauvrete_EHCVM_2022.pdf
+# but instad.bj answered HTTP 503 to every request on 2026-11-04 (home page
+# included). The Wayback Machine's capture of INStaD's own file (2025-04-18,
+# found via the CDX prefix listing of /images/docs/insae-statistiques/sociales/)
+# is fetched in its `id_` form -- the archive of the NSO's publication, not an
+# aggregator (DR Congo / Côte d'Ivoire precedent). Switch back to the instad.bj
+# URL when the host answers again.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20250418092616id_/https://instad.bj/images/docs/insae-statistiques/sociales/Pauvrete/Note_synthese_sur_la_pauvrete_EHCVM_2022.pdf"
+  save_as: benin_note_synthese_pauvrete_ehcvm_2022.pdf
+  download_timeout: 300
+
+parser: benin_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2021-2022 ("2022" in INStaD's labelling; fieldwork Nov 2021 - Jul
+  2022) with the 2018-2019 round ("2019") beside it for the 12 departments.
+  Line 287 187 FCFA per person per year. P1 and P2 are printed on 0-1
+  (unit index). An earlier version of the same note exists
+  (Note_synthèse_sur_la_pauvreté_EHCVM_2022_VR_20231026.pdf, Wayback
+  2023-11-06). No full EHCVM poverty report is in the archived listing.
+
+  CROSS-CHECK: 2022 P0 36,2 / 0,1000 / 0,0395; 2019 38,5 / 0,1077 / 0,0431;
+  urban 30,8, rural 40,6; Ouémé 16,0, Couffo 54,1.

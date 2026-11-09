@@ -1,0 +1,34 @@
+country: Mozambique
+iso3: MOZ
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ministério da Planificação e Desenvolvimento (MPD), Direcção Nacional de Estudos e Análise de Políticas (DNEAP) -- official poverty compiler; hosted by INE
+publication_code: Pobreza e Bem-Estar em Moçambique - Terceira Avaliação Nacional (Outubro 2010)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 150
+
+# --- discover ---
+# Hosted by INE itself (estatisticas/publicacoes/...). ine.gov.mz serves an
+# incomplete TLS chain, so this is the Wayback `id_` capture of INE's file
+# (2015-04-09).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20150409042410id_/http://www.ine.gov.mz/estatisticas/publicacoes/pobreza-e-bem-estar-em-mocambique_-terceira-avaliacao-nacional.pdf"
+  save_as: MPD_Terceira_Avaliacao_Nacional_Pobreza.pdf
+  download_timeout: 600
+
+parser: mozambique_terceira_poverty
+geography: Total country
+
+notes: >
+  Third national poverty assessment (MPD/DNEAP, Oct 2010), IOF 2008/09 with
+  IAF 2002/03 and IAF 1996/97 on its method. Quadros 3-5 / 3-7 / 3-8: P0 / P1
+  / P2 for national, urban/rural, Norte/Centro/Sul and 11 provinces x 3
+  rounds; the two "Diferença" columns are derived and skipped. Decimal
+  points. Province spellings harmonised with the fourth assessment
+  (Zambézia, Maputo Província, Maputo Cidade).
+
+  CROSS-CHECK: P0 69.4 / 54.1 / 54.7; P1 29.3 / 20.5 / 21.2; P2 15.6 / 10.3 /
+  11.0; Sofala 1996-97 87.9; Cidade de Maputo 2008-09 36.2.

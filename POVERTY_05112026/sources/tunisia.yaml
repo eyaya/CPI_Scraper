@@ -1,0 +1,46 @@
+country: Tunisia
+iso3: TUN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: Enquête Nationale sur le Budget, la Consommation et le Niveau de vie des ménages 2021, Volume A (arabe)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+expect_rows: 120
+
+# --- discover ---
+# Linked from www.ins.tn/publication/enquete-nationale-sur-le-budget-la-
+# consommation-et-le-niveau-de-vie-des-menages-2021 ("Volume A").
+discover:
+  method: static_url
+  url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Volume%20A_EBCNV_2021.pdf"
+  save_as: INS_EBCNV_2021_Volume_A.pdf
+  impersonate: ["chrome124"]
+  download_timeout: 600
+
+parser: tunisia_poverty
+geography: Total country
+
+notes: >
+  ENBCNV 2021, Volume A, chapter 4 (in Arabic). Tableau 12: poverty and
+  extreme-poverty rates by milieu, 2005/2010/2015/2021 plus the 2019
+  complementary survey (national poverty rate only). Tableau 13: the seven
+  large regions, 2005-2021. Tableaux 14/15: P0, population weight, absolute
+  and relative contribution by education and socio-professional category of
+  the head (2021). Volume C (also on the publication page) has no poverty
+  table.
+
+  THE ARABIC TEXT LAYER IS NOT BIDI-SCRAMBLED in these tables: every value
+  read left to right matches INS's French web table (/statistiques/102, see
+  tunisia_web.yaml) and the prose. Tableaux 14/15's column order is confirmed
+  by abs = P0 x pop / 100, checked on every row by the parser. Category labels
+  exist only in Arabic; they are given in French with the Arabic in brackets.
+  Not collected: priority index (derived), Gini (Tableaux 16-17, inequality),
+  charts 2-4 (repeat the tables).
+
+  CROSS-CHECK: P0 16,6 (2021), 13,8 (2019), 15,2, 20,5, 23,1; extreme 2,9 /
+  2,9 / 6,0 / 7,4; milieu communal 12,7, non communal 24,8 (2021); Centre
+  Ouest 37,0, Grand Tunis 4,7; head without education 23,5, unemployed head
+  41,3.

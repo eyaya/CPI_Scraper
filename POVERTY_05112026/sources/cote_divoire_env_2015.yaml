@@ -1,0 +1,24 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS, now ANStat)
+publication_code: ENV 2015 - Profil de pauvreté
+frequency: ad_hoc
+expect_rows: 350
+
+# --- discover ---
+# INS's own file on ins.ci (the pre-ANStat domain); Wayback id_ copy found
+# via the CDX index. anstat.ci itself is behind a Cloudflare challenge.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20160207165703id_/http://www.ins.ci:80/n/templates/docss/env2015.pdf"
+  save_as: ci_env2015.pdf
+  download_timeout: 600
+
+parser: cote_divoire_env2015_poverty
+geography: Total country
+
+notes: >
+  ENV 2015 (line 269 075 FCFA; extreme 122 385): P0 P1 P2 and contributions by milieu and 33 regions + Abidjan (3.1, 3.3), extreme P0 by region x milieu (3.4), P0 by size / sex / age / marital status / literacy of the head x Abidjan / autre urbain / rural / ensemble (3.5, P0 columns only: its share columns are misaligned). CROSS-CHECK: 46,3 / 16,3 / 8; extreme 10,0; Kabadougou 71,7.

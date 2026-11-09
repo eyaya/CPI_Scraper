@@ -1,0 +1,35 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: EHCVM-2018 Diagnostic de la pauvreté
+frequency: ad_hoc
+expect_metrics: 4
+expect_rows: 450
+
+# --- discover ---
+# Listed on INSD's "Statistiques sur les conditions de vie des ménages" page
+# (https://www.insd.bf/fr/statistiques-sociales/statistiques-sur-les-conditions-de-vie-des-menages).
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2022-05/EHCVM_2018_Diagnostic%20de%20la%20Pauvrete.pdf"
+  save_as: burkina_ehcvm_2018_diagnostic_pauvrete.pdf
+  download_timeout: 900
+
+parser: burkina_faso_2018_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2018/19 poverty diagnostic (line 194 629 FCFA per person per year;
+  food line 102 686). Three national measures (overall, extreme = total
+  consumption below the food line, "pauvreté alimentaire" = food consumption
+  below the food line) by milieu and 13 regions, household-level rates
+  (Tableau 3-7), head characteristics (5-1..5-4, 6-1, 6-2, 8-2, 8-3, 8-6,
+  8-7), the US$1,90 / US$3,20 (PPA 2011) rates, poor counts (3-1), and the
+  EMC 2014 / EMC 2018 series republished in Tableau 3-4 (a different survey:
+  EMC 2018 = 36,2% vs EHCVM 2018 = 41,4%; lines 153 530 / 164 955 FCFA).
+
+  CROSS-CHECK: 41,4 / 12,3 / 5,0; extreme 8,2; food 50,7; 8 375 686 poor;
+  Nord 70,9; Centre 5,3; EMC 40,1 / 36,2; households 31,5; US$1,9 31,9.

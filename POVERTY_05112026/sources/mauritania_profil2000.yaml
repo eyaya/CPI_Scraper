@@ -1,0 +1,32 @@
+country: Mauritania
+iso3: MRT
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Office National de la Statistique (ONS, now ANSADE)
+publication_code: Profil de la pauvreté en Mauritanie 2000 (EPCV 2000)
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 120
+
+# --- discover --- ONS's own file; ons.mr no longer serves it, so the Wayback id_ copy
+# (found via the CDX index of ons.mr) -- an archive of the NSO's publication.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20040102125556id_/http://www.ons.mr:80/francais/projets/epcv_fichiers/profil2000.pdf"
+  save_as: ONS_Profil_Pauvrete_2000.pdf
+  download_timeout: 600
+
+parser: mauritania_profil2000_poverty
+geography: Total country
+
+notes: >
+  ONS 2000 profile, line 67 316 UM (the 1996 line inflated by 25,03%). Tableau
+  1.6 wilaya P0 P1 P2; 1.8 wilaya C0 C1 C2; p. 17 Nouakchott zone lotie / non
+  lotie and zone contributions; 1.11 socio-economic group of the head. THIS
+  ROUND'S ORIGINAL ESTIMATE (46,3) differs from the 2004 profile's revised
+  EPCV 2000 figure (51,0, revised CPI series); each carries its own survey
+  label. Not read: GSE contribution blocks (a repeated row label), extreme
+  poverty and relative poverty tables (cells missing / one per line in the
+  text layer). CROSS-CHECK: 46,3 / 17,0 / 8,2; Guidimagha 78,6; rural share of
+  the poor 79,5.

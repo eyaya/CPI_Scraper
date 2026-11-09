@@ -1,0 +1,40 @@
+country: Malawi
+iso3: MWI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Statistical Office (NSO) Malawi
+publication_code: Monetary Poverty and Inequality Report, IHS6 2024/25
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 450
+
+# --- discover ---
+# NSO's headless CMS lists every publication at
+# https://cms.nsomalawi.mw/api/web/publications (id 147, published 2026-10-14).
+# The IHS5 Malawi Poverty Report (id 1, /api/download/3/...) answered HTTP 500
+# on 2026-11-04; its headline figures are republished in this report's Table 1
+# and Appendix B anyway.
+discover:
+  method: static_url
+  url: "https://cms.nsomalawi.mw/api/download/834/Malawi_Poverty_and_Inequality_Report_IHS6_Final.pdf"
+  save_as: Malawi_Poverty_and_Inequality_Report_IHS6_Final.pdf
+  download_timeout: 300
+
+parser: malawi_poverty
+geography: Total country
+
+notes: >
+  IHS6 (2024/25) monetary poverty, Cost of Basic Needs, real per-capita
+  consumption, person-weighted; IHS5 (2019/20) as republished. Lines per person
+  per day, nominal in each round's prices: total MWK 1,562.6 (IHS6) / 454.5
+  (IHS5); food = ultra-poverty line MWK 1,071.1 / 277.5. Table 1 national P0/P1/P2
+  on both lines; B.1/B.2 P0 with 95% CI by urban/rural, rural region and 32
+  districts (IHS5 ultra-poverty CIs skipped: symmetric approximation with
+  negative lower bounds); B.3 IHS6 regions and population / poor / ultra-poor
+  shares. The IHS5 national P0 is 50.7 in the main series and 50.8 in the
+  reproduced appendix -- 50.7 is collected.
+
+  CROSS-CHECK: P0 47.3 / 50.7; ultra 24.0 / 20.5; P1 15.7 / 17.0; P2 7.1 / 7.6;
+  rural 52.6, urban 20.9; Southern Region 55.8; Rural South 62.3 (ultra 35.0);
+  Mulanje 77.5; Blantyre City 17.2.

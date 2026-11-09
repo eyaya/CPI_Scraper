@@ -1,0 +1,36 @@
+country: Ethiopia
+iso3: ETH
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Planning Commission (NPC), official compiler of poverty statistics (HICES data from CSA/ESS)
+publication_code: "Ethiopia's Progress Towards Eradicating Poverty: An Interim Report on 2015/16 Poverty Analysis Study"
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 250
+
+# --- discover ---
+# ESS (formerly CSA) publishes consumption tables only; its HCES 2015/16
+# report names the NPC as producer of the poverty profile, so the planning
+# ministry is the official compiler (allowed by the poverty source policy
+# when the NSO publishes no poverty report). npc.gov.et no longer serves the
+# file; Wayback `id_` copy of the NPC's own document (CDX of npc.gov.et).
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20171024174026id_/http://www.npc.gov.et:80/documents/58300/0/An+Interim+Report+on+2016+Poverty+Analysis+Study+Final"
+  save_as: NPC_Interim_Report_2016_Poverty_Analysis.pdf
+  download_timeout: 900
+
+parser: ethiopia_poverty
+geography: Total country
+
+notes: >
+  NPC interim poverty report 2015/16 (HICES rounds 1995/96-2015/16). Table 10:
+  P0/P1/P2 national, rural, urban for all five rounds on the absolute line
+  (Birr 1,075 / 3,781 / 7,184 per adult per year in 1995/96, 2010/11,
+  2015/16). Table 11: the same for FOOD POVERTY (food consumption below the
+  food line; line_level other -- higher than absolute poverty). Table 13:
+  P0 by region x rural/urban/total 1999/00-2015/16. Table 14: food-poverty P0
+  by region 2010/11, 2015/16. Period = start year of the round.
+  CROSS-CHECK: 45.5 / 44.2 / 38.7 / 29.6 / 23.5; 2015/16 gap 6.7, severity
+  2.8; rural 25.6, urban 14.8; food 24.8; Tigray 27.0, Harari 7.1.

@@ -1,0 +1,35 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 2
+source_type: xlsx
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: Indicateurs OMD - Taux de pauvreté monétaire (%)
+frequency: ad_hoc
+expect_metrics: 1
+expect_rows: 12
+
+# --- discover ---
+# hcp.ma/Taux-de-pauvrete-monetaire_a2917.html ("Télécharger le fichier de
+# données") links this Google Sheets export -- HCP's own workbook, the same
+# arrangement as population/sources/morocco.yaml.
+discover:
+  method: static_url
+  url: "https://docs.google.com/spreadsheets/d/1Uc1B4Zwhl2HOlzDUB_yr6AWNFus0lqvH_X8odVV4Zl0/export?format=xlsx&gid=0"
+  save_as: HCP_OMD_taux_pauvrete_monetaire.xlsx
+
+parser: morocco_poverty
+geography: Total country
+
+notes: >
+  P0 by milieu for 1985, 2001, 2007, 2014 as HCP's MDG series publishes it.
+  The workbook names no survey and no line, so rows carry the series' own
+  name. ITS 2014 FIGURES (4,2 / urban 1,1 / rural 8,9) DIFFER FROM HCP's
+  ENCDM 2014 note (4,8 / 1,6 / 9,5 on the 2014 line of 4 667 DH urban /
+  4 312 DH rural per person per year; prose and chart only, not collected);
+  2001 and 2007 agree. Also not collected: the 2021 "Evolution du niveau de
+  vie ... COVID-19" note (Word file, prose only; 2019 moved to consumption
+  units). Morocco's multidimensional poverty is in mpi/.
+
+  CROSS-CHECK: national 21,0 / 15,3 / 8,9 / 4,2; rural 26,8 / 25,1 / 14,4 /
+  8,9; urban 13,3 / 7,6 / 4,8 / 1,1.

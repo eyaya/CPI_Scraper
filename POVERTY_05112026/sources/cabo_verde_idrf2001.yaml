@@ -1,0 +1,33 @@
+country: Cabo_Verde
+iso3: CPV
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE Cabo Verde)
+publication_code: O Perfil da Pobreza em Cabo Verde - IDRF 2001/2002 (INE 2004), Quadro 5
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 18
+
+# INE publication 634, via /GenericFile/GetFile (checked 2026-11-04).
+discover:
+  method: static_url
+  url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20251209_084254_ce9cef66-5ae1-4561-b006-a3cdcb36e7d1.pdf"
+  save_as: cv_idrf_perfil_pobreza_2001_02.pdf
+  download_timeout: 300
+
+parser: cabo_verde_idrf2001_poverty
+geography: Total country
+
+notes: >
+  Quadro 5: P0/P1/P2, moderate and extreme, for IDRF 2001/02 and 1988/89 on
+  the relative lines (2001/02: ECV 43.250 / 28.833 per person per year) and
+  1988/89 on the 2001/02 line (SimSIP simulation by the report's authors).
+  The caption reads "1998-99"; the column headers and Quadro 1 date the
+  earlier round 1988-89 (INE's IDRF rounds are 1988/89 and 2001/02) -- dated
+  1988. Not read: the p.132 synthesis (P0 printed as 0-1 fractions, which
+  the schema does not take for headcounts) and the p.32 status counts
+  (garbled "Outras Ilhas" row).
+
+  CROSS-CHECK: 36,69 / 13,59 / 6,61 (2001/02 relative); extreme 20,50;
+  1988/89 31,15 relative, 48,97 at the 2001/02 line.

@@ -1,0 +1,41 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zimbabwe National Statistics Agency (ZIMSTAT)
+publication_code: Zimbabwe Poverty Report 2017 (PICES 2017)
+frequency: ad_hoc
+expect_metrics: 4
+expect_rows: 350
+
+# --- discover ---
+# Linked from ZIMSTAT's "Poverty Statistics" page (wp-json pages?slug=poverty-statistics),
+# alongside the PICES 2011/12 and 2001 reports, poverty atlases and the
+# "Zimbabwe Poverty Update 2017-2019" (a World Bank co-publication, not used).
+# The monthly Poverty Datum Lines are a separate price product.
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Poverty_Statistics/Final_Poverty_Report_21052019.pdf"
+  save_as: Final_Poverty_Report_21052019.pdf
+  download_timeout: 600
+
+parser: zimbabwe_poverty
+geography: Total country
+
+notes: >
+  PICES 2017 poverty report. Lines: Total Consumption Poverty Line (TCPL,
+  overall) and Food Poverty Line (FPL, extreme); welfare = consumption
+  expenditure per capita. Households and people kept apart by
+  unit_of_analysis. Tables 2.5/2.6 give four rounds (PICES 2017, PICES 2011/12,
+  ICES 2001, ICES 1995); ZIMSTAT notes the 1995/2001 lines were not
+  recalibrated to 2017 prices. Provinces (2.7/2.8), provinces within rural and
+  urban (2.10/2.11), sex/marital status of head (2.14), main activity (2.15)
+  and sector of employment (2.16) of the head. Table 2.11's urban Manicaland
+  indices are a copy of Table 2.7's Bulawayo row and are dropped (its share
+  of urban poor is kept).
+
+  CROSS-CHECK: households 60.6 / 21.9 / 26.9 / 14.7; people 70.5 / 29.3 / 33.3 /
+  18.9 (2017); 2011/12 households 62.6, people 72.3; Mashonaland Central 81.6;
+  Bulawayo people 29.9; male-headed 61.6, female-headed 58.9; shares of poor
+  households by province sum to 100.0.

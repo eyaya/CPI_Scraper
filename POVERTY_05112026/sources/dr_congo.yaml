@@ -1,0 +1,48 @@
+country: DR_Congo
+iso3: COD
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS-RDC)
+publication_code: Enquête 1-2-3 2011-2012, Rapport global (2014), partie II chapitre 1
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 250
+
+# --- discover ---
+# Same file labour/ and unemployment/ collect from (see labour/sources/drc.yaml).
+# INS-RDC's own site answers a Cloudflare 403 and the rebuilt ins.gouv.cd does
+# not list this report; the only reachable copy is the Wayback Machine's `id_`
+# capture of INS's own file (original bytes, no rewriting) -- an archive of the
+# NSO's publication, not an aggregator.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20150821012651id_/http://www.ins-rdc.org/sites/default/files/Rapport%20enquete%20123.pdf"
+  save_as: INS_RDC_Enquete_123_2012_Rapport_global.pdf
+  impersonate: ["chrome124", "safari17_0"]
+  download_timeout: 300
+
+parser: dr_congo_poverty
+geography: Total country
+
+notes: >
+  Monetary poverty from the Enquête 1-2-3 2012 global report (Tableaux II.1.1,
+  II.1.2, II.1.3 x2, II.1.5-II.1.9), consumption per adult equivalent against
+  the urban/rural lines of Tableau II.7.1 (869 210,3 FC urban, 579 248,5 FC
+  rural, per adult equivalent per year -- the 2005-comparable method; the
+  Kinshasa-specific line is printed but not used). Every 2012 measure is given
+  over HOUSEHOLDS and over PERSONS (unit_of_analysis). 2005 P0 of persons by
+  milieu and province from the Enquête 1-2-3 2005, as republished in II.1.1.
+
+  Not collected: non-monetary ("conditions de vie") and subjective poverty
+  (II.1.10-II.1.26), opinions (II.2.x), consumption (II.3.x).
+
+  Published quirks kept: II.1.6's Individus header is printed "Incidence
+  Sévérité Profondeur" but the values are P0 P1 P2 (Ensemble = 63,4 26,5 14,5
+  = II.1.2); II.1.3's zone table omits Kasaï occidental; rural persons' P0 is
+  65,2 in II.1.2 but 65,3 in II.1.3 (Total rows not collected).
+
+  CROSS-CHECK: persons P0 63,4 / P1 26,5 / P2 14,5 (2012), 71,3 (2005);
+  households 54,2 / 21,6 / 11,5; Kinshasa 36,8, Kasaï Oriental 78,6 (persons);
+  female-headed households 49,0%, persons 60,3%.

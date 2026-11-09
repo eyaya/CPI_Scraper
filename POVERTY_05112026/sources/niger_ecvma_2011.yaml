@@ -1,0 +1,21 @@
+country: Niger
+iso3: NER
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Niger)
+publication_code: Profil et déterminants de la pauvreté au Niger 2011 (ECVMA 2011)
+frequency: ad_hoc
+expect_rows: 200
+
+discover:
+  method: static_url
+  url: "https://www.stat-niger.org/wp-content/uploads/2020/06/Profil_Pauvrete_2011_ECVMA.pdf"
+  save_as: ne_profil_pauvrete_2011_ecvma.pdf
+  download_timeout: 600
+
+parser: niger_back_poverty
+geography: Total country
+
+notes: >
+  INS's own file on the live site (wp-content/uploads/2020/06/). ECVMA 2011 profile, line 182 635,2 FCFA: P0 P1 P2, population and poor shares by milieu, 8 regions and head characteristics. Survey 'ECVMA 2011 (profil 2011)' -- the EHCVM 2021 trend table republishes ECVMA 2011 by milieu with urban population share 17,0 vs 17,3 here. CROSS-CHECK: 48,2 / 13,1 / 4,9; Maradi 57,8; Niamey 10,2.

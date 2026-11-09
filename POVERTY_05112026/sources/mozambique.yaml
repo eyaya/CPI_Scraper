@@ -1,0 +1,42 @@
+country: Mozambique
+iso3: MOZ
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ministério da Economia e Finanças (MEF), Direcção de Estudos Económicos e Financeiros (DEEF) -- official poverty compiler; surveys by INE
+publication_code: Evolução da Pobreza e Bem-Estar em Moçambique, 1996/97-2014/15 (Quarta Avaliação Nacional figures, DEEF 2016)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 90
+
+# --- discover ---
+# INE runs the IAF/IOF surveys but publishes no poverty estimates; the national
+# poverty assessments are the ministry's (MPD/DNEAP 3rd, MEF/DEEF 4th), so the
+# official compiler is used (tranche-3 brief, rule B). mef.gov.mz no longer
+# serves the file; this is the Wayback `id_` capture of MEF's own download
+# (documentos/estudos/artigos/754, captured 2019-10-27). ine.gov.mz itself
+# serves an incomplete TLS chain (not worked around).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20191027035648id_/http://www.mef.gov.mz:80/index.php/documentos/estudos/artigos/754--152/file?force_download=1"
+  save_as: MEF_Evolucao_Pobreza_1996-2015.pdf
+  download_timeout: 600
+
+parser: mozambique_poverty
+geography: Total country
+
+notes: >
+  MEF/DEEF, fourth national poverty assessment figures ("Fonte: DEEF
+  (2016)"), four rounds on one method: IAF 1996/97, IAF 2002/03, IOF 2008/09,
+  IOF 2014/15 (periods 1996, 2002, 2008, 2014). Tabela 1: P0 national,
+  urban/rural, Norte/Centro/Sul, 11 provinces; Tabela 4: P1 national,
+  urban/rural; Tabela 5: number of poor persons national/urban/rural. Lines
+  are set per spatial domain, so no national amount (line_value blank).
+  The earlier rounds are RE-ESTIMATES (1996/97 69,7 here vs 69.4 in the third
+  assessment) and carry this edition in `survey`; the third assessment's own
+  figures are mozambique_terceira.yaml. The fifth assessment (IOF 2019/20)
+  was not found on any government host or capture.
+
+  CROSS-CHECK: P0 69,7 / 52,8 / 51,7 / 46,1; urban 2014/15 37,4; Maputo
+  Cidade 11,6; Niassa 60,6; P1 29,3 / 19,4 / 19,2 / 16,7; poor 2014/15
+  11 826 280 = urban 3 038 517 + rural 8 787 763.

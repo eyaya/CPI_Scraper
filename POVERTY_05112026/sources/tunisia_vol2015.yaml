@@ -1,0 +1,31 @@
+country: Tunisia
+iso3: TUN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: "Enquête Nationale sur le Budget, la Consommation et le Niveau de vie des ménages 2015, Volume A (arabe)"
+frequency: ad_hoc
+expect_metrics: 2
+expect_rows: 44
+
+# --- discover --- (linked from www.ins.tn/publication/enquete-nationale-sur-le-budget-la-consommation-et-le-niveau-de-vie-des-menages-2015)
+discover:
+  method: static_url
+  url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/vol1-budget-2015.pdf"
+  save_as: INS_EBCNV_2015_Volume_A.pdf
+  download_timeout: 600
+
+parser: tunisia_vol2015_poverty
+geography: Total country
+
+notes: >
+  ENBCNV 2015 Volume A (Arabic). Tableau 13: poverty and extreme poverty by the
+  7 regions 2000-2015 -- only 2000 read (2005-2015 equal Volume A 2021).
+  Tableaux 14/15: P0 and population share by education and socio-professional
+  category of the head, 2015. Arabic labels are in visual (reversed) order in
+  the text layer; rows are identified by position (INS's fixed order),
+  confirmed by values and by weighted P0 = national 15,2. Tableau 12 (poor in
+  thousands) not collected. CROSS-CHECK: Centre Ouest 2000 44,1 / extreme
+  18,8; head without schooling 23,4 (22,4% of population); agricultural
+  workers 38,3.

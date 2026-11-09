@@ -1,0 +1,34 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: Profil de pauvreté et d'inégalités en 2014 au Burkina Faso (EMC 2014)
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 600
+
+# --- discover ---
+# INSD's own file (insd.bf/contenu/enquetes_recensements/Enq_EMC/), no longer
+# linked on the rebuilt site; Wayback `id_` copy found via the CDX index.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20210517101420id_/https://www.insd.bf/contenu/enquetes_recensements/Enq_EMC/Profil_de_pauvrete_et_d_inegalite_en_2014.pdf"
+  save_as: bf_emc2014_profil_pauvrete_inegalite.pdf
+  download_timeout: 600
+
+parser: burkina_faso_emc2014_poverty
+geography: Total country
+
+notes: >
+  EMC 2014 poverty profile, line 153 530 FCFA per person per year. Overall,
+  extreme and food poverty (P0 CTR P1 CTR P2 CTR) by milieu and 13 regions,
+  and overall poverty by sex, age, household size, marital status, literacy,
+  education, socio-professional category, branch, activity status and type of
+  employment of the head. The EHCVM 2018 diagnostic also republishes EMC 2014
+  by milieu (filed "EMC 2014 (républié, diagnostic EHCVM 2018)"); this is the
+  original report.
+
+  CROSS-CHECK: 40,1 / 9,7 / 3,3; food 57,7; extreme 11,1; Nord 70,4; Sahel
+  20,6; female head 30,4.

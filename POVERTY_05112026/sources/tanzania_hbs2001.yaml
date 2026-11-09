@@ -1,0 +1,34 @@
+country: Tanzania
+iso3: TZA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS) Tanzania
+publication_code: Household Budget Survey 2000/01 Key Findings (with 1991/92)
+frequency: ad_hoc
+expect_metrics: 2
+expect_rows: 50
+
+# --- discover ---
+# The old nbs.go.tz/nbs/takwimu/hbs/ tree is gone from the live site; Wayback
+# `id_` copy of NBS's own file (CDX index of www.nbs.go.tz).
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/2018id_/http://nbs.go.tz/nbs/takwimu/hbs/hbs2000-01/Key_Findings_HBS_2001_Eng.pdf"
+  save_as: Key_Findings_HBS_2001_Eng.pdf
+  download_timeout: 900
+
+parser: tanzania_hbs2001_poverty
+geography: Tanzania Mainland
+
+notes: >
+  HBS 2000/01 key findings. Food and basic-needs P0 by stratum for 1991/92
+  and 2000/01 (Table 9), % of the poor (Table 10), and P0 for the 20 regions
+  in 2000/01 (selected indicators by region, WHOLE NUMBERS; column order from
+  the rotated header, confirmed by the prose -- Lindi, Mara, Singida,
+  Shinyanga poorest, Dar es Salaam and Mbeya least poor -- and by the
+  Mainland column 36 = Table 9's 35.7). Lines 2000/01: food TZS 5,295, basic
+  needs 7,253 per adult equivalent per 28 days (1991/92: 2,083 / 2,777).
+  The HBS 2000/01 Final Report exists only as a zip with no surviving
+  original capture (warc revisit), so not collected.
+  CROSS-CHECK: 38.6 / 35.7 basic needs; 21.6 / 18.7 food; Singida 55; Lindi 53.

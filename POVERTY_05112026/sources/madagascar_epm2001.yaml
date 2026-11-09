@@ -1,0 +1,28 @@
+country: Madagascar
+iso3: MDG
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+publication_code: EPM 2001 rapport principal (novembre 2002), Tableau 154
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 60
+
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_Epm01_11-2002.pdf"
+  save_as: INSTAT_Epm01_11-2002.pdf
+  download_timeout: 900
+
+parser: madagascar_epm2001_poverty
+geography: Total country
+
+notes: >
+  EPM 2001 Tableau 154: population share, P0 and share of the poor by
+  province x milieu (point decimals). The EPM 1993/1997/1999 reports print no
+  poverty-measure table; those rounds come from EPM 2010 (Tableaux 174/175)
+  and EPM 2002 (Tableau 37). Not comparable with EPM 2021-22 (INSTAT).
+
+  CROSS-CHECK: 69.6; urban 44.1; rural 77.1; Fianarantsoa 83.2.

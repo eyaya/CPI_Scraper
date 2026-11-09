@@ -1,0 +1,34 @@
+country: Gabon
+iso3: GAB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Direction Générale de la Statistique (DGS) -- now INSTAT Gabon
+publication_code: Annuaire statistique du Gabon 2014, chapitre III.5 Pauvreté (EGEP 2005)
+frequency: ad_hoc
+verify_ssl: true
+expect_metrics: 5
+expect_rows: 150
+
+# --- discover ---
+# dgstat.ga is dead (Gabon's live host is instatgabon.org, which no longer
+# carries the 2014 yearbook). Wayback `id_` copy of DGS's own chapter file.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20190203154507id_/http://www.dgstat.ga:80/images/DSG/annuaire2014/POPULATION-ACTIVE-REVENUS-CONDITION-DE-VIE-DES-MENAGES-ET-PAUVRETE.pdf"
+  save_as: DGS_annuaire2014_pauvrete.pdf
+  download_timeout: 600
+
+parser: gabon_egep2005_poverty
+geography: Total country
+
+notes: >
+  EGEP 2005 (Enquête Gabonaise pour l'Evaluation et le suivi de la Pauvreté),
+  Tableau III.5.1.3 of DGS's 2014 yearbook: P0, P1, P2, population share and
+  share of the poor by milieu, the six EGEP regions, and sex, age, education,
+  socio-economic group and pluri-activity of the head. National line 429 336
+  FCFA per person per year. EGEP 2005 and EGEP 2 2017 use different lines and
+  strata; they are separate surveys in `survey`, not a chained series.
+
+  CROSS-CHECK: Total 32.7 / 10.0 / 4.3; Urbain 29.8; Rural 44.6;
+  Libreville 22.8; Sud 53.9; Femme 36.9.

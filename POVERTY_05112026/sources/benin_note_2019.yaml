@@ -1,0 +1,24 @@
+country: Benin
+iso3: BEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de l'Analyse Economique (INSAE, now INStaD)
+publication_code: Note synthèse sur la pauvreté en 2019 (Tableau 2, colonne 2015)
+frequency: ad_hoc
+expect_rows: 13
+
+# --- discover ---
+# INSAE's own file on insae-bj.org (the pre-INStaD domain, no longer served);
+# Wayback `id_` copy found via the CDX index.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20200922002438id_/https://insae-bj.org/images/docs/insae-publications/autres/Note-sur-la-pauvrete/Note%20synth%C3%A8se%20sur%20la%20pauvret%C3%A9%20en%202019.pdf"
+  save_as: bj_note_pauvrete_2019.pdf
+  download_timeout: 600
+
+parser: benin_note_2019_poverty
+geography: Total country
+
+notes: >
+  Only Tableau 2's 2015 column: EMICoV 2015 P0 by department re-estimated on the EHCVM method (Atacora 53,9 vs 42,33 in the 2015 note; national 39,3 vs 40,08), survey 'EMICoV 2015 (ré-estimé méthode EHCVM, note 2019)'. The 2019 values are collected from the 2022 note (benin.yaml).

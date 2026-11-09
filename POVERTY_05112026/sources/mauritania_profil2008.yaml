@@ -1,0 +1,32 @@
+country: Mauritania
+iso3: MRT
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Office National de la Statistique (ONS, now ANSADE)
+publication_code: Profil de pauvreté de la Mauritanie 2008 (EPCV 2008)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 1500
+
+# --- discover --- (ANSADE WordPress media API, plain request)
+discover:
+  method: static_url
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/01/profil-Pauvrete-2008-Mauritanie.pdf"
+  save_as: ONS_Profil_Pauvrete_2008.pdf
+  download_timeout: 900
+
+parser: mauritania_profil2008_poverty
+geography: Total country
+
+notes: >
+  ONS 2008 profile (lines 129 600 / 96 400 UM). Tableau 2.1.2 (sex of head,
+  households and persons), 2.1.10 (13 wilayas), 2.1.11 (head characteristics:
+  milieu x sex, education, household type, activity, institutional sector,
+  socio-economic group, branch), 2.1.12 (extreme, milieu and wilaya,
+  households and persons), 2.1.16/2.1.17 (52 moughataas, households and
+  persons, both lines), 2.1.8 (relative poverty, 148 100 UM). 2.1.16 row 6 is
+  printed 'Moughataa' (2.1.17: Timbédra) -- dropped. CROSS-CHECK: persons
+  42,0 / 14,5 / 6,9, households 35,1 / 11,9 / 5,7; extreme 25,9; Monguel
+  88,9; relative 48,8.

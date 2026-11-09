@@ -1,0 +1,33 @@
+country: Benin
+iso3: BEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de l'Analyse Economique (INSAE, now INStaD)
+publication_code: EMICoV 2006 - Rapport d'analyse (chapitre 2, pauvreté)
+frequency: ad_hoc
+expect_rows: 89
+
+# --- discover ---
+# INSAE's own file on insae-bj.org (the pre-INStaD domain, no longer served);
+# Wayback `id_` copy found via the CDX index (same SHA-1 as the retained file).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20141113161440id_/http://www.insae-bj.org/emicov.html?file=files/enquetes-recensements/emicov/Rapport_final_emicov_2006.pdf"
+  save_as: bj_emicov2006_rapport_final.pdf
+  download_timeout: 600
+
+parser: benin_emicov2006_poverty
+geography: Total country
+
+notes: >
+  EMICoV 2006 (August-November 2006). A RELATIVE line: every poverty line in
+  chapter 2 is set at the first two quintiles of the welfare indicator
+  (consumption per head for monetary poverty), so line_type relative. Monetary
+  P0 printed as a FRACTION (unit index, kept as printed): Tableau 2.1 (12
+  departments, PM column only) and Tableau 2.7 (77 communes; standard errors
+  and ranks not taken). National 37,4 % and urban/rural are chart labels only.
+  The prose's commune rates differ from Tableau 2.7 (Adjarra 22,17 % vs 0,220);
+  table values kept.
+  CROSS-CHECK: Alibori 0,430; Littoral 0,304; Couffo 0,406; Adjarra 0,220;
+  Banikoara 0,563; Cotonou 0,310.

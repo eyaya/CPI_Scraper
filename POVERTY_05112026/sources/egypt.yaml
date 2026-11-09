@@ -1,0 +1,39 @@
+country: Egypt
+iso3: EGY
+indicator: Poverty
+tier: 2
+source_type: pdf
+agency: Central Agency for Public Mobilization and Statistics (CAPMAS)
+publication_code: National Statistical Report on Monitoring the 2030 SDG Indicators in Egypt (2023), indicator 1.2.1; Egypt in Figures 2019/2020/2024
+frequency: ad_hoc
+expect_metrics: 1
+expect_rows: 40
+
+# --- discover --- CAPMAS API (the route cpi/labour use): /api/Publication/SearchPublicationDetail
+# ?PublicationId=147&Year=2023 (SDG report) and PublicationId=167 (Egypt in Figures).
+discover:
+  method: static_url
+  url: "https://www.capmas.gov.eg:8080/Publication/Pdf/8fa8d973-04e8-40ea-946b-f15435d22294.pdf"
+  save_as: capmas_sdg_report_2023.pdf
+  download_timeout: 600
+extra_urls:
+  - url: "https://www.capmas.gov.eg:8080/Publication/Pdf/c55d8512-9739-44de-b7b8-88a6cbc41172.pdf"
+    save_as: capmas_egypt_in_figures_2019.pdf
+  - url: "https://www.capmas.gov.eg:8080/Publication/Pdf/93c7d72a-0312-42f6-8ae2-71bf1a2e9875.pdf"
+    save_as: capmas_egypt_in_figures_2020.pdf
+  - url: "https://www.capmas.gov.eg:8080/Publication/Pdf/31a65c03-ab92-466b-b562-cd3908fedf86.pdf"
+    save_as: capmas_egypt_in_figures_2024.pdf
+
+parser: egypt_poverty
+geography: Total country
+
+notes: >
+  National-line poverty rate (HIECS 2015, 2017/18, 2019/20): SDG report 2023
+  Tableaux 2-4 (national, sex, six age groups) and the Egypt in Figures
+  regional table (urban governorates, urban/rural Lower and Upper Egypt; the
+  frontier governorates are not printed). The $2.15 PPP table is World Bank
+  data and not collected; the 1999/2000-2012/13 rounds appear only in a
+  trend chart whose labels cannot be paired with years from the text layer,
+  and as images in the HIECS 2019/20 poverty-indicators file. CROSS-CHECK:
+  27,8 / 32,5 / 29,7; men 30,4, women 29,1 (2019/20); Upper Rural 56,7
+  (2015), 51,9, 42,8.

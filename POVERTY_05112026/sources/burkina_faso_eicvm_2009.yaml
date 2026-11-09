@@ -1,0 +1,27 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: Analyse succincte des résultats provisoires de l'EICVM 2009-2010
+frequency: ad_hoc
+expect_rows: 6
+
+# --- discover ---
+# INSD's own file (insd.bf/contenu/enquetes_recensements/enq_cond_vie_menages/),
+# Wayback `id_` copy.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20210818002407id_/http://www.insd.bf/contenu/enquetes_recensements/enq_cond_vie_menages/resultats_provisoires_eicvm.pdf"
+  save_as: bf_eicvm2009_resultats_provisoires.pdf
+  download_timeout: 600
+
+parser: burkina_faso_eicvm_poverty
+geography: Total country
+
+notes: >
+  EICVM 2009-2010 PROVISIONAL results (INSD's own label). Tableau 1 only:
+  HOUSEHOLD incidence and 95% CI for Urbain (19,9 [16,7; 23,1]) and Rural
+  (50,7 [47,7; 53,7]); line 108 454 FCFA. The national 43,9% [41,2; 46,6] and
+  the regional values are prose / chart only and are not taken.

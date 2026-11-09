@@ -1,0 +1,53 @@
+country: Senegal
+iso3: SEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: Rapport final EHCVM 2018/2019, chapitres III-IV
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 250
+
+# --- discover ---
+# The same file labour/ collects as an extra_url (see labour/sources/
+# senegal.yaml): linked from ANSD's own EHCVM 2018-2019 survey page
+# (/enquete-et-etude/enquete-harmonisee-sur-les-conditions-de-vie-des-menages-ehcvm-2018-2019)
+# on the stable /sites/default/files/<YYYY-MM>/ path. One-off round: pinned.
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2022-04/Rapport-final-EHCVM-11092021%20vf-Senegal%20004_1.pdf"
+  save_as: senegal_ehcvm_2018_2019_rapport_final.pdf
+  download_timeout: 300
+
+parser: senegal_poverty
+geography: Total country
+
+notes: >
+  ANSD EHCVM 2018/19 final report. Welfare = annual consumption per capita.
+  Lines (Tableau des principaux résultats): seuil de pauvreté 333 440 FCFA a
+  year; seuil de l'extrême pauvreté 186 869 FCFA.
+
+  Chapter III compares 2018/19 with 2011. The 2011 columns are ESPS-II
+  estimates RE-LINKED ("raccordés") to EHCVM methodology (P0 42,8%), not the
+  originally published ESPS-II figure (46,7%); they carry survey
+  "ESPS-II 2011 (raccordé EHCVM)" and no line amount.
+
+  Collected: III-1 (P0 + absolute contribution by stratum, 2011 & 2018/19),
+  III-2 (number of poor), III-3 (P1, P2), III-6 (extreme P0, contribution,
+  counts), IV-1 (urban/rural), IV-2 (14 regions: P0 P1 P2, population share,
+  share of the poor), IV-3..IV-10 (household size; age, education, marital,
+  activity status, sector, status in employment and branch of the head).
+  IV-8..IV-10 cover only people whose household head is employed. Counts in
+  III-2/III-6 are read from word geometry (space-grouped counts print side by
+  side) and accepted only when the strata sum to the printed Total.
+
+  PUBLISHED ODDITY KEPT: in IV-9 the population shares read Tâcheron/aide
+  familial 72,7% and Compte propre 2,1%, implausible for Senegal and possibly
+  transposed in the report; collected verbatim (P0 and C0 agree with the
+  text).
+
+  CROSS-CHECK: P0 37,8 (2018/19) / 42,8 (2011); P1 10,3 / 13,8; P2 3,9 / 6,3;
+  extreme 6,8 / 12,2; Dakar urbain 8,7; urbain 19,8; rural 53,6; Sédhiou
+  65,6; Dakar region 9,0; poor 6 032 056 / 5 832 008.

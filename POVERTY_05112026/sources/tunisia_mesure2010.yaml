@@ -1,0 +1,35 @@
+country: Tunisia
+iso3: TUN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: "Mesure de la pauvreté, des inégalités et de la polarisation en Tunisie 2000-2010"
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 220
+
+# --- discover --- (linked from www.ins.tn/publication/mesure-de-la-pauvrete-des-inegalites-et-de-la-polarisation-en-tunisie-2000-2010)
+discover:
+  method: static_url
+  url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Mesure_de_la_pauvrete.pdf"
+  save_as: INS_mesure_pauvrete_2000_2010.pdf
+  download_timeout: 600
+
+parser: tunisia_ins_poverty
+geography: Total country
+
+notes: >
+  INS 2012 (with AfDB / World Bank). P0 2000/2005/2010 on the high and low
+  lines by stratum and the seven regions (Tableaux 7-8); P1 (A17) and P2 (A18,
+  2000 only) likewise; 2010 population share and absolute / relative
+  contributions by region (Tableaux 9-10) and by education of the head
+  (Tableaux 14-15). INS'S 2012 METHODOLOGY: 2010 P0 15,5 against Volume A
+  2021's re-estimate 20,5, so the rows carry their own lines (line_level
+  other: "Seuil haut / Seuil bas (série INS 2000-2010)") and series ids.
+  PUBLISHED DEFECT: A18 a/b's 2005 and 2010 severity columns violate P2 <= P1
+  (low-line P2 2005 2,43 > P1 1,66) and look exchanged between the two
+  tables; severity is kept for 2000 only. Not read: CSP tables 12-13 (labels
+  wrap around the numbers), standard errors, priority ratios, the 'Dépense
+  totale' variant. CROSS-CHECK: 32,4 / 23,3 / 15,5 (high), 12,0 / 7,6 / 4,6
+  (low); Centre Ouest 49,3 / 46,5 / 32,3; P1 high 9,3 / 6,21 / 3,85.

@@ -1,0 +1,35 @@
+country: South_Africa
+iso3: ZAF
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Statistics South Africa (Stats SA)
+publication_code: Poverty Trends in South Africa 2006-2011 (Report 03-10-06, March 2014)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 420
+
+# Wayback `id_` capture (2017-01-20) of Stats SA's own PDF, found through the
+# CDX index of statssa.gov.za/publications/Report-03-10-06/* (statssa.gov.za
+# answers plain requests with an Incapsula challenge; see south_africa.yaml).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20170120212800id_/http://www.statssa.gov.za/publications/Report-03-10-06/Report-03-10-06March2014.pdf"
+  save_as: Report-03-10-06March2014.pdf
+  download_timeout: 600
+
+parser: south_africa_ptr2014_poverty
+geography: Total country
+
+notes: >
+  PTR 2014, a superseded edition: IES 2005/06, LCS 2008/09, IES 2010/11 on
+  its own line series (Table 2, March prices: FPL 210/305/321, LBPL
+  300/416/443, UBPL 431/577/620 per person per month). Survey labels
+  "... (Poverty Trends 2014)". National FPL P0 and gap (Tables 3/4); UBPL
+  P0/P1/P2 for persons by sex, age, education (18+), province, settlement
+  type (Tables 7, 9-12) and households by sex and education of the head,
+  province, settlement type (Tables 14, 16-18). Population group and
+  counts in millions not collected.
+
+  CROSS-CHECK: UBPL 57,2 / 56,8 / 45,5; FPL 26,6 / 32,4 / 20,2; UBPL gap
+  2011 19,6; households 42,2 / 42,7 / 32,9; Limpopo 2009 78,9.

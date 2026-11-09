@@ -1,0 +1,37 @@
+country: Somalia
+iso3: SOM
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Somalia National Bureau of Statistics (SNBS), with World Bank technical assistance
+publication_code: District-Level Poverty Estimates in Somalia - A Fay Herriot Model Approach (2025, SIHBS 2022)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 260
+
+# --- discover ---
+# SNBS's own upload (wp-content 2025/05), fetched 2026-11-05 with TLS verified
+# and no impersonation.
+discover:
+  method: static_url
+  url: "https://nbs.gov.so/wp-content/uploads/2025/05/DIGITAL-District-Level-Poverty-Estimates-in-Somalia.pdf"
+  save_as: SNBS_District_Level_Poverty_Estimates_2025.pdf
+  download_timeout: 400
+
+parser: somalia_district_poverty
+geography: Total country
+
+notes: >
+  Joint SNBS / World Bank note, hosted by SNBS. Table 8 "Final FH Estimates":
+  Fay-Herriot SMALL-AREA P0 with 95% CI for 74 districts, and the regional
+  DIRECT SIHBS 2022 rates with CI for 17 regions (Middle Juba: none), at the
+  national poverty line, printed as 0-1 fractions (unit index, kept as
+  printed). The population covered is RURAL AND URBAN ONLY (nomadic, IDP and
+  refugee-camp households excluded, Table 1 note 2), so rows carry locality
+  other "Rural and urban population (excl. nomadic, IDPs)" and differ from
+  the Poverty Report 2023 rates (Awdal 0.357 vs 39.4). Two CI upper bounds
+  above 1 (Bulo Burto 1.094, Jalalaqsi 1.087) are not read. Not read: the
+  superseded initial model (Tables A1, 9), A2's district direct estimates
+  (unreliable for publication per the note).
+  CROSS-CHECK: Borama 0.308 (0.224-0.391); Banadir district 0.458; Banadir
+  region direct 0.44 (0.374-0.505); Hiraan 0.815; Jamaame 0.468.

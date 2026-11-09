@@ -1,0 +1,38 @@
+country: Comoros
+iso3: COM
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ministère du Plan et de l'Aménagement du Territoire - Direction de la Statistique (now INSEED)
+publication_code: Enquête intégrale auprès des ménages 2004 - Eléments d'analyse (Principaux résultats, janvier 2005)
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 500
+
+# --- discover ---
+# INSEED's NADA catalogue, study 3 (EIM 2004), related materials, download 24
+# ("Comores - Principaux Resultats- EIM - 2004.pdf"). Fetched with TLS
+# verification on (it succeeds; comoros.yaml's verify_ssl: false is not needed).
+discover:
+  method: static_url
+  url: "https://www.nada.inseed-comores.org/index.php/catalog/3/download/24"
+  save_as: comoros_eim2004_principaux_resultats.pdf
+  download_timeout: 600
+
+parser: comoros_eim2004_poverty
+geography: Total country
+
+notes: >
+  EIM 2004 and EBC 1995. Every measure printed as a FRACTION (the report's own
+  footnote: "n'ont pas été multipliées par 100") -- unit index, kept as printed.
+  Tableau 3 (households P0/P1/P2 with contributions, persons P0, by island and
+  island x milieu), Tableau 4 (by labour-market status of the head), Tableau 44
+  (T3 + T4 for male- and female-headed households), Tableau 5 (1995 households
+  and persons P0 + contributions; 2004 person contributions). Lines 285 144 FC
+  (2004) and 170 337 FC (1995) per person per year. Authored by J.-P. Lachaud for
+  the Ministère du Plan; the companion "Rapport principal" (download 23) is
+  co-branded with UNDP. Standard errors, vulnerability and decomposition tables
+  not taken.
+  CROSS-CHECK: 2004 households 0,369 / 0,128 / 0,062, persons 0,448; Ndzouani
+  rural 0,435; 1995 households 0,473, persons 0,546; Ndzouani 1995 0,608; male
+  heads 0,386, female heads 0,304.

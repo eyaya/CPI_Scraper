@@ -1,0 +1,40 @@
+country: Ethiopia
+iso3: ETH
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ministry of Finance and Economic Development (MoFED), official compiler of poverty statistics
+publication_code: Development and Poverty in Ethiopia 1995/96-2010/11 (2013)
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 1800
+
+# --- discover ---
+# Wayback `id_` copy of MoFED's own file (CDX of mofed.gov.et).
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20131204222201id_/http://www.mofed.gov.et:80/English/Resources/Documents/Development%20and%20Poverty%20in%20Ethiopia(1995-96)(2010-11).pdf"
+  save_as: MoFED_Development_and_Poverty_1995_96_2010_11.pdf
+  download_timeout: 900
+
+parser: ethiopia_zones_poverty
+geography: Total country
+
+notes: >
+  MoFED poverty profile 1995/96-2010/11. Annex Table A5.6b: P0/P1/P2 in
+  percent for 58 zones (incl. 6 Addis Ababa woreda groups), 1995/96, 1999/00,
+  2004/05; places "<zone> zone, <region>" (NORTH SHOA is a zone of both
+  Amhara and Oromiya). Every other poverty table prints the indices on a 0-1
+  scale; those are read with unit "index" (kept as printed) under survey
+  "HICES <round> (MoFED 2013 profile)": A5.1-A5.4 national / rural / urban and
+  regional P0-P2 (total and food poverty, four rounds), 5.5/5.6 regional
+  P1/P2 2010/11, A5.5/A5.6a towns, other-urban areas and Addis Ababa
+  sub-cities (2010/11, 2004/05), 5.10 number of poor by region, A6.1/A6.4/A6.5
+  sex, household size and literacy of the head (four rounds), 6.4, 6.6-6.8,
+  6.11, 6.12 (2010/11 cuts by residence). The MoFED 2010/11 interim report
+  (retained) prints the same tables and is not read.
+  CROSS-CHECK: KONSO SPECIAL 89.8 / 43.3 / 22.9 (1995/96); WESTERN TIGRAY
+  76.3 -> 39.4; MEKELLE ZONE 34.4 (2004/05); A5.1 national 0.455 / 0.442 /
+  0.387 / 0.296; Tigray 1995/96 0.561; Lideta 2010/11 0.538; Bole 2004/05
+  0.153; Oromiya poor 2010/11 8981694; Table 5.10 regions sum to the national
+  total within 0.6% except 1995/96 (25.08 vs 25.65 million, as printed).

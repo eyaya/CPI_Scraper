@@ -1,0 +1,45 @@
+country: Guinea
+iso3: GIN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: Rapport final EHCVM 2018/2019, chapitre 5 Profil de pauvreté monétaire
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 5
+expect_rows: 650
+
+# --- discover ---
+# Linked from INS's "Rapports d'enquêtes" page
+# (https://www.stat-guinee.org/index.php/publications-ins/rapports-d-enquetes);
+# the same file labour/ collects as an extra. The path contains a literal
+# space ("EHCVM GUINEE"). One-off round, so the file is pinned.
+discover:
+  method: static_url
+  url: "https://www.stat-guinee.org/images/Documents/Publications/INS/rapports_enquetes/INS_Rapport_Final_EHCVM%20GUINEE_01_03_2021.pdf"
+  save_as: INS_Rapport_Final_EHCVM_GUINEE_2018-19.pdf
+
+parser: guinea_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2018/2019 (dated 2019 throughout the report). National line
+  5 006 533 GNF per person per year (food / extreme line 3 068 265); welfare =
+  consumption per capita. International line "$3,2 PPA 2011" (5 947 113 GNF).
+  P0/P1/P2, poor counts and shares of the poor by administrative region (8),
+  natural region (4, OVERLAPPING the administrative ones), milieu, household
+  size, rural/urban x region, characteristics of the head and of individuals;
+  P0 by age group x sex x milieu/region; extreme poverty by region and milieu.
+  Earlier rounds as republished: EIBC 1993/1994, EIBEP 2002/2003, ELEP 2007
+  (P0), ELEP 2012 (P0/P1/P2 by region; P0 urban/rural) -- the report states
+  the EHCVM is NOT comparable with them (different methodology).
+
+  Numbers are rebuilt from word geometry (space thousands + whole-number
+  percentages printed without ",0"): see parsers/guinea_poverty.py.
+
+  CROSS-CHECK: P0 43,7 / P1 12,5 / P2 5; poor 5 264 038; international
+  P0 56 / P1 18,5 / P2 8,2, poor 6 751 096; Labé 66, Conakry 15,7, Kankan
+  P2 2 with 685 665 poor; rural 55,4; extreme 13,4 (1 615 664); ELEP 2012
+  55,2 / 18,4 / 8,4; EIBC 1994 rural 82,1. Shares of the poor sum to 100,0
+  and regional counts to 5 264 038.

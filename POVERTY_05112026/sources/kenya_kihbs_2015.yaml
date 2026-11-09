@@ -1,0 +1,46 @@
+country: Kenya
+iso3: KEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+publication_code: Basic Report on Well-Being in Kenya (KIHBS 2015/16, 2018) + 2005/06 trend
+frequency: ad_hoc
+expect_metrics: 4
+expect_rows: 600
+
+# --- discover ---
+# Listed by KNBS's WordPress media API (search=well-being). knbs.or.ke serves
+# an incomplete TLS chain, so the retained copy is the Wayback `id_` capture
+# of KNBS's own file (2024-05-21) rather than a fetch with verification off.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20240521224337id_/https://www.knbs.or.ke/wp-content/uploads/2023/09/2015-2016-Kenya-Integrated-Household-Budget-Survey-Basic-Report-On-Well-Being-In-Kenya.pdf"
+  save_as: KIHBS_2015_16_Basic_Report_Well_Being.pdf
+  download_timeout: 900
+
+parser: kenya_kihbs_poverty
+geography: Total country
+
+notes: >
+  KIHBS 2015/16 Basic Report on Well-Being. Tables 4.2-4.4: food, overall
+  and hardcore poverty by residence (National, Rural, Peri-Urban, Core-Urban)
+  and 47 counties -- headcount, distribution of the poor, gap, severity.
+  Lines per adult equivalent per month: overall KSh 3,252 rural/peri-urban,
+  5,995 core-urban; food KSh 1,954 / 2,551. Table 4.5: KIHBS 2005/06 as
+  originally published AND re-estimated on the 2015/16 basket at 2005/06
+  prices (KSh 1,584 / 2,779 overall), each its own survey.
+
+  The three-way residence split differs from the KCHS two-way split the
+  2022 report uses for the same survey (Rural 40.1 here vs 38.8 there), so
+  this report's Rural is filed as "Rural (three-way split)".
+
+  PUBLISHED DEFECT: Table 4.4 Nairobi City severity 9.8 with headcount 0.6
+  -- that cell dropped. Table 4.2's peri-urban poor count (817) disagrees
+  with Table 4.1's (965); counts are not read. Table 5.1 is printed rotated
+  (reversed text layer) and is not read.
+
+  CROSS-CHECK: overall 36.1 / 10.4 / 4.5; food 32.0 / 9.2 / 3.9; hardcore
+  8.6 / 2.2 / 0.9; Turkana overall 79.4 / 46.0 / 30.8; Mandera hardcore 38.9;
+  2005/06 overall 46.6 (comparable 46.8), food 45.8, hardcore 19.5; county
+  distributions of the poor sum to 100 +/- 0.4.

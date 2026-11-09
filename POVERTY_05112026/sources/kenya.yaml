@@ -1,0 +1,52 @@
+country: Kenya
+iso3: KEN
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+publication_code: The Kenya Poverty Report 2022 (KCHS 2022) + 2019-2021 reports
+frequency: annual
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 3000
+
+# --- discover ---
+# KNBS's WordPress media API lists every poverty report (search=poverty);
+# the four reports are pinned by their upload paths (checked 2026-11-04).
+discover:
+  method: static_url
+  url: "https://www.knbs.or.ke/wp-content/uploads/2024/10/The-Kenya-Poverty-Report-2022.pdf"
+  save_as: The-Kenya-Poverty-Report-2022.pdf
+  impersonate: ["chrome124"]
+  download_timeout: 300
+extra_urls:
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/The-Kenya-Poverty-Report-2021.pdf"
+    save_as: The-Kenya-Poverty-Report-2021.pdf
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/The-Kenya-Poverty-Report-2020.pdf"
+    save_as: The-Kenya-Poverty-Report-2020.pdf
+  - url: "https://www.knbs.or.ke/wp-content/uploads/2023/09/The-Kenya-Poverty-Report-2019.pdf"
+    save_as: The-Kenya-Poverty-Report-2019.pdf
+
+parser: kenya_poverty
+geography: Total country
+
+notes: >
+  KNBS Kenya Poverty Reports (KCHS 2019-2022; KIHBS 2015/16 via the 2022
+  report's trend Table 4.2). Consumption per adult equivalent; lines differ
+  by residence (2022: overall KSh 4,358 rural / 8,006 urban, food KSh 2,668 /
+  3,520 per adult equivalent per month). Three measures: overall poverty
+  (overall line), hardcore (total consumption below the FOOD line; filed
+  extreme) and food poverty (food consumption below the food line; filed
+  line_level other). 2022: county Tables 4.3-4.5 + household Table 5.1;
+  2019-2021: annex Tables A.1/B.1/C.1 (individuals), P0 P1 P2 and the
+  contribution to each. Population / number-of-poor columns are in
+  thousands and are not collected. Child/youth/elderly tables are printed
+  rotated (reversed text layer) and are not collected.
+
+  PUBLISHED DEFECT KEPT: Table 5.1's rural household distribution by marital
+  status of the head sums to 130,9% (Widow 45,2%).
+
+  CROSS-CHECK: 2022 overall 39.8 / 10.1 / 3.8, food 31.7, hardcore 7.1;
+  Turkana 82.7; 2020 overall 42.9, Turkana 80.6 / 36.1 / 20.0; 2019 overall
+  33.6; 2015/16 36.1. The 2022 trend table equals each year's own report for
+  all 33 overlapping national/rural/urban values.

@@ -1,0 +1,31 @@
+country: Madagascar
+iso3: MDG
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+publication_code: EPM 2010 rapport principal (août 2011), chapitre XI Pauvreté et inégalité
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+expect_rows: 250
+
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_Epm10_08-2011.pdf"
+  save_as: INSTAT_Epm10_08-2011.pdf
+  download_timeout: 900
+
+parser: madagascar_epm2010_poverty
+geography: Total country
+
+notes: >
+  EPM 2010: P0/P1 for 22 regions x milieu (Tableau 172) with P0 95% CIs (173),
+  P0 by GSE (177), household size x sex of head (180), extreme (food line
+  328 162 Ar) and overall P0 by milieu (182) and education of head (183);
+  national line 468 800 Ar. Tableaux 174/175 republish the EPM series
+  1993-2010 (P0, P1 by milieu) on one comparable basis -- filed as "EPM
+  <year> (as republished in EPM 2010)". Region names follow the EPM 2021-22
+  module. Not comparable with EPM 2021-22 (INSTAT).
+
+  CROSS-CHECK: 76,5 / 34,9; extreme 56,5; 1993 70,0 / 30,3; 2002 80,7 / 47,6.

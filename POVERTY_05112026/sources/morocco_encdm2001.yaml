@@ -1,0 +1,24 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Les Indices de la pauvreté 2000-2001 (ENCDM 2000/01)"
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 200
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231669/"
+  save_as: HCP_indices_pauvrete_2000_2001.pdf
+
+parser: morocco_hcp_poverty
+geography: Total country
+
+notes: >
+  ENCDM 2000/01. CROSS-CHECK: national 15,3 / 0,035 / 0,012; urban 7,6;
+  rural 25,1; Meknès-Tafilalet rural 41,7. Equals the 2001 row of HCP's
+  absolute-poverty workbook (morocco_hcp_series), which is read only for 2007+.

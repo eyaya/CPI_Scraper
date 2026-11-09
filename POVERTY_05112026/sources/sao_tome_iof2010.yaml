@@ -1,0 +1,37 @@
+country: Sao_Tome_and_Principe
+iso3: STP
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE) São Tomé e Príncipe, with UNDP
+publication_code: Profil de la pauvreté à Sao Tomé et Principe 2010 (IOF / Enquête Budget Consommation 2010)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 250
+
+# --- discover ---
+# INE's Phoca download tree; this upload's name has NO accents in the file
+# part (a Wayback capture shows an older accented spelling of the same file).
+discover:
+  method: static_url
+  url: "https://www.ine.st/phocadownload/userupload/Documentos/Inqu%C3%A9ritos/Inqu%C3%A9rito%20aos%20Or%C3%A7amentos%20Familiares%20-IOF/Inquerito%20aos%20Orcamentos%20Familiares%20-IOF2010.pdf"
+  save_as: stp_iof2010.pdf
+  download_timeout: 900
+
+parser: sao_tome_iof2010_poverty
+geography: Total country
+
+notes: >
+  IOF 2010 poverty profile (French; footer "PNUD/INE", published on INE's
+  site). Official absolute cost-of-basic-needs line 10 975 730 STD per person
+  per year: P0/P1/P2 and contributions by the 7 districts over households and
+  persons (Tableau 4), by sex within districts (5), and by sex, household type
+  and quintile (6). Also the RELATIVE measure (2/3 of mean expenditure per
+  head) for 2000 and 2010 (Tableau 3), line_type relative.
+
+  This is the original IOF 2010 estimate; the IOF 2017 report's "2010" (68,4)
+  is a survey-to-survey re-estimate and keeps its own survey label.
+
+  CROSS-CHECK: 66,2 / 24,8 / 12,0; households 54,4; Caué 84,5; relative 2000
+  53,8, 2010 49,6.

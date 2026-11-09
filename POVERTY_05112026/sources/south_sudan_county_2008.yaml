@@ -1,0 +1,33 @@
+country: South_Sudan
+iso3: SSD
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: South Sudan National Bureau of Statistics (SSNBS)
+publication_code: South Sudan Poverty Estimates at the County Level for 2008
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 230
+
+# --- discover ---
+# ssnbs.org (the bureau's former domain) is gone; Wayback `id_` copy of
+# SSNBS's own file from the CDX index of ssnbs.org.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20140821215643id_/http://ssnbs.org/storage/important-documents/County%20Level%20Poverty%20Estimates.pdf"
+  save_as: SSNBS_County_Level_Poverty_Estimates.pdf
+  download_timeout: 900
+
+parser: south_sudan_county_poverty
+geography: Total country
+
+notes: >
+  SSNBS (with the World Bank) county poverty map: Table 1, P0 and 95%
+  confidence interval for 79 counties, whole percentages. SMALL-AREA
+  ESTIMATES (NBHS 2009 consumption model on the 2008 census), dated to the
+  census year 2008 and filed under their own survey label; NBHS 2009 line
+  SDG 72.9 per person per month. The SSCCSE report "Poverty in Southern
+  Sudan: estimates from NBHS 2009" on the same domain is retained but its
+  tables are images (no text layer for them) -- its state figures are those
+  the NBHS 2009 report already gives.
+  CROSS-CHECK: Malakal 12% (5%, 19%), Aweil South 82% (76%, 87%), Juba 36%.

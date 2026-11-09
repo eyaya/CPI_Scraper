@@ -1,0 +1,38 @@
+country: Malawi
+iso3: MWI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Statistical Office (NSO) Malawi
+publication_code: Malawi Poverty Report 2018 (IHS4 2016/17, with IHS3 2010/11), published 2019
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 800
+
+# --- discover ---
+# Not on NSO's rebuilt CMS (cms.nsomalawi.mw lists only IHS5/IHS6 items).
+# Wayback `id_` capture (2020-03-15) of NSO's own file on nsomalawi.mw.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20200315180615id_/http://www.nsomalawi.mw/images/stories/data_on_line/economics/poverty/Malawi%20Poverty%20Report%20-%202019%20.pdf"
+  save_as: Malawi_Poverty_Report_2019.pdf
+  download_timeout: 600
+
+parser: malawi_ihs4_poverty
+geography: Total country
+
+notes: >
+  NSO "Malawi Poverty Report 2018": IHS4 2016/17 and IHS3 2010/11 on the IHS4
+  method (Tables 3-2..3-8): P0 and ultra-poverty P0 with 95% CI, P1, P2,
+  ultra P1, ultra P2 by national, urban/rural, rural region and 32 districts;
+  Table 3-4 region P0 and population / poor / ultra-poor shares (IHS4). Lines
+  MWK per person per year: total 37,002 / 137,428, food (ultra) 22,956 /
+  85,260. IHS3 rows are this report's re-estimate (survey "IHS3 2010/11 (IHS4
+  report)"); the IHS3 report itself (2012) is malawi_ihs3.yaml if retrieved.
+  CI pairs with a negative printed lower bound are skipped. District names
+  harmonised with the IHS6 report (Nkhatabay -> Nkhata Bay, Lilongwe Rural ->
+  Lilongwe, Zomba Rural -> Zomba Non-City).
+
+  CROSS-CHECK: IHS4 P0 51.5 / ultra 20.1 / P1 16.8 / P2 7.4; IHS3 50.7 /
+  24.5 / 18.9 / 9.3; Phalombe 83.2 (IHS4); Blantyre City 8.0; Likoma 31.4;
+  regional shares of the poor sum to 100.0.

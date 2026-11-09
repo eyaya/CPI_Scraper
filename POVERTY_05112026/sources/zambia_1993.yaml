@@ -1,0 +1,23 @@
+country: Zambia
+iso3: ZMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats, formerly CSO)
+publication_code: Social Dimensions of Adjustment Priority Survey II 1993 (Living Conditions Monitoring Survey series)
+frequency: ad_hoc
+expect_rows: 40
+
+# --- discover ---
+# On ZamStats' own WordPress uploads (found via /wp-json/wp/v2/media?search=Living Conditions).
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/1993-Living-Conditions-Monitoring-Survey.pdf"
+  save_as: 1993-Living-Conditions-Monitoring-Survey.pdf
+  download_timeout: 900
+
+parser: zambia_1993_poverty
+geography: Total country
+
+notes: >
+  PS II 1993 ch. 10: EXTREME poverty headcount only (Tables 10.2 province x residence, 10.4 strata, 10.5 sex of head and household size). Extreme line K5,910 per adult equivalent per month (moderate K8,480). The overall headcount is not tabulated (only extreme + moderate, not summed here); Table 10.8's P1/P2 are averaged over the poor only, so are not FGT measures. CROSS-CHECK: extreme 76; rural 89; urban 56; North-Western 90; urban high cost 44.

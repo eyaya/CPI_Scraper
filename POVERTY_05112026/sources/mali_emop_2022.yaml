@@ -1,0 +1,33 @@
+country: Mali
+iso3: MLI
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: Résultats annuels de l'EMOP 2022 (chapitre pauvreté)
+frequency: annual
+expect_metrics: 3
+expect_rows: 40
+
+# --- discover ---
+# Listed on INSTAT's EMOP publication page
+# (https://www.instat-mali.org/fr/publications/enquete-modulaire-et-permanente-aupres-des-menages-emop)
+# as ranuel22_eq.pdf. TLS verifies.
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/eq/ranuel22_eq.pdf"
+  save_as: mali_ranuel22_eq.pdf
+  download_timeout: 900
+
+parser: mali_emop_poverty
+geography: Total country
+
+notes: >
+  INSTAT's annual EMOP (Enquête Modulaire et Permanente auprès des Ménages)
+  poverty chapter for 2022, individual-level (the report: "les principaux
+  résultats relatifs aux indices de pauvreté se réfèrent aux individus").
+  Own year read from the tables' "Source : EMOP-2022" lines. P0/P1/P2 by region
+  (P0 95% CI where printed), by sex of the head, and Tableau 8.7 (education of
+  the head, household size, Bamako / Autres villes / Rural) where printed.
+  Line value: this report's own Tableau 2-1 row where it prints one.
+  EMOP 2013 excludes Gao, Tombouctou, Kidal; 2014-2018 exclude Kidal.

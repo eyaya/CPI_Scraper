@@ -1,0 +1,31 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: xls
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Carte de pauvreté monétaire 2014 (communes, provinces, régions)"
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 5000
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231439/"
+  save_as: HCP_carte_pauvrete_monetaire_2014_commune.xls
+extra_urls:
+  - url: "https://www.hcp.ma/file/231440/"
+    save_as: HCP_carte_pauvrete_monetaire_2014_region.xls
+  - url: "https://www.hcp.ma/file/231441/"
+    save_as: HCP_carte_pauvrete_monetaire_2014_province.xls
+
+parser: morocco_carte2014_poverty
+geography: Total country
+
+notes: >
+  Small-area estimates (RGPH 2014 x ENCDM 2014): P0, P1, P2 in percent for
+  1,687 communes (4 printed 'PM', skipped), 75 provinces and 12 regions, each
+  Ensemble / Urbain / Rural for provinces and regions. A model estimate, kept
+  under its own survey label beside ENCDM 2014's survey estimates.
+  CROSS-CHECK: Laouamra (AC) 19 / 3,08 / 0,68; Daraa-Tafilalet 14,55.

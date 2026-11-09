@@ -1,0 +1,42 @@
+country: Madagascar
+iso3: MDG
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT), Direction des Statistiques des Conditions de Vie des Ménages (DSCVM)
+publication_code: Rapport EPM 2021-2022, chapitre 18 Pauvreté monétaire (mars 2024)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 7
+expect_rows: 280
+
+# --- discover ---
+# The same file unemployment/ retains as an extra (see its madagascar.yaml),
+# linked from https://www.instat.mg/p/epm-enquete-permanente-aupres-des-menages-2021-2022
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_Epm21-22_06-2024.pdf"
+  save_as: INSTAT_Epm21-22_06-2024.pdf
+  download_timeout: 300
+
+parser: madagascar_poverty
+geography: Total country
+
+notes: >
+  EPM 2021-2022, fieldwork November 2021 - June 2022; welfare = real
+  consumption per capita (temporal and spatial deflators). Lines (Tableau
+  18.1, Ar/person/year): national 1 453 987; extreme = food component 986 047.
+  INSTAT states the EPM 2021-2022 is NOT comparable with ENSOMD 2012 or the
+  EPM 1993-2010 series (new questionnaire, line method and deflators).
+
+  Collected: 18.2/18.3/18.4 (milieu: P0, extreme P0, P1, P2, contributions,
+  population shares), 18.6 Urbain row, 18.7 (23 regions: P0 ensemble/urbain/
+  rural, P1, contributions, population shares), 18.8 (sex of head, persons
+  and households), household size, 18.9-18.12 (marital status, labour status,
+  branch and occupation of the head; 18.11/18.12 cover persons whose head is
+  employed). Not collected: 18.5 elasticities, Graphiques 18.1-18.3,
+  18.13/18.14 inequality.
+
+  CROSS-CHECK: P0 77,0; extreme 53,3; P1 33,8; P2 18,4; Capitale 37,1; Rural
+  83,3; Urbain 50,8; Analamanga 51,3 (P1 17,5); Androy 98,0 (P1 63,4); female
+  head 76,1; households poor 68,2 (extreme 43,2); "7 ou plus" 91,0.

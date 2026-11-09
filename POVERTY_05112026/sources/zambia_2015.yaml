@@ -1,0 +1,23 @@
+country: Zambia
+iso3: ZMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats, formerly CSO)
+publication_code: Living Conditions Monitoring Survey 2015
+frequency: ad_hoc
+expect_rows: 200
+
+# --- discover ---
+# On ZamStats' own WordPress uploads (found via /wp-json/wp/v2/media?search=Living Conditions).
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/2015-Living-Conditions-Monitoring-Survey.pdf"
+  save_as: 2015-Living-Conditions-Monitoring-Survey.pdf
+  download_timeout: 900
+
+parser: zambia_2015_poverty
+geography: Total country
+
+notes: >
+  LCMS 2015 report, Appendix E 'revised 2015 poverty estimates' (CSO/World Bank estimations, published by CSO): P0/P1/P2 on the lower (overall) and food (extreme) lines with P0 CIs, by rural/urban, province and stratum. Lines ZMW 214 / 152 per AE per month. Same survey label as zambia_poverty's 2015 rows (from the 2022 report), whose overlapping values are identical. CROSS-CHECK: 54.4 / 40.8; P1 26.4; P2 16.0; Western 82.2; high cost extreme P2 0.2.

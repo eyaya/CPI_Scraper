@@ -1,0 +1,46 @@
+country: Gambia
+iso3: GMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Gambia Bureau of Statistics (GBoS)
+publication_code: Integrated Household Survey 2020 - Prevalence of Poverty report (+ IHS 2015/16 Prevalence of Poverty report)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 600
+
+# --- discover ---
+# GBoS download tree /downloads/134-the-gambia-integrated-household-survey-ihs-
+# -> /downloads/138-ihs-2020 and /downloads/137-ihs-2015-2016 each list a
+# "Prevalence of Poverty Report" (downloads-file 518 / 519; checked 2026-11-04).
+# The 2015/16 report is an extra: its Tables 5.2/5.3 carry the 2010 round and
+# 5.4 the 2015/16 food poverty. (source_file credits the primary for all rows.)
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/518-prevalence-of-poverty-report-2020"
+  save_as: gambia_ihs2020_poverty.pdf
+  download_timeout: 300
+extra_urls:
+  - url: "https://www.gbosdata.org/downloads-file/519-prevalence-of-poverty-report-2015-2016"
+    save_as: gambia_ihs2015_16_poverty.pdf
+
+parser: gambia_poverty
+geography: Total country
+
+notes: >
+  IHS 2020 Tables 18-20 (absolute, extreme, food poverty; 2015/16 and 2020) and
+  IHS 2015/16 Tables 5.2-5.4 (2010 round; 2015/16 food poverty). Lines per
+  person per month: 2020 absolute GMD 2,236.85 / food 1,428.17; 2015/16
+  1,503.33 / 982.89; 2010 none derived (footnote 20). "Food poverty" =
+  food expenditure below the food line (line_level other), distinct from
+  extreme poverty (total consumption below the food line).
+
+  PUBLISHED DEFECT: Table 5.3's 2010 extreme block repeats the absolute 2010
+  gap/severity cells -- only its P0, distribution, share and count are read.
+  LGA poor counts sum to the national to rounding (2010: 791,411 vs 791,592
+  printed).
+
+  CROSS-CHECK: 53.4 / 19.4 / 9.4 (2020); 48.6 / 15.5 / 6.7 (2015/16); 48.1
+  (2010); extreme 26.3 / 20.8 / 21.3; Kuntaur 86.3; poor 1,083,373 (2020);
+  food poverty 60.2 (2020), 55.1 (2015/16).

@@ -1,0 +1,29 @@
+country: Togo
+iso3: TGO
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Etudes Economiques et Démographiques (INSEED)
+publication_code: Cartographie de la pauvreté 2017
+frequency: ad_hoc
+expect_rows: 250
+
+# --- discover ---
+# INSEED download manager (wp-json/wp/v2/dlm_download search "pauvret": id 2626).
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/2626/"
+  save_as: tg_cartographie_pauvrete_2017.pdf
+  download_timeout: 600
+
+parser: togo_carto_poverty
+geography: Total country
+
+notes: >
+  Small-area estimates (QUIBB 2015 model imputed into a 2017 listing) of P0 P1
+  P2 for 5 regions, 39 prefectures, Lomé commune and its 5 arrondissements,
+  2017, plus the 2011 poverty map's values as republished (Annexe Tableau 3).
+  Survey labels say "petits domaines" / "cartographie" so these never pass as
+  survey rounds. Kpendjal and Oti 2011 values (pre-split areas) not taken.
+
+  CROSS-CHECK: Golfe 47 / 18 / 9 (2017), 32,6 (2011); Savanes 65 / 87,3.

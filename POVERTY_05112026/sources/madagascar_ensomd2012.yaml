@@ -1,0 +1,33 @@
+country: Madagascar
+iso3: MDG
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT)
+publication_code: ENSOMD 2012-2013, rapport principal, chapitre 1.8 Pauvreté monétaire
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 5
+expect_rows: 200
+
+discover:
+  method: static_url
+  url: "https://www.instat.mg/documents/upload/main/INSTAT_Ensomd2012-2013_10-2013.pdf"
+  save_as: INSTAT_Ensomd2012-2013_10-2013.pdf
+  download_timeout: 900
+
+parser: madagascar_ensomd_poverty
+geography: Total country
+
+notes: >
+  ENSOMD 2012-2013 (fieldwork Dec 2012 - Jan 2013): P0/P1 and shares by milieu
+  and 22 regions, by socio-economic group, household size, sex and marital
+  status of the head (households and persons, overall and extreme line), and
+  Tableau 1.8.1's trend 2001-2012 on the national line and two international
+  lines named as printed (no PPP base year given; "actualisé" nationally,
+  "courant" for urban/rural 1,25$). Earlier rounds in that trend are filed as
+  "EPM <year> (as republished in ENSOMD 2012-2013)". INSTAT says EPM 2021-22
+  is not comparable with this series.
+
+  CROSS-CHECK: 71,5 / 32,8; extreme 52,7; Androy 96,7; trend 69,6 / 80,7 /
+  68,7 / 76,5 / 71,5.

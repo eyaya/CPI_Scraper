@@ -1,0 +1,43 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: EHCVM 2021 - Diagnostic de la pauvreté
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 5
+expect_rows: 450
+
+# --- discover ---
+# Listed (with the 2018 edition) on INSD's "Statistiques sur les conditions de
+# vie des ménages" page:
+#   https://www.insd.bf/fr/statistiques-sociales/statistiques-sur-les-conditions-de-vie-des-menages
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2024-10/EHCVM_2021_Diagnostic%20de%20la%20Pauvret%C3%A9.pdf"
+  save_as: burkina_ehcvm_2021_diagnostic_pauvrete.pdf
+
+parser: burkina_faso_poverty
+geography: Total country
+
+notes: >
+  EHCVM 2021 "Diagnostic de la pauvreté". Line 247 806 FCFA per person per
+  year (food 142 009). Three measures, each its own line: overall, EXTREME
+  (total consumption below the food line) and "pauvreté alimentaire" (FOOD
+  consumption below the food line -- a different welfare measure, line_level
+  other). National, milieu (incl. Ouaga+Bobo and Autres urbain), 13 regions
+  on all three lines, household-level rates, and characteristics of the head
+  (sex, size, marital status, age, literacy, education, diploma, five
+  employment cuts). 2018 (EHCVM-1) figures appear only in prose here
+  (41,4 / 13,1 / 51,1); the 2018 diagnostic on the same page is the source
+  for that round.
+
+  PUBLISHED INCONSISTENCY kept as tabled: Tableau 2-10 gives 58,4% for
+  households of 12+ persons; the prose says 68,4%.
+
+  CROSS-CHECK: P0 43,2 / P1 13,0 / P2 5,4; 9 292 224 poor; extreme 11,9
+  (2 568 949); food poverty 53,3; rural 52,7, urban 16,6; Sahel 76,1, Centre
+  8,0; households 35,0; female head 47,5. Regional contributions sum to 100
+  (±0,1) on each line.

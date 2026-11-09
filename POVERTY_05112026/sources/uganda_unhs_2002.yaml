@@ -1,0 +1,27 @@
+country: Uganda
+iso3: UGA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Uganda Bureau of Statistics (UBOS)
+publication_code: "UNHS 2002/03 report (UNHS II) -- with 1999/00, MS-4 1997 and IHS 1992 on comparable coverage"
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 4
+expect_rows: 60
+
+# --- discover ---
+# UBOS publication listing ?pagename=explore-publications&p_id=23 (UNHS).
+discover:
+  method: static_url
+  url: "https://www.ubos.org/wp-content/uploads/publications/03_2018unhs_200203_report.PDF"
+  save_as: UNHS_2002_03_report.pdf
+  download_timeout: 1800
+
+parser: uganda_unhs_2002_poverty
+geography: Total country
+
+notes: >
+  Official national poverty line (Appleton 2001 cost of basic needs, the
+  series UBOS has used since 1992/93), real consumption per adult equivalent.
+  T6.3.1 (2002/03 full sample, Pader not surveyed), T6.3.2 a-d (2002/03, 1999/00, MS-4 1997, IHS 1992 on the comparable coverage excluding Kitgum, Gulu, Bundibugyo, Kasese, Pader -- every place suffixed [excl. ...]), T6.3.6 a/b poverty by sector of the head. CROSS-CHECK: 38.8 / 11.9 / 5.10; comparable 37.7 (1999/00 33.8, 1997 44.4, 1992 55.7); North 63.0; crop agriculture 50.4.

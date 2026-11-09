@@ -1,0 +1,30 @@
+country: Ghana
+iso3: GHA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Ghana Statistical Service (GSS)
+publication_code: Ghana Poverty Mapping Brief 2016/17 (GSS, 2023) -- Fay-Herriot SAE
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 600
+
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20260103021205id_/https://statsghana.gov.gh/gssmain/fileUpload/pressrelease/SAE%20District%20Poverty%20Ghana%202017%5b73%5d.pdf"
+  save_as: "SAE District Poverty Ghana 2017.pdf"
+  download_timeout: 600
+
+parser: ghana_sae2017_poverty
+geography: Total country
+
+notes: >
+  Fay-Herriot small-area estimates of P0 with 95% CI for 216 districts
+  (GLSS 7 direct district estimates + PHC 2010 covariates), upper line. Some
+  districts carry a degenerate CI (Bia East 17.2 17.2 17.2): their estimate is
+  purely synthetic (one EA sampled) -- kept as printed. Table 1's GLSS 7 DIRECT
+  regional 95% CIs are added under survey "GLSS 7 (2016/17)"; their point
+  estimates equal the GLSS 7 profile's and are not re-emitted.
+
+  CROSS-CHECK: Ahanta West 23.6 (4.5-42.7); Chereponi 93.5 (86.9-100.0);
+  Wa West 86.0; National direct 23.4 (21.7-25.2); Upper West 70.9 (65.9-75.9).

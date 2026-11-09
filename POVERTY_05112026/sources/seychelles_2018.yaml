@@ -1,0 +1,26 @@
+country: Seychelles
+iso3: SYC
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS), joint summary with the World Bank
+publication_code: Poverty & Inequality in Seychelles - A Joint NBS-World Bank Summary Report (January 2021)
+frequency: ad_hoc
+expect_rows: 6
+
+# --- discover ---
+# NBS's own download, Wayback `id_` capture 2022-08-16.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20220816231357id_/https://www.nbs.gov.sc/downloads/poverty-inequality-in-seychelles-january-2021/download"
+  save_as: NBS_Poverty_Inequality_Seychelles_Jan2021.pdf
+  download_timeout: 600
+
+parser: seychelles_2018_poverty
+geography: Total country
+
+notes: >
+  HBS 2018 (Feb 2018 - Jan 2019) income-based poverty on the 2018 upper
+  poverty line (SCR 4,376 per adult per month), Table 2: P0 25.3, P1 8.0, P2
+  3.8; with HBS 2013 re-estimated on the deflated 2018 line (38.4 / 11.5 /
+  5.3 -- not the 2016 profile's 39.3), each its own survey label.

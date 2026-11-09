@@ -1,0 +1,23 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Les Indices de la pauvreté 1998-1999 (ENNVM 1998/99)"
+frequency: ad_hoc
+expect_metrics: 3
+expect_rows: 200
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231670/"
+  save_as: HCP_indices_pauvrete_1998_1999.pdf
+
+parser: morocco_hcp_poverty
+geography: Total country
+
+notes: >
+  ENNVM 1998/99. CROSS-CHECK: national 16,2 / 0,038 / 0,013; urban 9,5;
+  rural 24,1; Fès-Boulmane 26,6.

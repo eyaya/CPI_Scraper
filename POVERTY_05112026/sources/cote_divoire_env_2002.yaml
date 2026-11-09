@@ -1,0 +1,24 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS, now ANStat)
+publication_code: ENV 2002 - Profil de pauvreté
+frequency: ad_hoc
+expect_rows: 90
+
+# --- discover ---
+# INS's own file on ins.ci (the pre-ANStat domain); Wayback id_ copy found
+# via the CDX index. anstat.ci itself is behind a Cloudflare challenge.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20151113143938id_/http://www.ins.ci/ENV/ENV2002.pdf"
+  save_as: ci_env2002.pdf
+  download_timeout: 600
+
+parser: cote_divoire_env2002_poverty
+geography: Total country
+
+notes: >
+  ENV 2002: P0 by strata 1985-2002 with each year's line (2.1.1) and extreme P0 1993-2002 (2.1.2; the 1985 column repeats the overall P0 and is skipped); P0 by region x milieu 2002 (3.1.1). Line 183 450 FCFA (2002). CROSS-CHECK: 38,4; Ouest 64,4; Abidjan 14,9.

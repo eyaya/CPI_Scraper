@@ -1,0 +1,23 @@
+country: Zambia
+iso3: ZMB
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats, formerly CSO)
+publication_code: Living Conditions Monitoring Survey 1996
+frequency: ad_hoc
+expect_rows: 110
+
+# --- discover ---
+# On ZamStats' own WordPress uploads (found via /wp-json/wp/v2/media?search=Living Conditions).
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/1996-Living-Conditions-Monitoring-Survey.pdf"
+  save_as: 1996-Living-Conditions-Monitoring-Survey.pdf
+  download_timeout: 900
+
+parser: zambia_1996_poverty
+geography: Total country
+
+notes: >
+  LCMS 1996 ch. 12: total-poor and extremely-poor headcounts (Tables 12.1 province, 12.2 province x residence, 12.4 stratum and socio-economic group of head, 12.5 sex of head and household size). Table 12.8's 'P1'/'P2' (0.615 / 0.443) are not FGT gap/severity -- skipped. No line amount printed in the tables. CROSS-CHECK: 78 / 66; rural 89; North-Western rural 94; parastatal employees 36.

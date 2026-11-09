@@ -1,0 +1,26 @@
+country: Morocco
+iso3: MAR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Haut-Commissariat au Plan (HCP)
+publication_code: "Dynamique de la pauvreté 1985-2007"
+frequency: ad_hoc
+expect_metrics: 6
+expect_rows: 40
+
+# --- discover --- (HCP's own file, listed under hcp.ma/downloads/?tag=Pauvreté+et+vulnérabilité)
+discover:
+  method: static_url
+  url: "https://www.hcp.ma/file/231445/"
+  save_as: HCP_dynamique_pauvrete_1985_2007.pdf
+
+parser: morocco_dynamique_poverty
+geography: Total country
+
+notes: >
+  p.19 Tableau 1: relative contributions of urban/rural to P0, P1, P2 and
+  absolute contributions to P0 for 1985/1991/2001/2007, plus 2007 P1/P2 by
+  milieu (in %). p.52 Tableau 1: national P0 of the 1994 and 2004 poverty
+  maps. CROSS-CHECK: rural share of the poor 72,5 / 72,9 / 72,3 / 70,0;
+  2007 P1 1,9, P2 0,6; 1994 map 16,5; 2004 map 14,2.

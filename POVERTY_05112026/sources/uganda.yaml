@@ -1,0 +1,39 @@
+country: Uganda
+iso3: UGA
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Uganda Bureau of Statistics (UBOS)
+publication_code: Uganda National Household Survey 2019/20 report, chapter 6
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 6
+expect_rows: 400
+
+# --- discover ---
+# UBOS publication upload path (HTTP 200, 8.7 MB, checked 2026-11-04). The
+# 2016/17 UNHS report (03_20182016_UNHS_FINAL_REPORT.pdf) is on the same path
+# but transfers at ~1 KB/s; its tables are republished as Table 6.8 here.
+discover:
+  method: static_url
+  url: "https://www.ubos.org/wp-content/uploads/publications/09_2021Uganda-National-Survey-Report-2019-2020.pdf"
+  save_as: UNHS_2019_20_report.pdf
+  impersonate: ["chrome124"]
+  download_timeout: 600
+
+parser: uganda_poverty
+geography: Total country
+
+notes: >
+  UNHS 2019/20 (and 2016/17 as republished in Table 6.8). Real consumption per
+  adult equivalent, 2009/10 prices, against the official national poverty line
+  (regional). Tables 6.7/6.8: national, rural/urban, 4 regions, region x
+  residence, 15 sub-regions with population share, P0 P1 P2 and contributions;
+  Box 6.1 food poverty (extreme line); Table 6.13 by sector of employment and
+  main activity of the head (2019/20). Not collected: mean consumption, poor
+  in millions, the pre-/during-COVID sub-sample split (6.12, 6.13), Gini.
+
+  CROSS-CHECK: 2019/20 P0 20.3 / P1 5.2 / P2 2.0; rural 23.4, urban 11.7;
+  Karamoja 65.7 / 28.1 / 14.6; Acholi 67.7; 2016/17 P0 21.4; Elgon 35.3 ->
+  13.2; food poverty 8.5 both years. Regional contributions sum to 100.0;
+  sub-regional population shares to 99.9 / 100.0.

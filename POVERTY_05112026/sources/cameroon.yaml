@@ -1,0 +1,52 @@
+country: Cameroon
+iso3: CMR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: ECAM5 policy guidance note (Jan 2024) + SDG page ECAM5 + Evolution de la pauvreté 1996-2001 (ECAM I/II)
+frequency: ad_hoc
+verify_ssl: false
+expect_metrics: 3
+expect_rows: 95
+
+# --- discover ---
+# All three files are INS's own uploads, found through ins-cameroun.cm's open
+# WordPress media API (/wp-json/wp/v2/media?search=ECAM). The host stalls and
+# resets plain requests (see labour/cameroon.yaml), hence the fingerprint.
+# NOTE: "Brochure-Ecam-5-En.pdf" (no suffix) is an HTML page, not the PDF --
+# the "-2" upload is the real file.
+discover:
+  method: static_url
+  url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Brochure-Ecam-5-En-2.pdf"
+  save_as: Brochure-Ecam-5-En-2.pdf
+  impersonate: ["chrome124"]
+  download_timeout: 600
+
+extra_urls:
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/07/Page-ODD-ECAM5-Fr.pdf"
+    save_as: Page-ODD-ECAM5-Fr.pdf
+  - url: "https://ins-cameroun.cm/wp-content/uploads/2025/06/ECAM-I-and-ECAM-II-Dynamique-de-la-pauvretT-1996-et-2001.pdf"
+    save_as: ECAM-I-and-ECAM-II-Dynamique-de-la-pauvretT-1996-et-2001.pdf
+
+parser: cameroon_poverty
+geography: Total country
+
+notes: >
+  ECAM5 2022 (new EHCVM-aligned method; line 296 691 FCFA per person per year,
+  813 FCFA a day): P0 national, urban, rural and by sex of the person (SDG page
+  table), and P0 for the 12 survey regions from Figure 4's text data labels
+  (region names in English as printed, including "Nort-West"). INS states ECAM5
+  is NOT comparable with ECAM1-4 or with the 2021 test survey (old method,
+  38,6%), which is not collected.
+
+  ECAM I 1996 / ECAM II 2001 HARMONISED (Tableaux 2.3-2.6): P0/P1/P2 by milieu,
+  six strata, sex and activity status of the head. 1996 = 53,3% is the
+  harmonised scenario; the unharmonised 1996 comparison gives 50,5%.
+
+  source_file credits every row to the primary (brochure) file -- the harness
+  convention for extras; the survey column says which report each row is from.
+
+  CROSS-CHECK: 2022 P0 37,7 (urban 21,6, rural 56,3; Far-North 69,2, Douala
+  8,3); 1996/2001 P0 53,3/40,2, P1 19,1/14,1, P2 9,0/7,0; Rurale Savane P0
+  44,4 -> 45,7 (the only stratum where poverty rose); chômeurs P0 62,5 -> 31,8.

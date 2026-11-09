@@ -1,0 +1,36 @@
+country: Seychelles
+iso3: SYC
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS), with the World Bank
+publication_code: A Poverty Profile of the Republic of the Seychelles - Poverty Report for the HBS 2013 (June 2016)
+frequency: ad_hoc
+expect_rows: 250
+
+# --- discover ---
+# NBS's own download (nbs.gov.sc/downloads/poverty-profile-for-seychelles),
+# Wayback `id_` capture 2017-05-07. Joint NBS/World Bank report; every table
+# is "National Bureau of Statistics' calculations based on the 2013 HBS".
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20170507162539id_/http://www.nbs.gov.sc:80/downloads/poverty-profile-for-seychelles/download"
+  save_as: NBS_Poverty_Profile_for_Seychelles.pdf
+  download_timeout: 600
+
+parser: seychelles_poverty
+geography: Total country
+
+notes: >
+  INCOME-based (gross income per adult equivalent; welfare_aggregate income).
+  Lines SCR 3,945 (poverty) / 3,193 (ultra-poverty, extreme) per AE per month,
+  2013. Tables 1/3 national P0-P2; 6/7 six regions with contributions and
+  population share; 9 individuals by sex and age; 11-13 household head by
+  sex, age, marital status, education, labour-force status; 20/21 P0 CIs by
+  region. Not comparable with the 2006/07 estimates (Table 4 of the report).
+  Previously blocked: the NBS-only 2017/18 profiling survey is a
+  non-probabilistic sample and the 2022 Poverty and Equity Assessment is
+  World Bank-only -- both still uncollected.
+
+  CROSS-CHECK: 39.3 / 12.6 / 6.6; ultra 24.3 / 8.2 / 4.6; Central 2 52.5;
+  female heads 42.9; regional contributions sum to 100.0.

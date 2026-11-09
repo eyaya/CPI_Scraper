@@ -1,0 +1,44 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL), jointly with the World Bank PREM unit
+publication_code: A Poverty Profile for Sierra Leone (2014), Appendix 2 Tables A1, A2, A5
+frequency: ad_hoc
+expect_metrics: 8
+expect_rows: 380
+
+# On Stats SL's own site (images/StatisticsSL/Documents/). The host drops
+# connections that send the harness's browser-style User-Agent (core.fetch
+# HEADERS) but serves the file to an ordinary client's default User-Agent
+# (python-requests / curl), 2026-11-05; downloaded that way, no impersonation.
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/StatisticsSL/Documents/poverty_profile_for_sierra_leone.pdf"
+  save_as: poverty_profile_for_sierra_leone.pdf
+  download_timeout: 900
+  user_agent: client_default   # see core.fetch._download_once
+
+parser: sierra_leone_profile2014_poverty
+geography: Total country
+
+notes: >
+  The 2014 poverty profile, "joint work by the World Bank Poverty Reduction &
+  Economic Management Unit and Statistics Sierra Leone" (acknowledgments;
+  para 1.3: the aggregate, line and poverty statistics computed jointly),
+  hosted by Stats SL -- kept under the joint-report rule (as Zimbabwe's
+  2017-19 update). It re-estimates SLIHS 2003/04 and SLIHS 2011 on one
+  method; survey labels "SLIHS 2003/04 (Poverty Profile 2014)" and "SLIHS
+  2011 (Poverty Profile 2014)" (2011 national 52.9 here against 53.9 in the
+  SLIHS 2011 report). Total poverty line only; people. A1 / A2: P0 P1 P2,
+  population share, contributions to P0/P1/P2 and number of poor by region,
+  district, rural/urban/Freetown/other urban; A5: sex and education of
+  head. This is NOT the 2004/05 "Poverty Profile for Sierra Leone" the
+  slihs2011 notes looked for: the statistics.sl file of that name is this
+  2014 report; no 2004/05 profile was found on statistics.sl or Wayback.
+
+  CROSS-CHECK: 2003 national 66.4 / 27.0 / 14.0, poor 3,193,537; 2011
+  national 52.9 / 16.1 / 6.7, poor 3,090,961; Tonkolili 2011 76.4;
+  Kailahun 2003 93.0; female heads 49.8; no education 61.3. 2011 regional
+  poor counts sum to 2,912,468, not the national (A2's own inconsistency).

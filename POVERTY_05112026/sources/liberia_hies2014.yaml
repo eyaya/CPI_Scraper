@@ -1,0 +1,34 @@
+country: Liberia
+iso3: LBR
+indicator: Poverty
+tier: 3
+source_type: pdf
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+publication_code: Household Income and Expenditure Survey 2014, Statistical Abstract (March 2016)
+frequency: ad_hoc
+verify_ssl: false
+expect_rows: 110
+
+# Wayback `id_` capture (2017-04-07) of LISGIS's own file on lisgis.net (the
+# old site; LISGIS is rebuilding, see cpi/population notes).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20170407013433id_/http://lisgis.net/pg_img/Liberia%20Statistical%20Abstract%20FINAL.pdf"
+  save_as: lisgis_statistical_abstract.pdf
+  download_timeout: 600
+
+parser: liberia_hies2014_poverty
+geography: Total country
+
+notes: >
+  HIES 2014, chapter 3: absolute, food and extreme poverty (Table 3-1) and
+  numbers of poor (3-2) for Liberia, rural/urban and six regions; by sex,
+  age, education and employment sector of the head with population shares
+  (3-3). LISGIS caveats: fieldwork halted Aug 2014 at about half the sample
+  (Ebola), pre-harvest season only, no county estimates, rates "likely
+  slightly higher than the true percentages"; NOT comparable with CWIQ
+  2007/2010 or HIES 2016. Line names match the HIES 2016 descriptor so the
+  three measures share IDs across rounds; the survey label marks the break.
+
+  CROSS-CHECK: 54.1 / 45.0 / 18.5; South Eastern B 78.9; 2,164,056 poor
+  (regions sum to 2,164,055); agriculture-head 77.2.
