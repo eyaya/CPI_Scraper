@@ -1,0 +1,32 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: IPI / IPPI Info -- note d'analyse de l'IPPI, 2025 trimestre 4
+frequency: quarterly
+expect_rows: 115
+expect_periods: 3
+
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2026-07/IPI%20_IPPI_Info%202025_T4_0.pdf"
+  save_as: bfa_ipi_ippi_T4-2025.pdf
+
+parser: burkina_faso_insd_ppi
+geography: National
+
+notes: >
+  INSD Burkina Faso IPPI, base 100 en 2015 (Laspeyres, chained; prix de base SCN 2008),
+  quarterly note for 2025-T4: Ensemble, 3 types d'industrie and 20 product divisions;
+  indices for T-4, T-1, T and % changes T/T-1 and T/T-4.
+  SERIES: one descriptor per quarterly note (burkina_faso_<yyyy>t<q>.yaml), run oldest
+  first; each prints T-4 | T-1 | T and the % changes, so the union covers 2020-T2..2025-T4
+  (newest note wins on revision; e.g. 2024-T1 Ensemble 154,5 in its own note, 154,2 in T2-2024's).
+  GAP: 2020-T1 (the T1-2021 note is not on insd.bf nor in the Wayback index). Not used:
+  2025-08/IPI_IPPI_Info_1T2025_KB.pdf, whose IPPI table repeats the T4-2024 note's quarters.
+  The IPPI starts with these notes (2021); no earlier producer price index on insd.bf.
+  CROSS-CHECK (this note): Ensemble T4-24 152,9 / T3-25 166,3 / T4-25 185,5, +11,5 % q/q,
+  +21,3 % y/y; Minerais métalliques T4-25 253,7; Produits alimentaires T4-25 186,9;
+  Papier et carton T4-25 72,3 (-63,0 % y/y).

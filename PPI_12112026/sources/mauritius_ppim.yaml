@@ -1,0 +1,41 @@
+country: Mauritius
+iso3: MUS
+indicator: PPI
+tier: 2
+source_type: xlsx
+agency: Statistics Mauritius
+publication_code: Producer Price Index - Manufacturing (PPI-M), Historical Series workbook
+frequency: monthly
+expect_rows: 17000
+expect_periods: 550
+
+# The "Data/Historical Series" link under Producer Price Index - Manufacturing
+# on Statistics Mauritius' Indices page; the file name carries the quarter and
+# release date (HS_PPIM_2Qtr26_280826.xlsx), so it is found by its prefix.
+discover:
+  method: page_scrape
+  page_url: "https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/Indices/SB_Indices.aspx"
+  link_contains: ["HS_PPIM_"]
+  base_url: "https://statsmauritius.govmu.org"
+
+parser: mauritius_ppim_hs_ppi
+geography: National
+
+notes: >
+  INVENTORY (PPI-M). First published March 1994 for food, beverages & tobacco
+  (1993=100); all manufacturing from June 2002 (1998=100); rebased 2003, 2007
+  (NSIC1, then NSIC2), 2013, 2018 after each Census of Economic Activities.
+  All six bases are collected from this one workbook: monthly + quarterly +
+  yearly indices and weights (per mille) by industry group, January 1993 -
+  June 2026 (T1-T7), the NSO's quarterly back-casts of the total to bases
+  2007/2013/2018 from 1998-Q1 (T8-T10), and month x year tables with "Annual
+  change (%)" for the total, food & beverages, chemicals, rubber & plastic
+  back to 2007 (T11-T18). No gaps within any base. Each value is rounded to
+  its cell's display format (the figure printed). Where the summary tables
+  repeat an industry-table cell the industry table is kept; nine repeats
+  differ, the NSO's own inconsistency, e.g. total manufacturing January 2018
+  (2018=100) is 99.8 in T7 and 98.8 in T12; 2011-Q4 (2013=100) 94.6 in T6 vs
+  94.5 in T9; the rest differ by 0.1 (2013-Q1, 2015-Q2/Q4, 2016-Q2, 2017-Q2,
+  2017 year, food 2015-01). CROSS-CHECK (verbatim): total May 2026 176.6,
+  April 2026 174.4, May 2025 163.8 (monthly release, 29 June 2026); total
+  January 2015 93.8 (2018=100); food January 1993 95.6 (1993=100).

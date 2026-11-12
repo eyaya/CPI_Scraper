@@ -1,0 +1,37 @@
+country: Mali
+iso3: MLI
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: Bulletin de publication n°000 -- Indices des Prix de Production dans l'Industrie (IPPI), base 100 = 2013 (2013-2014)
+frequency: monthly
+expect_rows: 860
+expect_periods: 34
+
+# instat-mali.org > Publications > "Indices des prix de production dans
+# l'industrie (IPPI) 2013 et 2014" -> the page's download link.
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/ippi000_pub.pdf"
+  save_as: mali_ippi_2013_2014.pdf
+
+parser: mali_instat_ippi
+geography: National
+
+notes: >
+  INSTAT Mali industrial IPPI, base 100 = 2013 (346 products, 89 firms = 96 % of
+  industrial turnover; NAEMA rev1; chained annually-reweighted Laspeyres).
+  Monthly 2013-01..2014-12, quarterly 2013-T1..2014-T4 and annual 2013-2014
+  (+ % change 2014/2013) for 3 types d'industrie + INDICE GLOBAL and 21
+  divisions. The only IPPI issue INSTAT ever published (old site 2016 and new
+  site carry the same n°000); the series stops in 2014. HEADER TYPO: the 2014
+  monthly header of Tableau C prints "avr-13" in April's place; read by
+  position (Tableau D, p.7, prints "avr-14" with the same values, e.g.
+  extractives 100,3). Weights are on 10 000 (not emitted).
+  IDENTITY: INDICE GLOBAL 2014 = (6968,52 x 101,6 + 2039,63 x 97,7 + 991,85 x
+  101,6) / 10 000 = 100,8 (printed 100,8).
+  CROSS-CHECK (verbatim): INDICE GLOBAL janv-13 99,9, déc-14 102,2, T3-14
+  102,5; INDUSTRIES MANUFACTURIÈRES 2014 97,7 (-2,3 %); FABRICATION DE
+  PRODUITS ALIMENTAIRES déc-13 94,9; TRAVAIL DU BOIS 2014 60,4 (-39,6 %);
+  FABRICATION D'EQUIPEMENTS ELECTRIQUES 2014 110,8.

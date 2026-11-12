@@ -1,0 +1,34 @@
+country: Burundi
+iso3: BDI
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique du Burundi (INSBU)
+publication_code: Indices des Prix à la Production Agricole au Burundi (IPPAB), 2025-12
+frequency: monthly
+discover:
+  method: static_url
+  url: https://api.insbu.bi/storage/documents/01KN21HKQ1YFBHAFR0YP8C6S8Z.pdf
+  save_as: IPPAB_2025-12.pdf
+parser: burundi_insbu_ippab
+geography: National
+expect_rows: 114
+notes: 'INSBU monthly ''Indices des Prix à la Production Agricole au Burundi (IPPAB)'', base 2018 = 100,
+
+  weights per mille (2014 national-accounts structure), insbu.bi API /api/publications (29 releases,
+
+  Jan 2024 - Aug 2026). Tableau 1 (15 classes + Ensemble, last 6 months) collected; each class row
+
+  is tied to its label by its fixed weight, and the weighted classes reproduce the printed Ensemble
+
+  in every release (e.g. Aug 2026: 291.6). Tableau 2 (69 products) not collected: wrapped labels
+
+  cannot be tied to rows. Releases whose Tableau 1 text layer is not readable: 2024-01, 2024-04, 2024-07,
+  2024-08, 2024-09 (the API serves the 2024-08 file), 2024-12, 2025-05, 2025-06, 2025-09, 2025-10, 2026-06;
+  their months are covered by the 6-month windows of neighbouring releases. No IPPAB before
+
+  Jan 2024 is on the INSBU API. Burundi publishes no industrial PPI (the IHPI is a volume index).
+
+  Cross-check (verbatim, Aug 2026): Ensemble 287.0 / 310.1 / 310.1 / 298.3 / 304.2 / 291.6 (Mar-Aug),
+
+  m/m -4.1; Céréales weight 42.0, Aug 271.5; Tubercules et racines weight 416.0, Aug 197.0.'

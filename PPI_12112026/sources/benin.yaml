@@ -1,0 +1,39 @@
+country: Benin
+iso3: BEN
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INStaD)
+publication_code: Publication des IPPI des années de référence et chaînés à l'année de base 2015 -- 2ème trimestre 2026 (n°2026-03)
+frequency: quarterly
+expect_rows: 460
+expect_periods: 18
+
+# instad.bj (site in maintenance, HTTP 503 but serving its download list)
+# lists the latest quarterly issue as ?cat=trimestriel&download=<file>.
+discover:
+  method: static_url
+  url: "https://instad.bj/?cat=trimestriel&download=Publication%20IPPI_T2-2026.pdf"
+  save_as: benin_ippi_T2-2026.pdf
+
+parser: benin_instad_ppi
+geography: National
+
+notes: >
+  INStaD Bénin IPPI, chained to base 2015 (=100), quarterly (Tableaux 1-3: types
+  d'industries, divisions regroupées, divisions; NAEMA). This issue covers
+  2022-T1..2026-T2. BACK-SERIES (run oldest first, newest wins on overlap):
+  benin_2021.yaml (T4-2021 issue, 2015-T1..2021-T4), benin_2024.yaml (T2-2024,
+  2015-T1..2024-T2), benin_2025.yaml (T2-2025, 2021-T1..2025-T2). Every issue
+  T4-2019..T2-2025 is on the Wayback Machine (instad.bj/images/docs/insae-
+  publications/trimestrielles/IPI|IPPI/...); overlapping issues agree to 0,1
+  (T2-2024 vs T2-2026: 240 shared cells, 0 revised). T2-2022 is a scanned
+  image (no text layer), not needed. The IPPI starts with base 2015 (back-cast
+  from the 2019 launch); no earlier producer price index.
+  CROSS-CHECK (Tableau 1, this issue): Ensemble T1-22 109,5, T4-23 111,9,
+  T2-26 112,9; Industries manufacturières T2-26 116,9; Industries métalliques
+  T1-22 149,6; Fabrication de produits alimentaires T2-26 135,3; Métallurgie
+  T4-24 141,7; matériaux minéraux T2-26 95,2. NOTE: the issue's prose says
+  "+0,4 % sur un an" for T2-2026 while its own Tableau 1 gives 112,9 / 112,7
+  (+0,2 %); the table values are kept. Section I tables (each year on the
+  previous year = 100, "Année de référence") are not collected.

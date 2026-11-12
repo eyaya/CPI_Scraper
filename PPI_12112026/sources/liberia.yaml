@@ -1,0 +1,29 @@
+country: Liberia
+iso3: LBR
+indicator: PPI
+tier: 1
+source_type: api
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS)
+publication_code: Electricity Producer Price Index (ppi-electricity-index)
+frequency: monthly
+expect_rows: 80
+expect_periods: 21
+
+# LISGIS open-data API (same service as cpi/sources/liberia.yaml); TLS on.
+discover:
+  method: static_url
+  url: "https://www.lisgis.gov.lr/api/datasets/ppi-electricity-index"
+  save_as: ppi-electricity-index.json
+
+parser: liberia_lisgis_ppi
+geography: National
+
+notes: >
+  INVENTORY. LISGIS's only producer price index is the ELECTRICITY PPI
+  (statistics_workbook "PPI Electricity Q1-Q3 2024"), monthly 2023-01..2024-09,
+  at four ISIC levels (D / 35 / 351 / 3510). The API's 401 datasets carry no
+  other producer, industrial or wholesale price index (searched 2026-11-05).
+  No base printed (reference columns hold 2022 values). Not collected: the
+  unlabelled change series and the provider price observations (see parser).
+  CROSS-CHECKS (verbatim, API): 2023-01 Electricity 100.7992; 2023-02 102.2883;
+  2023-03 104.5444.

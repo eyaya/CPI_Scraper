@@ -1,0 +1,171 @@
+country: Gambia
+iso3: GMB
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Gambia Bureau of Statistics (GBoS)
+publication_code: The Gambia Producer Price Index (PPI) Quarterly Report
+frequency: quarterly
+expect_rows: 7500
+expect_periods: 150
+extras_cache: true
+
+# GBoS downloads area (gbosdata.org/downloads/<n>-ppi-<year>), one report per
+# quarter. 2012-13 and 2021-Q2+ are PDF; 2013-Q4..2021-Q1 are Word files served
+# without an extension (saved as .docx). Every back issue listed on the site
+# 2026-11-05 is an extra; TLS verification on.
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/607-producer-price-index-september-2025"
+  save_as: 607-producer-price-index-september-2025.pdf
+  download_timeout: 180
+extra_urls:
+  - url: "https://www.gbosdata.org/downloads-file/69-ppi-march-2012"
+    save_as: 69-ppi-march-2012.pdf
+  - url: "https://www.gbosdata.org/downloads-file/70-ppi-june-2012"
+    save_as: 70-ppi-june-2012.pdf
+  - url: "https://www.gbosdata.org/downloads-file/71-ppi-september-2012"
+    save_as: 71-ppi-september-2012.pdf
+  - url: "https://www.gbosdata.org/downloads-file/72-ppi-december-2012"
+    save_as: 72-ppi-december-2012.pdf
+  - url: "https://www.gbosdata.org/downloads-file/73-ppi-march-2013"
+    save_as: 73-ppi-march-2013.pdf
+  - url: "https://www.gbosdata.org/downloads-file/74-ppi-june-2013"
+    save_as: 74-ppi-june-2013.pdf
+  - url: "https://www.gbosdata.org/downloads-file/75-ppi-september-2013"
+    save_as: 75-ppi-september-2013.pdf
+  - url: "https://www.gbosdata.org/downloads-file/136-producer-price-index-december-2013"
+    save_as: 136-producer-price-index-december-2013.docx
+  - url: "https://www.gbosdata.org/downloads-file/120-producer-price-index-march-2014"
+    save_as: 120-producer-price-index-march-2014.docx
+  - url: "https://www.gbosdata.org/downloads-file/121-producer-price-index-june-2014"
+    save_as: 121-producer-price-index-june-2014.docx
+  - url: "https://www.gbosdata.org/downloads-file/122-producer-price-index-september-2014"
+    save_as: 122-producer-price-index-september-2014.docx
+  - url: "https://www.gbosdata.org/downloads-file/123-producer-price-index-december-2014"
+    save_as: 123-producer-price-index-december-2014.docx
+  - url: "https://www.gbosdata.org/downloads-file/124-producer-price-index-march-2015"
+    save_as: 124-producer-price-index-march-2015.docx
+  - url: "https://www.gbosdata.org/downloads-file/125-producer-price-index-june-2015"
+    save_as: 125-producer-price-index-june-2015.docx
+  - url: "https://www.gbosdata.org/downloads-file/126-producer-price-index-september-2015"
+    save_as: 126-producer-price-index-september-2015.docx
+  - url: "https://www.gbosdata.org/downloads-file/127-producer-price-index-december-2015"
+    save_as: 127-producer-price-index-december-2015.docx
+  - url: "https://www.gbosdata.org/downloads-file/128-producer-price-index-march-2016"
+    save_as: 128-producer-price-index-march-2016.docx
+  - url: "https://www.gbosdata.org/downloads-file/129-producer-price-index-june-2016"
+    save_as: 129-producer-price-index-june-2016.docx
+  - url: "https://www.gbosdata.org/downloads-file/130-producer-price-index-september-2016"
+    save_as: 130-producer-price-index-september-2016.docx
+  - url: "https://www.gbosdata.org/downloads-file/132-producer-price-index-march-2017"
+    save_as: 132-producer-price-index-march-2017.docx
+  - url: "https://www.gbosdata.org/downloads-file/133-producer-price-index-june-2017"
+    save_as: 133-producer-price-index-june-2017.docx
+  - url: "https://www.gbosdata.org/downloads-file/168-producer-price-index-september-2017"
+    save_as: 168-producer-price-index-september-2017.docx
+  - url: "https://www.gbosdata.org/downloads-file/175-producer-price-index-march-2018"
+    save_as: 175-producer-price-index-march-2018.docx
+  - url: "https://www.gbosdata.org/downloads-file/177-producer-price-index-june-2018"
+    save_as: 177-producer-price-index-june-2018.docx
+  - url: "https://www.gbosdata.org/downloads-file/190-producer-price-index-september-2018"
+    save_as: 190-producer-price-index-september-2018.docx
+  - url: "https://www.gbosdata.org/downloads-file/191-producer-price-index-december-2018"
+    save_as: 191-producer-price-index-december-2018.docx
+  - url: "https://www.gbosdata.org/downloads-file/207-producer-price-index-march-2019"
+    save_as: 207-producer-price-index-march-2019.docx
+  - url: "https://www.gbosdata.org/downloads-file/222-producer-price-index-june-2019"
+    save_as: 222-producer-price-index-june-2019.docx
+  - url: "https://www.gbosdata.org/downloads-file/232-producer-price-index-september-2019"
+    save_as: 232-producer-price-index-september-2019.docx
+  - url: "https://www.gbosdata.org/downloads-file/237-producer-price-index-december-2019"
+    save_as: 237-producer-price-index-december-2019.docx
+  - url: "https://www.gbosdata.org/downloads-file/279-producer-price-index-march-2020"
+    save_as: 279-producer-price-index-march-2020.docx
+  - url: "https://www.gbosdata.org/downloads-file/280-producer-price-index-june-2020"
+    save_as: 280-producer-price-index-june-2020.docx
+  - url: "https://www.gbosdata.org/downloads-file/296-producer-price-index-september-2020"
+    save_as: 296-producer-price-index-september-2020.docx
+  - url: "https://www.gbosdata.org/downloads-file/317-producer-price-index-december-2020"
+    save_as: 317-producer-price-index-december-2020.docx
+  - url: "https://www.gbosdata.org/downloads-file/328-producer-price-index-march-2021"
+    save_as: 328-producer-price-index-march-2021.docx
+  - url: "https://www.gbosdata.org/downloads-file/411-producer-price-index-june-2021"
+    save_as: 411-producer-price-index-june-2021.pdf
+  - url: "https://www.gbosdata.org/downloads-file/412-producer-price-index-september-2021"
+    save_as: 412-producer-price-index-september-2021.pdf
+  - url: "https://www.gbosdata.org/downloads-file/413-producer-price-index-december-2021"
+    save_as: 413-producer-price-index-december-2021.pdf
+  - url: "https://www.gbosdata.org/downloads-file/414-producer-price-index-march-2022"
+    save_as: 414-producer-price-index-march-2022.pdf
+  - url: "https://www.gbosdata.org/downloads-file/415-producer-price-index-june-2022"
+    save_as: 415-producer-price-index-june-2022.pdf
+  - url: "https://www.gbosdata.org/downloads-file/417-producer-price-index-september-2022"
+    save_as: 417-producer-price-index-september-2022.pdf
+  - url: "https://www.gbosdata.org/downloads-file/466-producer-price-index-december-2022"
+    save_as: 466-producer-price-index-december-2022.pdf
+  - url: "https://www.gbosdata.org/downloads-file/462-producer-price-index-march-2023"
+    save_as: 462-producer-price-index-march-2023.pdf
+  - url: "https://www.gbosdata.org/downloads-file/475-producer-price-index-june-2023"
+    save_as: 475-producer-price-index-june-2023.pdf
+  - url: "https://www.gbosdata.org/downloads-file/492-producer-price-index-september-2023"
+    save_as: 492-producer-price-index-september-2023.pdf
+  - url: "https://www.gbosdata.org/downloads-file/507-producer-price-index-december-2023"
+    save_as: 507-producer-price-index-december-2023.pdf
+  - url: "https://www.gbosdata.org/downloads-file/532-producer-price-index-march-2024"
+    save_as: 532-producer-price-index-march-2024.pdf
+  - url: "https://www.gbosdata.org/downloads-file/540-producer-price-index-june-2024"
+    save_as: 540-producer-price-index-june-2024.pdf
+  - url: "https://www.gbosdata.org/downloads-file/604-producer-price-index-september-2024"
+    save_as: 604-producer-price-index-september-2024.pdf
+  - url: "https://www.gbosdata.org/downloads-file/605-producer-price-index-december-2024"
+    save_as: 605-producer-price-index-december-2024.pdf
+  - url: "https://www.gbosdata.org/downloads-file/609-producer-price-index-march-2025"
+    save_as: 609-producer-price-index-march-2025.pdf
+  - url: "https://www.gbosdata.org/downloads-file/606-producer-price-index-june-2025"
+    save_as: 606-producer-price-index-june-2025.pdf
+  - url: "https://www.gbosdata.org/downloads-file/173-producer-price-index-methodology"
+    save_as: 173-producer-price-index-methodology.pdf
+  - url: "https://www.gbosdata.org/downloads-file/174-producer-price-index-metadata"
+    save_as: 174-producer-price-index-metadata.docx
+  - url: "https://www.gbosdata.org/downloads-file/179-producer-price-index-metadata"
+    save_as: 179-producer-price-index-metadata.docx
+  - url: "https://www.gbosdata.org/downloads-file/180-producer-price-index-methodology"
+    save_as: 180-producer-price-index-methodology.pdf
+
+parser: gambia_gbos_ppi
+geography: National
+
+notes: >
+  INVENTORY. GBoS publishes one PPI (industrial/manufacturing producers' output,
+  quarterly report with monthly indices). Base "2009 = 100" in the reports of
+  2012-Q1..2017-Q3 (monthly 2011-03..2017-09); base "September 2017 = 100" from
+  the March 2018 report (monthly 2017-09..2025-09, complete). The two bases have
+  different baskets (2009: Cereals, Bread, Meat ... product groups; 2017:
+  Stone, Sand, Processed and preserved fish ... ) and are kept as two series.
+  The data portal (gbosdata.org/data/14-producer-price-index, PPPI_IX) has only
+  the headline and no table export; the reports are the source.
+  LAYOUTS AND PROOFS: see parsers/gambia_gbos_ppi.py. Each report's columns are
+  mapped by template and proved by its own printed changes (point-to-point,
+  one-month, three-month, quarterly), never by the printed month headers, which
+  carry typos (Dec 2020: "Oct | Dec | Sept 2020" for Oct/Nov/Dec).
+  DROPPED: the December 2021 report (its PDF table shifts every row from
+  "Leather" down by one against its label; disagrees with both neighbouring
+  reports on 16 industries -- its months are reprinted by March 2022); the
+  September 2024 rows labelled "Non-food items" (the food aggregate is printed
+  under that label as well as the non-food one); December 2024's year-ago column
+  and point-to-point change (its All-items point-to-point prints 0.05 where its
+  own index gives 4.87). Weights of the 2009 base are printed per ten thousand
+  (All items 10000.00) and are not kept; the 2017 base's percent weights are.
+  GAPS (2009 base): 2011-04/05/07..11 (only reached as year-ago columns),
+  2012-07/08 All items (September 2012 prints no All-items row), 2016-10/11
+  (no December 2016 report on the site).
+  REVISIONS: later reports restate earlier months (March 2021 prints Oct/Nov/Dec
+  2020 all as 113.2 where December 2020 printed 113.16/113.20/113.23; the
+  annual-inflation table of 2014 gives December 2012 y/y 1.95 where the
+  December 2012 report printed 1.82); the newest report wins.
+  CROSS-CHECKS (verbatim): Sep 2025 All items 167.96, Q3 2025 quarterly
+  inflation 1.34, point-to-point 4.07; Mar 2014 All items 164.84 (2009=100),
+  point-to-point 16.43; Sep 2022 Clothing 196.57; Mar 2018 Stone 106.25;
+  Dec 2012 Cereals 136.94; 2017 weights: Clothing 29.87, Non-food 53.30,
+  All food 25.83, Drinks 17.95.

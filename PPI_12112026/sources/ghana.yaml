@@ -1,0 +1,32 @@
+country: Ghana
+iso3: GHA
+indicator: PPI
+tier: 1
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+publication_code: Producer Price Index
+frequency: monthly
+verify_ssl: false
+
+# --- API (PxWeb / JSON-stat2), single table ---
+# The Producer Price Index by industry: the index level and its year-on-year and
+# month-on-month percentage changes, monthly from 2006. All months, all industries,
+# all three indicators.
+api:
+  table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Macroeconomic Indicators/Prices and Inflation/ppi.px"
+  save_as: ghana_ppi.json
+  dimensions:
+    Month: ["*"]
+    Indicator: ["*"]
+    Industry: ["*"]
+
+parser: ghana_pxweb_ppi
+geography: National
+
+notes: >
+  Ghana GSS StatsBank Producer Price Index (ppi.px). Monthly PPI level plus
+  year-on-year and month-on-month percentage change, by industry (all industries +
+  10 industry groups), 2006-2026. First country of the new PPI indicator — the
+  upstream producer-price companion to CPI. Same StatsBank PxWeb backend as Ghana
+  CPI/GDP/trade. Deferred: the export/import price indices (macro_xmpi.px) and the
+  Index of Industrial Production (iip.px), which could seed related indicators.

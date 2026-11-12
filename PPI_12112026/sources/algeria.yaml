@@ -1,0 +1,292 @@
+country: Algeria
+iso3: DZA
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Office National des Statistiques (ONS), Direction Technique chargée des Statistiques d'Entreprises et du suivi de la Conjoncture
+publication_code: "Indice des prix à la production industrielle (IPPI), base et référence 1989"
+frequency: quarterly
+expect_rows: 12000
+expect_periods: 100
+# ons.dz serves an INCOMPLETE certificate chain (no intermediate). Instead of
+# disabling verification (as the CPI descriptor does), this bundle holds the
+# missing Sectigo intermediate (from the leaf's own AIA URL) and its root, so
+# every download is verified. Path relative to the repo root.
+verify_ssl: indicators/ppi/certs/ons_dz_ca_bundle.pem
+
+# PRIMARY: the latest quarterly note (article 3106, "Indice des prix à la
+# production industrielle au 2ème trimestre 2025"). EXTRAS: every document
+# ONS's own site search returns for "prix à la production industrielle" /
+# "IPPI" (125 articles: quarterly notes 1998-2025 and the ten-year
+# "Collections Statistiques, Série E" compilations 2001-2011 .. 2013-2022),
+# resolved from each spip.php?article page. Back issues never change.
+discover:
+  method: static_url
+  url: "https://www.ons.dz/IMG/pdf/IPPI2T2025.pdf"
+  save_as: IPPI2T2025.pdf
+  download_timeout: 200
+extras_cache: true
+extra_urls:
+- url: https://www.ons.dz/IMG/pdf/3T013.pdf
+  save_as: 3T013.pdf
+- url: https://www.ons.dz/IMG/pdf/4t013.pdf
+  save_as: 4t013.pdf
+- url: https://www.ons.dz/IMG/pdf/Collection_Ippi_2011-_No175.pdf
+  save_as: Collection_Ippi_2011-_No175.pdf
+- url: https://www.ons.dz/IMG/pdf/commentaire2t14.pdf
+  save_as: commentaire2t14.pdf
+- url: https://www.ons.dz/IMG/pdf/commentaire_2T013_.pdf
+  save_as: commentaire_2T013_.pdf
+- url: https://www.ons.dz/IMG/pdf/CSIPPI14.pdf
+  save_as: CSIPPI14.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi1t2020.pdf
+  save_as: i.ippi1t2020.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi1t2021.pdf
+  save_as: i.ippi1t2021.pdf
+- url: https://www.ons.dz/IMG/pdf/I.IPPI1T2022.pdf
+  save_as: I.IPPI1T2022.pdf
+- url: https://www.ons.dz/IMG/pdf/I.IPPI1T2023.pdf
+  save_as: I.IPPI1T2023.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi2009-2018.pdf
+  save_as: i.ippi2009-2018.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi2010-2019.pdf
+  save_as: i.ippi2010-2019.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi2011-2020cs.pdf
+  save_as: i.ippi2011-2020cs.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi2t2020.pdf
+  save_as: i.ippi2t2020.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi2t2021.pdf
+  save_as: i.ippi2t2021.pdf
+- url: https://www.ons.dz/IMG/pdf/I.IPPI2T2022.pdf
+  save_as: I.IPPI2T2022.pdf
+- url: https://www.ons.dz/IMG/pdf/I.IPPI2T2023.pdf
+  save_as: I.IPPI2T2023.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi3t-2021.pdf
+  save_as: i.ippi3t-2021.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi3t2020.pdf
+  save_as: i.ippi3t2020.pdf
+- url: https://www.ons.dz/IMG/pdf/I.IPPI3T2022.pdf
+  save_as: I.IPPI3T2022.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi4t2019.pdf
+  save_as: i.ippi4t2019.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi4t2020.pdf
+  save_as: i.ippi4t2020.pdf
+- url: https://www.ons.dz/IMG/pdf/i.ippi4t2021.pdf
+  save_as: i.ippi4t2021.pdf
+- url: https://www.ons.dz/IMG/pdf/I.IPPI4T2022.pdf
+  save_as: I.IPPI4T2022.pdf
+- url: https://www.ons.dz/IMG/pdf/I.IPPI4T2024.pdf
+  save_as: I.IPPI4T2024.pdf
+- url: https://www.ons.dz/IMG/pdf/ipi2t2019.pdf
+  save_as: ipi2t2019.pdf
+- url: https://www.ons.dz/IMG/pdf/ipp1T2000.pdf
+  save_as: ipp1T2000.pdf
+- url: https://www.ons.dz/IMG/pdf/ipp1T99.pdf
+  save_as: ipp1T99.pdf
+- url: https://www.ons.dz/IMG/pdf/ipp2T98.pdf
+  save_as: ipp2T98.pdf
+- url: https://www.ons.dz/IMG/pdf/ipp2T99.pdf
+  save_as: ipp2T99.pdf
+- url: https://www.ons.dz/IMG/pdf/ipp3T98.pdf
+  save_as: ipp3T98.pdf
+- url: https://www.ons.dz/IMG/pdf/ipp3T99.pdf
+  save_as: ipp3T99.pdf
+- url: https://www.ons.dz/IMG/pdf/ipp4T98.pdf
+  save_as: ipp4T98.pdf
+- url: https://www.ons.dz/IMG/pdf/ipp4T99.pdf
+  save_as: ipp4T99.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI-1T-2018.pdf
+  save_as: IPPI-1T-2018.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI-2T-2017.pdf
+  save_as: IPPI-2T-2017.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI-4T-2017.pdf
+  save_as: IPPI-4T-2017.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI06-15.pdf
+  save_as: IPPI06-15.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI07-16.pdf
+  save_as: IPPI07-16.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T01.pdf
+  save_as: ippi1T01.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI1t014.pdf
+  save_as: IPPI1t014.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T03.pdf
+  save_as: ippi1T03.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T04-4.pdf
+  save_as: ippi1T04-4.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T06.pdf
+  save_as: ippi1T06.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T07-2.pdf
+  save_as: ippi1T07-2.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T08-4.pdf
+  save_as: ippi1T08-4.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T10.pdf
+  save_as: ippi1T10.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1t15.pdf
+  save_as: ippi1t15.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI1t16.pdf
+  save_as: IPPI1t16.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T2011.pdf
+  save_as: ippi1T2011.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T2012.pdf
+  save_as: ippi1T2012.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1T2013.pdf
+  save_as: ippi1T2013.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi1t2019-2.pdf
+  save_as: ippi1t2019-2.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI1T2024.pdf
+  save_as: IPPI1T2024.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI1T2025.pdf
+  save_as: IPPI1T2025.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI2008-2017.pdf
+  save_as: IPPI2008-2017.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI2012_2021CS.pdf
+  save_as: IPPI2012_2021CS.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI2013_2022.pdf
+  save_as: IPPI2013_2022.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T01.pdf
+  save_as: ippi2T01.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T02.pdf
+  save_as: ippi2T02.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T04.pdf
+  save_as: ippi2T04.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T06.pdf
+  save_as: ippi2T06.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T07-3.pdf
+  save_as: ippi2T07-3.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T08-2.pdf
+  save_as: ippi2T08-2.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2t15.pdf
+  save_as: ippi2t15.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI2t16.pdf
+  save_as: IPPI2t16.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T2000.pdf
+  save_as: ippi2T2000.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T2010-2.pdf
+  save_as: ippi2T2010-2.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2T2011-3.pdf
+  save_as: ippi2T2011-3.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI2t2012.pdf
+  save_as: IPPI2t2012.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi2t2019.pdf
+  save_as: ippi2t2019.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI2T2024.pdf
+  save_as: IPPI2T2024.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI3T-2017_.pdf
+  save_as: IPPI3T-2017_.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T01.pdf
+  save_as: ippi3T01.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T02.pdf
+  save_as: ippi3T02.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T03.pdf
+  save_as: ippi3T03.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T04.pdf
+  save_as: ippi3T04.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T05.pdf
+  save_as: ippi3T05.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T06-3.pdf
+  save_as: ippi3T06-3.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T07-3.pdf
+  save_as: ippi3T07-3.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T08-3.pdf
+  save_as: ippi3T08-3.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3t15.pdf
+  save_as: ippi3t15.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI3t16.pdf
+  save_as: IPPI3t16.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T2000.pdf
+  save_as: ippi3T2000.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T2010.pdf
+  save_as: ippi3T2010.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T2011.pdf
+  save_as: ippi3T2011.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3T2012.pdf
+  save_as: ippi3T2012.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI3T2018.pdf
+  save_as: IPPI3T2018.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi3t2019.pdf
+  save_as: ippi3t2019.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI3T2023.pdf
+  save_as: IPPI3T2023.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI3T2024.pdf
+  save_as: IPPI3T2024.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4T01-2.pdf
+  save_as: ippi4T01-2.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4T03.pdf
+  save_as: ippi4T03.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4T04.pdf
+  save_as: ippi4T04.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4T05.pdf
+  save_as: ippi4T05.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4T07-2.pdf
+  save_as: ippi4T07-2.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4t14.pdf
+  save_as: ippi4t14.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4t15-2.pdf
+  save_as: ippi4t15-2.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI4t16.pdf
+  save_as: IPPI4t16.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4T2000.pdf
+  save_as: ippi4T2000.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4T2010.pdf
+  save_as: ippi4T2010.pdf
+- url: https://www.ons.dz/IMG/pdf/ippi4T2011.pdf
+  save_as: ippi4T2011.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI4T2018.pdf
+  save_as: IPPI4T2018.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI4T2023.pdf
+  save_as: IPPI4T2023.pdf
+- url: https://www.ons.dz/IMG/pdf/IPPI_2T_2018.pdf
+  save_as: IPPI_2T_2018.pdf
+- url: https://www.ons.dz/IMG/pdf/ippitab2t16.pdf
+  save_as: ippitab2t16.pdf
+- url: https://www.ons.dz/IMG/pdf/ippiTab4T14.pdf
+  save_as: ippiTab4T14.pdf
+- url: https://www.ons.dz/IMG/pdf/ippitab4t15.pdf
+  save_as: ippitab4t15.pdf
+- url: https://www.ons.dz/IMG/pdf/PPRODINDUS3t13.pdf
+  save_as: PPRODINDUS3t13.pdf
+- url: https://www.ons.dz/IMG/pdf/Quest-Prix_a_la_Production_Industrielle.pdf
+  save_as: Quest-Prix_a_la_Production_Industrielle.pdf
+- url: https://www.ons.dz/IMG/pdf/Tab_1T2014.pdf
+  save_as: Tab_1T2014.pdf
+- url: https://www.ons.dz/IMG/pdf/Tab_2T2014.pdf
+  save_as: Tab_2T2014.pdf
+- url: https://www.ons.dz/IMG/pdf/Tab_3T2013_3_.pdf
+  save_as: Tab_3T2013_3_.pdf
+- url: https://www.ons.dz/IMG/pdf/Tab_4T2013.pdf
+  save_as: Tab_4T2013.pdf
+- url: https://www.ons.dz/IMG/pdf/tabippi3t15.pdf
+  save_as: tabippi3t15.pdf
+- url: https://www.ons.dz/IMG/pdf/TabIPPI_2T15_.pdf
+  save_as: TabIPPI_2T15_.pdf
+
+parser: algeria_ons_ppi
+geography: National
+
+notes: >
+  INVENTORY. One Laspeyres index, base and reference 1989 (TTC), computed
+  quarterly from ONS's survey of PUBLIC-sector industrial enterprises, by
+  aggregate (Industries hors hydrocarbures, Industries manufacturières),
+  sector (NSA 02-14) and branch (NAPR); ONS's nomenclature, not ISIC, so
+  codes are kept as series_code ("NSA:02", "NAPR:07"). An indicative
+  PRIVATE-sector index ("le taux de réponse est faible") is printed in the
+  notes until 2016 and in compilation N° 175: a separate index_name. A page
+  is filed private only under its own title ("PRIVE", also set with doubled
+  letters "PPrriivvéé"); a page showing the private total "Indice Général"
+  without a title is not read. 1989 weights are
+  read where printed (an NSA weight is its share of total industry, a NAPR
+  weight its share within its sector).
+  SPAN: annual 2001-2024 (compilations + notes' annual averages), y/y annual
+  2001-2022; quarterly public 2002-Q1 .. 2025-Q2 (aggregates continuous from
+  2009-Q1); private quarterly 2002-Q1 .. 2016-Q2 (with gaps), annual 2001-2015.
+  NOT READ (SKIPPED in the parser): the 1998-2000 notes and IPPI1t014 (no
+  NSA/NAPR codes, labels wrapped across lines), and 8 notes whose variation
+  header could not be paired (1T07, 4T07, 2T10, 4T10, 2T11, 4T13, 2T14,
+  3T22-type splits); their quarters are mostly republished by the next
+  note. Rows whose number count differs from the header (a misgrouped
+  "1 2002,8" in 3T22) are dropped, never repaired. Semester / nine-month
+  changes have no measure here.
+  CROSS-CHECK (verbatim): 2T25 hors hydrocarbures 1 777,9 (1T25 1 761,9,
+  q/q 0,9, y/y 0,1); 2T25 NAPR 20 phosphate 30 652,6; 3T12 manufacturières
+  1159,1 (weight 72,40); 2022 hors hydrocarbures 1 785,1 (+13,3); 2022 NSA
+  05 mines 11 286,0 (+95,9); 2001 hors hydrocarbures 829,3 (N° 175).

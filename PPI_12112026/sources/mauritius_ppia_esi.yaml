@@ -1,0 +1,25 @@
+country: Mauritius
+iso3: MUS
+indicator: PPI
+tier: 2
+source_type: xlsx
+agency: Statistics Mauritius
+publication_code: Economic and Social Indicators - Producer Price Index - Agriculture (quarterly)
+frequency: quarterly
+expect_rows: 150
+
+discover:
+  method: two_hop_scrape
+  index_url: "https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/Indices/SB_Indices.aspx"
+  page_link_contains: ["ESI/Agriculture/PPIA/PPIA_"]
+  file_link_contains: [".xlsx"]
+  base_url: "https://statsmauritius.govmu.org"
+
+parser: mauritius_ppia_esi_ppi
+geography: National
+
+notes: >
+  PPI-A % changes by commodity: month-on-month (Tab 1) and quarter-on-quarter
+  (Tab 2; the "Net contributions" columns beside them are not collected).
+  CROSS-CHECK (verbatim, 2nd Qr 2026 issue, rounded to display): Crop
+  Products Jan-Feb 2026 1.6, 1st to 2nd Qr 2026 -6.2.

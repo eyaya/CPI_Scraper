@@ -1,0 +1,87 @@
+country: Tunisia
+iso3: TUN
+indicator: PPI
+tier: 2
+source_type: html
+agency: Institut National de la Statistique (INS)
+publication_code: "Indice des prix de vente industriels (IPVI), base 2010 = 100"
+frequency: monthly
+expect_rows: 3000
+expect_periods: 70
+
+# PRIMARY: INS's statistics page "Indices des Prix de Vente Industriels, IPVI"
+# (statistiques/89): the latest 9 months by sector and the annual indices
+# 2016 - latest year, as HTML tables. EXTRAS: the files attached to every IPVI
+# publication INS lists (/publication/indice-des-prix-de-vente-industriels-*,
+# March 2017 - March 2019): the monthly notes (PDF) and the "IPVI-Diff"
+# workbooks (monthly by branch since January 2015; the 2019 final workbook).
+# Downloaded with TLS verification ON (the CPI descriptor's verify_ssl: false
+# was not needed for these files, 2026-11-05). The host is slow and drops
+# connections: long timeout, cache.
+discover:
+  method: static_url
+  url: "https://www.ins.tn/statistiques/89"
+  save_as: Tunisia_IPVI.html
+  download_timeout: 600
+extras_cache: true
+extra_urls:
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%2520Mars-2019_FrAr%2520%2528002%2529.pdf
+  save_as: Ipvi_20Mars-2019_FrAr_20_28002_29.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/IPVI%20DIFFDEFAv2020.xls
+  save_as: IPVI_DIFFDEFAv2020.xls
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%2520Oct-2018_FrAr-converted.pdf
+  save_as: Ipvi_20Oct-2018_FrAr-converted.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%2520Juin-2018_FrAr-converted.pdf
+  save_as: Ipvi_20Juin-2018_FrAr-converted.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/IPVI-Diff%20Juin%202018.xls
+  save_as: IPVI-Diff_Juin_2018.xls
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%2520Avril-2018_FrAr%2520%25282%2529.pdf
+  save_as: Ipvi_20Avril-2018_FrAr_20_282_29.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/IPVI-Diff%20Avril%202018.xls
+  save_as: IPVI-Diff_Avril_2018.xls
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%2520Mars-2018_FrAr.pdf
+  save_as: Ipvi_20Mars-2018_FrAr.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%2520Sept-2017_FrAr.pdf
+  save_as: Ipvi_20Sept-2017_FrAr.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/IPVI-Diff%20Sept%202017.xls
+  save_as: IPVI-Diff_Sept_2017.xls
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/ipvi-08.pdf
+  save_as: ipvi-08.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/IPVI-Diff%20Aout%202017.xls
+  save_as: IPVI-Diff_Aout_2017.xls
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%20Juil-2017_FrAr.pdf
+  save_as: Ipvi_Juil-2017_FrAr.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/IPVI-Diff%20Juil%202017.xls
+  save_as: IPVI-Diff_Juil_2017.xls
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/ipvi_comm_08.pdf
+  save_as: ipvi_comm_08.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/IPVI-Diff%20Juin%202017.xls
+  save_as: IPVI-Diff_Juin_2017.xls
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%20Mai-2017_FrAr.pdf
+  save_as: Ipvi_Mai-2017_FrAr.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%20Avril-2017_FrAr.pdf
+  save_as: Ipvi_Avril-2017_FrAr.pdf
+- url: https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Ipvi%20Mars-2017_FrAr.pdf
+  save_as: Ipvi_Mars-2017_FrAr.pdf
+
+parser: tunisia_ins_ppi
+geography: National
+
+notes: >
+  INVENTORY. One producer price index, "prix de vente industriels" (IPVI),
+  base 2010 = 100, monthly, by branch of the NAP 1986 (Ensemble, industrie
+  manufacturière with its sectors and branches, mines, énergie); the notes
+  also print a CTP 2002 product view (not read: same total, other grouping).
+  SPAN: monthly 2015-01 .. 2019-12 by branch (workbooks; branch weights read
+  as measure weight, period 2010), 2016-01 .. 2019-03 Ensemble m/m and y/y
+  (notes), 2025-10 .. 2026-06 by sector (page); annual 2016 .. 2024 (page).
+  GAP: monthly 2020-01 .. 2025-09 -- ins.tn lists no IPVI publication after
+  March 2019 and the page keeps only the latest 9 months; the annual indices
+  cover those years. Accumulates as the page is re-read (merge-on-write).
+  Totals printed as ENSEMBLE / INDICE ENSEMBLE / Indice d'ensemble are one
+  series. Also published, not collected: "Indice des prix à la production
+  industrielle" is not a separate INS series (IPVI is it).
+  CROSS-CHECK (verbatim): June 2026 Indice d'ensemble 218.5, Chimie 276.0,
+  Mines 177.8; Jan 2015 industrie manufacturière 117.2 (weight 84.8);
+  Dec 2019 ensemble 149.264444; March 2019 ENSEMBLE 146,8 (m/m 0,1, y/y 8,5),
+  March 2018 135,3.

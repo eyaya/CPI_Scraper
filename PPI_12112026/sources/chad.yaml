@@ -1,0 +1,51 @@
+country: Chad
+iso3: TCD
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique, des Études Économiques et Démographiques (INSEED)
+publication_code: Indice de prix de production de l'industrie (IPPI), note de publication trimestrielle
+frequency: quarterly
+expect_rows: 280
+expect_periods: 10
+
+# INSEED's publication API (<api_base>/api/publications) lists four IPPI notes,
+# titled inconsistently ("Bulletin_IPPI_T2-2026", "Indice de Prix de la
+# Production de l'Industrie T3-2025", and one undated title that is the
+# T4-2025 note). core.discover.inseed_tchad_latest wants an MM-YYYY title, so
+# the newest note is pinned and each new quarter is added by hand. TLS
+# verifies (2026-11-05).
+discover:
+  method: static_url
+  url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1789654033284-530675063.pdf"
+  save_as: Bulletin_IPPI_T2-2026.pdf
+extras_cache: true
+extra_urls:
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1783661809592-742114606.pdf"
+    save_as: Bulletin_IPPI_T1_2026.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1775734291334-109922478.pdf"
+    save_as: Indice_Prix_Production_Industrie_undated.pdf
+  - url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1770304672808-265841764.pdf"
+    save_as: Indice_Prix_Production_Industrie_T3-2025.pdf
+
+parser: chad_inseed_ppi
+geography: National
+
+notes: >
+  INVENTORY. One index: the IPPI, base 2022 = 100, Laspeyres, 54 enterprises
+  (95 % of industry), weights from national-accounts value added, NAEMA rév.1,
+  quarterly, published 60 days after the quarter. Four notes exist (T3-2025,
+  T4-2025, T1-2026, T2-2026), the first of the series; their windows cover
+  2024-Q1 .. 2026-Q2, 10 quarters, no gap, 26 rows (Ensemble, Ensemble hors
+  pétrole, 5 sections, 19 products). 2022-2023 quarters are not published
+  (not in any note, nor in the Annuaire statistique national 2024). Newest
+  note wins per quarter: INSEED revises heavily (produits alimentaires T1-24
+  100,4 in the T3-2025 note, 90,5 later). The T3-2025 note's last row reads
+  "Produits de collecte et traitement des eaux usées" where later notes print
+  "Déchets collectés": kept as printed. Changes kept only where Ensemble's
+  indices prove them: the T2-2026 y/y (Ensemble 29,0 printed, indices give
+  30,3) is not taken.
+  CROSS-CHECK (verbatim, T2-2026 note): Ensemble T2-26 96,0, T1-26 81,3
+  (q/q 18,1); Ensemble hors pétrole 105,6; Pétrole brut 93,6; MINERAIS D'OR
+  250,6; Machines et équipements n.c.a 31,6; T4-2025 note: Ensemble T4-25
+  70,4 (q/q -5,36, y/y -12,38); T1-2026 note: Ensemble T1-24 87,5.

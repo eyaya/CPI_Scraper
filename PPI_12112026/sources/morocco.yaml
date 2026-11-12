@@ -1,0 +1,517 @@
+country: Morocco
+iso3: MAR
+indicator: PPI
+tier: 2
+source_type: excel
+agency: Haut-Commissariat au Plan (HCP), Division des Indices Statistiques
+publication_code: "Indice des prix à la production industrielle, énergétique et minière (IPPIEM)"
+frequency: monthly
+expect_rows: 10000
+expect_periods: 200
+
+# PRIMARY: HCP's "IPPI par secteur" indicator workbook (Google Sheets export
+# linked from https://www.hcp.ma/L-Indice-des-prix-a-la-production-par-secteur-Mensuel_a2661.html,
+# the arrangement CPI Morocco uses). EXTRAS: the three branch workbooks
+# (manufacturing groups 1-3 a2664/a3067, extractives a2663, electricity and
+# water a2662), then EVERY French monthly note HCP lists under "Actualité
+# IPPI" (r354, 232 articles, July 2007 - September 2026; attachment ids from
+# each article page). Back issues never change: extras_cache.
+discover:
+  method: static_url
+  url: "https://docs.google.com/spreadsheets/d/1TUUh2OZbs2L5TQmX4fBmcJIu2QLg36i2-madut_shD4/export?format=xlsx"
+  save_as: hcp_ippi_secteur.xlsx
+  download_timeout: 180
+extras_cache: true
+extra_urls:
+- url: https://docs.google.com/spreadsheets/d/1dkerRpPLruxJqxQS7yvQSRwuKbk2tyW5D7DVG0U2Hro/export?format=xlsx
+  save_as: hcp_ippi_manuf.xlsx
+- url: https://docs.google.com/spreadsheets/d/1rrhLDdUzupJbLQfQj1zNN9tZ7zCzAovidE5WfmqkMgw/export?format=xlsx
+  save_as: hcp_ippi_extract.xlsx
+- url: https://docs.google.com/spreadsheets/d/1BqASnerte4J-aClbC5DD8suO-LY_ebHk70MAuX0SCVM/export?format=xlsx
+  save_as: hcp_ippi_elec_eau.xlsx
+- url: https://www.hcp.ma/attachment/2926490/
+  save_as: releases/2926490_ippiem_septembre_2026_fr.pdf
+- url: https://www.hcp.ma/attachment/2912483/
+  save_as: releases/2912483_ippiem_aout_2026_fr.pdf
+- url: https://www.hcp.ma/attachment/2900919/
+  save_as: releases/2900919_ippiem_juillet_2026_fr.docx
+- url: https://www.hcp.ma/attachment/2894305/
+  save_as: releases/2894305_ippiem_juin_2026_fr.docx
+- url: https://www.hcp.ma/attachment/2888015/
+  save_as: releases/2888015_ippiem_mai_2026_fr.docx
+- url: https://www.hcp.ma/attachment/2878350/
+  save_as: releases/2878350_ippiem_avril_2026_fr.docx
+- url: https://www.hcp.ma/attachment/2870739/
+  save_as: releases/2870739_ippiem_mars_2026_fr.docx
+- url: https://www.hcp.ma/attachment/2861233/
+  save_as: releases/2861233_ippiem_fevrier_2026_fr.docx
+- url: https://www.hcp.ma/attachment/2850201/
+  save_as: releases/2850201_ippiem_janvier_2026_fr.docx
+- url: https://www.hcp.ma/attachment/2839323/
+  save_as: releases/2839323_ippiem_decembre_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2828597/
+  save_as: releases/2828597_ippiem_novembre_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2816910/
+  save_as: releases/2816910_ippiem_octobre_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2805997/
+  save_as: releases/2805997_ippiem_septembre_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2793406/
+  save_as: releases/2793406_ippiem_aout_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2783224/
+  save_as: releases/2783224_ippiem_juillet_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2773837/
+  save_as: releases/2773837_ippiem_juin_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2763349/
+  save_as: releases/2763349_ippiem_mai_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2749288/
+  save_as: releases/2749288_ippiem_avril_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2737690/
+  save_as: releases/2737690_ippiem_mars_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2722683/
+  save_as: releases/2722683_ippiem_fevrier_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2707350/
+  save_as: releases/2707350_ippiem_janvier_2025_fr.docx
+- url: https://www.hcp.ma/attachment/2694573/
+  save_as: releases/2694573_ippiem_decembre_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2682697/
+  save_as: releases/2682697_ippiem_novembre_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2672562/
+  save_as: releases/2672562_ippiem_octobre_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2659696/
+  save_as: releases/2659696_ippiem_septembre_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2646546/
+  save_as: releases/2646546_ippiem_aout_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2633855/
+  save_as: releases/2633855_ippiem_juillet_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2623266/
+  save_as: releases/2623266_ippiem_juin_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2610948/
+  save_as: releases/2610948_ippiem_mai_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2600313/
+  save_as: releases/2600313_ippiem_avril_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2588796/
+  save_as: releases/2588796_ippiem_mars_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2575082/
+  save_as: releases/2575082_ippiem_fevrier_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2562867/
+  save_as: releases/2562867_ippiem_janvier_2024_fr.docx
+- url: https://www.hcp.ma/attachment/2550060/
+  save_as: releases/2550060_ippiem_decembre_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2538029/
+  save_as: releases/2538029_ippiem_novembre_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2528888/
+  save_as: releases/2528888_ippiem_octobre_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2517086/
+  save_as: releases/2517086_ippiem_septembre_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2504148/
+  save_as: releases/2504148_ippiem_aout_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2494018/
+  save_as: releases/2494018_ippiem_juillet_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2484364/
+  save_as: releases/2484364_ippiem_juin_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2474103/
+  save_as: releases/2474103_ippiem_mai_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2463921/
+  save_as: releases/2463921_ippiem_avril_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2451147/
+  save_as: releases/2451147_ippiem_mars_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2439360/
+  save_as: releases/2439360_ippiem_fevrier_2023_fr.docx
+- url: https://www.hcp.ma/attachment/2425894/
+  save_as: releases/2425894_ippiem_janvier_2023_fr.doc
+- url: https://www.hcp.ma/attachment/2411871/
+  save_as: releases/2411871_ippiem_decembre_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2399531/
+  save_as: releases/2399531_ippiem_novembre_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2389258/
+  save_as: releases/2389258_ippiem_octobre_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2375607/
+  save_as: releases/2375607_ippiem_septembre_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2362968/
+  save_as: releases/2362968_ippiem_aout_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2353797/
+  save_as: releases/2353797_ippiem_juillet_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2343869/
+  save_as: releases/2343869_ippiem_juin_2022_fr.pdf
+- url: https://www.hcp.ma/attachment/2333375/
+  save_as: releases/2333375_ippiem_mai_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2319974/
+  save_as: releases/2319974_note_d_information_du_haut_commissariat_au_plan_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere_du_mois_d_avril_2022__fr_.docx
+- url: https://www.hcp.ma/attachment/2305646/
+  save_as: releases/2305646_ippiem_mars_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2314710/
+  save_as: releases/2314710_ippiem_fevrier_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2314832/
+  save_as: releases/2314832_ippiem_janvier_2022_fr.docx
+- url: https://www.hcp.ma/attachment/2264216/
+  save_as: releases/2264216_ippiem_decembre_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2315260/
+  save_as: releases/2315260_ippiem_novembre_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2318050/
+  save_as: releases/2318050_ippiem_octobre_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2232946/
+  save_as: releases/2232946_ippiem_septembre_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2232958/
+  save_as: releases/2232958_ippiem_aout_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2232970/
+  save_as: releases/2232970_ippiem_juillet_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2232976/
+  save_as: releases/2232976_ippiem_juin_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2232990/
+  save_as: releases/2232990_ippiem_mai_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2233004/
+  save_as: releases/2233004_ippiem_avril_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2233012/
+  save_as: releases/2233012_ippiem_mars_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2233028/
+  save_as: releases/2233028_ippiem_fevrier_2021_fr.docx
+- url: https://www.hcp.ma/attachment/2233044/
+  save_as: releases/2233044_ippiem_janvier_2021__fr.docx
+- url: https://www.hcp.ma/attachment/2233054/
+  save_as: releases/2233054_ippiem_decembre_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233064/
+  save_as: releases/2233064_ippiem_novembre_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233076/
+  save_as: releases/2233076_ippiem_octobre_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233084/
+  save_as: releases/2233084_ippiem_septembre_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233098/
+  save_as: releases/2233098_ippiem_aout_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233100/
+  save_as: releases/2233100_ippiem_aout_2020.pdf
+- url: https://www.hcp.ma/attachment/2233110/
+  save_as: releases/2233110_ippiem_juillet_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233116/
+  save_as: releases/2233116_ippiem_juin_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233117/
+  save_as: releases/2233117_ippiem_juin_2020.pdf
+- url: https://www.hcp.ma/attachment/2233129/
+  save_as: releases/2233129_ippiem_mai_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233139/
+  save_as: releases/2233139_ippiem_avril_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233154/
+  save_as: releases/2233154_ippiem_mars_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233167/
+  save_as: releases/2233167_ippiem_fevrier_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233181/
+  save_as: releases/2233181_ippiem_janvier_2020_fr.docx
+- url: https://www.hcp.ma/attachment/2233191/
+  save_as: releases/2233191_ippiem_decembre_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233199/
+  save_as: releases/2233199_ippiem_novembre_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233214/
+  save_as: releases/2233214_ippiem_octobre_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233222/
+  save_as: releases/2233222_ippiem_septembre_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233230/
+  save_as: releases/2233230_ippiem_aout_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233244/
+  save_as: releases/2233244_ippiem_juillet_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233252/
+  save_as: releases/2233252_ippiem_juin_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233260/
+  save_as: releases/2233260_ippiem_mai_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233272/
+  save_as: releases/2233272_ippiem_avril_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233278/
+  save_as: releases/2233278_ippiem_mars_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233286/
+  save_as: releases/2233286_ippiem_fevrier_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233300/
+  save_as: releases/2233300_ippiem_janvier_2019_fr.docx
+- url: https://www.hcp.ma/attachment/2233310/
+  save_as: releases/2233310_ippiem_decembre_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233316/
+  save_as: releases/2233316_ippiem_novembre_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233330/
+  save_as: releases/2233330_ippiem_octobre_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233336/
+  save_as: releases/2233336_ippiem_septembre_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233346/
+  save_as: releases/2233346_ippiem_aout_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233360/
+  save_as: releases/2233360_ippiem_juillet_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233366/
+  save_as: releases/2233366_ippiem_juin_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233374/
+  save_as: releases/2233374_ippiem_mai_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233386/
+  save_as: releases/2233386_ippiem_avril_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233392/
+  save_as: releases/2233392_ippiem_mars_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233400/
+  save_as: releases/2233400_ippiem_fevrier_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233412/
+  save_as: releases/2233412_ippiem_janvier_2018_fr.docx
+- url: https://www.hcp.ma/attachment/2233418/
+  save_as: releases/2233418_ippiem_decembre_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233426/
+  save_as: releases/2233426_ippiem_novembre_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233442/
+  save_as: releases/2233442_ippiem_octobre_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233450/
+  save_as: releases/2233450_ippiem_septembre_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233472/
+  save_as: releases/2233472_ippiem_aout_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233484/
+  save_as: releases/2233484_ippiem_juillet_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233494/
+  save_as: releases/2233494_ippiem_juin_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233506/
+  save_as: releases/2233506_ippiem_mai_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233519/
+  save_as: releases/2233519_ippiem_avril_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233531/
+  save_as: releases/2233531_ippiem_mars_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233537/
+  save_as: releases/2233537_ippiem_fevrier_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233547/
+  save_as: releases/2233547_ippiem_janvier_2017_fr.docx
+- url: https://www.hcp.ma/attachment/2233561/
+  save_as: releases/2233561_ippiem_decembre_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233567/
+  save_as: releases/2233567_ippiem_novembre_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233577/
+  save_as: releases/2233577_ippiem_octobre_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233585/
+  save_as: releases/2233585_ippiem_septembre_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233593/
+  save_as: releases/2233593_ippiem_aout_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233607/
+  save_as: releases/2233607_ippiem_juillet_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233615/
+  save_as: releases/2233615_ippiem_juin_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233621/
+  save_as: releases/2233621_ippiem_mai_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233635/
+  save_as: releases/2233635_ippiem_avril_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233643/
+  save_as: releases/2233643_ippiem_mars_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233649/
+  save_as: releases/2233649_ippiem_fevrier_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233657/
+  save_as: releases/2233657_ippiem_janvier_2016_fr.docx
+- url: https://www.hcp.ma/attachment/2233667/
+  save_as: releases/2233667_ippiem_decembre_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233675/
+  save_as: releases/2233675_ippiem_novembre_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233684/
+  save_as: releases/2233684_ippiem_octobre_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233692/
+  save_as: releases/2233692_ippiem_septembre_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233700/
+  save_as: releases/2233700_ippiem_aout_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233710/
+  save_as: releases/2233710_ippiem_juillet_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233718/
+  save_as: releases/2233718_ippiem_juin_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233725/
+  save_as: releases/2233725_ippiem_mai_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233736/
+  save_as: releases/2233736_ippiem_avril_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233744/
+  save_as: releases/2233744_ippiem_mars_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233750/
+  save_as: releases/2233750_ippiem_fevrier_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233762/
+  save_as: releases/2233762_ippiem_janvier_2015_fr.docx
+- url: https://www.hcp.ma/attachment/2233773/
+  save_as: releases/2233773_ippiem_decembre_2014_fr_d_ocx_d_ocx.docx
+- url: https://www.hcp.ma/attachment/2233774/
+  save_as: releases/2233774_ippiem_decembre_2014_ar_d_ocx_d_ocx.docx
+- url: https://www.hcp.ma/attachment/2233779/
+  save_as: releases/2233779_ippiem_novembre_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233787/
+  save_as: releases/2233787_ippiem_octobre_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233797/
+  save_as: releases/2233797_ippiem_septembre_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233803/
+  save_as: releases/2233803_ippiem_ao__t_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233809/
+  save_as: releases/2233809_ippiem_juillet_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233817/
+  save_as: releases/2233817_ippiem_juin_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233825/
+  save_as: releases/2233825_ippiem__mai_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233835/
+  save_as: releases/2233835_ippiem_avril_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233843/
+  save_as: releases/2233843_ippiem_mars_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233847/
+  save_as: releases/2233847_ippiem_fevrier_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233858/
+  save_as: releases/2233858_ippiem_janvier_2014_fr.docx
+- url: https://www.hcp.ma/attachment/2233868/
+  save_as: releases/2233868_ippiem_decembre_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233874/
+  save_as: releases/2233874_ippiem_novembre_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233884/
+  save_as: releases/2233884_ippiem_octobre_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233892/
+  save_as: releases/2233892_ippiem_septembre_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233900/
+  save_as: releases/2233900_ippiem_aout_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233910/
+  save_as: releases/2233910_ippiem_juillet_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233924/
+  save_as: releases/2233924_ippiem_juin__2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233926/
+  save_as: releases/2233926_ippiem_mai_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233940/
+  save_as: releases/2233940_ippiem_avril_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233948/
+  save_as: releases/2233948_ippiem_mars_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233954/
+  save_as: releases/2233954_ippiem_fevrier_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233962/
+  save_as: releases/2233962_ippiem_janvier_2013_fr.docx
+- url: https://www.hcp.ma/attachment/2233974/
+  save_as: releases/2233974_ippiem_decembre_2012_fr.doc
+- url: https://www.hcp.ma/attachment/2233980/
+  save_as: releases/2233980_ippiem_novembre_2012_fr.docx
+- url: https://www.hcp.ma/attachment/2233992/
+  save_as: releases/2233992_ippiem_octobre_2012_fr.pdf
+- url: https://www.hcp.ma/attachment/2234002/
+  save_as: releases/2234002_ippiem_septembre_2012_fr.pdf
+- url: https://www.hcp.ma/attachment/2234010/
+  save_as: releases/2234010_ippiem_aout_2012_fr.docx
+- url: https://www.hcp.ma/attachment/2234018/
+  save_as: releases/2234018_ippiem_juillet_2012_fr.docx
+- url: https://www.hcp.ma/attachment/2234028/
+  save_as: releases/2234028_ippiem_juin_2012_fr.doc
+- url: https://www.hcp.ma/attachment/2234036/
+  save_as: releases/2234036_ippiem_mai_2012_fr.pdf
+- url: https://www.hcp.ma/attachment/2234052/
+  save_as: releases/2234052_ippiem_avril__2012_fr.doc
+- url: https://www.hcp.ma/attachment/2234060/
+  save_as: releases/2234060_ippiem_mars_2012_fr.doc
+- url: https://www.hcp.ma/attachment/2234066/
+  save_as: releases/2234066_ippiem_fevrier_2012_fr.doc
+- url: https://www.hcp.ma/attachment/2234076/
+  save_as: releases/2234076_ippiem_janvier_2012_fr.doc
+- url: https://www.hcp.ma/attachment/2234092/
+  save_as: releases/2234092_ippiem_decembre_2011_fr.doc
+- url: https://www.hcp.ma/attachment/2234104/
+  save_as: releases/2234104_ippiem_novembre_2011_fr.doc
+- url: https://www.hcp.ma/attachment/2234115/
+  save_as: releases/2234115_ippiem_octobre_2011_fr.doc
+- url: https://www.hcp.ma/attachment/2234123/
+  save_as: releases/2234123_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere_du_mois_de_septembre_2011__version_francaise_.docx
+- url: https://www.hcp.ma/attachment/2234129/
+  save_as: releases/2234129_ippiem_aout_2011_fr.doc
+- url: https://www.hcp.ma/attachment/2234137/
+  save_as: releases/2234137_ippiem_juillet_2011_fr.pdf
+- url: https://www.hcp.ma/attachment/2234145/
+  save_as: releases/2234145_ippiem_juin_2011_fr_1.doc
+- url: https://www.hcp.ma/attachment/2234151/
+  save_as: releases/2234151_ippiem_mai_2011_fr.pdf
+- url: https://www.hcp.ma/attachment/2234168/
+  save_as: releases/2234168_ippiemavril2011fr.pdf
+- url: https://www.hcp.ma/attachment/2234176/
+  save_as: releases/2234176_ippiemmars2011fr.pdf
+- url: https://www.hcp.ma/attachment/2234182/
+  save_as: releases/2234182_ippiemfevrier2011fr.pdf
+- url: https://www.hcp.ma/attachment/2234188/
+  save_as: releases/2234188_ippiemjanvier2011fr.pdf
+- url: https://www.hcp.ma/attachment/2234202/
+  save_as: releases/2234202_ippiemdecembre2010fr.pdf
+- url: https://www.hcp.ma/attachment/2234206/
+  save_as: releases/2234206_ippiemnovembre2010fr2.pdf
+- url: https://www.hcp.ma/attachment/2234216/
+  save_as: releases/2234216_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_d_octobre_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234226/
+  save_as: releases/2234226_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_septembre_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234229/
+  save_as: releases/2234229_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_d_aout_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234238/
+  save_as: releases/2234238_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_de_juillet_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234251/
+  save_as: releases/2234251_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_de_juin_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234252/
+  save_as: releases/2234252_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_de_mai_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234263/
+  save_as: releases/2234263_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_d_avril_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234274/
+  save_as: releases/2234274_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_de_mars_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234279/
+  save_as: releases/2234279_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_de_fevrier_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234283/
+  save_as: releases/2234283_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_de_janvier_2010_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234290/
+  save_as: releases/2234290_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_de_decembre_2009_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234297/
+  save_as: releases/2234297_l_indice_des_prix_a_la_production_industrielle__energetique_et_miniere_du_mois_de_novembre_2009_en_francais.pdf
+- url: https://www.hcp.ma/attachment/2234308/
+  save_as: releases/2234308_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_d_octobre_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234315/
+  save_as: releases/2234315_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_de_septembre_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234318/
+  save_as: releases/2234318_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_d_aout_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234328/
+  save_as: releases/2234328_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_de_juillet_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2836394/
+  save_as: releases/2836394_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle_energetique_et_miniere__ippiem__du_mois_de_juin_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234339/
+  save_as: releases/2234339_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_de_mai_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234351/
+  save_as: releases/2234351_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_d_avril_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234356/
+  save_as: releases/2234356_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_de_mars_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234361/
+  save_as: releases/2234361_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_de_fevrier_2009__versiojn_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234370/
+  save_as: releases/2234370_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_de_janvier_2009__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234384/
+  save_as: releases/2234384_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_de_novembre_2008__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234393/
+  save_as: releases/2234393_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere__ippiem__du_mois_d_octobre_2008___version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234401/
+  save_as: releases/2234401_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle_energetique_et_miniere__ippiem__du_mois_de_septembre_2008__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234409/
+  save_as: releases/2234409_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle_energetique_et_miniere__ippiem__du_mois_d_aout_2008__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234425/
+  save_as: releases/2234425_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle_energetique_et_miniere_du_mois_de_mai_2008__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2836401/
+  save_as: releases/2836401_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle_energetique_et_miniere__ippiem__du_mois_d__avril_2008__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234439/
+  save_as: releases/2234439_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle,_energetique_et_miniere_du_mois_de_mars_2008__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234447/
+  save_as: releases/2234447_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle_energetique_et_miniere_du_mois_de_fevrier_2008__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234457/
+  save_as: releases/2234457_note_d_information_relative_a_l_indice_des_prix_a_la_production_industrielle_energetique_et_miniere_du_mois_de_janvier_2008__version_francaise_.pdf
+- url: https://www.hcp.ma/attachment/2234466/
+  save_as: releases/2234466_ippiem26_12_2007.pdf
+- url: https://www.hcp.ma/attachment/2234479/
+  save_as: releases/2234479_ippiem27_09_2007.pdf
+- url: https://www.hcp.ma/attachment/2234482/
+  save_as: releases/2234482_ippiem072007.pdf
+
+parser: morocco_hcp_ppi
+geography: National
+
+notes: >
+  INVENTORY. One index, three generations: (1) old nomenclature (sections C
+  extractives / D manufacturing / E electricity and water, divisions 11-41),
+  monthly notes July 2007 - October 2013, NO BASE PRINTED (base_period blank;
+  section codes kept as series_code "NMA:C" since they are not ISIC Rev.4
+  letters); (2) base 2010, ISIC Rev.4 / NMA 2010 (B C D E, divisions 06-36),
+  notes October 2013 - December 2020 (base printed in the notes of Nov 2013 -
+  May 2018; the notes of Jan-Apr 2018 and Jun 2018 - Dec 2020 print none and
+  are filed under it: same nomenclature, continuous values, and the Jan 2021
+  note announces base 2018); (3) base 2018, workbooks Jan 2019 - latest
+  (monthly by section and branch; annual average by section 2019-2025).
+  Section C is printed as "Industries manufacturières" until Sep 2017 and as
+  "... hors raffinage de pétrole" from Apr 2016 (refining stopped): two
+  series, both as printed. Base-2018 notes are read only to VERIFY the
+  workbooks whose sheet names are truncated before the base ("(Base 100  2"):
+  their figures equal the notes' for the same label and month.
+  GAPS: only September 2007 and June 2008 (old series) have no index -- the
+  Sept/Oct/Dec 2007 and Jul/Dec 2008 articles carry no attachment, the others
+  are covered as the next note's "previous month"; the July 2007 PDF note is
+  refused (its text layer interleaves labels and numbers: 5 rows' labels do
+  not match their codes). Base 2010 and base 2018 have every month.
+  Base-2010 and old notes give each month and its m/m change only (no y/y).
+  CROSS-CHECK (verbatim): Sept 2026 C excl. refining 119,0, chemicals 141,3,
+  other manufacturing 217,1; annual 2025 C 117,7, B 100,4; July 2014 (base
+  2010) C 108,6, refining 129,5; Feb 2008 (old) D 145,5*, refining 300,2,
+  chemicals 191,7; Dec 2012 (old) refining 422,0.

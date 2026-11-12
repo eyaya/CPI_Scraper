@@ -1,0 +1,38 @@
+country: Central African Republic
+iso3: CAF
+indicator: PPI
+tier: 2
+source_type: xlsx
+agency: Institut Centrafricain des Statistiques et des Etudes Economiques et Sociales (ICASEES)
+publication_code: Indice de prix de la production industrielle (IPPI), année de base 2017 (classeur de calcul)
+frequency: monthly
+expect_rows: 900
+expect_periods: 48
+
+# ICASEES's edocman document "indice-de-prix-de-la-production-industrielle-
+# ippi-annee-de-base-2017" downloads as a zip holding IPPI-annee-de-Base-2017.xlsx
+# (file dated 2021-10-04). TLS verifies (2026-11-05).
+discover:
+  method: static_url
+  url: "https://www.icasees.org/index.php/component/edocman/indice-de-prix-de-la-production-industrielle-ippi-annee-de-base-2017/download?Itemid=0"
+  save_as: icasees_ippi_base2017.zip
+
+parser: car_icasees_ppi
+geography: National
+
+notes: >
+  INVENTORY. One index: the IPPI, base 2017 = 100 (annual average), NAEMA
+  rév.1 manufacturing 10-33 plus electricity (35) and water (36), monthly
+  2017-01 .. 2020-12 (48 months, no gap) -- the only IPPI ICASEES publishes
+  (its site, edocman listings and the Wayback index of icasees.org hold this
+  one workbook; no bulletin, no later months). Collected: ENSEMBLE, the 9
+  grouped divisions and the 13 divisions (35 and 36 taken once), 19 series,
+  values as stored in the workbook. Not read: the workbook's quarterly
+  columns (they contradict its own months and are mislabelled), the
+  "type d'industrie" sheet (a copy of ENSEMBLE labelled 10-33
+  manufacturing), products / gammes / classes / groupes, the per-ten-thousand
+  weights. The volume index (IPI, base 2017 and the 2005-2019 bases) is a
+  different indicator.
+  CROSS-CHECK (workbook cells): ENSEMBLE 2017-01 97,3084, 2020-10 83,9037;
+  INDUSTRIES AGRO-ALIMENTAIRES 2020-12 75,3541; 10 produits alimentaires
+  2020-10 39,1943; 12 tabac 2020-04 103,2984; 24 métallurgie 2017-02 100,8116.

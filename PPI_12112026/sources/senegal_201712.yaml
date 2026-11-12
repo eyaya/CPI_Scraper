@@ -1,0 +1,26 @@
+country: Senegal
+iso3: SEN
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: Note mensuelle IPPI base 100 en 2006, 2017-12
+frequency: monthly
+expect_rows: 400
+expect_periods: 10
+
+# Wayback id_ copy of ANSD's own file (ansd.sn serves an incomplete TLS chain;
+# the archive copy is fetched with verification on).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20240520094212id_/https://www.ansd.sn/sites/default/files/2022-11/ippi_Dcembre_2017_2_.pdf"
+  save_as: senegal_ippi_2017-12.pdf
+
+parser: senegal_ansd_ippi_note
+geography: National
+
+notes: >
+  ANSD IPPI base 100 en 2006 (pre-renovation), Tableau 1: ENSEMBLE INDUSTRIE,
+  branches and sub-branches; up to 13 months ending 2017-12, m/m and y/y changes
+  (columns identified by the ENSEMBLE row's own indices). Part of the base-2006
+  back-series; see senegal.yaml.

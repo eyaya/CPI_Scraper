@@ -1,0 +1,35 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique (ANStat)
+publication_code: Indice des Prix de Production Industrielle (IPPI) -- note de mai 2025 (parution 16 juillet 2025)
+frequency: monthly
+expect_rows: 460
+expect_periods: 13
+
+# anstat.ci answers 403 to plain clients (and the CPI descriptor needs TLS
+# verification off); the Wayback id_ copy of ANStat's own file is used.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20250723231504id_/https://www.anstat.ci/assets/publications/files/File_val_indicateur1753114784.pdf"
+  save_as: anstat_ippi_1753114784.pdf
+
+parser: cote_divoire_anstat_ppi
+geography: National
+
+notes: >
+  ANStat IPPI rénové, base 100 en 2015 (stated), Tableau 1 by branche d'activité:
+  Ensemble, 4 types, 30 branches; 13 months mai-24..mai-25 and the y/y change
+  (confirmed on Ensemble: 147,6 / 131,2 = +12,5 %). CROSS-CHECK: Ensemble mai-25
+  147,6; Industries extractives 174,2 (+23,9 %); Minerais métalliques 265,3
+  (+38,8 %); Produits alimentaires 151,4 (+32,0 %); Industries manufacturières
+  138,0 (+8,6 %).
+  INVENTORY / GAPS: INS notes (ins.ci, Wayback) exist only for 01-02/2020, 07/2020
+  and 09/2020 (cote_divoire_2020MM.yaml: 2019-02..2020-09); ANStat (2021-) files
+  are anonymous "File_val_indicateur<ts>.pdf" -- of the 18 in the Wayback index,
+  two are IPPI notes: this one and File_val_indicateur1745335235.pdf (uploaded
+  2025-04, capture 20260215053556), which the Wayback Machine refused with 429/404
+  on 2026-11-05 -- retry. anstat.ci itself is not reachable (403), so 2020-10..
+  2024-04 is NOT collected. Production-volume IHPI/IPI notes on ins.ci are not PPIs.

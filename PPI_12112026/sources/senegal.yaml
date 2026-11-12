@@ -1,0 +1,40 @@
+country: Senegal
+iso3: SEN
+indicator: PPI
+tier: 2
+source_type: xlsx
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD)
+publication_code: Série IPPI -- indices mensuels des produits agrégés, IPPI rénové base 100 en 2015 (2015-01..2026-05)
+frequency: monthly
+expect_rows: 4300
+expect_periods: 137
+
+# Linked from ansd.sn/Indicateur/indice-des-prix-la-production-industrielle-ippi
+# (file sites/default/files/2026-07/Série IPPI (1).xlsx). ansd.sn serves an
+# incomplete TLS chain, so the Wayback id_ copy of ANSD's own file is used
+# with verification on (capture 20260929134554).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20260929134554id_/https://www.ansd.sn/sites/default/files/2026-07/Se%CC%81rie%20IPPI%20%281%29.xlsx"
+  save_as: senegal_serie_ippi_2026-07.xlsx
+
+parser: senegal_ansd_ippi_serie
+geography: National
+
+notes: >
+  ANSD renovated IPPI, base 100 en 2015 (stated in the renovated monthly notes;
+  the workbook prints no base), monthly 2015-01..2026-05, 33 aggregates by NOPEMA
+  rev1 code: 05-39 ENSEMBLE HORS EGRENAGE DE COTON (the headline), types,
+  divisions, and 01 Egrenage de coton apart. "#N/A" and 0 cells skipped.
+  CROSS-CHECK vs "IPPI rénové juin 2022" note: 07 Minerais métalliques juin-21
+  140,3, févr-22 156,9, mars 167,2, avr 168,2, mai 167,3, juin 162,1 -- identical;
+  10 Produits alimentaires févr-22 130,2 identical, later months revised in the
+  workbook (juin-22 133,0 in the note, 135,2 now); ENSEMBLE juin-21 111,2 identical.
+  BACK-SERIES, base 100 en 2006 (separate series, not chained here): 11 monthly
+  notes, senegal_YYYYMM.yaml, Wayback copies of ansd.sn/sites/default/files/
+  2022-11/, each Tableau 1 = up to 13 months: covers 2009-05..2010-09 and
+  2011-12..2020-08. GAP 2010-10..2011-11: no note of that period is on ANSD's
+  site or in the Wayback index (the archive holds IPPI notes from 05/2010, 07/2010,
+  09/2010, then 12/2012). Truncated archive copies (exactly 1 MiB, e.g. IPPI renov
+  aot 2022) were not used. Also published, not collected: the services producer
+  price index (IPPS, quarterly notes 2017-2020) -- a different index.

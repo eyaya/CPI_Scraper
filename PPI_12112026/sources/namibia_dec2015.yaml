@@ -1,0 +1,29 @@
+country: Namibia
+iso3: NAM
+indicator: PPI
+tier: 2
+source_type: excel
+agency: Namibia Statistics Agency (NSA)
+publication_code: Namibia Producer Price Index (NPPI) -- quarterly tables, Dec 2015=100 (last edition, Q2 2024)
+frequency: quarterly
+expect_rows: 750
+expect_periods: 30
+
+discover:
+  method: static_url
+  url: "https://nsa.org.na/wp-content/uploads/2024/08/PPI-Q2-2024-Tables_Dissemination.xlsx"
+  save_as: PPI-Q2-2024-Tables_Dissemination.xlsx
+
+parser: namibia_nsa_ppi_dec2015
+geography: Total country
+
+notes: >
+  The last edition on Dec 2015=100: index 2016-Q1 .. 2024-Q2 and weights for
+  ISIC sections B, C and 9 classes; Table 2, captioned "Percentage Change Over
+  Quarter", is the change on a YEAR earlier (starts 2017-Q1; Mining 2017-Q1
+  -12.09 = 88.96/101.19 - 1) and is filed as inflation_yoy -- the validator's
+  y/y guard agrees on every row. Cross-check (verbatim): Mining 2016-Q1
+  101.19; uranium (0721) 2024-Q2 136.94; Manufacturing y/y 2017-Q1 -3.75;
+  water (3600) 2016-Q3 110.1. Identity: weights B 34.03 + C 52.59 + 3510 9.28
+  + 3600 4.10 = 100.0. The Dec 2015 = 100 reference column is not a quarter
+  and is not read.

@@ -1,0 +1,30 @@
+country: Malawi
+iso3: MWI
+indicator: PPI
+tier: 2
+source_type: xlsx
+agency: National Statistical Office (NSO) Malawi
+publication_code: "Malawi Producer Price Index Brief Release: First Quarter 2026 -- Annex Tables"
+frequency: monthly
+expect_rows: 200
+
+# NSO's headless CMS (the site nsomalawi.mw is a Nuxt app over it): the
+# publication record lists its attachments; /api/download/<media id>/<file>.
+discover:
+  method: static_url
+  url: "https://cms.nsomalawi.mw/api/download/842/NSO-PPI--First-Quarter-of-2026-_Brief-Release---Annex-Tables.xlsx"
+  save_as: NSO-PPI--First-Quarter-of-2026-_Brief-Release---Annex-Tables.xlsx
+
+parser: malawi_nso_annex_ppi
+geography: National
+
+notes: >
+  Base 2019=100, manufacturing (divisions 10, 11, 12, 20, 22, 23) +
+  electricity (D) + water (E), weights 90.6 / 6.2 / 3.2. Monthly indices Oct 2024 - Mar 2026; m/m and y/y monthly; q/q and y/y quarterly 2025-Q1 - 2026-Q1. Table 3 prints Manufacturing 2025-Q2 as 224.6 (the 2024-Q1 figure repeated; the months average 360.4) -- that one cell is dropped by the parser's check.
+  INVENTORY (Malawi): first PPI release 2016 (quarterly 2013-2016, base
+  2012=100; malawi_2016.yaml); a 2022 brief exists only as an image scan
+  (not read -- no OCR); the 2019=100 monthly series is collected from
+  January 2022 across six annex workbooks (2017-2021 not published in any
+  file found on the CMS or the old site's Wayback listing). CROSS-CHECK
+  (Q1 2026 issue, verbatim): total index March 2026 385.6, February 374.0,
+  y/y March 2026 14.6, Q1 2026 average 376.1.

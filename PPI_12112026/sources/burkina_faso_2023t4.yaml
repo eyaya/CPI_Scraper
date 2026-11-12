@@ -1,0 +1,23 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: IPI / IPPI Info -- note d'analyse de l'IPPI, 2023 trimestre 4
+frequency: quarterly
+expect_rows: 115
+expect_periods: 3
+
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2024-04/IPI_IPPI_Info_4T2023_.pdf"
+  save_as: bfa_ipi_ippi_T4-2023.pdf
+
+parser: burkina_faso_insd_ppi
+geography: National
+
+notes: >
+  INSD Burkina Faso IPPI, base 100 en 2015 (Laspeyres, chained; prix de base SCN 2008),
+  quarterly note for 2023-T4: Ensemble, 3 types d'industrie and 20 product divisions;
+  indices for T-4, T-1, T and % changes T/T-1 and T/T-4.

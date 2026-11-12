@@ -1,0 +1,68 @@
+country: Cameroon
+iso3: CMR
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS)
+publication_code: Note d'analyse de l'Indice des Prix à la Production Industrielle (IPPI), trimestrielle
+frequency: quarterly
+expect_rows: 1100
+expect_periods: 38
+
+# INS's WordPress media search (wp-json/wp/v2/media?search=IPPI) lists every
+# quarterly note since 1T-2019. The notes are named "Note_IPPI_2T2026.pdf",
+# a quarter token core.discover.wp_media_latest_quarter does not read (it wants
+# "Q2"), so the newest note is pinned here and each new quarter is added by
+# hand (move the current url into extra_urls). TLS verifies (2026-11-05).
+discover:
+  method: static_url
+  url: "https://ins-cameroun.cm/wp-content/uploads/2026/11/Note_IPPI_2T2026.pdf"
+extras_cache: true
+extra_urls:
+  - "https://ins-cameroun.cm/wp-content/uploads/2026/08/Note_IPPI_1T2026.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2026/06/Note_IPPI_4T2025_DSE.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2026/01/Note_IPPI_3T2025.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/11/NOTE_ANALYSE_IPPI_2T_2025.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/09/NOTE_ANALYSE_IPPI_1T_2025_VF.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/NOTE_ANALYSE_IPPI_4T_2024_VF.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/NOTE_ANALYSE_IPPI_3T_2024-1.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/NOTE_ANALYSE_IPPI_2T_2024.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-danalyse-IPPI_1T_2024.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note_ippi_4_t_2023-1-1.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/note_ippi_3_t_2023.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note_IPPI_2T-2023.docx.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note_IPPI_28_07_2019_Final.pdf"
+
+parser: cameroon_ins_ppi
+geography: National
+
+notes: >
+  INVENTORY. One producer price index: the IPPI (NAEMA rév.1 sections B-E,
+  ~103 enterprises, Laspeyres, base 2016 = 100), quarterly from 1T-2017 (the
+  first collection, April 2017). Collected 2017-Q1 .. 2026-Q2, 38 quarters,
+  no gap: 20 branch rows (the 2 sections B/C groups, 13 manufacturing
+  branches, the D and E groups and their one item each, ENSEMBLE INDUSTRIE)
+  x index, plus the printed glissements annuel / trimestriel for each note's
+  own quarter. Sources: 1T-2019 note (2017-Q1..2019-Q1), the 2T/3T-2023
+  "TABLEAU DES INDICES" history (2019-Q1..2023-Q3), the 4T-2023 .. 2T-2026
+  notes (8-10 quarter windows). Newest note wins per quarter (INS revises:
+  T1-19 115,0 in 2019, 111 in 2023; 2025-Q1 extractives 175,7 -> 162,1).
+  NOT READ: the 2020-2022 notes (IPPI-2T-2020, 3T-2020, IPPI-2020-1111 =
+  4T-2019, 1T-2021, 2T/4T-2022, 1T-2023) and IPPI-2022-annuelle (annual
+  averages 2017-2022) -- their table page is rotated 90 degrees and its text
+  comes out reversed; their quarters are all in later notes, only the annual
+  averages are lost. Not retrievable (the media items return an HTML page):
+  IPPI-2021-7, IPPI-2021-8, IPPI-2022-2t, 1T-2022 note.
+  HEADER DEFECTS handled (see parser): repeated labels ("T3-24 T3-24" = T3-24,
+  T4-24), missing labels (1T-2026: 10 columns under 8 labels; the unlabelled
+  9th, a repeat of T4-25, is dropped), "BASE 100 EN 2006" in the 2019 caption
+  (its text says 2016). Glissements are taken only where ENSEMBLE INDUSTRIE's
+  arithmetic proves which is annual and which quarterly: the 1T-2024 note's
+  annual 0,9 % (index says -2,5 %) and the 2T-2026 note's annual 4,0 % for
+  ENSEMBLE (index says 3,4 %) are NOT taken. 15 of 174 printed q/q changes
+  differ from the index because INS revised the previous quarter afterwards.
+  CROSS-CHECK (verbatim): ENSEMBLE INDUSTRIE 2026-Q2 131,9, 2024-Q4 129,7,
+  2019-Q1 111, 2018-Q4 117,8, 2017-Q1 102,8; INDUSTRIES EXTRACTIVES 2026-Q2
+  170,5 (glissement annuel 16,0 % = 170,5 / 147,0); RAFFINAGE 2020-Q4 66,7;
+  VEHICULES 2022-Q1 163,9; METALLURGIE 2026-Q2 125,2; extractives 2026-Q1
+  glissement annuel -6,6 %.
