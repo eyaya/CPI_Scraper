@@ -1,0 +1,36 @@
+country: Rwanda
+iso3: RWA
+indicator: PPI
+tier: 3
+source_type: xls
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: PPI time series, August 2026
+frequency: monthly
+discover:
+  method: static_url
+  url: https://web.archive.org/web/20261009181040id_/http://www.statistics.gov.rw/sites/default/files/documents/2026-09/PPI_time_series_August_2026.xls
+  save_as: PPI_time_series_August_2026.xls
+parser: rwanda_nisr_ppi
+geography: National
+expect_rows: 6879
+notes: 'NISR monthly PPI time-series workbook: all products (output), local products (domestic market)
+
+  and exports, ISIC Rev.4 sections/divisions, weights per mille, December 2010 - August 2026.
+
+  No base period printed in the workbook (left blank). Source: the Wayback Machine''s id_ copy of
+
+  NISR''s own file (captured 2026-10-09): www.statistics.gov.rw serves a TLS certificate that does
+
+  not match its host name (SEC_E_WRONG_PRINCIPAL / certifi), 2026-11-05, so the live host was not
+
+  used. Inventory: NISR also published PPI from 2005 (old series, survey pages 2005-2014 in the
+
+  Wayback index; e.g. PPI-01-07FRAN.pdf) and quarterly time series 2013-2015 -- the Wayback copies
+
+  of those were cookie walls / 429 on 2026-11-05 and were not collected; the current series already
+
+  starts December 2010.
+
+  Cross-check (verbatim): Rwanda (all products) Dec 2010 49.0, Apr 2024 100.0, Aug 2026 129.7;
+
+  Exports Aug 2026 135.4; Local Index Aug 2026 126.9; Manufacturing weight 872.'

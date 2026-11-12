@@ -1,0 +1,40 @@
+country: Togo
+iso3: TGO
+indicator: PPI
+tier: 2
+source_type: xlsx
+agency: Institut National de la Statistique et des Etudes Economiques et Démographiques (INSEED)
+publication_code: Indice mensuel de Prix de Production de l'Industrie (IPPI) de janvier 2015 à juin 2026
+frequency: monthly
+expect_rows: 4400
+expect_periods: 138
+
+# INSEED's IPPI page lists the workbooks as "/download/<id>/" links; each
+# quarterly re-issue gets a NEW id (8028 = janvier 2015 - juin 2026, file
+# IPPI-Janv-Juin-2026.xlsx; earlier issues 7559, 6709, 5276 ...). The latest id
+# is read off https://inseed.tg/indice-de-prix-de-production-de-lindustrie-ippi/.
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/8028/"
+  save_as: togo_ippi_mensuel_2015_2026-06.xlsx
+
+parser: togo_inseed_ppi
+geography: National
+
+notes: >
+  INSEED Togo IPPI, base 100 en 2015 (Laspeyres, annually re-weighted and
+  chained to 2015; NAEMA rev1 / NOPEMA rev1; ~330 products). Monthly indices
+  2015-01..2026-06 for ENSEMBLE, 4 types d'industries, 12 divisions regroupées
+  and 18 divisions (34 distinct labels; a label printed in two blocks is emitted
+  once). Stored values are the workbook's unrounded chained indices. The leather
+  division (INDUSTRIE DU CUIR...) reads 0 for 2024 -- skipped, not a price level.
+  INVENTORY: the IPPI starts with base 2015 (first notes 2022, back-cast to
+  2015-01); before it INSEED/stat-togo.org published only the IHPI (industrial
+  PRODUCTION volume index, 2003-2018), not a price index. Monthly "IPPI Info"
+  notes (2022-04 onward) print only rounded % changes of the same indices; not
+  parsed. Quarterly series: togo_quarterly.yaml.
+  CROSS-CHECK against "IPPI Info d'octobre 2025" (download 7508): ensemble
+  +0,72 % m/m, -1,54 % y/y; extractives +6,44 % / -0,70 %; manufacturières
+  -0,45 % / -2,91 %; électricité et eau 0,00 % / +3,24 %; pharmaceutiques
+  -27,27 % y/y; métallurgie -14,76 % y/y -- all reproduced from the workbook's
+  indices (2025-10 ensemble 111.96).

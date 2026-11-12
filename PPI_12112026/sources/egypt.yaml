@@ -1,0 +1,321 @@
+country: Egypt
+iso3: EGY
+indicator: PPI
+tier: 2
+source_type: excel
+agency: Central Agency for Public Mobilization and Statistics (CAPMAS)
+publication_code: "Producers Price Index (publication 87)"
+frequency: monthly
+expect_rows: 90000
+expect_periods: 150
+
+# CAPMAS's SPA API on port 8080 (the route Egypt CPI uses): GET
+# /api/Publication/87 returns the newest issue's workbook. EXTRAS: every issue
+# since the first (September 2007), resolved through
+# /api/Publication/SearchPublicationDetail?PublicationId=87&Year=Y&Month=M
+# (133 issues: bimonthly Jan/Mar/.../Nov until May 2023, monthly since).
+# Workbook where one exists (2007-09 .. 2009-11, 2021-01 .. latest except
+# 2022-01), else the PDF. Back issues never change: extras_cache.
+discover:
+  method: capmas_publication
+  api_base: "https://www.capmas.gov.eg:8080"
+  publication_id: 87
+  prefer: excel
+  save_as: capmas_ppi_latest.xlsx
+  download_timeout: 180
+extras_cache: true
+extra_urls:
+- url: https://www.capmas.gov.eg:8080/Publication/Data/4ab84aaf-702b-46cd-a130-3d2dd45d7dd0.xlsx
+  save_as: capmas_ppi_2007_09.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/9bfaee28-83a9-45ab-a417-2c0ebe288057.xlsx
+  save_as: capmas_ppi_2007_11.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/5c68db97-9363-4902-b628-9ce4d131495e.xlsx
+  save_as: capmas_ppi_2008_01.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/7063fdcd-7f99-45f0-913e-ea8f2c8252c1.xlsx
+  save_as: capmas_ppi_2008_03.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/a2e41a7d-6fe5-4ecc-8ed5-8bd376872241.xlsx
+  save_as: capmas_ppi_2008_05.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/c27e33de-7d04-4602-bd73-e5ecba9fad5f.xlsx
+  save_as: capmas_ppi_2008_07.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/640e1d7f-0941-4c21-a414-bb501ef394a0.xlsx
+  save_as: capmas_ppi_2008_09.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/8d82c495-c2f6-4fc7-8365-c624a6ba7417.xlsx
+  save_as: capmas_ppi_2008_11.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/e2cb7d4d-5297-4303-b977-1d51eefc4ff6.xlsx
+  save_as: capmas_ppi_2009_01.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/c08c7b13-5bf0-4ddc-8f49-0ef649ca22ae.xlsx
+  save_as: capmas_ppi_2009_03.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/bd3074d8-8d5b-498f-9134-9f8f9cdb7557.xlsx
+  save_as: capmas_ppi_2009_05.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/6dbfebed-6125-4a62-8ccb-1526d97a2fff.xlsx
+  save_as: capmas_ppi_2009_07.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/163a4cf7-e454-4d6d-b4a3-72382076feb0.xlsx
+  save_as: capmas_ppi_2009_09.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/9462b23c-ed72-4480-9e98-f2018133f695.xlsx
+  save_as: capmas_ppi_2009_11.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/a9c913cb-2ecf-4f18-a5b7-953e2662079a.pdf
+  save_as: capmas_ppi_2010_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/9bab94da-7a88-483a-881c-59f3cd612ad9.pdf
+  save_as: capmas_ppi_2010_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/7a2c15d4-b80a-4f82-a797-0e6fae543ca5.pdf
+  save_as: capmas_ppi_2010_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/adef60b8-1514-4056-8f6b-924cf85f7ee9.pdf
+  save_as: capmas_ppi_2010_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/7940b99d-6fbf-4e4f-a7c9-b91a63c21539.pdf
+  save_as: capmas_ppi_2010_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/60a45504-22a8-42e5-8145-e882372367cd.pdf
+  save_as: capmas_ppi_2010_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/732af9ee-dc10-4d0a-bdc4-686c3ebfac01.pdf
+  save_as: capmas_ppi_2011_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/acc4a016-7a16-4f30-9e09-3fbaa05aefb2.pdf
+  save_as: capmas_ppi_2011_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/184698c0-33e7-4245-b792-e7e48206faef.pdf
+  save_as: capmas_ppi_2011_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/5c21ea8a-9b26-4c1f-ae4a-118e439d0cc7.pdf
+  save_as: capmas_ppi_2011_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/359544e1-f369-43d7-9f53-f5f29847f61e.pdf
+  save_as: capmas_ppi_2011_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/8d73dc67-5380-43fb-9cc7-ef4a3868a6a1.pdf
+  save_as: capmas_ppi_2011_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/ca923e3d-951f-4dc9-8425-8e74cb7aa4e5.pdf
+  save_as: capmas_ppi_2012_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/8f3c7660-9e87-4644-aa1d-7fef759161a7.pdf
+  save_as: capmas_ppi_2012_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/d6d93a40-1a79-45ae-bda6-50133872c7f8.pdf
+  save_as: capmas_ppi_2012_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/a9d317c0-0906-4fcb-9d59-0aa76803afd2.pdf
+  save_as: capmas_ppi_2012_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/3242c948-1c22-4bf1-b12d-b0768202dea6.pdf
+  save_as: capmas_ppi_2012_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/fc18a8c0-47a1-4114-8572-5eeb269437d9.pdf
+  save_as: capmas_ppi_2013_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/239c5df7-5e0f-42c3-bef3-dee362f3e047.pdf
+  save_as: capmas_ppi_2013_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/a4086e1a-1eae-4710-84e4-0c824e8e5bb0.pdf
+  save_as: capmas_ppi_2013_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/5de9e2e1-4c2d-4bb0-b2cd-ad77b2e91ce8.pdf
+  save_as: capmas_ppi_2013_07.pdf
+- url: https://www.capmas.gov.eg:8080/News/Pdf/59ee1061-6e03-45a8-9799-49fe4900426d.pdf
+  save_as: capmas_ppi_2013_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/b6ea1937-fb2e-4e26-9110-514d3e23cb9b.pdf
+  save_as: capmas_ppi_2013_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/34641d8d-a57d-46d9-ac71-e6314b50946b.pdf
+  save_as: capmas_ppi_2014_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/ce5a5382-c2c1-41ce-b76d-24da505ad49d.pdf
+  save_as: capmas_ppi_2014_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/830a88c8-0ee4-4a7b-82c7-5251631d51bd.pdf
+  save_as: capmas_ppi_2014_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/dfb32234-fd3d-4b11-884e-7252c55c3554.pdf
+  save_as: capmas_ppi_2014_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/735ca833-aad9-4fde-af0e-3db09105f0e8.pdf
+  save_as: capmas_ppi_2014_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/6c618786-9c65-4882-b40b-283c84bc0914.pdf
+  save_as: capmas_ppi_2014_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/f4cd12a3-cfd2-4888-9836-21d9971bc2d3.pdf
+  save_as: capmas_ppi_2015_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/31b236b8-8351-4c47-8a72-442c850cd80f.pdf
+  save_as: capmas_ppi_2015_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/babfce08-aef4-4e3c-934c-07a2023cc96f.pdf
+  save_as: capmas_ppi_2015_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/52d3db80-a2bb-4afb-b674-f97eae40f6ac.pdf
+  save_as: capmas_ppi_2015_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/6ebc46fd-2b5c-4c31-9566-237e686848cb.pdf
+  save_as: capmas_ppi_2015_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/7fcf9b96-9d75-41f0-b7f2-1ea9e943486a.pdf
+  save_as: capmas_ppi_2015_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/b825229a-44a0-4eee-a1c2-18fca0d612b8.pdf
+  save_as: capmas_ppi_2016_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/d69ea301-3504-4a49-810d-cbe3d5c35b8d.pdf
+  save_as: capmas_ppi_2016_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/9870c329-b9f4-426d-b771-c92e9759c3ed.pdf
+  save_as: capmas_ppi_2016_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/b1c2ff6b-8a58-4e3b-9a25-37206fc9bb9a.pdf
+  save_as: capmas_ppi_2016_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/bc00e357-0cb6-4481-b2d4-30bec455766c.pdf
+  save_as: capmas_ppi_2016_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/5566b783-005a-4fcc-9c81-403696567bb2.pdf
+  save_as: capmas_ppi_2016_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/cc6ef8b9-7114-4bf7-85bc-ba92b6dc555d.pdf
+  save_as: capmas_ppi_2017_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/c91aad16-dc7d-49f7-aece-41fd760d811c.pdf
+  save_as: capmas_ppi_2017_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/64c65d4e-9e85-45f0-aacc-cec321fc702e.pdf
+  save_as: capmas_ppi_2017_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/ae8b2f36-491a-4aa9-8bfc-ce3b5826d79f.pdf
+  save_as: capmas_ppi_2017_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/a1e28e49-e0b7-48ce-9a3f-7353aed1bb05.pdf
+  save_as: capmas_ppi_2017_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/d87b2c5d-708b-4291-85a7-cee12f911d71.pdf
+  save_as: capmas_ppi_2017_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/c4986943-b9af-4fa3-98b1-079230904be1.pdf
+  save_as: capmas_ppi_2018_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/9cdaa064-2198-45dd-9a40-e53e793db33b.pdf
+  save_as: capmas_ppi_2018_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/9e1fc1b7-cf3e-4a0a-b866-b0d2017decd5.pdf
+  save_as: capmas_ppi_2018_05.pdf
+- url: https://www.capmas.gov.eg:8080/News/Pdf/4647030c-9a12-4e79-96e3-7f14ca52a34d.pdf
+  save_as: capmas_ppi_2018_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/5c1575db-3663-42ec-8683-9f98fc12e654.pdf
+  save_as: capmas_ppi_2018_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/e9e61f21-f6b5-42ed-a0dd-e5c8a37ae217.pdf
+  save_as: capmas_ppi_2018_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/797a0df1-89cb-4ad1-9fd4-4919fdb0d30f.pdf
+  save_as: capmas_ppi_2019_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/136383dc-488c-4f89-948e-c8b2eb183d92.pdf
+  save_as: capmas_ppi_2019_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/bd6eac66-b759-4f9f-9cd7-7fa3cc91e5d6.pdf
+  save_as: capmas_ppi_2019_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/f9a9c72f-a011-4baf-a27a-5f37ec4b91c3.pdf
+  save_as: capmas_ppi_2019_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/639c6ceb-754d-4dc3-bb3a-2f60f4377ac8.pdf
+  save_as: capmas_ppi_2019_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/6f6609a0-93c4-436a-85d5-1303e4c774d7.pdf
+  save_as: capmas_ppi_2019_11.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/41f0ace1-1968-41e5-8363-4225c1c7691b.pdf
+  save_as: capmas_ppi_2020_01.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/7f02e83b-f6f8-4d7a-9f70-bfa2027e5211.pdf
+  save_as: capmas_ppi_2020_03.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/fb1b7b4b-a988-4544-be8c-7f9e92cbad84.pdf
+  save_as: capmas_ppi_2020_05.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/df55259c-79b5-4963-b583-e95dbbc7378d.pdf
+  save_as: capmas_ppi_2020_07.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/45062b51-a0b7-4af6-a15d-cd2b7923c785.pdf
+  save_as: capmas_ppi_2020_09.pdf
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/52d0c998-9816-4dd5-b1ee-945574524936.pdf
+  save_as: capmas_ppi_2020_11.pdf
+- url: https://www.capmas.gov.eg:8080/News/Data/c5b66345-c794-437e-8eda-c780625c71cf.xlsx
+  save_as: capmas_ppi_2021_01.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/f6e77059-7443-4c2b-9c29-2f3ae8f0394e.xlsx
+  save_as: capmas_ppi_2021_03.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/ffe7c7e8-2ba9-459c-8307-95dde21262bd.xlsx
+  save_as: capmas_ppi_2021_05.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/305ba403-35f9-4ec5-a6bb-1caf20409c4f.xlsx
+  save_as: capmas_ppi_2021_07.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/e20c859a-45de-4cd5-b0bd-105fe5cb706c.xlsx
+  save_as: capmas_ppi_2021_09.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/05eb3c51-e685-433e-92f9-b58d5c9add28.xlsx
+  save_as: capmas_ppi_2021_11.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Pdf/98caf3b7-cd4c-4a32-a378-3dabd81f2439.pdf
+  save_as: capmas_ppi_2022_01.pdf
+- url: https://www.capmas.gov.eg:8080/News/Data/045988da-e839-4aa8-bade-57b77af07a78.xlsx
+  save_as: capmas_ppi_2022_03.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/9fb5450a-03a1-4fd2-af7f-799d75adc6a7.xlsx
+  save_as: capmas_ppi_2022_05.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/ba464ea0-fc1c-4707-924d-91f9bb6ade85.xlsx
+  save_as: capmas_ppi_2022_07.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/c6bd345e-e1c3-4666-9db5-4344a634c608.xlsx
+  save_as: capmas_ppi_2022_09.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/2b9e347b-415e-40d4-82cf-aab4eb483686.xlsx
+  save_as: capmas_ppi_2022_11.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/55c3ca19-7d28-49fe-8126-cade5f32e637.xlsx
+  save_as: capmas_ppi_2023_01.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/49cd9151-79f7-43b9-bffe-04b1ce9615da.xlsx
+  save_as: capmas_ppi_2023_03.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/88ac36b6-85d9-4044-a8b3-814535afd5e9.xlsx
+  save_as: capmas_ppi_2023_05.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/21b1baeb-7eba-438a-85a4-36aa6db46709.xlsx
+  save_as: capmas_ppi_2023_06.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/135c5d3c-d522-4ae9-aa7e-8484ae14a8bf.xlsx
+  save_as: capmas_ppi_2023_07.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/f6139816-053f-416b-9ec9-ddc679119e10.xlsx
+  save_as: capmas_ppi_2023_08.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/3cac4e8a-4b8b-4320-b757-abcd35c3e7ca.xlsx
+  save_as: capmas_ppi_2023_09.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/7bdd8e46-cd70-4df0-9981-11a0adae3926.xlsx
+  save_as: capmas_ppi_2023_10.xlsx
+- url: https://www.capmas.gov.eg:8080/News/Data/f4bd4232-0e0d-4337-a548-e17fc013288c.xlsx
+  save_as: capmas_ppi_2023_11.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/48e3b5d6-6693-4842-80fe-43d0822c6f46.xlsx
+  save_as: capmas_ppi_2023_12.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/3715ff56-7f81-46e6-aee0-a371468a673c.xlsx
+  save_as: capmas_ppi_2024_01.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/1d318f43-d332-4a3c-a63b-785ca4e8c3c0.xlsx
+  save_as: capmas_ppi_2024_02.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/0a06e5e2-dc5e-4e29-a4a0-b1008940d5d3.xlsx
+  save_as: capmas_ppi_2024_03.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/7b4d622c-474c-4a54-8ace-4a1fcee6a4cf.xlsx
+  save_as: capmas_ppi_2024_04.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/e0fcddca-c4d1-4302-b5f0-bdbafbdaf8a9.xlsx
+  save_as: capmas_ppi_2024_05.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/9dc33426-4b24-451a-902c-285e756e5388.xlsx
+  save_as: capmas_ppi_2024_06.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/b7eb1876-afe8-4e07-a840-4c91be645c7e.xlsx
+  save_as: capmas_ppi_2024_07.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/ceae342c-cf2a-40b8-be11-82a3b4510e4d.xlsx
+  save_as: capmas_ppi_2024_08.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/3097b4e5-43d8-431b-afc7-59d43c05cc19.xlsx
+  save_as: capmas_ppi_2024_09.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/3d94b22a-3769-4d79-b292-79046229ff75.xlsx
+  save_as: capmas_ppi_2024_10.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/1e437d93-681d-4cfe-85e9-9eebf759561e.xlsx
+  save_as: capmas_ppi_2024_11.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/804e8e30-6879-4e2f-afc7-192c0f54c4c8.xlsx
+  save_as: capmas_ppi_2024_12.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/fdf1ec82-1ce2-4070-be61-aaf3fa08b0ac.xlsx
+  save_as: capmas_ppi_2025_01.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/b369dde7-8418-4b40-957e-af9c5f657abe.xlsx
+  save_as: capmas_ppi_2025_02.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/988a2bd5-6beb-4afa-a007-c7080ffe131f.xlsx
+  save_as: capmas_ppi_2025_03.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/96dbf8ec-25a0-4250-8349-5175b6492f1d.xlsx
+  save_as: capmas_ppi_2025_04.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/bd1233af-b8e4-4ce4-87b7-939c35229e16.xlsx
+  save_as: capmas_ppi_2025_05.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/45093c3b-ee97-4878-a9ac-11580b678c4c.xlsx
+  save_as: capmas_ppi_2025_06.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/8f925b9a-95c6-4567-a6f8-1f567ad6bb13.xlsx
+  save_as: capmas_ppi_2025_07.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/52d96236-1507-46a8-80d9-afa978c10150.xlsx
+  save_as: capmas_ppi_2025_08.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/d3c1f150-136c-4d59-b77f-039c82a748ea.xlsx
+  save_as: capmas_ppi_2025_09.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/1a1257c5-66f6-46ce-8101-cbdcea4226b1.xlsx
+  save_as: capmas_ppi_2025_10.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/73024906-2aa6-42a8-8996-a14790b8579f.xlsx
+  save_as: capmas_ppi_2025_11.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/b22af25d-faab-4af4-bd6f-c919cef45264.xlsx
+  save_as: capmas_ppi_2025_12.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/d48a3232-ee4c-472f-b0a3-772c6ac9c0b7.xlsx
+  save_as: capmas_ppi_2026_01.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/7b87e9ad-4c7e-442d-8ff0-df1c61ab5d32.xlsx
+  save_as: capmas_ppi_2026_02.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/e272dd17-5d16-427a-82cd-522ea5f4960c.xlsx
+  save_as: capmas_ppi_2026_03.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/e663300c-db03-4ac7-ac8d-fccca4bf26cd.xlsx
+  save_as: capmas_ppi_2026_04.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/e23a6ab2-e52a-4a86-88dd-9fc3857dcd37.xlsx
+  save_as: capmas_ppi_2026_05.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/6d67280e-5036-40f9-974e-b50ee9a42f3a.xlsx
+  save_as: capmas_ppi_2026_06.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/7c41d8bb-f52d-4d23-9e46-798da34748d4.xlsx
+  save_as: capmas_ppi_2026_07.xlsx
+- url: https://www.capmas.gov.eg:8080/Publication/Data/ae17b924-ef43-4b65-b940-3e3ad1404fb6.xlsx
+  save_as: capmas_ppi_2026_08.xlsx
+
+parser: egypt_capmas_ppi
+geography: National
+
+notes: >
+  INVENTORY. One PPI (replacing the Wholesale Price Index from September
+  2007), by ISIC section (A B C D E H I J), division/group/product detail,
+  major groups by end use and by stage of processing, and (from 2021)
+  selected CPC products. Bases as printed: "2004/2005=100" (Sep 2007 -
+  mid-2017 issues) and "Jan 2016 = 100" (from 2017). Each issue prints the
+  previous month, the current month and the same month a year earlier, plus
+  m/m and y/y changes. Span: Sep 2006 (year-ago column of the first issue) -
+  Aug 2026.
+  NOT READ: 49 PDF issues -- 2010-01 .. 2016-11 except 2013-09, 2015-05/07,
+  2016-03/09 are SCANNED (no text layer; no OCR), and some 2018-2020 issues'
+  Table (1) pages do not yield all sections; from PDFs only Table (1) (all
+  items and sections) is read, its five-number order (y/y, m/m, year-ago,
+  current, previous) proved per issue on ALL ITEMS. All-items months still
+  missing: 86, nearly all 2010-2016.
+  DROPPED CELLS: July 2025's Table 1 prints B Mining's and D Electricity's
+  year-ago index and y/y change as other rows' figures (580.6 vs Table 3's
+  284.8; 615.7 vs Table 5's 419.3): both copies of each dropped; one
+  impossible printed index (-632.8, Finished goods, Jan 2025) not read.
+  Labels follow the NEWEST issue's English for each (table, Arabic label).
+  CROSS-CHECK (verbatim): Aug 2026 all items 654.6 (Jul 646.2, Aug 2025
+  586.7, m/m 1.3, y/y 11.6), C Manufacturing 778.9, rice 402.6; Jan 2021 all
+  items 201.480529977961; Jan 2008 all items 141.9 (base 2004/2005);
+  Jul 2015 all items 202.3, B 118.2; May 2019 all items 208.7, y/y 10.2.

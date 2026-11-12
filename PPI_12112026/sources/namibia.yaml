@@ -1,0 +1,35 @@
+country: Namibia
+iso3: NAM
+indicator: PPI
+tier: 2
+source_type: excel
+agency: Namibia Statistics Agency (NSA)
+publication_code: Namibia Producer Price Index (NPPI) -- quarterly tables, June 2024=100
+frequency: quarterly
+expect_rows: 2400
+expect_periods: 40
+
+# The NSA posts each quarter's tables as a "document" page
+# (nsa.org.na/document/namibia-producer-price-index-q<n>-<yyyy>-tables/) holding
+# one .xlsx; the site search (?s=producer+price) lists them. Pinned to the
+# Q2 2026 workbook; a newer quarter is a new URL.
+discover:
+  method: static_url
+  url: "https://nsa.org.na/wp-content/uploads/2026/08/PPI-Q2-2026-Tables.xlsx"
+  save_as: PPI-Q2-2026-Tables.xlsx
+
+parser: namibia_nsa_ppi
+geography: Total country
+
+notes: >
+  NPPI June 2024=100, 2016-Q1 .. 2026-Q2: index, % change on the previous
+  quarter, % change on a year earlier, and the 2022 product-share weights, for
+  Production (B+C+D+E) and 34 ISIC sections / divisions / classes. Table 2 is
+  stale after 2024-Q2 (Production 2025-Q3: 112.36 vs Table 1's 134.21, while
+  Tables 1/3/4 agree), so levels come from Table 2 to 2024-Q2 and Table 1 after
+  (see the parser). Cross-check (verbatim): Production 2016-Q1 66.93, 2026-Q2
+  151.91, y/y 2026-Q2 50.71, q/q 8.77; Mining and quarrying 2025-Q3 156.80;
+  weight of Mining 40.81. Identity: section weights B+C+D+E = 100.0. Inventory:
+  Dec 2015=100 series to 2024-Q2 (namibia_dec2015.yaml), June 2024=100 from the
+  Q3 2024 release. NSA's PPI tables are on the site from Q1 2023; no earlier
+  workbook is listed.

@@ -1,0 +1,26 @@
+country: Malawi
+iso3: MWI
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: National Statistical Office (NSO) Malawi
+publication_code: "Producer Price Indices (2013 to 2016) -- first PPI release"
+frequency: quarterly
+expect_rows: 160
+
+# The old NSO site (www.nsomalawi.mw, now retired); Wayback `id_` copy.
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20170627221056id_/http://www.nsomalawi.mw/images/stories/data_on_line/economics/PPI/MALAWI%20PPI%20RELEASE%202016.pdf"
+  save_as: MALAWI_PPI_RELEASE_2016.pdf
+
+parser: malawi_nso_release2016_ppi
+geography: National
+
+notes: >
+  Base 2012=100. Table 2: quarterly indices by division, 2013-Q1 - 2016-Q3
+  (prices collected 15 Feb/May/Aug/Nov; the table labels the quarters
+  March/June/September/December), weights; Table 1: Sept 2016 vs June 2016
+  and September-on-September changes 2014-2016. CROSS-CHECK (verbatim):
+  total Sep-16 179.2, Sep-13 173.0; food March 2016 190.5; total Sept 2016 vs
+  Sept 2015 -12.8, vs June 2016 -1.3.

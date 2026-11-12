@@ -1,0 +1,25 @@
+country: Benin
+iso3: BEN
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INStaD)
+publication_code: Publication IPPI Provisoire actualisé T4-2021 (2015-T1..2021-T4)
+frequency: quarterly
+expect_rows: 720
+expect_periods: 28
+
+# Wayback id_ copy of INStaD's own file (capture 20221006035356).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20221006035356id_/https://instad.bj/images/docs/insae-publications/trimestrielles/IPI/archives/2021/Publication%20IPPI_Provisoire_actualis%C3%A9_T4-2021.pdf"
+  save_as: benin_ippi_T4-2021.pdf
+
+parser: benin_instad_ppi
+geography: National
+
+notes: >
+  Oldest back-issue used (provisional, revised by the later issues, which win
+  on overlap). Kept for one division the later issues drop: "Fabrication
+  d'articles d'habillement", printed for 2018-T1..T4 only. Cross-check:
+  Ensemble T1-15 100,4, T4-21 107,4.

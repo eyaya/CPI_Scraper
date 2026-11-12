@@ -1,0 +1,48 @@
+country: Congo
+iso3: COG
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS-Congo)
+publication_code: Indices des prix à la production industrielle (IPPI), note trimestrielle
+frequency: quarterly
+expect_rows: 470
+expect_periods: 10
+
+# INS-Congo's publications API (backend/api/publications/list.php,
+# sous_secteur=stat-prix) lists two IPPI notes, T2-2020 (id 77) and T2-2022
+# (id 81), served under /assets/Documents/... (download.php?id= answers 404).
+# The 4T-2020 note of the old WordPress site (wpdmdl=2501) survives only as a
+# Wayback `id_` copy of INS's own file. TLS verifies (2026-11-05).
+discover:
+  method: static_url
+  url: "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/STATISTIQUES%20CONJONCTURELLES/Indice-des-prix-a-la-production-industrielle-du-deuxieme-2022.pdf"
+  download_timeout: 900
+extras_cache: true
+extra_urls:
+  - url: "https://web.archive.org/web/20220702191751id_/https://ins-congo.cg/download/indices-de-prix-a-la-production-industrielle-du-quatrieme-trimestre-2020/?wpdmdl=2501&refresh=62c00da15d0591656753569"
+    save_as: INS_Congo_IPPI_T4_2020.pdf
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/STATISTIQUES%20CONJONCTURELLES/INDICES-DE-PRIX-A-LA-PRODUCTION-INDUSTRIELLE-T2_2020.pdf"
+
+parser: congo_ins_ppi
+geography: National
+
+notes: >
+  INVENTORY. One index: the IPPI, base 2019 = 100 (NAEMA divisions 05-38,
+  weights per ten thousand), quarterly. Published notes found: T2-2020,
+  T4-2020 (Wayback), T2-2022; together 2020-Q1 .. 2022-Q2, 10 quarters, no
+  gap, 30 series (Indice Global IPPI, 10 types d'industries, 19-20 branches)
+  plus the q/q and y/y changes of each note's own quarter. Not found on
+  ins-congo.cg, its API or the Wayback index (12,115 URLs): any note after
+  T2-2022 or before T2-2020 (T1-2020 is printed in the T2-2020 note), the
+  T3-2020 / T1-2021 / T3-2021 / T4-2021 / T1-2022 notes (their quarters are
+  in the T4-2020 and T2-2022 windows). Annuaire 2018 ch. 28 (prix) has no IPPI.
+  NOT TAKEN: Pondérations (per ten thousand -- no schema unit), the constant
+  "Base 2019=100" column. Branch labels are filed under the T2-2022 note's
+  spelling with its NAEMA code (industry_code_nso). "32 AUTRES INDUSTRIES
+  MANUFACTURIERES" prints "-" from T3-2021: not collected for those quarters.
+  CROSS-CHECK (verbatim): Indice Global IPPI 2022-Q2 161,0 (q/q 8,5, y/y
+  62,6), 2020-Q2 56,86, 2020-Q4 77,03 (q/q 1,0); Industries extractives
+  2021-Q4 121,4; 06 hydrocarbures 2020-Q3 68,1; Industries pétrolières
+  2020-Q2 83,6 and 2020-Q4 102,1 (both printed on a wrapped line); 36 eau
+  2020-Q2 201,9; 24 métallurgie 2022-Q1 154,0; 17 papier 2020-Q4 85,9.

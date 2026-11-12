@@ -1,0 +1,78 @@
+country: Botswana
+iso3: BWA
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Statistics Botswana
+publication_code: Producer Price Index (Mining and Utilities), quarterly, 2017=100
+frequency: quarterly
+expect_rows: 500
+expect_periods: 34
+
+# The prices-statistics page links the latest release only; the site search
+# (search/node/producer price) lists every release page, Q2 2019 onward. TLS
+# verifies (2026-11-05; the CPI descriptor's verify_ssl: false is not needed).
+discover:
+  method: static_url
+  url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%20%28Mining%20and%20Utilities%29%20Quarter%202%20of%202026.pdf"
+  save_as: PPI_Mining_Utilities_Q2_2026.pdf
+extras_cache: true
+extra_urls:
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/PPI-Second%20Quarter%202019.pdf"
+    save_as: PPI_Mining_Utilities_2019Q2.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%20Mining%20and%20Utilities%20Quarter%203%202019.pdf"
+    save_as: PPI_Mining_Utilities_2019Q3.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/PRODUCER%20PRICE%20INDEX%20%20%28MINING%20AND%20UTILITIES%29%20%20Q4%202019.pdf"
+    save_as: PPI_Mining_Utilities_2019Q4.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%28Mining%20%26%20Utilities%29%20Quater%201-4%202020.pdf"
+    save_as: PPI_Mining_Utilities_2020Q1-4.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%20Mining%20%20Utilities%20Quarter%201%202021.pdf"
+    save_as: PPI_Mining_Utilities_2021Q1.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%20%28Mining%20and%20Utilities%29%20%20Q%202%202021.pdf"
+    save_as: PPI_Mining_Utilities_2021Q2.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%20%20%28Mining%20%20Utilities%29%20%20Quarter%203%20%26%204%202021.pdf"
+    save_as: PPI_Mining_Utilities_2021Q3-4.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%20%28Mining%20%20Utilities%29%20Q1-3%202022.pdf"
+    save_as: PPI_Mining_Utilities_2022Q1-3.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%20%20Mining%20and%20Utilities%20Quarter%204%20of%202022.pdf"
+    save_as: PPI_Mining_Utilities_2022Q4.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/PRODUCER%20PRICE%20INDEX%20%20%28MINING%20AND%20UTILITIES%29%20%20QUARTER%201%20%202023.pdf"
+    save_as: PPI_Mining_Utilities_2023Q1.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/PRODUCER%20PRICE%20INDEX%20%28MINING%20AND%20UTILITIES%29%20%20QUARTER%202%20%20of%202023.pdf"
+    save_as: PPI_Mining_Utilities_2023Q2.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/PRODUCER%20PRICE%20INDEX%20%28MINING%20AND%20UTILITIES%29%20%20QUARTER%203%20%20of%202023.pdf"
+    save_as: PPI_Mining_Utilities_2023Q3.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/PRODUCER%20PRICE%20INDEX%20%28MINING%20AND%20UTILITIES%29%20%20QUARTER%204%20%20of%202023.pdf"
+    save_as: PPI_Mining_Utilities_2023Q4.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/PRODUCER%20PRICE%20INDEX%20%28MINING%20AND%20UTILITIES%29%20%20QUARTER%201%20of%202024.pdf"
+    save_as: PPI_Mining_Utilities_2024Q1.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/Producer%20Price%20Index%20%28Mining%20and%20Utilities%29%20%20Quarter%202%20of%202024.pdf"
+    save_as: PPI_Mining_Utilities_2024Q2.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/Producer%20Price%20Index%20%28Mining%20%26%20Utilities%29%20Quarter%203%2C4%20of%202024%20and%20Quarter%20%201%20of%202025.pdf"
+    save_as: PPI_Mining_Utilities_2024Q3-2025Q1.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/Producer%20Price%20Index%20%28Mining%20and%20Utilities%29%20Quarter%202%20Of%202025.pdf"
+    save_as: PPI_Mining_Utilities_2025Q2.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/Producer%20Price%20Index%20%28Mining%20and%20Utiliies%29Quarter%203%20of%202025.pdf"
+    save_as: PPI_Mining_Utilities_2025Q3.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/publications/Producer%20Price%20Index%20%28Mining%20and%20Utilities%29%20Quarter%204%20of%202025.pdf"
+    save_as: PPI_Mining_Utilities_2025Q4.pdf
+  - url: "https://www.statsbots.org.bw/sites/default/files/Producer%20Price%20Index%20%28Mining%20and%20Utilities%29%20Quarter%201%20of%202026.pdf"
+    save_as: PPI_Mining_Utilities_2026Q1.pdf
+
+parser: botswana_statsbots_ppi
+geography: Total country
+
+notes: >
+  Two indices, 2017=100: Mining (diamond, coal, gold, soda ash, salt, quarry)
+  and Utilities (electricity by customer group, potable water). Headline index,
+  q/q and y/y 2018-Q1 .. 2026-Q2 (no gaps); component indices 2019-Q4 ..
+  2026-Q2 for mining (2023-Q1 and Q2 missing: those releases' text layers break
+  the component rows) and 2025-Q4 .. 2026-Q2 for utilities (first published in
+  Q1 2026); weights (reference year 2017). All 21 releases are read and the
+  NEWEST value per quarter kept (heavy revisions: Mining 2019-Q2 99.2 in the
+  Q2 2019 release, 84.5 later). Cross-check (verbatim, Q2 2026 release): Mining
+  2026-Q2 93.4, q/q -12.9, y/y -21.1; Diamond 90.7; Utilities 138.0; Electricity
+  -- Government 170.7; (2020 release) Diamond 2020-Q1 71.8, Gold 2020-Q4 179.4;
+  Mining 2018-Q1 88.1. Identity: the six mining group weights sum to 100.0, and
+  the validator's y/y guard holds on every quarter. "Portable Water" and
+  "Bussiness & Industrial" are Statistics Botswana's spellings.

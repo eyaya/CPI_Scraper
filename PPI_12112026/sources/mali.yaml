@@ -1,0 +1,39 @@
+country: Mali
+iso3: MLI
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: Bulletin trimestriel de publication n°000 -- Indice de Prix des Produits Agricoles à la Production (IPPAP), base 100 = 2015, 2015-2020 (juin 2022)
+frequency: quarterly
+expect_rows: 580
+expect_periods: 20
+
+# instat-mali.org > Publications > Prix > "Indice des Prix des Produits
+# Agricoles à la Production (IPPAP)" -- the page's single "Télécharger" link.
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/ippap000_pub.pdf"
+  save_as: mali_ippap_2015_2020.pdf
+
+parser: mali_instat_ppi
+geography: National
+
+notes: >
+  AGRICULTURAL producer price index (index_variant agriculture), 134 farm-gate
+  products, weights = 2015 value added. Quarterly T1-2016..T1-2020 and annual
+  2015..2019 for 4 sous-secteurs + Ensemble and 21 postes; % change T1-20 on
+  T4-19 (inflation_qoq) and on T1-19 (inflation_yoy). INVENTORY: INSTAT's only
+  IPPAP issue online (n°000); no later IPPAP issue on the site or its Wayback
+  history. The INDUSTRIAL IPPI (base 2013, n°000, 2013-2014) is mali_ippi.yaml
+  -- INSTAT's only IPPI issue (old site /contenu/pub/ippi000_pub.pdf, 2016;
+  new site, same file); no later IPPI issue was ever listed. DROPPED: p.6's Ensemble row (copy of p.5's 2016-17 values; the
+  weighted sub-sectors and the bulletin's text give T1-19 = 106,8); indices of
+  0,0 (out-of-season fruit, empty postes); the weights (per 100 000).
+  IDENTITY: Ensemble = sum(weight x sub-sector index)/100 000 reproduces the
+  printed Ensemble at T1-16 109,5, T4-17 105,9, T1-19 106,8, T4-19 128,9,
+  T1-20 126,3 and annual 2019 105,2 (2016: 99,1 vs 99,2 printed, rounding).
+  CROSS-CHECK (verbatim): Céréales T1-16 101,0; Coton graine T1-20 105,3;
+  Produits de la pêche (frais) T4-19 317,3; Ensemble 2017 103,5; % change
+  Ensemble T1-20/T4-19 -2,0 %, T1-20/T1-19 18,3 % (text says "0,2 %" for the
+  former; the table is kept).

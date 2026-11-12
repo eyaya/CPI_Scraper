@@ -1,0 +1,49 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: PPI
+tier: 2
+source_type: excel
+agency: Zimbabwe National Statistics Agency (ZimStat)
+publication_code: Producer Price Index (PPI) and Producer Price Index for Agriculture (PPIA), monthly, USD / ZWG / Weighted
+frequency: monthly
+expect_rows: 7500
+expect_periods: 40
+
+# ZimStat's WordPress pages /producer-price-index/ and
+# /producer-price-index-agriculture/ (wp-json/wp/v2/pages?slug=...) link every
+# monthly release, three workbooks each (USD, ZWG, Weighted). Each workbook
+# carries its version's whole history, so the latest of each is read: the
+# primary is the ZWG PPI, the extras the other five. TLS verifies (2026-11-05).
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Prices/PPI/2026/07/PPI_ZWG_07_2026_email.xls"
+  save_as: PPI_ZWG_07_2026.xls
+extra_urls:
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Prices/PPI/2026/07/PPI_Weighted_07_2026_email.xls"
+    save_as: PPI_Weighted_07_2026.xls
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Prices/PPI/2026/06/PPI_USD_06_2026.xls"
+    save_as: PPI_USD_06_2026.xls
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Prices/PPIA/2026/09/PPIA_ZWG_09_2026.xlsx"
+    save_as: PPIA_ZWG_09_2026.xlsx
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Prices/PPIA/2026/09/PPIA_USD_09_2026.xlsx"
+    save_as: PPIA_USD_09_2026.xlsx
+  - url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Prices/PPIA/2026/09/PPIA_Weighted_09_2026.xlsx"
+    save_as: PPIA_Weighted_09_2026.xlsx
+
+parser: zimbabwe_zimstat_ppi
+geography: Total country
+
+notes: >
+  Six series: PPI (industry: mining and quarrying + manufacturing, 70+ ISIC
+  groups/classes) and PPIA (agriculture, 25 crop/animal/fishing groups), each in
+  USD prices (PPI January 2023=100, PPIA Apr 2023=100, from Jan / Apr 2023), ZWG
+  prices (April 2024=100, from Apr 2024) and currency-weighted (April 2024=100;
+  sections only). Monthly index and weights by industry; All items % change on
+  the previous month and on a year earlier; All items annual averages. Latest
+  months: PPI USD 2026-06 (the July release has no USD workbook), ZWG / Weighted
+  2026-07, PPIA 2026-09. Cross-check (verbatim): ZWG PPI All items 2026-07
+  231.307711, m/m 0.323305; Mining and quarrying 2024-05 103.993382; PPIA ZWG
+  All items 2026-09 290.843035, y/y 13.347578; PPIA crop and animal production
+  weight 96.523709. Identity: PPIA section weights 96.52 + 3.48 = 100; the
+  validator's y/y guard holds. No ZimStat PPI before 2023 is on the site or in
+  the Wayback captures of /Macro/Prices/ (514 URLs, all 2023-2026).

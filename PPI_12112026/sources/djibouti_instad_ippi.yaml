@@ -1,0 +1,27 @@
+country: Djibouti
+iso3: DJI
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique de Djibouti (INSTAD)
+publication_code: Bulletin de l'Indice des Prix à la Production Industrielle (IPPI), T4 2024
+frequency: quarterly
+discover:
+  method: instad_dj_ipc
+  api_base: https://instad-dj-6abc7b0eb612.herokuapp.com
+  categorie: IPPI
+  save_as: IPPI_T42024.pdf
+parser: djibouti_instad_ppi
+geography: National
+expect_rows: 299
+notes: 'INSTAD quarterly IPPI, base year 2022, NAEMA rev1 branches (32 firms, 95% of industry).
+
+  instad.dj (Nuxt SPA) lists it under category ''IPPI'' of its Express backend
+
+  (/fichiers/IPPI/<year>); the only file posted is T4 2024 (checked 2015-2026, 2026-11-05),
+
+  which carries every quarter T1-22 .. T4-24. Found via the Wayback index of instad.dj (/ica/ippi).
+
+  Cross-check (verbatim): Ensemble T1-22 99,4, T4-24 101,2; q/q -0,02, y/y 1,07, 2024/2023 1,22;
+
+  Industries manufacturières T4-24 102,7; Produits chimiques T1-24 66,2.'

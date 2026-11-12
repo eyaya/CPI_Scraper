@@ -1,0 +1,31 @@
+country: Mauritius
+iso3: MUS
+indicator: PPI
+tier: 2
+source_type: xls
+agency: Statistics Mauritius
+publication_code: Producer Price Index - Agriculture (PPI-A), Historical Series workbook
+frequency: monthly
+expect_rows: 11000
+expect_periods: 350
+
+discover:
+  method: page_scrape
+  page_url: "https://statsmauritius.govmu.org/Pages/Statistics/By_Subject/Indices/SB_Indices.aspx"
+  link_contains: ["HS_PPIA_"]
+  base_url: "https://statsmauritius.govmu.org"
+
+parser: mauritius_ppia_hs_ppi
+geography: National
+
+notes: >
+  INVENTORY (PPI-A, index_variant agriculture -- a farm-gate index, separate
+  from PPI-M). Quarterly total from 1993-Q1 with the reference period printed
+  on each row (1993, 1997, 2002, 2007, 2013, 2018, 2025 = 100; T7); monthly
+  total January 2000 - June 2026 re-referenced by the NSO to January-December
+  2025=100 (T8); by commodity group and product: monthly/quarterly/yearly
+  2018-2025 on 2018=100 (T2/T5, weights per mille) and on 2025=100 (T3/T6),
+  and 2026 on 2025=100 (T1/T4, 2023 weights). Values rounded to each cell's
+  display format (the linked series is stored unrounded, e.g.
+  29.83256534177552 -> 29.8). CROSS-CHECK (verbatim): Q1 1993 98.5, Q2 1993
+  94.3 (1993=100); Crop Products January 2018 107.1 (2018=100).

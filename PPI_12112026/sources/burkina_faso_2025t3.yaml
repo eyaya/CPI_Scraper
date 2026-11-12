@@ -1,0 +1,25 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: IPI / IPPI Info -- note d'analyse de l'IPPI, 2025 trimestre 3
+frequency: quarterly
+expect_rows: 115
+expect_periods: 3
+
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2026-02/IPI_IPPI%20Info.pdf"
+  save_as: bfa_ipi_ippi_2026-02_Info.pdf
+
+parser: burkina_faso_insd_ppi
+geography: National
+
+notes: >
+  INSD Burkina Faso IPPI, base 100 en 2015 (Laspeyres, chained; prix de base SCN 2008),
+  quarterly note for 2025-T3: Ensemble, 3 types d'industrie and 20 product divisions;
+  indices for T-4, T-1, T and % changes T/T-1 and T/T-4.
+  File "IPI_IPPI Info.pdf" (2026-02) = the 3e trimestre 2025 note; point decimals; no
+  methodology box (base taken as 2015: every overlapping cell equals the T4-2024 note).

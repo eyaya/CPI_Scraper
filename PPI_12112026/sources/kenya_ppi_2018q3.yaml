@@ -1,0 +1,35 @@
+# verify_ssl mirrors indicators/cpi/sources/kenya.yaml: KNBS serves an incomplete TLS
+# chain that Python's certifi bundle cannot complete. The retained file was
+# downloaded 2026-11-05 with TLS VERIFIED (Windows Schannel, which fetches the
+# missing intermediate). A trust store with AIA fetching would let this be true.
+country: Kenya
+iso3: KEN
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS)
+publication_code: Producer Price Indices, Third Quarter 2018
+frequency: quarterly
+verify_ssl: false
+discover:
+  method: static_url
+  url: https://www.knbs.or.ke/wp-content/uploads/2023/08/Kenya-Producer-Price-Index-Third-Quarter-2018.pdf
+  save_as: Kenya-Producer-Price-Index-Third-Quarter-2018.pdf
+parser: kenya_knbs_ppi
+geography: National
+expect_rows: 74
+notes: "KNBS quarterly \"Producer Price Indices\" release, one PDF per quarter, on knbs.or.ke\n  (WordPress\
+  \ media: wp-json/wp/v2/media?search=producer%20price). ISIC Rev.4 2-digit\n  divisions of mining, manufacturing,\
+  \ electricity and water, with weights.\n  Bases: June 2011 = 100 (releases 2013 Q1 - 2019 Q4; series\
+  \ 2011 Q2 - 2019 Q4) and\n  March 2019 = 100 (rebased report 2020 and releases 2020 Q1 -; series 2018\
+  \ Q1 -\n  2026 Q2, KNBS back-casting 2018 on the new base). Quarterly; prices collected mid-\n  quarter\
+  \ (a \"Mar-26\" column is 2026-Q1). Each release republishes the last 5 (to\n  2014: 8-9) quarters,\
+  \ so the newest release's values win (descriptors are named so\n  --all runs them oldest first).\n \
+  \ Releases with no readable table (scanned text layer or rotated/image tables), whose\n  quarters are\
+  \ covered by neighbouring releases: 2014q2 (Producer-Price-Index-Second-Quarter-2014.pdf); 2014q3 (Producer-Price-Index-Third-Quarter-2014.pdf);\
+  \ 2016q1 (Kenya-Producer-Price-Index-First-Quarter-2016.pdf); 2016q3 (Kenya-Producer-Price-Index-Third-Quarter-2016.pdf);\
+  \ 2017q1 (Kenya-Producer-Price-Index-First-Quarter-2017.pdf); 2017q2 (Kenya-Producer-Price-Index-Second-Quarter-2017.pdf);\
+  \ 2020q2 (Kenya-Producer-Price-Index-Second-Quarter-2020.pdf); 2020q3 (Kenya-Producer-Price-Index-Third-Quarter-2020.pdf);\
+  \ 2021q4 (Kenya-Producer-Price-Index-Fourth-Quarter-2021.pdf); 2022q2 (Kenya-Producer-Price-Index-Second-Quarter-2022.pdf);\
+  \ 2022q3 (Kenya-Producer-Price-Index-Third-Quarter-2022.pdf); 2022q4 (Kenya-Producer-Price-Index-Fourth-Quarter-2022.pdf).\n\
+  \  2017 Q3 - 2018 Q3 releases print only \"selected indices\" (5-9 divisions)."

@@ -1,0 +1,64 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL), National Accounts and Economic Statistics Division
+publication_code: Producers' Price Index (PPI) quarterly press release
+frequency: quarterly
+expect_rows: 2200
+expect_periods: 40
+extras_cache: true
+
+# statistics.sl/index.php/ppi.html lists eight releases (2026-11-05). The host
+# drops connections that announce a browser User-Agent; it serves requests' own
+# (core.fetch user_agent: client_default). TLS verification on.
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/StatisticsSL/Documents/ppi/2023/2023_Q4_ppi_Press-Release.pdf"
+  save_as: 2023_Q4_ppi_Press-Release.pdf
+  download_timeout: 300
+  user_agent: client_default
+extra_urls:
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/ppi/2023/2023_Q2_ppi_Press_Release.pdf"
+    save_as: 2023_Q2_ppi_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/ppi/2022_Q2_PPI_Press_Release.pdf"
+    save_as: 2022_Q2_PPI_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/ppi/2021_Q2_PPI_Press-_Release.pdf"
+    save_as: 2021_Q2_PPI_Press-_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/ppi/2020-Q2-PPI-Press-Release.pdf"
+    save_as: 2020-Q2-PPI-Press-Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/ppi/2019_Q4_Producers_Press_Release.pdf"
+    save_as: 2019_Q4_Producers_Press_Release.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/ppi/producers_price_index_quarterly_press_release_-2016-2018-Q1.pdf"
+    save_as: producers_price_index_quarterly_press_release_-2016-2018-Q1.pdf
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/ppi/PPI_2017_Press-Release_formatted.pdf"
+    save_as: PPI_2017_Press-Release_formatted.pdf
+
+parser: sierra_leone_statssl_ppi
+geography: National
+
+notes: >
+  INVENTORY. Two indexes, both quarterly. (1) The composite PPI, 2011 base year
+  (mining, manufacturing, electricity and steam, water supply; "PPI Combined",
+  later "PPI with Mining" / "PPI without Mining"): 2012 Q1 .. 2022 Q2, every
+  quarter, from the 2017 release's full series and the later releases' 9-10
+  quarter windows. (2) The Geometric Mean (GM) PPI, 2022 base year (geometric
+  mean of the mining, manufacturing and utilities PPIs, each with its own 2022
+  weights): 2022 Q1 .. 2023 Q4 (2023 Q4 release). Stats SL publishes no index
+  level "=100" text; base_period is the base YEAR as stated ("2011 base year",
+  "2022 base year", 2023 Q4 release 1.1).
+  NOT COLLECTED: the 2023 Q2 release's single table (an interim layout: GDP
+  value, "2022 PPI weights" and two "(%)" columns whose TOTAL reads 135.09 and
+  138.27 and whose LIVESTOCK reads 100.00 / 124.14 -- index or inflation cannot
+  be told apart, so the table is dropped); "Contributions to"/"Components of"
+  annual PPI inflation tables; the 2013 "producer_price_index_report_2013" (a
+  Wayback-only annual report, superseded by the 2017 release's series).
+  No release later than 2023 Q4 is listed on the site.
+  CROSS-CHECKS (verbatim): 2023 Q4 GM PPI 111.49, y/y 2.89; Mining and
+  quarrying 2023 Q3 228.18, 2023 Q4 y/y -8.14; Manufacturing 2023 Q4 164.52;
+  Mining of iron ores 2023 Q4 189.88; composite weight of Mining 94.16;
+  PPI Combined 2012 Q1 93.61, 2013 Q1 q/q 6.30 and y/y 11.53; Mining &
+  Quarrying 2014 Q1 127.97; PPI with Mining 2019 Q4 240.78; Manufacturing
+  Industry 2019 Q2 163.03. The validator's y/y-vs-index guard passes on all
+  quarters where both are printed.

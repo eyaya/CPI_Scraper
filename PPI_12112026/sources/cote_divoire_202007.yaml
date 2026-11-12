@@ -1,0 +1,26 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS, now ANStat)
+publication_code: IPPI mensuel, année de base 2015 et référence 2019 -- 2020-07
+frequency: monthly
+expect_rows: 600
+expect_periods: 13
+
+# Wayback id_ copy of INS's own file (ins.ci is gone; ANStat replaced it in 2021).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20201113172405id_/http://www.ins.ci/n/templates/ihpi/ippi0720.pdf"
+  save_as: civ_ippi0720.pdf
+
+parser: cote_divoire_ins_ppi
+geography: National
+
+notes: >
+  INS Côte d'Ivoire IPPI, base 2015 (reference year 2019), 13 months ending 2020-07:
+  type d'industries (+ TOTAL INDUSTRIE, TOTAL INDUSTRIE HORS EXTRACTION), divisions
+  regroupées and divisions (NAEMA rev1), m/m and y/y % changes (confirmed on TOTAL
+  INDUSTRIE). Overprinted division labels (15, 16, 18 on the DIVISION page) skipped.
+  See cote_divoire.yaml for the inventory.

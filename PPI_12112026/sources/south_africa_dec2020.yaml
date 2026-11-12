@@ -1,0 +1,32 @@
+country: South_Africa
+iso3: ZAF
+indicator: PPI
+tier: 2
+source_type: excel
+agency: Statistics South Africa (Stats SA)
+publication_code: P0142.1 Producer price index -- time-series archive (Dec 2020=100)
+frequency: monthly
+expect_rows: 10000
+expect_periods: 130
+
+# Stats SA's own time-series zip, fetched as a Wayback `id_` copy: statssa.gov.za
+# now answers every request (pages AND the timeseriesdata files the CPI
+# descriptor probes) with an Incapsula bot challenge (2026-11-05), which is
+# never bypassed. The archive is read whole (`unzip: false`).
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20230126185839id_/https://www.statssa.gov.za/timeseriesdata/Excel/P0142.1%20PPI%20New%20series%20from%202013(202212).zip"
+  save_as: statssa_ppi_new_series_202212.zip
+  unzip: false
+  download_timeout: 600
+
+parser: south_africa_statssa_ppi
+geography: Total country
+
+notes: >
+  Stats SA P0142.1, base Dec 2020=100, 2012-01..2022-12. LAST edition on Dec 2020=100 (December 2022; Wayback holds no edition between 2023-01 and 2026-05). Identity: all 76 series = 100.0 in Dec 2020.
+  Every edition re-references the whole history to its own base and all are
+  kept (base_period is in the merge key); the series_id carries the base, so
+  each base is its own series. Inventory of bases: 2000=100 (to 2012), 2012=100
+  (editions to Dec 2016), Dec 2016=100 (2017-03 .. 2020-09), Dec 2020=100
+  (2021-09 .. 2022-12), Dec 2023=100 (2026-06, current).

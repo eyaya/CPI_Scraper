@@ -1,0 +1,36 @@
+country: Tanzania
+iso3: TZA
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS), Tanzania
+publication_code: Producer Price Indices for the quarter 2021-Q1 (en-1705493817-PPI_Release_JAN_MAR_2021.pdf)
+frequency: quarterly
+discover:
+  method: static_url
+  url: https://www.nbs.go.tz/uploads/statistics/documents/en-1705493817-PPI_Release_JAN_MAR_2021.pdf
+  save_as: en-1705493817-PPI_Release_JAN_MAR_2021.pdf
+parser: tanzania_nbs_ppi
+geography: Mainland Tanzania
+expect_rows: 167
+notes: 'NBS Tanzania quarterly ''Producer Price Indices'' release (nbs.go.tz > Statistics > Industrial
+
+  statistics > Producer Price Indices (PPI), 5 listing pages, 49 files). ISIC Rev.4 divisions of
+
+  mining, manufacturing and utilities, sections B and C, Utilities and the Overall Index; weights
+
+  (percent, from ASIP gross output) and 2-6 quarters of index per release; 2020+ also q/q and y/y %.
+
+  Bases as printed: March 2013 = 100 (releases 2014 Q2 - 2018 Q3; series 2013 Q1 - 2018 Q3) and
+
+  Dec 2018 = 100 (2019 Q2 -; series 2018 Q4 - 2026 Q2). The linked-back 2013 series NBS mentions
+
+  is not printed. Not read: the 2019 Q1 release (header not resolvable; its two quarters are in the
+
+  2019 Q2 release); 2025 Q2-Q4 print no ISIC codes (codes blank there, as published). Each release
+
+  republishes earlier quarters, so descriptors are named to run oldest first and the newest wins.
+
+  Cross-check (verbatim): Overall Index 2026 Q2 119.67, 2026 Q1 119.49, 2025 Q2 118.05, weight
+
+  Manufacturing 62.80; 2014 Q3 release Overall 106.2 (Jul-Sept 2014), Mining weight 4.0.'

@@ -1,0 +1,43 @@
+country: Guinea
+iso3: GIN
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique (INS), Sous-direction des statistiques des entreprises
+publication_code: Publication des indices des prix à la production industrielle (IPPI)
+frequency: monthly
+expect_rows: 2100
+expect_periods: 110
+
+# The Wayback id_ copy of INS's own file: stat-guinee.org serves an incomplete
+# TLS certificate chain (cpi/sources/guinea.yaml) and TLS verification is not
+# disabled for new sources. Each quarterly publication carries the whole
+# series since 2019, so the newest one is the source; the earlier ones
+# (Publication_IPPI_2019-2022_Guine_Avril_23 .. 2019_2025_Guinee_T2_2025,
+# under .../infra_annuelles/IHPI/ and .../IPPI/) are superseded by it.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20260409222449id_/https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IPPI/Publication_IPPI_2019-2025_Guinee_T4_25.pdf"
+  save_as: Publication_IPPI_2019-2025_Guinee_T4_25.pdf
+  download_timeout: 200
+
+parser: guinea_ins_ppi
+geography: National
+
+notes: >
+  INVENTORY. INS publishes one IPPI, "Base 100 en 2019" (provisional base
+  year), Laspeyres, 227 products of 44 firms, computed with AFRISTAT (2023):
+  monthly 2019-01..2025-12, quarterly 2019-Q1..2025-Q4 and annual 2019..2025,
+  for Ensemble, three types d'industries and 15 divisions (fourth-quarter 2025
+  publication). No earlier IPPI series exists on the site (the "IHPI" pages
+  are the industrial PRODUCTION index). INS's "IPI_Info" notes are production.
+  DROPPED: Ensemble 2024-10 and 2024-Q1 (Tableaux 1/2 and 3/4 print 122 vs a
+  different value, and 109.42 vs 109.1); Industries extractives quarterly
+  2019-2025 block of Tableau 3 page 13 (a "²" mark stands where the 2025-Q1
+  value should be, so the row cannot be aligned; Tableau 4 gives divisions, not types). The 2025
+  block of Tableau 1 labels the utilities type "Industries De Production Et De
+  Distribution D'électricité Et D'eau" (no "gaz") -- kept as printed, so that
+  type's 2025 months sit under that label.
+  CROSS-CHECKS (verbatim): Ensemble 2019-01 96,5; 2023-09 108,44; 2025-12
+  161,45; 2025-Q4 156,29; Industries extractives 2025-10 169,7 and 2024
+  (annual) 115.3; Extraction de minerais métalliques 2021-01 121,7.

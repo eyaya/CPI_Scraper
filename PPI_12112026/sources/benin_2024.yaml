@@ -1,0 +1,25 @@
+country: Benin
+iso3: BEN
+indicator: PPI
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INStaD)
+publication_code: Publication IPPI T2-2024 (2015-T1..2024-T2)
+frequency: quarterly
+expect_rows: 980
+expect_periods: 38
+
+# Wayback id_ copy of INStaD's own file (capture 20241015024508).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20241015024508id_/https://instad.bj/images/docs/insae-publications/trimestrielles/IPPI/annee-en-cours/Publication%20IPPI_T2-2024.pdf"
+  save_as: benin_ippi_T2-2024.pdf
+
+parser: benin_instad_ppi
+geography: National
+
+notes: >
+  Back-issue of benin.yaml; the latest issue printing the WHOLE series from
+  2015-T1 (to 2024-T2). Its header wraps ("Type / d'industries / 2015=100")
+  and one label breaks as "agro- alimentaires"; both repaired in the parser.
+  Cross-check: Ensemble T1-15 100,4, T4-19 103,8, T2-24 111,8.

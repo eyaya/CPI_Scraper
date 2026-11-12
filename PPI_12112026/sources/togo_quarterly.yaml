@@ -1,0 +1,25 @@
+country: Togo
+iso3: TGO
+indicator: PPI
+tier: 2
+source_type: xlsx
+agency: Institut National de la Statistique et des Etudes Economiques et Démographiques (INSEED)
+publication_code: Indice trimestriel de Prix de Production de l'Industrie (IPPI) des Trimestres 1 et 2 de 2026
+frequency: quarterly
+expect_rows: 1450
+expect_periods: 46
+
+# Same page as togo.yaml; download 8036 = IPPI-T1-T2-2026.xlsx (2015-T1..2026-T2).
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/8036/"
+  save_as: togo_ippi_trimestriel_T1-T2_2026.xlsx
+
+parser: togo_inseed_ppi
+geography: National
+
+notes: >
+  INSEED Togo IPPI, quarterly chained indices, base 100 en 2015, 2015-Q1..2026-Q2,
+  same four blocks as the monthly workbook (33 labels; the leather division
+  is absent from the quarterly sheet). Quarterly indices are INSEED's own,
+  not averages computed here. Cross-check: ensemble 2026-Q2 111.34, 2015-Q1 99.87.

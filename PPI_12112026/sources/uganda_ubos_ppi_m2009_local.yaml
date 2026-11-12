@@ -1,0 +1,35 @@
+# verify_ssl mirrors indicators/cpi/sources/uganda.yaml: UBOS serves an incomplete TLS chain that
+# Python's certifi bundle cannot complete. The retained file was downloaded 2026-11-05 with TLS
+# VERIFIED (Windows Schannel, which fetches the missing intermediate).
+country: Uganda
+iso3: UGA
+indicator: PPI
+tier: 3
+source_type: xlsx
+agency: Uganda Bureau of Statistics (UBOS)
+verify_ssl: false
+geography: National
+publication_code: PPI-M (Local) annual % changes, calendar years 2015-2019
+frequency: annual
+discover:
+  method: static_url
+  url: https://www.ubos.org/wp-content/uploads/statistics/PPI-M_(Local)_Annual_Percentage_Changes,_Calendar_Year_2015-2019;_July_2009_to_June_2010=100.xlsx
+  save_as: PPI-M_(Local)_Annual_Percentage_Changes,_Calendar_Year_2015-2019;_July_2009_to_June_2010=100.xlsx
+parser: uganda_ubos_ppi_m_annual
+expect_rows: 85
+notes: 'UBOS producer price indices (ubos.org Explore Statistics > Prices, page /explore-statistics/30/).
+
+  Inventory: PPI-M&U (manufacturing & utilities), monthly, current series July 2016 - (base not printed
+  in
+
+  the tables; weights per mille); previous series July 2009 - June 2010 = 100 (annual tables 2015-2019
+
+  for PPI-M Local, PPI-M Export and the combined PPI-M&U; the monthly y/y and m/m for Dec 2018 - Dec 2019);
+
+  PPI-H&R (hotels & restaurants), quarterly, base 2008, released to FY 2022/23 Q2 (Oct-Dec 2022).
+
+  Not found as tables: the 2009/10-base monthly index levels before Dec 2018 (only these annual and
+
+  13-month change tables are on the site; Wayback CDX for ubos.org did not answer, 2026-11-05).
+
+  The fiscal-year twins of the annual tables are not read (a July-June year is not a schema period).'

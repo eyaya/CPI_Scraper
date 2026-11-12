@@ -1,0 +1,111 @@
+country: Angola
+iso3: AGO
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE) Angola
+publication_code: "Folha de Informação Rápida do Índice de Preços no Produtor (IPP) -- every issue on ine.gov.ao"
+frequency: monthly
+expect_rows: 3000
+
+# The latest issue's file (from its publicacoes/detalhes page) is the primary;
+# every earlier issue on INE's list (35 in all, found by walking
+# /publicacoes/todas?pagina=N) is an extra, oldest first. A new issue: add the
+# current primary to extra_urls and point `url` at the new file.
+discover:
+  method: static_url
+  url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639283916096827644.pdf"
+  save_as: INE_IPP_58507_Publicacao_639283916096827644.pdf
+extra_urls:
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637531377595944058.pdf"   # IV Trimestre 2020 (published 04/04/2021)
+    save_as: INE_IPP_20_Publicacao_637531377595944058.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637580752196319541.pdf"   # 2020 (published 31/05/2021)
+    save_as: INE_IPP_31_Publicacao_637580752196319541.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637620285607742327.pdf"   # I Trimestre 2021 (published 21/06/2021)
+    save_as: INE_IPP_153_Publicacao_637620285607742327.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637680993146532923.pdf"   # II Trimestre 2021 (published 24/09/2021)
+    save_as: INE_IPP_1205_Publicacao_637680993146532923.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637756306993031237.pdf"   # III Trimestre 2021 (published 20/12/2021)
+    save_as: INE_IPP_3224_Publicacao_637756306993031237.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637837252303721029.pdf"   # IV Trimestre 2021 (published 24/03/2022)
+    save_as: INE_IPP_3248_Publicacao_637837252303721029.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637913557511234946.pdf"   # I Trimestre 2022 (published 20/06/2022)
+    save_as: INE_IPP_5266_Publicacao_637913557511234946.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_637995242303595053.pdf"   # II Trimestre 2022 (published 20/09/2022)
+    save_as: INE_IPP_8286_Publicacao_637995242303595053.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638076576412290012.pdf"   # III Trimestre 2022 (published 20/12/2022)
+    save_as: INE_IPP_10279_Publicacao_638076576412290012.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638150710844926303.pdf"   # IV Trimestre 2022 (published 20/03/2023)
+    save_as: INE_IPP_11290_Publicacao_638150710844926303.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638195254914004417.pdf"   # Maio 2023 (published 12/05/2023)
+    save_as: INE_IPP_14276_Publicacao_638195254914004417.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638259700691165050.pdf"   # I Trimestre 2023 (published 20/07/2023)
+    save_as: INE_IPP_15296_Publicacao_638259700691165050.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638732851480997792.pdf"   # IV Trimestre 2023 (published 20/03/2024)
+    save_as: INE_IPP_38334_Publicacao_638732851480997792.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638496382362550375.pdf"   # Maio 2023 (published 21/05/2024)
+    save_as: INE_IPP_30308_Publicacao_638496382362550375.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638513214421932800.pdf"   # II Trimestre 2024 (published 28/10/2024)
+    save_as: INE_IPP_32327_Publicacao_638513214421932800.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638748433035730441.pdf"   # III Trimestre 2024 (published 28/12/2024)
+    save_as: INE_IPP_40341_Publicacao_638748433035730441.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638809967301481269.pdf"   # IV Trimestre 2024 (published 22/04/2025)
+    save_as: INE_IPP_41348_Publicacao_638809967301481269.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638852355831947504.pdf"   # Junho 2024 (published 11/06/2025)
+    save_as: INE_IPP_42373_Publicacao_638852355831947504.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638884409649159440.pdf"   # Maio 2025 (published 18/07/2025)
+    save_as: INE_IPP_42380_Publicacao_638884409649159440.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638890871262304134.pdf"   # Junho 2025 (published 26/07/2025)
+    save_as: INE_IPP_42383_Publicacao_638890871262304134.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638918373757424652.pdf"   # Julho 2025 (published 26/08/2025)
+    save_as: INE_IPP_44394_Publicacao_638918373757424652.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638944707755903829.pdf"   # Agosto 2025 (published 25/09/2025)
+    save_as: INE_IPP_46399_Publicacao_638944707755903829.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_638969893810080259.pdf"   # Setembro 2025 (published 25/10/2025)
+    save_as: INE_IPP_46406_Publicacao_638969893810080259.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639002879575158719.pdf"   # 2025 (published 02/12/2025)
+    save_as: INE_IPP_48417_Publicacao_639002879575158719.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639024055066901721.pdf"   # Novembro 2025 (published 27/12/2025)
+    save_as: INE_IPP_50414_Publicacao_639024055066901721.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639048804052823728.pdf"   # Dezembro 2025 (published 24/01/2026)
+    save_as: INE_IPP_50424_Publicacao_639048804052823728.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639077686121944075.pdf"   # Janeiro 2026 (published 27/02/2026)
+    save_as: INE_IPP_51444_Publicacao_639077686121944075.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639100269062014675.pdf"   # Fevereiro 2026 (published 24/03/2026)
+    save_as: INE_IPP_51461_Publicacao_639100269062014675.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639131737933927920.pdf"   # Março 2026 (published 30/04/2026)
+    save_as: INE_IPP_53473_Publicacao_639131737933927920.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639153166222683878.pdf"   # Abril 2026 (published 25/05/2026)
+    save_as: INE_IPP_54475_Publicacao_639153166222683878.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639180330845270873.pdf"   # Maio 2026 (published 26/06/2026)
+    save_as: INE_IPP_55481_Publicacao_639180330845270873.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639204851288525841.pdf"   # Junho 2026 (published 24/07/2026)
+    save_as: INE_IPP_55493_Publicacao_639204851288525841.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639232154580122254.pdf"   # Julho 2026 (published 25/08/2026)
+    save_as: INE_IPP_55503_Publicacao_639232154580122254.pdf
+  - url: "https://www.ine.gov.ao/Arquivos/arquivosCarregados//Carregados/Publicacao_639259741953945608.pdf"   # Agosto 2026 (published 25/09/2026)
+    save_as: INE_IPP_58497_Publicacao_639259741953945608.pdf
+
+parser: angola_ine_issues_ppi
+geography: National
+
+notes: >
+  INVENTORY: INE's IPP since 2018 (old site: quarterly "Folha de Informação
+  Rápida" I-II Trimestre 2018 and an annual 2017 edition, base 2015 -- listed
+  in the Wayback index of www.ine.gov.ao but the PDFs are not archived);
+  on the current site: quarterly issues 2020-Q4 to 2024-Q4 (base 2015=100, CAE
+  2010; each prints the quarter, the previous quarter and the quarter a year
+  earlier, with y/y and q/q), annual editions 2020, 2022, 2023, 2024 (yearly
+  indices 2018-2024 and annual-average changes), and monthly issues from May
+  2025 (base 2019=100, CAE 2019; 13-month windows from May 2024, index, m/m,
+  y/y). Collected: quarterly 2019-Q4 - 2024-Q4, annual 2018-2024 (2015=100),
+  monthly May 2024 - September 2026 (2019=100), by CAE section/division and
+  goods category, with weights. Gap: 2019-Q1..Q3 and earlier quarters (the
+  2018 issues are not archived). The "III Trimestre 2024" file repeats the II
+  Trimestre 2024 tables (2023-Q2..2024-Q2); 2024-Q3 comes from the IV
+  Trimestre 2024 issue. Three monthly issues print "Jan-24" (Oct-Dec 2025)
+  and the September 2026 issue "Jan-25" inside a consecutive Quadro 3 header
+  whose Quadros 4-5 print the right month; read as the sequence month.
+  "0,0" index cells (categories with no production) are not collected.
+  CROSS-CHECK (verbatim): Set-26 total 283,37, m/m 28,70, y/y 57,07; Jan-26
+  173,16; 2022_T4 307,7, y/y -9,7, q/q -12,9; annual 2023 290,8, -17,6.

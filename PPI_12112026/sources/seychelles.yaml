@@ -1,0 +1,38 @@
+country: Seychelles
+iso3: SYC
+indicator: PPI
+tier: 2
+source_type: xlsx
+agency: National Bureau of Statistics (NBS) Seychelles
+publication_code: Timeseries PPI-IPI (sheet PPI)
+frequency: monthly
+expect_rows: 2400
+expect_periods: 150
+
+# NBS's own workbook, linked from the home page ("Timeseries PPI IPI"). The
+# live host (2026-11-05) serves its home page to an ordinary client but answers
+# 403 on every inner page and download, and drops the connection on the
+# browser-style User-Agent, so the file is the Wayback `id_` copy of NBS's own
+# download (captured 2026-04-30, data to March 2026).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20260430140719id_/https://www.nbs.gov.sc/downloads/1936-timeseries-ppi-ipi/download"
+  save_as: nbs_timeseries_ppi_ipi_20260430.xlsx
+
+parser: seychelles_nbs_timeseries_ppi
+geography: National
+
+notes: >
+  INVENTORY: one index, the PPIM (manufacturing incl. electricity and water),
+  monthly from January 2013, reference 2013=100, never rebased; first
+  bulletin February 2015 (PPIM.2014/Q4, quarterly), monthly from 2015.
+  Every month January 2013 - March 2026 is in this workbook (14 ISIC Rev.4
+  classes + TOTAL, m/m and y/y % of the total); April - August 2026 come from
+  the August 2026 bulletin (seychelles_bulletin.yaml), which also REVISES
+  2025-2026 months (total March 2026: 102.3 here, 98.8 in the bulletin; malt
+  liquors and spirits revised). The newer source wins in the output. The
+  2014-2023 bulletins (archived) are superseded by this workbook. Not
+  collected: the seasonally adjusted total (no adjustment flag in the
+  schema); the IPI sheet (a volume index). CROSS-CHECK: total January 2013
+  106.3 (2014-Q4 bulletin prints 106.2 -- revised since), March 2026 102.3,
+  m/m -0.8%, y/y -1.31%.

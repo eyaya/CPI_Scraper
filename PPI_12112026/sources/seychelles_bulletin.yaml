@@ -1,0 +1,26 @@
+country: Seychelles
+iso3: SYC
+indicator: PPI
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS) Seychelles
+publication_code: PPIM.2026/August -- Producer Price Index Manufacturing bulletin (released 30 September 2026)
+frequency: monthly
+expect_rows: 300
+
+# Wayback `id_` copy of NBS's own download (live host 403s, see seychelles.yaml).
+discover:
+  method: static_url
+  url: "https://web.archive.org/web/20261004154057id_/https://www.nbs.gov.sc/component/edocman/2015-ppi-bulletin-august-2026/download"
+  save_as: nbs_ppi_bulletin_august_2026.pdf
+
+parser: seychelles_nbs_bulletin_ppi
+geography: National
+
+notes: >
+  Table 1: total PPIM January 2023 - August 2026 (index, m/m %, y/y %, and
+  quarterly index + q/q % at each quarter end); Table 2: index by ISIC class,
+  August 2025 - August 2026. Extends the time-series workbook from March to
+  August 2026 and revises 2025-26. CROSS-CHECK (verbatim): August 2026 100.7,
+  July 96.2, m/m 4.8%, y/y -7.5%; Q2 2026 98.6, q/q -2.4%; fish processing
+  August 2026 98.1.
