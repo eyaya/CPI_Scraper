@@ -1,0 +1,82 @@
+country: Sudan
+iso3: SDN
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Central Bank of Sudan (CBoS), Policies, Research & Statistics Department -- official compiler of merchandise-trade statistics (data Sudan Customs Authority, Ministry of Energy & Petroleum)
+publication_code: Foreign Trade Statistical Digest (year-to-date; quarterly / half-year / annual issues)
+frequency: monthly
+expect_rows: 20000
+expect_periods: 200
+
+# The digest list (https://cbos.gov.sd/en/periodicals-publications?field_publication_type_tid_i18n=45)
+# is not in date order and each issue sits on its own /en/content/<slug> page, so the
+# issues are pinned. Issues are YEAR-TO-DATE, so the newest issue of each year carries
+# all its months: the newest issue is the discover target, and one issue per earlier
+# year is an extra (the newest figure of a key wins). When CBoS posts a newer issue,
+# make it the static_url and move the current one to extra_urls if it closes a year.
+discover:
+  method: static_url
+  url: "https://cbos.gov.sd/sites/default/files/Stat_br_%20jan.-jun._%202026.pdf"
+  save_as: CBoS_digest_2026_H1.pdf
+
+extras_cache: true
+extra_urls:
+  - {url: "https://cbos.gov.sd/sites/default/files/Sta_digest_q4_2025.pdf", save_as: CBoS_digest_2025_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/%D8%A7%D9%84%D9%85%D9%88%D8%AC%D8%B2%20%D8%A7%D9%84%D8%B1%D8%A8%D8%B9%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%20%D9%A0%D9%A2%D9%A4.pdf", save_as: CBoS_digest_2024_Jan-Dec.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/%D8%A7%D9%84%D8%B1%D8%A8%D8%B9%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%202022.pdf", save_as: CBoS_digest_2022_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/%D8%A7%D9%84%D9%85%D8%A4%D8%AC%D8%B2%20%D8%A7%D9%84%D8%A7%D8%AD%D8%B5%D8%A7%D8%A6%D9%8A%20%D9%84%D9%84%D9%85%D8%B7%D8%A8%D8%B9%D9%87%20%D8%A7%D9%84%D8%B1%D8%A8%D8%B9%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%20%D9%86%D9%87%D8%A7%D8%A6%D9%8A%202021.pdf", save_as: CBoS_digest_2021_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/Quarter%203-2020.pdf", save_as: CBoS_digest_2020_Q3.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/%D8%A7%D9%84%D9%85%D9%88%D8%AC%D8%B2%20%D8%A7%D9%84%D8%A5%D8%AD%D8%B5%D8%A7%D8%A6%D9%8A%20%D8%A7%D9%84%D8%B1%D8%A8%D8%B9%20%D8%A7%D9%84%D8%B1%D8%A7%D8%A8%D8%B9%20%D9%86%D9%87%D8%A7%D8%A6%D9%8A.pdf", save_as: CBoS_digest_2019_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest-q4-2018.pdf", save_as: CBoS_digest_2018_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/Digest%20Q4%20-%202017.pdf", save_as: CBoS_digest_2017_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest_q4_16_0.pdf", save_as: CBoS_digest_2016_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest_q4_2015.pdf", save_as: CBoS_digest_2015_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest_q4_14.pdf", save_as: CBoS_digest_2014_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest_q4_2013_0.pdf", save_as: CBoS_digest_2013_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest_q4_2012.pdf", save_as: CBoS_digest_2012_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest_q4_11.pdf", save_as: CBoS_digest_2011_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/Digest_q4_09.pdf", save_as: CBoS_digest_2009_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest_q4_08.pdf", save_as: CBoS_digest_2008_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/Digest_q4_07.pdf", save_as: CBoS_digest_2007_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/digest_q4_06.pdf", save_as: CBoS_digest_2006_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/Digest_q4_05.pdf", save_as: CBoS_digest_2005_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/Digest_q4_04.pdf", save_as: CBoS_digest_2004_Q4.pdf}
+  - {url: "https://cbos.gov.sd/sites/default/files/Digest_q1_04.pdf", save_as: CBoS_digest_2004_Q1.pdf}
+
+parser: sudan_cbos_trade
+geography: National
+
+notes: >
+  COMPILER: the Central Bureau of Statistics (cbs.gov.sd) has no reachable site;
+  Sudan's merchandise-trade statistics are compiled and published by the Central
+  Bank of Sudan from Customs (and Ministry of Energy & Petroleum) records, so CBoS
+  is the official compiler under the source policy (as the CPI descriptor already
+  uses cbos.gov.sd). Unblocked 2026-11-19 (CBoS answered 522 on 2026-11-12).
+  INVENTORY (80 issues listed, 2003-Q3 .. 2026 Jan-Jun): the issues are YEAR-TO-DATE
+  (the "4th Quarter" issue = January-December). Not posted / not a PDF: 2003-Q3/Q4,
+  all 2010 issues and 2011-Q1 (the links serve a 5-page error document), 2014-Q1,
+  2020-Q4 (page has no file), 2022-Q2, all of 2023 (the 2024 and 2025 issues carry
+  2023 only as an annual row). PINNED: the newest issue of each year (2004-Q1 for
+  its 2003 trade-balance page).
+  COLLECTED (US$ thousands, "US.$000'S"; imports CIF, exports FOB as the digest's
+  introduction states): trade balance table (annual ~2000-2025 with revisions --
+  the newest issue wins -- and monthly 2003-01 .. 2026-06 except 2010 and 2023;
+  non-petroleum / petroleum exports as national groups in the 2004-2022 issues);
+  exports and imports by commodity (the bank's national list, with group subtotals)
+  and by country (with regional and COMESA groups), monthly and, in a January-
+  December issue, annual.
+  GUARDS: every table row must add up to its own year-to-date Total or it is
+  dropped (e.g. 2004 export commodities printed with quantities); a key printed
+  twice with different figures in one issue is dropped ("Other" in the 2016 import
+  tables; the 2012 issue's second "2011" trade-balance row, which is 2012
+  mislabelled); the months of a trade-balance page take the year in ITS caption
+  (2004-Q1 reprints the 2003 page); the caption year's annual row is kept only when
+  all twelve months are printed. BALANCE SIGN: the 2023-2025 issues draw the
+  deficit parentheses as graphics, so the text layer has bare magnitudes; a balance
+  is kept only when its sign is explicit or it is a surplus (exports >= imports).
+  NOT READ: quantities, the quarterly and two-year comparison tables, by-country-
+  and-commodity matrices, government imports (2004-2018 issues).
+  CROSS-CHECK (verbatim): 2016 balance (5,216,968) = 3,093,639 - 8,310,607 (2022-Q4
+  issue); 2026-01 imports 626,013.00, exports 286,474.28 (2026-Q1 issue); 2025 gold
+  exports 1,536,253.42; Egypt 2025 exports 718,874.58, imports 959,689.53.

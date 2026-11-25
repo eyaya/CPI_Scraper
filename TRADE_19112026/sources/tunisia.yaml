@@ -1,0 +1,95 @@
+country: Tunisia
+iso3: TUN
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Institut National de la Statistique (INS)
+publication_code: Commerce extérieur aux prix courants -- Excel annexes of the December (année) and March (3 mois) notes
+frequency: annual
+expect_rows: 5000
+# TLS verifies with the default CA store (checked 2026-11-12); the CPI
+# descriptor's verify_ssl: false is NOT mirrored.
+
+discover:
+  method: static_url
+  url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Comext_12mois_2025.xlsx"
+  save_as: INS_comext_2025_12_Comext_12mois_2025.xlsx
+
+parser: tunisia_ins_trade_notes
+geography: National
+
+# The annexes of every December and March note published as .xlsx, resolved
+# from https://www.ins.tn/publication/commerce-exterieur-aux-prix-courants-
+# {decembre|mars}-{year} (2026-11-12). Other months are year-to-date windows
+# (Jan-Feb, Jan-Apr ...), not a schema period, and are not listed. ADD the next
+# December / March issue when it appears.
+extras_cache: true
+extra_urls:
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Comext-Ann%C3%A9e-%202021.xlsx"
+    save_as: "INS_comext_2021_12_Comext-Ann_e-_2021.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Comext-3mois-2022.xlsx"
+    save_as: "INS_comext_2022_03_Comext-3mois-2022.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20chapitre-12mois%202023.xlsx"
+    save_as: "INS_comext_2023_12_Balance_par_chapitre-12mois_2023.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20pays-12mois%202023.xlsx"
+    save_as: "INS_comext_2023_12_Balance_par_pays-12mois_2023.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Comext-Ann%C3%A9e2023%20%281%29.xlsx"
+    save_as: "INS_comext_2023_12_Comext-Ann_e2023_1_.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance_3mois_Pays.xlsx"
+    save_as: "INS_comext_2023_03_Balance_3mois_Pays.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance_3mois_chapitre.xlsx"
+    save_as: "INS_comext_2023_03_Balance_3mois_chapitre.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Comext-3mois%202023.xlsx"
+    save_as: "INS_comext_2023_03_Comext-3mois_2023.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20Chapitre_Ann%C3%A9e_2024.xlsx"
+    save_as: "INS_comext_2024_12_Balance_par_Chapitre_Ann_e_2024.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20Pays%20_Ann%C3%A9e_2024.xlsx"
+    save_as: "INS_comext_2024_12_Balance_par_Pays__Ann_e_2024.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Comext_Ann%C3%A9e_2024.xlsx"
+    save_as: "INS_comext_2024_12_Comext_Ann_e_2024.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Commerce%20Exterieur%203%20Mois%202024%20-%20Balance%20Commerciale.xlsx"
+    save_as: "INS_comext_2024_03_Commerce_Exterieur_3_Mois_2024_-_Balance_Commerciale.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20Chapitre_Annee_2025.xlsx"
+    save_as: "INS_comext_2025_12_Balance_par_Chapitre_Annee_2025.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20pays_Annee_2025.xlsx"
+    save_as: "INS_comext_2025_12_Balance_par_pays_Annee_2025.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20chapitres.xlsx"
+    save_as: "INS_comext_2025_03_Balance_chapitres.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20pays_1.xlsx"
+    save_as: "INS_comext_2025_03_Balance_par_pays_1.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Comext-03-2025.xlsx"
+    save_as: "INS_comext_2025_03_Comext-03-2025.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20chapitre_3_2026.xlsx"
+    save_as: "INS_comext_2026_03_Balance_par_chapitre_3_2026.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Balance%20par%20pays_3_2026.xlsx"
+    save_as: "INS_comext_2026_03_Balance_par_pays_3_2026.xlsx"
+  - url: "https://www.ins.tn/sites/default/files-ftp3/files/publication/pdf/Comext_3_2026.xlsx"
+    save_as: "INS_comext_2026_03_Comext_3_2026.xlsx"
+
+notes: >
+  INS (the NSO) compiles Tunisia's merchandise trade from customs records
+  (general/offshore regimes combined in the totals read here). The monthly note
+  "Commerce extérieur aux prix courants" (PDF + Excel annexes) is CUMULATIVE
+  (January to the reference month) and compares three years; only the December
+  issue (= calendar year) and the March issue (= first quarter) are schema
+  periods. COLLECTED: "Balance par chapitres" exports / imports by HS chapter
+  (hs2, 97+ chapters), value in TND and net weight in kg -- annual 2021-2025
+  (December 2023/2024/2025 issues) and Q1 2021-2026 (March 2023/2025/2026);
+  "Balance par pays" exports / imports by country and bloc (MD) -- annual
+  2021-2025, Q1 2021-2026 (PAYS DE UE, PAYS ARABES, PAYS D'AFRIQUE ...,
+  AVITAILLEMENT, PAYS NON DETERMINE are groups); Comext "Global" total exports,
+  imports and balance (MD) -- annual 2019-2025, Q1 2020-2026; Comext "GP" by
+  product group (alimentation, énergie, matières premières et demi-produits,
+  biens d'équipement, biens de consommation) -- annual 2021-2025 and Q1
+  2020-2026. GAPS: annual chapters/countries before 2021 and the March 2021 /
+  December 2019-2021 chapter and country annexes are PDF (not read); the March
+  2024 issue has no chapter/country xlsx; the December 2022 publication page
+  could not be located (its years are covered by the 2023/2024 issues). Not
+  collected: régime général / offshore split, the GSA (sector) and TYPE sheets
+  (sector/type cuts are taken from the INS stats pages, tunisia_web.yaml),
+  coverage rates and variations.
+  CROSS-CHECK (verbatim): Comext_12mois_2025 Global -- see run output; March 2026
+  Comext Global exports 3 mois 2026 16266.820824575003, imports 21499.521426994;
+  Balance par chapitres 9 mois annex (not collected) chapter 01 exports 2026
+  3839099 TND. Balance par pays Année 2025: FRANCE export 2025 14828.085584616001,
+  ALLEMAGNE export 2025 9177.758196709001, PAYS DE UE export 2025 44527.81454734702.

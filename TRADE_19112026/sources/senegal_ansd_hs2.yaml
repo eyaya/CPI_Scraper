@@ -1,0 +1,34 @@
+country: Senegal
+iso3: SEN
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD), Bureau des Echanges extérieurs
+publication_code: Exportations / Importations des produits (valeur et volume), janv2010 - fevr2024 (SH2)
+frequency: monthly
+verify_ssl: indicators/trade/certs/ansd_sn_ca_bundle.pem   # certifi + ANSD's missing GlobalSign intermediate
+expect_rows: 55000
+expect_periods: 170
+
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2024-04/Exportations%20des%20produits%20%28valeur%20et%20volume%29%2C%20janv2010%20-%20fevr2024.xlsx"
+
+extra_urls:
+  - url: "https://www.ansd.sn/sites/default/files/2024-04/Importations%20des%20produits%20%28valeur%20et%20volume%29%2C%20janv2010%20-%20fevr2024.xlsx"
+
+parser: senegal_ansd_hs2_xlsx
+geography: National
+
+notes: >
+  ANSD Senegal exports and imports by HS chapter ("Code SH2", 97 chapters + the
+  "Total" row = all products), all partners (PARTENAIRE MONDE), MONTHLY
+  2010-01..2024-02 (170 months), general trade; value (VALDOUANE, FCFA, exports
+  FOB / imports CIF) and net weight (POIDSNET, kg). Units verified against BMSCE
+  fevr. 2024 Tableau 1/2: exports 2024-02 291 787 852 202 FCFA and 746 683 420 kg;
+  imports net weight 2024-02 818 531 126 kg -- identical. The older edition
+  (janv2010-avr2022, 2022-12 upload) is superseded by this one. Chapters after
+  2024-02 come from the monthly BMSCE (senegal_ansd_bmsce, Tableaux 19/20/23/24).
+  CROSS-CHECK (verbatim): exports ch.03 2010-01 8 254 504 687; ch.01 2010-01
+  11 533 890; imports ch.04 2010-01 5 851 376 654; import total 2010-01
+  170 991 780 898; export weight total 2010-01 357 010 385.

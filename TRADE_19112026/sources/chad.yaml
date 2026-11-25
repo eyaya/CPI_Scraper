@@ -1,0 +1,46 @@
+country: Chad
+iso3: TCD
+indicator: Trade
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique, des Études Économiques et Démographiques (INSEED) -- customs data DGDDI/SYDONIA
+publication_code: Statistiques du Commerce Extérieur (annual report)
+frequency: annual
+# TLS verifies on inseed.ssn-tchad.td (2026-11-12): no verify_ssl override (the CPI descriptor's is not mirrored).
+discover:
+  # INSEED's SPA lists publications at <api_base>/api/publications; the newest
+  # "Statistiques du Commerce Extérieur <year>" is resolved by title + year in the file
+  # list below (the discover helper's MM-YYYY title rule does not fit an annual title),
+  # so the newest report is a static URL, updated each year.
+  method: static_url
+  url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1778246933825-827741811.pdf"
+  save_as: Chad_Commerce_Exterieur_2025.pdf
+extras_cache: true
+extra_urls:
+  - {url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1767709619914-130586225.pdf", save_as: Chad_Commerce_Exterieur_2019.pdf}
+  - {url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1778246696371-157650657.pdf", save_as: Chad_Commerce_Exterieur_2020.pdf}
+  - {url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1778246785252-392767676.pdf", save_as: Chad_Commerce_Exterieur_2021.pdf}
+  - {url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1778246828651-824478271.pdf", save_as: Chad_Commerce_Exterieur_2022.pdf}
+  - {url: "https://inseed.ssn-tchad.td/uploads/publications/publication-1778246878842-382124802.pdf", save_as: Chad_Commerce_Exterieur_2023.pdf}
+parser: chad_inseed_trade
+geography: Total country
+expect_rows: 20
+expect_periods: 1
+notes: >
+  INSEED "Statistiques du Commerce Extérieur" annual reports (DGDDI customs).
+  INVENTORY (INSEED API): 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017-2018, 2019, 2020,
+  2021, 2022, 2023, 2024, 2025, all downloaded to source_data/Chad.
+  COLLECTED: 2019-2023 annual HS chapters (hs2) of imports and exports, weight (tonnes)
+  and value (millions FCFA); partner countries (full lists) for imports and exports;
+  continents and sub-continents; totals; 2025 principal partners (top 10 + Autres
+  partenaires + Total).
+  GAPS: 2010-2016 reports (top-N tables in other layouts, not parsed); the two-year
+  2017-2018 report (both years in one header); the 2024 report (top-10 layouts); 2023
+  imports by HS2 (Tableau A1 caption says "million de F CFA" over figures printed in F CFA,
+  table dropped, not rescaled); 2024-2025 SH2 annexes (no scale printed on the page).
+  NOTE: the 2022 partner list prints "TC Turquie" (Turks and Caicos) under Turkey's name;
+  only the first "Turquie" line is kept. The 2021 import total differs between the SH2
+  table (615 458,87) and the partner table (615 456,83); the SH2 table's is kept.
+  CROSS-CHECK (verbatim, 2022 report, millions FCFA): imports total 768 503,8 (Tableau
+  A1 = A9 total), exports total 4 613 877,4 (A27 = A32), imports from Chine 228 885,9,
+  exports to Chine 1 555 402,6.

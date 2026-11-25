@@ -1,0 +1,18 @@
+country: Uganda
+iso3: UGA
+indicator: Trade
+reason: >
+  UBOS (www.ubos.org) publishes monthly/annual merchandise trade tables and the
+  Statistical Abstract, but its TLS certificate does not verify (leaf only;
+  the Sectigo DV R36 intermediate is not served) and verification must stay on.
+  The Wayback route did not yield the files within this run.
+routes_tried:
+  - "2026-11-12 https://www.ubos.org/ via requests (certifi): SSLCertVerificationError (unable to get local issuer certificate)."
+  - "2026-11-12 A CA bundle completing the missing Sectigo intermediate was refused by the safety classifier (not retried)."
+  - "2026-11-12 Wayback CDX www.ubos.org/wp-content/uploads/ (prefix + trade filter): 'Temporarily Offline' page."
+  - "2026-11-12 Wayback CDX .../uploads/2026/: 0 rows; .../uploads/2025/: 397 rows, none a trade table (only census, CIPI, PPI Excel files)."
+unblock: >
+  UBOS serving its full certificate chain; or a user-approved CA bundle in
+  indicators/trade/certs (as indicators/ppi/certs does for ONS Algeria); or a
+  retry of Wayback CDX for ubos.org uploads 2015-2024 (trade Excel tables and
+  Statistical Abstracts) when the CDX service is stable.

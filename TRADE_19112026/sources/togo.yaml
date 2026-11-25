@@ -1,0 +1,80 @@
+country: Togo
+iso3: TGO
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et des Etudes Economiques et Démographiques (INSEED)
+publication_code: Bulletin (trimestriel) statistique du Commerce international des marchandises
+frequency: quarterly
+expect_rows: 40000
+expect_periods: 300
+
+discover:
+  method: static_url
+  url: "https://inseed.tg/download/7986/"
+  save_as: togo_inseed_cim_7986.pdf
+
+extras_cache: true
+extra_urls:
+  - {url: "https://inseed.tg/download/2098/", save_as: togo_inseed_cim_2098.pdf}
+  - {url: "https://inseed.tg/download/2102/", save_as: togo_inseed_cim_2102.pdf}
+  - {url: "https://inseed.tg/download/2108/", save_as: togo_inseed_cim_2108.pdf}
+  - {url: "https://inseed.tg/download/2114/", save_as: togo_inseed_cim_2114.pdf}
+  - {url: "https://inseed.tg/download/2116/", save_as: togo_inseed_cim_2116.pdf}
+  - {url: "https://inseed.tg/download/2118/", save_as: togo_inseed_cim_2118.pdf}
+  - {url: "https://inseed.tg/download/2123/", save_as: togo_inseed_cim_2123.pdf}
+  - {url: "https://inseed.tg/download/2129/", save_as: togo_inseed_cim_2129.pdf}
+  - {url: "https://inseed.tg/download/2139/", save_as: togo_inseed_cim_2139.pdf}
+  - {url: "https://inseed.tg/download/2144/", save_as: togo_inseed_cim_2144.pdf}
+  - {url: "https://inseed.tg/download/2202/", save_as: togo_inseed_cim_2202.pdf}
+  - {url: "https://inseed.tg/download/2208/", save_as: togo_inseed_cim_2208.pdf}
+  - {url: "https://inseed.tg/download/2210/", save_as: togo_inseed_cim_2210.pdf}
+  - {url: "https://inseed.tg/download/2212/", save_as: togo_inseed_cim_2212.pdf}
+  - {url: "https://inseed.tg/download/2940/", save_as: togo_inseed_cim_2940.pdf}
+  - {url: "https://inseed.tg/download/2943/", save_as: togo_inseed_cim_2943.pdf}
+  - {url: "https://inseed.tg/download/2946/", save_as: togo_inseed_cim_2946.pdf}
+  - {url: "https://inseed.tg/download/2949/", save_as: togo_inseed_cim_2949.pdf}
+  - {url: "https://inseed.tg/download/3100/", save_as: togo_inseed_cim_3100.pdf}
+  - {url: "https://inseed.tg/download/3539/", save_as: togo_inseed_cim_3539.pdf}
+  - {url: "https://inseed.tg/download/3615/", save_as: togo_inseed_cim_3615.pdf}
+  - {url: "https://inseed.tg/download/4094/", save_as: togo_inseed_cim_4094.pdf}
+  - {url: "https://inseed.tg/download/4128/", save_as: togo_inseed_cim_4128.pdf}
+  - {url: "https://inseed.tg/download/4553/", save_as: togo_inseed_cim_4553.pdf}
+  - {url: "https://inseed.tg/download/4596/", save_as: togo_inseed_cim_4596.pdf}
+  - {url: "https://inseed.tg/download/5265/", save_as: togo_inseed_cim_5265.pdf}
+  - {url: "https://inseed.tg/download/5843/", save_as: togo_inseed_cim_5843.pdf}
+  - {url: "https://inseed.tg/download/5847/", save_as: togo_inseed_cim_5847.pdf}
+  - {url: "https://inseed.tg/download/6393/", save_as: togo_inseed_cim_6393.pdf}
+  - {url: "https://inseed.tg/download/7005/", save_as: togo_inseed_cim_7005.pdf}
+  - {url: "https://inseed.tg/download/7044/", save_as: togo_inseed_cim_7044.pdf}
+  - {url: "https://inseed.tg/download/7469/", save_as: togo_inseed_cim_7469.pdf}
+  - {url: "https://inseed.tg/download/7638/", save_as: togo_inseed_cim_7638.pdf}
+  - {url: "https://inseed.tg/download/7983/", save_as: togo_inseed_cim_7983.pdf}
+
+parser: togo_inseed_trade
+geography: National
+
+notes: >
+  INSEED Togo quarterly bulletins (https://inseed.tg/echanges-exterieurs/ lists 42
+  issues, 2016-T1..2026-T2; download ids in extra_urls). Each issue prints five
+  quarters. Read: Tableau 1 exports FOB, imports CIF, balance (millions of FCFA)
+  and quantities (tonnes); exports / imports by SITC section (sitc1) and division
+  (sitc2), value (millions FCFA) and net weight (tonnes); by partner country (ISO
+  alpha-2 + name printed; non-country codes -> group) and by geographic / economic
+  zone (labels printed with the zone code, "11 Union Europeenne" -> group); and,
+  in the issues from ~2023, Tableaux 87/88/89 exports / imports / balance by month,
+  quarter and year since 2008 (billions of FCFA; semesters skipped). Newest issue
+  wins per observation; a finer print wins within an issue. SPAN: monthly
+  2008-01..2026-06, quarterly headline 2008-Q1..2026-Q2, annual 2008-2025 (balance
+  2026 partial year as printed); quarterly SITC / partner / zone cuts 2015-Q1..2026-Q2.
+  GAPS: issue ids 2143 and 2146 (2017-T2/T4 listings) answer 404; 2131, 2133, 4880,
+  5105 downloaded truncated (inseed.tg drops long transfers) and were left out -- their
+  quarters are covered by neighbouring issues (each prints five quarters). Rows with
+  no label (page numbers caught on a table line) are dropped. Not read: HS-section
+  tables (no schema class), shares, growth rates, customs-regime and top-ten tables,
+  the 2016-T1 price-index issue (2199).
+  CROSS-CHECK (verbatim, 2026-T2 issue): Tableau 89 balance juin 2026 -56,7 =
+  148,3 - 205,0 (Tableaux 87/88); annual 2025 exports 1 011,5 imports 2 003,5
+  balance -992,0; Tableau 1 imports 2026-T2 562 120,6, balance -266 392,5; exports
+  to "23 Pays de l'Afrique de l'Ouest" 2026-T2 145 770,2. Identity guard passes on
+  all quarterly and monthly cells.

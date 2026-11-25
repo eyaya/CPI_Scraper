@@ -1,0 +1,29 @@
+country: Central_African_Republic
+iso3: CAF
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut Centrafricain des Statistiques et des Études Économiques et Sociales (ICASEES)
+publication_code: Annuaire statistique 2018-2021, chapitre III-7 Commerce extérieur
+frequency: annual
+# TLS verifies on www.icasees.org (2026-11-12): no verify_ssl override (the CPI descriptor's is not mirrored).
+discover:
+  method: static_url
+  url: "https://www.icasees.org/publications/liste-des-publications/annuaire-statistique-2018-2021-vf/download"
+  save_as: ICASEES_Annuaire_statistique_2018-2021.pdf
+parser: central_african_republic_icasees_trade
+geography: Total country
+expect_rows: 50
+expect_periods: 3
+notes: >
+  ICASEES Annuaire statistique 2018-2021, chapter III-7. The NSO's "Statistiques du
+  commerce extérieur" web section is empty; quarterly bulletins (BTS) stop in 2017 (not
+  read); the 2016 and 2017 yearbooks were not opened.
+  COLLECTED: annual 2019-2021 (2018 printed "ND"): exports FOB and imports CAF by main
+  product (national) and by continent (groups), totals; values in millions (FCFA, the
+  national currency; the captions print only "en millions FOB / de CAF").
+  NOT READ: Tableau 171 (four year headers over three values), Tableaux 174 and 177
+  (values disagree with 172 and 175 for the same label and year).
+  CROSS-CHECK (verbatim): exports total 2019 22 283, 2020 49 696, 2021 55 122 (Tableau
+  172); imports total 2021 285 841 (Tableau 175; Tableau 176 prints 285 840); Or 2021
+  15 143; imports from Asie 2021 67 039. Products 2021 sum to 55 117 against 55 122.

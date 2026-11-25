@@ -1,0 +1,37 @@
+country: Somalia
+iso3: SOM
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Somalia National Bureau of Statistics (SNBS) -- Somalia Facts & Figures (source CBS / Directorate of National Statistics)
+publication_code: Somalia Facts and Figures
+frequency: annual
+
+discover:
+  method: static_url
+  url: "https://nbs.gov.so/wp-content/uploads/2026/04/Facts-and-figures-2024.pdf"
+
+extras_cache: true
+extra_urls:
+  - "https://nbs.gov.so/wp-content/uploads/2026/04/Facts-and-figures-2023.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2023/07/Somalia-Facts-Figures-2018.pdf"
+
+parser: somalia_snbs_ff
+geography: Somalia
+expect_periods: 2
+
+notes: >
+  Facts & Figures editions 2018-2024 are on nbs.gov.so. Collected: 2018 edition
+  Table 2.9 "foreign Trade (US dollars, in million)", exports and imports
+  2012-2017 (Directorate of National Statistics); 2023 and 2024 editions, the
+  annual "Total" column of the import/export-by-category tables (Millions USD,
+  one decimal; CBS) for 2023 and 2024. Not collected: the quarter columns of
+  those tables (their headers are misprinted -- the 2024 export table is
+  headed 2023Q1..Q4 -- and the quarters are in the QSBs at full precision);
+  2018 Tables 2.12/2.13 (partner SHARES in %, and a "Total Exports" row --
+  451,610,848 for 2017 -- that contradicts Table 2.9's 766 million); 2019-2022
+  editions (single-year tables duplicated by the QSBs / Abstract, with
+  misprinted headers in 2022).
+  CROSS-CHECK: 2018 T2.9 2012 exports 911, imports 3,365; 2017 exports 766,
+  imports 4,959. 2024 edition: imports Grand Total 9179.7, Food 2517.7; exports
+  Grand Total 1556.0. 2023 edition: imports Grand Total 6955.5; exports 1009.5.

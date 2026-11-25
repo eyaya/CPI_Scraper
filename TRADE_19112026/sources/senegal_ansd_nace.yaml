@@ -1,0 +1,71 @@
+country: Senegal
+iso3: SEN
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD), Bureau des Echanges extérieurs
+publication_code: Note d'analyse du commerce extérieur (NACE), editions 2006-2025
+frequency: annual
+verify_ssl: indicators/trade/certs/ansd_sn_ca_bundle.pem   # certifi + ANSD's missing GlobalSign intermediate
+expect_rows: 1000
+expect_periods: 55
+
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2026-07/NACE_2025_VF_OK.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2006.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2007.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2008.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2009.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2010.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2011.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2012.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2013%20VERSION%20FINALE.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2014%20VERSION%20FINALE.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2015%20VERSION%20FINALE%20DU%208%20SEPT%202016.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2016.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2017_DIFFUSION.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-11/NACE_2018%20VERSION%20DEF_13NOV.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-12/NACE_2019_Version_Finale.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2022-12/NACE_2020%20%20V3_17%2012%202021.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2023-01/NACE_2021_VERSION_FINALE-30122022-rev.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2024-12/NACE_2022%20VFcorrig.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2024-12/NACE_EDITION_2023_VF%20%281%29.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-07/NACE_2024_VF_21_juillet_2025.pdf"
+
+parser: senegal_ansd_nace
+geography: National
+
+notes: >
+  ANSD annual "Note d'analyse du commerce exterieur", 20 editions (2006..2025), annex
+  tables. (1) "Evolution generale du commerce exterieur" (Tableau 1 in 2006-2010,
+  Tableau 2 from 2011): exports FOB and imports CIF in billions of FCFA ("Valeur en
+  milliards"), net weights "en Mt" = milliers de tonnes (caption of the 2006-2019
+  editions; the 2020-2024 editions mislabel the column "Poids (en tonne)" over the
+  same thousand-tonne figures), trade balance B.C. in billions, signed; ANNUAL
+  1967-2025. Editions are read oldest first and a newer edition's figure replaces an
+  older one. Rows whose cells do not split one per text line are dropped (all of the
+  2009 edition, most of 2010, 2016 after 1975, and the 2025 edition after 2016, which
+  merges cells), so a year comes from the newest edition that prints it cleanly.
+  ANSD MISPRINT: the 2022-2024 editions print the B.C. column shifted by three years
+  (2022 "-2 327" is 2019's): a balance that is not exports - imports within rounding
+  is dropped, never corrected -- hence no balance for 2024-2025. (2) "Exportations /
+  Importations par region / par continent en valeur (en millions FCFA)": five years
+  per edition, ANSD's regional groupings (partner_type group), labels as printed in
+  each edition (spellings change: "LES PAYS MEMBRES DE LA COMMUNAUTE EUROPEENE",
+  "LES PAYS MEMBRES D'UNION EUROPEENE" ...; the 2006-2010 editions print the region
+  without "LES PAYS DE"); imports 2002-2025, exports 2007-2025. A table is kept only
+  when its rows add up to its own TOTAL in every year (within 0.5 %); its TOTAL is
+  emitted only for a year the headline table lacks (2025 exports 5 805 626, imports).
+  Not collected: principal products / produits regroupes / groupes d'utilisation
+  (national lists; HS2 monthly is collected from 2010), partner-country annex tables
+  (UEMOA/CEDEAO partners), unit values, shares, goods-and-services Tableau 1.
+  CROSS-CHECK (verbatim): 1967 exports 33,9 imports 38,9 B.C. -5 (NACE 2006);
+  2000 exports 479,4 weight 2 483,9 imports 1 091,6 B.C. -612,21 (NACE 2021);
+  2016 exports 1 551 imports 3 219 B.C. -1 667 (NACE 2025); 2021 exports 2 885
+  imports 5 378 B.C. -2 494. 2025 exports by region (NACE 2025 Tableau 19): CE
+  1 549 081, Afrique de l'Ouest 1 526 954, Autres pays de l'Asie 948 799, DIVERS
+  176 863, TOTAL 5 805 626 = sum of the rows.

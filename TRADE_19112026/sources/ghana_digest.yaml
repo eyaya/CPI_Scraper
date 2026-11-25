@@ -1,0 +1,47 @@
+country: Ghana
+iso3: GHA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Ghana Statistical Service (GSS) -- Digest of External Trade Statistics
+publication_code: Digest of External Trade Statistics (annual, five-year tables)
+frequency: annual
+
+# --- discover ---
+# Back-years only (ghana.yaml, the StatsBank API, covers 2021 onward and is not
+# touched). GSS's old docfiles tree is gone from the live site (the new
+# statsghana.gov.gh is a JavaScript app; /gssmain/fileUpload/ paths answer
+# 404, 2026-11-12), so the file is the Wayback Machine's id_ copy of the
+# NSO's own PDF. Wayback answers 429 to rapid requests: fetched alone.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20160626003228id_/http://www.statsghana.gov.gh:80/docfiles/Econs_Stats/2016/Digest%20of%20trade.pdf"
+  save_as: "Digest of trade 2016.pdf"
+  download_timeout: 120
+
+parser: ghana_gss_digest_trade
+geography: National
+expect_rows: 700
+expect_periods: 5
+
+notes: >
+  INVENTORY of GSS trade publications before the StatsBank era (Wayback CDX of
+  statsghana.gov.gh, 2026-11-12): Digest of External Trade 2016 (2011-2015,
+  read here); DigestExtTrade_Final (2015 capture, earlier five-year digest);
+  "Trade @ A Glance" 2013 and Annual 2018, Quarterly 2019Q2; "Annual Trade
+  indicators" (2018) and "Quarterly Trade indicators"; SITC_annual_2018;
+  Statistical Yearbooks 2013 and 2015; Ghana 2023 Trade Report, mid-year
+  2023, quarterly newsletters 2024 (inside the StatsBank span). Only the 2016
+  digest is read in this pass; the others are listed as the next descriptors
+  (Wayback rate-limited the session: repeated 429s / refused connections).
+  GAP: 2016-2020 (and before 2011) are not collected yet.
+  CUTS (GH¢ million, annual 2011-2015): Table 1 imports (CIF), exports (FOB),
+  balance (printed "(913.3)" = -913.3); Tables 2/3 imports / exports by HS
+  section (GSS labels, no codes); Tables 6/7 major partners; Tables 9/10
+  ECOWAS countries; Tables 11/12 economic blocs (groups).
+  CROSS-CHECKS (verbatim): 2011 imports 19,064.83, exports 27,428.65, balance
+  8,363.8; 2015 imports 46,830.10, balance (1,353.8); China imports 2015
+  8,631.7; Nigeria imports 2011 1,426.8; Asia imports 2015 18,484.7; live
+  animals imports 2011 886.2. Identity: exports - imports = balance for all
+  five years. Sum check: 2015 import sections (18 read) sum 46,066.5 of the
+  printed 46,830.10 -- the "Others" line (not read) holds the rest.

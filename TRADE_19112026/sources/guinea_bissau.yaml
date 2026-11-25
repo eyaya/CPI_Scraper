@@ -1,0 +1,51 @@
+country: Guinea_Bissau
+iso3: GNB
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística (INE Guiné-Bissau)
+publication_code: Comércio Externo (anuário), 2001-2010
+frequency: annual
+expect_rows: 1500
+expect_periods: 8
+
+discover:
+  method: static_url
+  url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Comercio_externo/2010.pdf"
+  save_as: comercio_externo_2010.pdf
+
+extras_cache: true
+extra_urls:
+  - {url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Comercio_externo/2001_2002.pdf", save_as: comercio_externo_2001_2002.pdf}
+  - {url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Comercio_externo/2003_2004.pdf", save_as: comercio_externo_2003_2004.pdf}
+  - {url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Comercio_externo/2005.pdf", save_as: comercio_externo_2005.pdf}
+  - {url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Comercio_externo/2006.pdf", save_as: comercio_externo_2006.pdf}
+  - {url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Comercio_externo/2007.pdf", save_as: comercio_externo_2007.pdf}
+  - {url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Comercio_externo/2008.pdf", save_as: comercio_externo_2008.pdf}
+  - {url: "https://www.stat-guinebissau.com/Menu_principal/Pubica%C3%A7%C3%B5es/Comercio_externo/2009.pdf", save_as: comercio_externo_2009.pdf}
+
+parser: guinea_bissau_ine_trade
+geography: National
+
+notes: >
+  INE Guinea-Bissau annual "Comercio Externo" books, 2001/2002 .. 2010 (the only
+  merchandise-trade publications on stat-guinebissau.com; its "Estatisticas do
+  comercio externo" page reads "estamos em atualizacao do site" and no later book
+  or bulletin is online or in the Wayback index). Units: 10^3 XOF ("Unidade: 103
+  XOF" / "(103 FCFA)"), quantities in tonnes. Read: "Resultados gerais" (imports
+  CIF, "Exportacao Nacional (FOB)" -> export, saldo -> balance), "Reparticao por
+  zonas economicas e paises" (zones CEDEAO, UE, AFRICA, EUROPA, AMERICA, ASIA,
+  OUTROS -> group; countries printed indented -> country; TOTAL GERAL -> all
+  partners) and imports / exports "segundo as seccoes e capitulos" (HS chapters,
+  code printed "CAP 42"; value and tonnes; section subtotals skipped). SPAN: annual
+  2001, 2002 (chapters only; the two-year book's partner table is not read), 2005
+  (chapters, partners), 2006-2010 (all cuts; 2009 headline from the partner table's
+  TOTAL GERAL -- the 2009 "Resultados gerais" page is titled "ANO 2008" and prints
+  the balance without its sign, so it is not read). GAPS: 2003-2004 (book laid out
+  so that no row splits cleanly -- not read), 2011 onward (not published online).
+  ".." (nil) and "o" (below half a unit) are skipped, never 0. A partner printed
+  twice with different values in one year (Singapore 2007) is dropped.
+  CROSS-CHECK (verbatim): 2010 imports 53 096 251, exports 36 798 631, saldo
+  -16 297 620 (= exports - imports); 2010 PORTUGAL imports 16 914 963, SENEGAL
+  imports 5 316 347, CEDEAO imports 7 532 358; CAP 44 imports 2010 171 987 (898 t).
+  SUM: 2006 exports by chapter 29 207 696 vs total 29 210 092.

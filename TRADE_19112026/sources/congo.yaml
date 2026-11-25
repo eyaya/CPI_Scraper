@@ -1,0 +1,59 @@
+country: Congo
+iso3: COG
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Institut National de la Statistique (INS) Congo -- Bulletin des statistiques du commerce extérieur
+publication_code: Bulletin du Commerce Extérieur (quarterly; annual bulletins)
+frequency: quarterly
+# TLS verifies on ins-congo.cg (2026-11-12): no verify_ssl override (the CPI descriptor's is not mirrored).
+discover:
+  # The publications API (list.php, sous_secteur=stat-commerce-exterieur) lists each
+  # bulletin with download_url (PDF) and, from Q2 2026, download_url_excel. The newest
+  # bulletin's Excel file:
+  method: static_url
+  url: "https://ins-congo.cg/backend/api/publications/download.php?id=134&format=excel"
+  save_as: Congo_BCE_id134.xlsx
+extras_cache: true
+extra_urls:
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-des-biens-premier-trimestre-2022.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-des-biens-deuxieme-trimestre-2022.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-des-biens-troisieme-trimestre-2022.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-des-biens-quatrieme-trimestre-2022.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-des-biens-du-premier-trimestre-2023__v.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-des-biens-du-deuxieme-trimestre-2023__v.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-2023-VALIDE.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-des-biens-du-1trimestre-2024.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-deuxieme-trimestre-2024.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-quatrieme-trimestre-2024-VALIDE.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin_des_statistiques_du_commerce_exterieur__2024_VALIDE.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin_des_statistiques_du_commerce_exterieur_troisieme_trimestre_2024_VALIDE.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-premier-trimestre-2025-.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-du-deuxieme-trimestre-2025.pdf"
+  - "https://ins-congo.cg/assets/Documents/Statistiques%20economiques/COMMERCE%20EXTERIEUR/Bulletin-des-statistiques-du-commerce-exterieur-du-troisieme-trimestre-2025.pdf"
+  - {url: "https://ins-congo.cg/backend/api/publications/download.php?id=144&format=excel", save_as: Congo_BCE_id144.xlsx}
+  - {url: "https://ins-congo.cg/backend/api/publications/download.php?id=143&format=excel", save_as: Congo_BCE_id143.xlsx}
+  - {url: "https://ins-congo.cg/backend/api/publications/download.php?id=142&format=excel", save_as: Congo_BCE_id142.xlsx}
+parser: congo_ins_trade
+geography: Total country
+expect_rows: 1
+expect_periods: 1
+notes: >
+  INS Congo bulletins of foreign trade (customs data). INVENTORY (publications API,
+  sous_secteur stat-commerce-exterieur): quarterly 2022-Q1..2022-Q4, 2023-Q1, 2023-Q2,
+  2024-Q1..2024-Q4, 2025-Q1..2026-Q2; annual bulletins 2023, 2024, 2025; Excel versions
+  of the 2025-Q4, annual 2025, 2026-Q1 and 2026-Q2 bulletins (used in place of their
+  PDFs); 2023-Q3/Q4 not posted. Also the 2018 yearbook chapter "ASN CH22" (not read).
+  COLLECTED: headline exports / imports / balance (milliards FCFA): quarterly 2023-Q1 ..
+  2026-Q2, annual 2019-2025; top-10 partner countries per quarter / year; top-10
+  products and "quelques produits" series (national list); exports and imports by
+  geographic and economic zone (groups) -- quarterly 2022-Q1..2026-Q2, annual 2023-2025.
+  GAPS: the 2022 bulletins' Tableau 1 (headline 2022 quarters) did not parse; the 2025-Q2
+  and 2025-Q3 PDFs gave only 2-3 rows (their caption lines did not parse) -- their periods
+  are covered by the 2025-Q4 and 2026 Excel files' 6-quarter windows. The unit column
+  "10^9 FCFA" is rendered "109 FCFA" by the text layer and read as 1e9.
+  CROSS-CHECK (verbatim): 2024-Q4 exports 1 048,814, imports 760,736, balance 288,08
+  (4th-quarter 2024 bulletin Tableau 1 prints the same; 1 048,814 - 760,736 = 288,078);
+  2025 exports 4 038,4, imports 2 688,5, balance 1 349,9 (annual 2025 bulletin
+  Tableau 1); 2026-Q2 exports 1 463,3, imports 596,6 (2026-Q2 Excel Tableau 1);
+  exports to Chine 2025 2 907,9 milliards.

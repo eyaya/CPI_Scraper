@@ -1,0 +1,55 @@
+country: Kenya
+iso3: KEN
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Kenya National Bureau of Statistics (KNBS) -- Leading Economic Indicators (trade data from Kenya Revenue Authority customs)
+publication_code: Leading Economic Indicators, Tables 12-14
+frequency: monthly
+# www.knbs.or.ke serves an incomplete TLS chain (leaf only, Let's Encrypt YE2
+# whose root is not in certifi). Verification stays on: every file is the
+# Wayback id_ copy of KNBS's own upload. Wayback answers 429 to the browser-style
+# UA and serves requests' own UA, hence client_default.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20260816115742id_/https://www.knbs.or.ke/wp-content/uploads/2026/08/Kenya-Leading-Economic-Indicators-June-2026.pdf"
+  save_as: Kenya-Leading-Economic-Indicators-June-2026.pdf
+  user_agent: client_default
+
+extras_cache: true
+extra_urls:
+  - {url: "http://web.archive.org/web/20241206045617id_/https://www.knbs.or.ke/wp-content/uploads/2023/07/Kenya-Leading-Economic-Indicators-December-2019.pdf", save_as: Kenya-Leading-Economic-Indicators-December-2019.pdf}
+  - {url: "http://web.archive.org/web/20260212134936id_/https://www.knbs.or.ke/wp-content/uploads/2023/07/Kenya-Leading-Economic-Indicators-December-2020.pdf", save_as: Kenya-Leading-Economic-Indicators-December-2020.pdf}
+  - {url: "http://web.archive.org/web/20241106232150id_/https://www.knbs.or.ke/wp-content/uploads/2023/07/Kenya-Leading-Economic-Indicators-December-2021.pdf", save_as: Kenya-Leading-Economic-Indicators-December-2021.pdf}
+  - {url: "http://web.archive.org/web/20240521224813id_/https://www.knbs.or.ke/wp-content/uploads/2023/07/Kenya-Leading-Economic-Indicators-December-2022.pdf", save_as: Kenya-Leading-Economic-Indicators-December-2022.pdf}
+  - {url: "http://web.archive.org/web/20240521224313id_/https://www.knbs.or.ke/wp-content/uploads/2024/03/Kenya-Leading-Economic-Indicators-December-2023.pdf", save_as: Kenya-Leading-Economic-Indicators-December-2023.pdf}
+  - {url: "http://web.archive.org/web/20250217222906id_/https://www.knbs.or.ke/wp-content/uploads/2025/02/Kenya-Leading-Economic-Indicators-December-2024.pdf.pdf", save_as: Kenya-Leading-Economic-Indicators-December-2024.pdf}
+
+parser: kenya_knbs_lei
+geography: Kenya
+expect_periods: 60
+
+notes: >
+  KNBS Leading Economic Indicators (monthly), customs data from KRA, KSh
+  million, excluding electricity and informal cross-border trade. Collected:
+  Table 12 External Trade (domestic exports, re-exports, total exports, total
+  imports, total trade; "Volume of Home use Imports" not collected) monthly
+  2019-01 .. 2026-06; Table 13(a) domestic exports to the top 11 destinations
+  and 14(a) imports from the top 11 origins, monthly 2018-01 .. 2026-06; Tables
+  13(b)/14(b) domestic exports / imports by Broad Economic Category (7 BEC
+  groups; their Total row is not emitted -- in the Dec-2019 issue it differs from Table 12 for 3 months), monthly 2018-11 .. 2026-06 (gaps where an issue's BEC table
+  did not read: 13(b) Dec-2022 and Dec-2024 issues, 14(b) Dec-2020 issue ->
+  13(b) 2022-01..2022-11 and 2024-01..2024-11 missing, 14(b) 2020-01..2020-11
+  covered by Dec-2021's 2020-12 only). No balance is printed (none derived).
+  LEI issues exist on the KNBS site from 2007 (Wayback lists ~110 issues);
+  issues before 2019 use a different table layout (2007-2013 issues read
+  EMPTY with this parser) and Dec-2015/Dec-2016/Mar-2017/Dec-2025 Wayback
+  copies failed to download (connection resets, 2026-11-12); Dec-2018's copy
+  was truncated. Back-filling 2007-2018 needs those issues + a parser variant
+  -- or the Statistical Abstract / Economic Survey annual trade tables (also
+  only via Wayback).
+  CROSS-CHECK (June 2026 issue, Table 12): 2026-06 domestic exports 103,322.89,
+  re-exports 14,704.19, total exports 118,027.08, total imports 300,165.47,
+  total trade 418,192.55; 2024-01 domestic exports 79,668.56. Table 13(a)
+  Uganda 2026-06 12,121.64; USA 2026-05 15,122.14. Table 13(b) Food and
+  beverages 2026-06 41,924.47 (printed Total 103,322.89 = Table 12 domestic exports).

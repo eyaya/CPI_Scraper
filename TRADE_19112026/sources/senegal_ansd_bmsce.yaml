@@ -1,0 +1,85 @@
+country: Senegal
+iso3: SEN
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD), Bureau des Echanges extérieurs
+publication_code: Bulletin mensuel des statistiques du commerce extérieur (BMSCE)
+frequency: monthly
+verify_ssl: indicators/trade/certs/ansd_sn_ca_bundle.pem   # certifi + ANSD's missing GlobalSign intermediate
+expect_rows: 30000
+expect_periods: 40
+
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2026-11/BMSCE_SEPT_2026.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.ansd.sn/sites/default/files/2024-04/BMSCE_FEV_2024.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2024-05/BMSCE_MARS_2024%20%284%29.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2024-07/BMSCE_AVRIL_2024.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2024-07/BMSCE_MAI_2024.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-01/BMSCE_JUIN_2024maj.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-01/BMSCE_JUILLET_2024maj.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-01/BMSCE_AOUT_2024maj.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-01/BMSCE_SEPT_2024maj.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-01/BMSCE_OCT_2024maj.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-01/BMSCE_NOV_2024.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-01/BMSCE_DEC_2024.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-03/BMSCE_25_01.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-03/BMSCE_FEV_25.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-05/BMSCE_MARS_2025.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-06/BMSCE_25_AVRIL_BEE_DSC_DSECN.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-07/BMSCE_25_MAI_BEE_DSC.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-08/BMSCE_25_06_BEE.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-09/BMSCE_JUILLET_2025.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-10/BMSCE_AOUT_2025Correction.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2025-11/BMSCE_SEPT_2025.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-06/BMSCE_Oct_2025.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-06/BMSCE_Nov_2025.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-06/BMSCE_Dec_2025.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-06/BMSCE_JANV_2026.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-04/BMSCE_FEV_2026_V01.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-05/BMSCE_MARS_2026.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-06/BMSCE_AVRIL_2026.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-07/BMSCE_MAI_2026.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-08/BMSCE_JUIN_2026.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-09/BMSCE_JUILLET_2026.pdf"
+  - url: "https://www.ansd.sn/sites/default/files/2026-10/BMSCE_AOUT_2026.pdf"
+  # The HS2 workbooks supply ANSD's own chapter codes for the chapter labels.
+  - url: "https://www.ansd.sn/sites/default/files/2024-04/Exportations%20des%20produits%20%28valeur%20et%20volume%29%2C%20janv2010%20-%20fevr2024.xlsx"
+  - url: "https://www.ansd.sn/sites/default/files/2024-04/Importations%20des%20produits%20%28valeur%20et%20volume%29%2C%20janv2010%20-%20fevr2024.xlsx"
+
+parser: senegal_ansd_bmsce
+geography: National
+
+notes: >
+  ANSD BMSCE, 32 monthly issues fevr. 2024 .. sept. 2026 (add each new issue to
+  extra_urls and move the primary url forward); each prints five months (month
+  under review, the three before, the same month a year earlier), so the span is
+  2023-02..2026-09 (2023-02..2023-12 only the months the issues reprint). Read:
+  Tableau 1/2 all products value (FCFA) and net weight (kg); Tableaux 19/20
+  (exports) and 23/24 (imports) by HS chapter, value in millions of FCFA and
+  weight in thousands of kg; Tableaux 27/29 exports/imports by partner country
+  and ANSD's regional groupings ("LES PAYS MEMBRES DE LA COMMUNAUTE EUROPEENE",
+  "LES PAYS DE L'AFRIQUE DE L'OUEST" ... -> group; "DIVERS (PBE,PBF,OM,nda..)" and
+  its parts -> group), millions of FCFA; Tableau 31 trade balance by partner,
+  millions of FCFA, signed as printed. The chapter tables print labels only; the
+  HS2 code is ANSD's own code for the identical label in its HS2 workbook (one
+  label spelt differently, "HUILES ESSENTIELLES ; ... PARFURMERIE", stays
+  uncoded). Columns are located by the right edges of the right-aligned figures;
+  a page segment whose columns cannot be located is skipped, never guessed (a few
+  pages in juin 2024, sept 2025). Newest issue wins per month; within an issue the
+  FCFA print of Tableau 1/2 replaces the chapter-table total in millions. Not
+  collected: groupes d'utilisation and produits regroupes (national lists; HS2 is
+  collected), unit values, shares, growth rates, cumulative columns.
+  CROSS-CHECK (verbatim, sept. 2026 issue): exports sept-26 566 034 349 588 FCFA,
+  imports 595 574 801 043, balance sept-26 -29 540 (Tableau 31 total, millions;
+  exports - imports = -29 540,5); ch.27 exports sept-26 233 133; FRANCE exports
+  sept-26 1 939; SUISSE 122 932; PAYS BAS 55 034; LES PAYS MEMBRES DE LA
+  COMMUNAUTE EUROPEENE 92 535. SUM: sept. 2026 imports, the regional groupings
+  (589 060) + DIVERS (6 515) = 595 575 = Tableau 2 total (595 574,8 million);
+  exports 525 719 + 40 315 = 566 034. Chapters 2026-09 sum 566 040 vs 566 034.
+  Older BMSCE / "BullComex" back issues 2010-01..2024-01 are on the same page;
+  their months are covered by the partner and HS2 workbooks, so they are not read.

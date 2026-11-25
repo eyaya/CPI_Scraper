@@ -1,0 +1,59 @@
+country: Liberia
+iso3: LBR
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Liberia Institute of Statistics and Geo-Information Services (LISGIS) -- Trade Statistics archive
+publication_code: External Trade Report Tables (quarterly) and LISGIS trade workbooks
+frequency: monthly
+
+# --- discover ---
+# LISGIS serves its trade workbooks byte-for-byte from
+# /uploads/archive/trade-statistics/ (listed, with cell-level JSON copies, at
+# /api/datasets -- domain "international-trade"). TLS verifies (2026-11-12).
+# The latest quarterly report tables are pinned; add the next quarter's file
+# when LISGIS posts it (the dataset id follows trade-external-<yyyy>-q<n>).
+discover:
+  method: static_url
+  url: "https://www.lisgis.gov.lr/uploads/archive/trade-statistics/External%20Trade%202026%20Q1%20REPORT%20TABLES.xlsx"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.lisgis.gov.lr/uploads/archive/trade-statistics/EXTERNAL%20TRADE%20TABLES%202024%20N0V%20-%202025%20NOV.xlsx"
+  - url: "https://www.lisgis.gov.lr/uploads/archive/trade-statistics/External_Trade_2021_data.xlsx"
+  - url: "https://www.lisgis.gov.lr/uploads/archive/trade-statistics/bop2004-2007nov202008.xlsx"
+
+parser: liberia_lisgis_trade
+geography: National
+expect_rows: 2000
+expect_periods: 60
+
+notes: >
+  INVENTORY (LISGIS /api/datasets, domain international-trade, 2026-11-12):
+  External Trade Report Tables 2026 Q1; External Trade Tables Nov 2024 - Nov
+  2025; External Trade Data 2021; the 2004-2007 BoP & trade workbook; a
+  quarterly BoP workbook 2020-2024 (not merchandise-trade statistics, not read);
+  and "International trade statistics" 2016-2021 from the Social Statistics
+  Bulletin 2023 (a LISGIS cell extract of a bulletin table, not a workbook;
+  not read here -- see report). Nothing else for 2008-2020 or 2022-2024 Oct
+  is posted: those years are a GAP on the LISGIS site.
+  CUTS (US dollars; exports FOB, imports CIF as printed). Headline: monthly
+  2021-01..2021-12 + 2021 annual (exports, imports, balance, total);
+  2024-11..2025-11 monthly exports and imports; 2026-01..03 monthly + 2026-Q1
+  (exports, imports, total trade, balance). Commodity: HS chapters and SITC
+  sections (no SITC codes printed), 2026-Q1; HS chapters (thousands USD,
+  "c.i.f." as printed) for exports 2006-01..2008-03 monthly, quarterly
+  2006-Q1..2008-Q1, annual 2006-2007, and imports 2007 monthly + annual.
+  Partner: every partner, 2026-Q1 (exports, imports); imports by country of
+  supply 2007 monthly / quarterly / annual (thousands USD). The Nov 2024 -
+  Nov 2025 partner and product tables print only partial-year columns ("2024"
+  = Nov-Dec, "2025" = Jan-Nov) and are not read.
+  CROSS-CHECKS (verbatim): 2026 Q1 summary grand total FOB 789,234,075.0, CIF
+  815,041,941.1, TT 1,604,276,016.2, BOT -25,807,866.1; Jan 2026 FOB
+  257,517,884.1; HS2 26 "Ores, slag and ash" exports 241,132,449.9; 2021 TOTAL
+  exports 171,699,004.6, imports 1,566,031,227.0, balance -1,394,332,222.4;
+  2025 Nov exports 180,741,276.8, imports 235,108,883.8; 2007 TOTAL EXPORTS
+  194,640 and TOTAL IMPORTS 524,931 (thousand USD). Sum checks: 2026-Q1 HS2,
+  SITC and partner tables each sum to the printed grand totals (789,234,075.0
+  / 815,041,941.1); 2007 imports by partner sum 415,345 vs the printed "TOTAL"
+  (excl. tax-exempt) 415,343.

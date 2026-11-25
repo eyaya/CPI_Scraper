@@ -1,0 +1,74 @@
+country: Nigeria
+iso3: NGA
+indicator: Trade
+tier: 2
+source_type: excel
+agency: National Bureau of Statistics (NBS) -- Foreign Trade in Goods Statistics (data from Nigeria Customs Service)
+publication_code: Foreign Trade in Goods Statistics (quarterly)
+frequency: monthly
+
+# --- discover ---
+# NBS posts each quarterly report on its NADA catalogue (catalog 84,
+# "Foreign Trade in Goods Statistics"). Since Q2 2025 each quarter is a ZIP
+# holding the PDF report and the Excel tables; Q3 2024 - Q1 2025 were posted as
+# separate .xlsx files. The download id grows each quarter, so the newest ZIP
+# is the largest id. (nigerianstat.gov.ng/elibrary answered HTTP 500 on
+# 2026-11-12; the microdata host serves the same files.)
+discover:
+  method: catalog_latest
+  page_url: https://microdata.nigerianstat.gov.ng/index.php/catalog/84
+  include_ext: [".zip"]
+  base_url: https://microdata.nigerianstat.gov.ng/index.php
+  inner_suffix: ".xlsx"
+
+# Earlier quarters on the same catalogue (immutable). Each workbook repeats the
+# series back to 2020; the newest issue wins for an overlapping key.
+extras_cache: true
+extra_urls:
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/84/download/1418/Q1_2026_FTS.zip"
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/84/download/1368/Q4_2025_Foreign_Trade_in_Goods_Statistics_Report.zip"
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/84/download/1318/Q3_2025_FTS_Report.zip"
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/84/download/1285/Q2_2025%20Foreign%20Trade%20in%20Goods%20Statistics%20Report.zip"
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/84/download/1227/Q1_2025_Foreign_Trade_Statistics_Tables.xlsx"
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/84/download/1160/Q4_2024_Foreign_Trade_Statistics_Tables.xlsx"
+  - url: "https://microdata.nigerianstat.gov.ng/index.php/catalog/84/download/1063/Q3_2024_Foreign_Trade_Statistics_Tables.xlsx"
+
+parser: nigeria_nbs_trade
+geography: National
+expect_rows: 9000
+expect_periods: 100
+
+notes: >
+  INVENTORY. NBS publishes "Foreign Trade in Goods Statistics" quarterly (PDF
+  report + Excel tables), compiled from Nigeria Customs Service records. The
+  catalogue holds Q3 2024 - Q2 2026 (8 quarters); every workbook carries the
+  series back to 2020, so this descriptor covers 2020-01 .. 2026-06 monthly.
+  Earlier years (2011-2019) are in the PDF reports kept by the Wayback Machine
+  -- separate descriptor nigeria_pdf.yaml.
+  CUTS (naira; N'million unless stated). Table 1: imports, exports (fob),
+  balance (signed), total trade, crude-oil / non-crude-oil / non-oil exports --
+  monthly 2020-01..2026-06, quarterly 2020-Q1..2026-Q2, annual 2020..2025.
+  Table 8 (N'billion): domestic exports and re-exports, same span. Tables 2/3:
+  imports (cif) / exports (fob) by HS SECTION (22 sections; "national" with the
+  section number as code, since the schema has no section level) -- annual
+  2020..2025 and quarters as printed in the 8 issues. Tables 4/5: imports /
+  exports by region (Africa, ECOWAS, America, Europe, Asia, Oceania, and each
+  region's "Others") and 12 major partners -- monthly 2020-01..2026-06. Table
+  5B: exports / imports with ~50 African countries, annual 2020..2025 and the
+  report quarter. Table 6: imports by SITC section, monthly 2020+. Table 7:
+  imports by BEC, annual + quarters. Not taken: shares, growth, HS10 rankings,
+  partner x product tables, sector tables, transport mode, ports. Partial-year
+  ("Jan-Jun") columns skipped.
+  KNOWN NBS INCONSISTENCIES: Table 8's own 2025-Q1..Q3 balances (5172.3,
+  7464.0, 6690.6 N bn) disagree with its exports - imports; only its domestic
+  exports / re-exports are read, the balance comes from Table 1. Section-table
+  "Total" rows (e.g. 2022 imports 25,659,000.0) differ from Table 1
+  (25,590,547.4) and are not read.
+  CROSS-CHECKS (Q2 2026 workbook, verbatim): Table 1 2020 Jan-Dec imports
+  12,700,943.807826; 2020 Mar balance -264,641.43632; 2026 Q2 crude oil
+  exports 12,914,330.27; Table 8 2025 Sept re-exports 120.272505 (N bn); Table
+  4 2024 Jan-Dec China imports 14,147,322.3; Table 5B 2020 exports to Ghana
+  137,167.9; Table 2 Apr-Jun 2026 mineral products imports 1,912,126.99; Table
+  6 2020 Jan food & live animals imports 131,713.81; Table 7 Apr-Jun 2023 Food
+  and Beverage 733,626.41. Sum checks: Table 4 regions June 2026 = 4,852,803.77
+  = Table 1 imports; Table 6 SITC 2025 sum = 67,346,929.17 = Table 1 imports.

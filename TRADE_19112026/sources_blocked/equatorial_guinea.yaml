@@ -1,0 +1,17 @@
+country: Equatorial_Guinea
+iso3: GNQ
+indicator: Trade
+status: blocked
+checked: 2026-11-12
+reason: >
+  INEGE (inege.org) is Cloudflare-gated: a plain HTTPS request with a browser User-Agent
+  gets HTTP 403 on the home page (the CPI descriptor reaches it only through
+  browser-fingerprint impersonation, which this collection does not use). No
+  merchandise-trade publication could be listed or downloaded.
+routes_tried:
+  - "https://inege.org/ -> 403 (Cloudflare)"
+  - "Wayback Machine -> 429 / connection refused throughout this session"
+unblock: >
+  INEGE serving plain clients, or Wayback id_ copies of its "Comercio Exterior" /
+  "Anuario Estadístico" files once the archive allows; the Banco de los Estados de
+  África Central (BEAC) is a regional central bank, not the national compiler.

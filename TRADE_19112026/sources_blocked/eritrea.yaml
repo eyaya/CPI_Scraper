@@ -1,0 +1,7 @@
+country: Eritrea
+iso3: ERI
+indicator: Trade
+reason: No national statistics office website (as for every other indicator); no official trade compiler publishes online.
+routes_tried:
+  - "2026-11-12 No NSO domain exists to search (consistent with the PPI/GDP/population blocked descriptors)."
+unblock: An NSO or customs web presence publishing merchandise trade statistics.

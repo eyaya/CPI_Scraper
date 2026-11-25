@@ -1,0 +1,62 @@
+country: Lesotho
+iso3: LSO
+indicator: Trade
+tier: 2
+source_type: pdf
+agency: Bureau of Statistics Lesotho (BOS) -- Quarterly Foreign Trade Statistics Report
+publication_code: Foreign Trade Statistics Report (quarterly)
+frequency: monthly
+discover:
+  method: static_url
+  url: "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2026_Q2.pdf"
+extras_cache: true
+extra_urls:
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2021_Q1.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2021_Q2.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2021_Q3.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2021_Q4.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2022_Q1.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2022_Q2.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2022_Q3.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2022_Q4.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2023_Q1.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2023_Q2.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2023_Q3.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2023_Q4.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2024_Q1.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2024_Q2.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2024_Q3.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2024_Q4.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2025_Q1.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2025_Q2.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2025_Q3.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2025_Q4.pdf"
+  - "https://www.bos.gov.ls/BoS_reports/Copy%20of%20Economics/Foreign_Trade_Statistics_Report_2026_Q1.pdf"
+parser: lesotho_bos_trade
+expect_rows: 1200
+expect_periods: 60
+notes: >
+  BOS publishes a quarterly Foreign Trade Statistics Report (PDF; the home page links
+  the latest as a .zip of the same PDF). The PDFs follow a fixed name
+  Foreign_Trade_Statistics_Report_<year>_Q<q>.pdf; 2021 Q1 - 2026 Q2 (22 reports) were
+  found by probing that name (nothing earlier under it; the older BOS site's
+  Economic/Foreign Trade HTML tables of 2000-2003 survive only in Wayback, not
+  collected). Collected: monthly imports (CIF) and exports (FOB) by SITC section
+  (Tables "Distribution of Imports ... by SITC Categories" / "Value of Exports by
+  SITCs"; sitc1, section names as printed, codes not printed) and the tables'
+  printed monthly Total (all products), January 2021 - June 2026; the 2026 Q2
+  report's monthly trade volume table (exports, imports, trade balance signed, net
+  trade volume = flow total). Partner cut: the annex "Total Value of Imports/Exports
+  by SITCs and Partner", total column only, quarterly, for the quarters where the
+  annex extracts cleanly -- each annex is kept only if its WORLD/Total equals the
+  three monthly totals of the SITC table (2 %; a check, nothing derived): imports
+  2021 Q1-Q2, Q4, 2022 Q3, 2023 Q1, 2025 Q3, 2026 Q1-Q2; exports 2021 Q1-Q2, 2022
+  Q3-Q4, 2023 Q1, 2025 Q4, 2026 Q1-Q2. Other quarters' annexes (rotated headers,
+  wrapped rows) fail the check and are not emitted (gap). Trade balance monthly
+  only for 2026 Q2 (earlier reports show it as a chart). Million maloti (LSL x 1e6).
+  Compiler: BOS, from Revenue Services Lesotho customs records.
+  Verbatim cross-checks: 2026 Q2 trade volume April exports M1,297.0, imports
+  M2,684.1, balance -M1,387.1, net volume M3,981.1; 2026 Q2 Table 1 April Food and
+  live animals 521.2; annex WORLD imports 8,053, exports 3,900, South Africa imports
+  6,618; 2023 Q1 Table 1 Total 2,159.70 2,468.27 2,686.85; 2021 Q1 exports Table 3
+  Food and live animals January 30.

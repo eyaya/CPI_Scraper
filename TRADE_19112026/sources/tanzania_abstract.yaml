@@ -1,0 +1,62 @@
+country: Tanzania
+iso3: TZA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS) Tanzania -- Tanzania Statistical Abstract (data from TRA customs)
+publication_code: Tanzania Statistical Abstract, chapter Trade
+frequency: annual
+# TLS verifies on www.nbs.go.tz (2026-11-12).
+
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.go.tz/statistics/topic/statistical-abstract"
+  link_contains:
+    - "Statistical"
+    - "Abstract"
+    - ".pdf"
+
+# Back editions (older ones are .zip with the PDF inside; the parser reads the
+# PDF member directly). Oldest first is irrelevant: the parser orders by edition.
+extras_cache: true
+extra_urls:
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705576004-Statistical_Abstract_2011.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705575984-Statistical_Abstract_2012.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705575946-Statistical_Abstract_2014.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705575924-Statistical_Abstract_2015.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705575907-Statistical_Abstract_2016.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705575886-Statistical_Abstract_2019.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705575838-Statistical_Abstract_2020.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705575813-Statistical_Abstract_2021.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1705577077-Statistical_Abstract_2022.pdf"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1731414485-Statistical%20Abstract%202023.zip"
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1762949235-Statistical%20Abstract%202024.pdf"
+
+parser: tanzania_nbs_abstract
+geography: Tanzania
+expect_periods: 20
+
+notes: >
+  Statistical Abstract chapter "Trade" (J in 2011, I in 2012-2016, H in 2019,
+  9 from 2020). Collected: Table X.1 Value of Foreign Trade (exports FOB,
+  domestic exports, re-exports, imports CIF, total trade, balance; Mill. TZS)
+  2003-2025; Table X.6 Domestic Exports by Country of Destination and X.7
+  Direct Imports by Country of Origin (Mill. TZS; every printed country plus
+  the regional subtotals Western/Eastern Europe, Northern America, Asia and
+  Oceania, Africa, Middle East, South & Central America, "Others") 2003-2025.
+  Each edition prints a 5-9 year window; the newest edition's figure wins
+  (large revisions: 2015 imports 29 352 500 in the 2015/2016 editions, 17 820 666
+  from 2019). Not collected: X.2/X.3 (nine traditional crops + minerals; mixed
+  units across editions), X.4/X.5 (prices). Headline tables without a printed
+  scale are dropped (2012, 2014 editions; their years are in 2011/2015/2016).
+  Partner rows with a blank cell, a wrapped label that cannot be rejoined, or a
+  malformed figure are dropped; the X.6/X.7 Total rows are not emitted (see
+  parser). The 2024 edition's partner pages are not read (mis-captioned page).
+  Editions 2013, 2017, 2018 are not on the NBS site. Known oddities printed by
+  NBS and kept as printed: Abstract 2025 Table 9.6 Kenya 2022 = 1 and Botswana
+  2022 = 642,192 (the 2022 column looks shifted by a row); 2011 edition balance
+  minus signs for 2005-2007 printed on a separate line (re-attached by x).
+  CROSS-CHECK (Abstract 2025, Table 9.1): 2025 Export (FOB) 25,290,157; Imports
+  (CIF) 41,036,184; Balance -15,746,027; Domestic Export 2024 21,961,114.
+  Table 9.6 China 2025 1,296,799; Table 9.7 China 2025 14,341,623. Abstract
+  2011 Table J.1: 2003 Export (FOB) 1,267,322; 2005 balance -1,785,697.

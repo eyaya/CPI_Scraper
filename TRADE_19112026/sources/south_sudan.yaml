@@ -1,0 +1,46 @@
+country: South_Sudan
+iso3: SSD
+indicator: Trade
+tier: 2
+source_type: xlsx
+agency: National Bureau of Statistics (NBS) South Sudan -- "SS Trade Data" workbooks
+publication_code: SS Trade Data (annual workbook, monthly detail)
+frequency: monthly
+# TLS verifies on www.nbs.gov.ss (2026-11-12).
+
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.gov.ss/statistics/Trade_Statistics.php"
+  link_contains:
+    - "SS Trade Data"
+    - ".xlsx"
+
+extras_cache: true
+extra_urls:
+  - "https://www.nbs.gov.ss/assets/images/SS%20Trade%20Data%2001_12_2022.xlsx"
+  - "https://www.nbs.gov.ss/assets/images/SS%20Trade%20Data%2001_12_2023.xlsx"
+  - "https://www.nbs.gov.ss/assets/images/SS%20Trade%20Data%2001_12_2024.xlsx"
+
+parser: south_sudan_nbs_trade
+geography: South Sudan
+expect_periods: 36
+
+notes: >
+  NBS "Trade Statistics" page links three workbooks (2022, 2023, 2024; checked
+  2026-11-12), each a long table Reporter | Date (YYYYMm) | Trade Flow (I, E,
+  RE, RI) | Commodity (8-digit tariff code, no description) | Partner (ISO
+  alpha-2 code) | Indicator (F_VALUE_CIF_USD, F_VALUE_FOB_USD, F_VALUE_NET,
+  F_VALUE_QUANTITY) | Unit | Value. Monthly 2022-01 .. 2024-12. It is the ONLY
+  trade table NBS publishes: there are NO printed totals, chapter or partner
+  aggregates, so no headline, HS2 or all-products partner cut exists and none
+  is derived. Emitted as published: tariff line x partner x month, value (USD,
+  CIF for imports / FOB for exports and re-exports) and net weight (kg);
+  classification "national" (8-digit national tariff line), partner = the
+  alpha-2 code as printed. Skipped: re-imports (RI, not in the schema),
+  quantities (unit "None"), non-8-digit codes (2024: 44 lines), and 327 lines
+  of 2023 that repeat a key with a different value. Coverage caveat: exports
+  are almost absent (crude oil, ~90 % of South Sudan's exports, is not in
+  these customs records). Earlier years (2011-2021) are not published.
+  CROSS-CHECK (2022 workbook, first lines): 2022M1 I 01019090 UG F_VALUE_CIF_USD
+  2400, F_VALUE_NET 300; 2022M1 I 01022100 UG F_VALUE_CIF_USD 17575, F_VALUE_NET 24000.
+  2024 workbook: 2024M10 I 01022900 UG CIF 6800, net 800.

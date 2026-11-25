@@ -1,0 +1,13 @@
+country: Ethiopia
+iso3: ETH
+indicator: Trade
+reason: The Ethiopian Statistics Service hosts could not be reached on 2026-11-12.
+routes_tried:
+  - "2026-11-12 https://ess.gov.et/ : ConnectionError (NewConnectionError, connection refused/timeout); curl 000."
+  - "2026-11-12 https://www.statsethiopia.gov.et/ : NameResolutionError."
+  - "Wayback was rate-limited/offline intermittently all session; ESS trade files not searched there."
+unblock: >
+  ess.gov.et reachable again (the CPI descriptor's host); look for the ESS
+  external trade statistics / Statistical Report or yearbook trade tables, or
+  Wayback id_ copies of them. The Ethiopian Customs Commission / NBE are not
+  the compiler of record while ESS publishes.

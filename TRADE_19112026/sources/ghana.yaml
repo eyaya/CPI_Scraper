@@ -1,0 +1,65 @@
+country: Ghana
+iso3: GHA
+indicator: Trade
+tier: 1
+source_type: api
+agency: Ghana Statistical Service (GSS) — StatsBank (PxWeb)
+publication_code: International Merchandise Trade
+frequency: monthly
+# TLS verifies (2026-11-12); the old `verify_ssl: false` is no longer needed.
+
+# --- API (PxWeb / JSON-stat2) ---
+# The commodity cut (every HS chapter; every GSS product group) for all
+# partners, and the partner cut (all products, every partner). Every month and
+# the annual "All Months" figure, in nominal cedis, real cedis, US dollars and
+# net weight. The API refuses the partner cut for all years at once (403), so
+# it is asked one year per table: ADD A TABLE EACH NEW YEAR.
+api:
+  tables:
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Trade/trade_general.px"
+      save_as: ghana_trade_general_products.json
+      dimensions: {Valuation_Parameter: ["*"], Tradeflow: ["*"], Year: ["*"], Month: ["*"],
+                   Product_Classification: ["*"], Partner_Country: ["All Partner Countries"]}
+    - table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Trade/trade_detail_hs2.px"
+      save_as: ghana_trade_hs2.json
+      dimensions: {Valuation_Parameter: ["*"], Tradeflow: ["*"], Year: ["*"], Month: ["*"],
+                   HS_2_digit: ["*"], Partner_Country: ["All Partner Countries"]}
+    - {table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Trade/trade_general.px",
+       save_as: ghana_trade_partners_2021.json,
+       dimensions: {Valuation_Parameter: ["*"], Tradeflow: ["*"], Year: ["2021"], Month: ["*"],
+                    Product_Classification: ["All Products"], Partner_Country: ["*"]}}
+    - {table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Trade/trade_general.px",
+       save_as: ghana_trade_partners_2022.json,
+       dimensions: {Valuation_Parameter: ["*"], Tradeflow: ["*"], Year: ["2022"], Month: ["*"],
+                    Product_Classification: ["All Products"], Partner_Country: ["*"]}}
+    - {table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Trade/trade_general.px",
+       save_as: ghana_trade_partners_2023.json,
+       dimensions: {Valuation_Parameter: ["*"], Tradeflow: ["*"], Year: ["2023"], Month: ["*"],
+                    Product_Classification: ["All Products"], Partner_Country: ["*"]}}
+    - {table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Trade/trade_general.px",
+       save_as: ghana_trade_partners_2024.json,
+       dimensions: {Valuation_Parameter: ["*"], Tradeflow: ["*"], Year: ["2024"], Month: ["*"],
+                    Product_Classification: ["All Products"], Partner_Country: ["*"]}}
+    - {table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Trade/trade_general.px",
+       save_as: ghana_trade_partners_2025.json,
+       dimensions: {Valuation_Parameter: ["*"], Tradeflow: ["*"], Year: ["2025"], Month: ["*"],
+                    Product_Classification: ["All Products"], Partner_Country: ["*"]}}
+    - {table_url: "https://statsbank.statsghana.gov.gh/api/v1/en/Trade/trade_general.px",
+       save_as: ghana_trade_partners_2026.json,
+       dimensions: {Valuation_Parameter: ["*"], Tradeflow: ["*"], Year: ["2026"], Month: ["*"],
+                    Product_Classification: ["All Products"], Partner_Country: ["*"]}}
+
+parser: ghana_pxweb_trade
+geography: Total country
+expect_periods: 60
+
+notes: >
+  Ghana GSS StatsBank International Merchandise Trade, 2021 onward (the
+  StatsBank's span; earlier years are in GSS trade bulletins -- separate
+  descriptors). Exports, imports and total trade, monthly and annual, by HS
+  chapter (trade_detail_hs2) and by GSS product group (trade_general: Gold,
+  Cocoa Beans and Products, Mineral Fuels and Oils ...), all partners; and by
+  partner country, all products. Nominal and real cedis, US dollars, net weight.
+  Not collected: the partner x commodity matrix (the roadmap's two cuts are
+  taken instead), HS 10-digit detail (trade_detail_hs10), and the export/import
+  unit value indices (trade_uvi, a price index).

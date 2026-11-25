@@ -1,0 +1,42 @@
+country: Mali
+iso3: MLI
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT Mali)
+publication_code: Annuaire du Commerce International des Marchandises (editions 2017-2025)
+frequency: annual
+expect_rows: 150
+expect_periods: 1
+
+discover:
+  method: static_url
+  url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair-stat-cmext25_pub.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair-stat-cmext24_pub.pdf"
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair-stat-cmext23_pub.pdf"
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair-stat-cmext22_pub.pdf"
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair-stat-cmext21_pub.pdf"
+  - url: "https://www.instat-mali.org/laravel-filemanager/files/shares/pub/anuair-stat-cmext20_pub.pdf"
+
+parser: mali_instat_trade
+geography: National
+
+notes: >
+  INSTAT Mali "Annuaire du Commerce International des Marchandises", editions
+  2017-2025 on instat-mali.org (2015/2016 answer 404). Values in francs CFA
+  (units, "VALEUR: CFA"), net weight in kg. PARTIAL: the parser keeps a table only
+  when its coded rows add up to its own printed total (value and weight, within
+  0.1 %) and it has >= 10 rows; with the current text extraction only the 2025
+  edition's "Exportations de marchandises par pays en 2025" passes (102 partners +
+  total). The chapter and country tables of the 2020-2024 editions and the 2025
+  import tables break the label/figure sequence (multi-line labels, totals
+  printed apart) and are dropped, never guessed; the 2017-2019 editions print two
+  years with shares (another layout, not read). Also published, not collected:
+  quarterly "Commerce exterieur par CTCI" notes (cmex-ctci<q>t<yy>_pub.pdf,
+  imports/exports by WTO product group and partner) -- the next source to add.
+  CROSS-CHECK (verbatim, 2025): exports total 3 357 105 133 417 FCFA, 1 425 599 780
+  kg; Emirats Arabes Unis 339 151 227 038; Australie 335 299 647 892; Burkina Faso
+  29 017 287 653. SUM: the partners add up exactly to the total.

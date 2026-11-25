@@ -1,0 +1,174 @@
+code,name
+HS2_01,Live animals
+HS2_02,Meat and edible meat offal
+HS2_03,"Fish and crustaceans, molluscs and other aquatic invertebrates"
+HS2_04,Dairy produce; birds' eggs; natural honey; edible products of animal origin n.e.s.
+HS2_05,Products of animal origin n.e.s.
+HS2_06,Live trees and other plants; bulbs and roots; cut flowers and ornamental foliage
+HS2_07,Edible vegetables and certain roots and tubers
+HS2_08,Edible fruit and nuts; peel of citrus fruit or melons
+HS2_09,"Coffee, tea, maté and spices"
+HS2_10,Cereals
+HS2_11,Products of the milling industry; malt; starches; inulin; wheat gluten
+HS2_12,Oil seeds and oleaginous fruits; miscellaneous grains and seeds; industrial or medicinal plants; straw and fodder
+HS2_13,"Lac; gums, resins and other vegetable saps and extracts"
+HS2_14,Vegetable plaiting materials; vegetable products n.e.s.
+HS2_15,"Animal, vegetable or microbial fats and oils; prepared edible fats; waxes"
+HS2_16,"Preparations of meat, fish, crustaceans, molluscs or insects"
+HS2_17,Sugars and sugar confectionery
+HS2_18,Cocoa and cocoa preparations
+HS2_19,"Preparations of cereals, flour, starch or milk; pastrycooks' products"
+HS2_20,"Preparations of vegetables, fruit, nuts or other parts of plants"
+HS2_21,Miscellaneous edible preparations
+HS2_22,"Beverages, spirits and vinegar"
+HS2_23,Residues and waste from the food industries; prepared animal fodder
+HS2_24,Tobacco and manufactured tobacco substitutes
+HS2_25,"Salt; sulphur; earths and stone; plastering materials, lime and cement"
+HS2_26,"Ores, slag and ash"
+HS2_27,Mineral fuels and oils and products of their distillation; bituminous substances; mineral waxes
+HS2_28,"Inorganic chemicals; compounds of precious metals, rare-earth metals and radioactive elements"
+HS2_29,Organic chemicals
+HS2_30,Pharmaceutical products
+HS2_31,Fertilisers
+HS2_32,"Tanning or dyeing extracts; dyes, pigments, paints and varnishes; putty and mastics; inks"
+HS2_33,"Essential oils and resinoids; perfumery, cosmetic or toilet preparations"
+HS2_34,"Soap, washing and lubricating preparations, waxes, polishes, candles and modelling pastes"
+HS2_35,Albuminoidal substances; modified starches; glues; enzymes
+HS2_36,Explosives; pyrotechnic products; matches; pyrophoric alloys; certain combustible preparations
+HS2_37,Photographic or cinematographic goods
+HS2_38,Miscellaneous chemical products
+HS2_39,Plastics and articles thereof
+HS2_40,Rubber and articles thereof
+HS2_41,Raw hides and skins (other than furskins) and leather
+HS2_42,Articles of leather; saddlery and harness; travel goods and handbags; articles of animal gut
+HS2_43,Furskins and artificial fur; manufactures thereof
+HS2_44,Wood and articles of wood; wood charcoal
+HS2_45,Cork and articles of cork
+HS2_46,Manufactures of straw or other plaiting materials; basketware and wickerwork
+HS2_47,Pulp of wood or other fibrous cellulosic material; recovered paper or paperboard
+HS2_48,"Paper and paperboard; articles of paper pulp, paper or paperboard"
+HS2_49,"Printed books, newspapers, pictures and other products of the printing industry"
+HS2_50,Silk
+HS2_51,"Wool, fine or coarse animal hair; horsehair yarn and woven fabric"
+HS2_52,Cotton
+HS2_53,Other vegetable textile fibres; paper yarn and woven fabrics of paper yarn
+HS2_54,Man-made filaments
+HS2_55,Man-made staple fibres
+HS2_56,"Wadding, felt and nonwovens; special yarns; twine, cordage, ropes and cables"
+HS2_57,Carpets and other textile floor coverings
+HS2_58,Special woven fabrics; tufted textile fabrics; lace; tapestries; trimmings; embroidery
+HS2_59,"Impregnated, coated, covered or laminated textile fabrics; textile articles for industrial use"
+HS2_60,Knitted or crocheted fabrics
+HS2_61,"Articles of apparel and clothing accessories, knitted or crocheted"
+HS2_62,"Articles of apparel and clothing accessories, not knitted or crocheted"
+HS2_63,Other made up textile articles; sets; worn clothing and worn textile articles; rags
+HS2_64,"Footwear, gaiters and the like"
+HS2_65,Headgear and parts thereof
+HS2_66,"Umbrellas, walking-sticks, seat-sticks, whips and riding-crops"
+HS2_67,Prepared feathers and down; artificial flowers; articles of human hair
+HS2_68,"Articles of stone, plaster, cement, asbestos, mica or similar materials"
+HS2_69,Ceramic products
+HS2_70,Glass and glassware
+HS2_71,"Pearls, precious or semi-precious stones, precious metals; imitation jewellery; coin"
+HS2_72,Iron and steel
+HS2_73,Articles of iron or steel
+HS2_74,Copper and articles thereof
+HS2_75,Nickel and articles thereof
+HS2_76,Aluminium and articles thereof
+HS2_78,Lead and articles thereof
+HS2_79,Zinc and articles thereof
+HS2_80,Tin and articles thereof
+HS2_81,Other base metals; cermets; articles thereof
+HS2_82,"Tools, implements, cutlery, spoons and forks, of base metal"
+HS2_83,Miscellaneous articles of base metal
+HS2_84,"Nuclear reactors, boilers, machinery and mechanical appliances"
+HS2_85,Electrical machinery and equipment; sound and television recorders and reproducers
+HS2_86,Railway or tramway locomotives and rolling stock; track fixtures; traffic signalling equipment
+HS2_87,Vehicles other than railway or tramway rolling stock
+HS2_88,"Aircraft, spacecraft and parts thereof"
+HS2_89,"Ships, boats and floating structures"
+HS2_90,"Optical, photographic, measuring, precision, medical or surgical instruments"
+HS2_91,Clocks and watches and parts thereof
+HS2_92,Musical instruments
+HS2_93,Arms and ammunition
+HS2_94,"Furniture; bedding, mattresses and cushions; lamps and lighting fittings n.e.s.; prefabricated buildings"
+HS2_95,"Toys, games and sports requisites"
+HS2_96,Miscellaneous manufactured articles
+HS2_97,"Works of art, collectors' pieces and antiques"
+SITC1_0,Food and live animals
+SITC1_1,Beverages and tobacco
+SITC1_2,"Crude materials, inedible, except fuels"
+SITC1_3,"Mineral fuels, lubricants and related materials"
+SITC1_4,"Animal and vegetable oils, fats and waxes"
+SITC1_5,Chemicals and related products n.e.s.
+SITC1_6,Manufactured goods classified chiefly by material
+SITC1_7,Machinery and transport equipment
+SITC1_8,Miscellaneous manufactured articles
+SITC1_9,Commodities and transactions not classified elsewhere
+SITC2_00,Live animals other than fish
+SITC2_01,Meat and meat preparations
+SITC2_02,Dairy products and birds' eggs
+SITC2_03,"Fish, crustaceans, molluscs and aquatic invertebrates, and preparations thereof"
+SITC2_04,Cereals and cereal preparations
+SITC2_05,Vegetables and fruit
+SITC2_06,"Sugars, sugar preparations and honey"
+SITC2_07,"Coffee, tea, cocoa, spices and manufactures thereof"
+SITC2_08,Feeding stuff for animals (not including unmilled cereals)
+SITC2_09,Miscellaneous edible products and preparations
+SITC2_11,Beverages
+SITC2_12,Tobacco and tobacco manufactures
+SITC2_21,"Hides, skins and furskins, raw"
+SITC2_22,Oil-seeds and oleaginous fruits
+SITC2_23,Crude rubber (including synthetic and reclaimed)
+SITC2_24,Cork and wood
+SITC2_25,Pulp and waste paper
+SITC2_26,Textile fibres and their wastes
+SITC2_27,Crude fertilisers and crude minerals
+SITC2_28,Metalliferous ores and metal scrap
+SITC2_29,Crude animal and vegetable materials n.e.s.
+SITC2_32,"Coal, coke and briquettes"
+SITC2_33,"Petroleum, petroleum products and related materials"
+SITC2_34,"Gas, natural and manufactured"
+SITC2_35,Electric current
+SITC2_41,Animal oils and fats
+SITC2_42,"Fixed vegetable fats and oils, crude, refined or fractionated"
+SITC2_43,"Animal or vegetable fats and oils, processed; waxes"
+SITC2_51,Organic chemicals
+SITC2_52,Inorganic chemicals
+SITC2_53,"Dyeing, tanning and colouring materials"
+SITC2_54,Medicinal and pharmaceutical products
+SITC2_55,"Essential oils, resinoids and perfume materials; toilet, polishing and cleansing preparations"
+SITC2_56,Fertilisers (other than crude)
+SITC2_57,Plastics in primary forms
+SITC2_58,Plastics in non-primary forms
+SITC2_59,Chemical materials and products n.e.s.
+SITC2_61,"Leather, leather manufactures n.e.s. and dressed furskins"
+SITC2_62,Rubber manufactures n.e.s.
+SITC2_63,Cork and wood manufactures (excluding furniture)
+SITC2_64,"Paper, paperboard and articles of paper pulp, paper or paperboard"
+SITC2_65,"Textile yarn, fabrics, made-up articles n.e.s. and related products"
+SITC2_66,Non-metallic mineral manufactures n.e.s.
+SITC2_67,Iron and steel
+SITC2_68,Non-ferrous metals
+SITC2_69,Manufactures of metals n.e.s.
+SITC2_71,Power-generating machinery and equipment
+SITC2_72,Machinery specialised for particular industries
+SITC2_73,Metalworking machinery
+SITC2_74,General industrial machinery and equipment and machine parts n.e.s.
+SITC2_75,Office machines and automatic data-processing machines
+SITC2_76,Telecommunications and sound-recording and reproducing apparatus and equipment
+SITC2_77,"Electrical machinery, apparatus and appliances n.e.s. and electrical parts thereof"
+SITC2_78,Road vehicles (including air-cushion vehicles)
+SITC2_79,Other transport equipment
+SITC2_81,"Prefabricated buildings; sanitary, plumbing, heating and lighting fixtures and fittings n.e.s."
+SITC2_82,"Furniture and parts thereof; bedding, mattresses, cushions and similar stuffed furnishings"
+SITC2_83,"Travel goods, handbags and similar containers"
+SITC2_84,Articles of apparel and clothing accessories
+SITC2_85,Footwear
+SITC2_87,"Professional, scientific and controlling instruments and apparatus n.e.s."
+SITC2_88,"Photographic apparatus, equipment and supplies and optical goods n.e.s.; watches and clocks"
+SITC2_89,Miscellaneous manufactured articles n.e.s.
+SITC2_91,Postal packages not classified according to kind
+SITC2_93,Special transactions and commodities not classified according to kind
+SITC2_96,"Coin (other than gold coin), not being legal tender"
+SITC2_97,"Gold, non-monetary (excluding gold ores and concentrates)"

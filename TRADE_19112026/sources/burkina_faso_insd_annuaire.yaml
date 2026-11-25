@@ -1,0 +1,51 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD), Direction des statistiques sur les échanges extérieurs
+publication_code: Annuaire du commerce extérieur (editions 2013, 2014, 2019, 2024)
+frequency: annual
+expect_rows: 9000
+expect_periods: 30
+
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2025-09/Annuaire_Commerce_exterieur2024.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.insd.bf/sites/default/files/2022-05/Annuaire_Commerce_exterieur2019.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/Anuaire_commerce_exterieur_2014.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/Annuaire_commerce_exterieur_2013.pdf"
+
+parser: burkina_faso_insd_annuaire
+geography: National
+
+notes: >
+  INSD "Annuaire du commerce extérieur", listing
+  https://www.insd.bf/fr/statistiques/statistiques-economiques/-commerce-ext-rieur (8 pages:
+  annuaires 1999-2002, 2005-2009, 2013-2024, the quarterly SCE/ICE notes, analysis notes
+  "SACE"). Read, newest edition winning per (flow, chapter code / partner, year):
+  Tableau 1.1 imports CIF, exports FOB, trade balance, billions of FCFA, ANNUAL 1995-2024;
+  Tableaux 3.x by HS chapter ("CH" code printed), value in millions of FCFA and net weight
+  in tonnes, all partners, 2004-2024 (2024 edition: 2015-2024; 2019: 2010-2019; 2014 and
+  2013: 2004-2014) plus each table's "Ensemble" (all products); Tableaux 9.1-9.6 exports,
+  imports and balance by partner country and INSD's regional lines (Union européenne des
+  27, Afrique de l'Ouest, Asie ... -> group; "Ensemble" -> all partners), millions of FCFA,
+  2005-2024; Tableaux 9.7-9.12 by economic zone (ALENA, CEDEAO, UEMOA, UE27, SADC ... ->
+  group), 2005-2024. A row is kept only when every year column is accounted for: INSD
+  leaves blank cells unprinted in some chapter rows ("36,6  78,6" for five years) and those
+  rows are DROPPED (e.g. 2020-2024 exports chapters 78/86/87: chapters sum to 99.5-99.8 %
+  of "Ensemble"); the 2004-2008 chapter tables of the 2013/2014 editions parse only partly
+  (exports 17-19 chapters). The 1999-2002 and 2005-2009 annuaires (743 pages, older
+  layout) and Com_exterieur_2007 are not read (their years are covered by Tableau 1.1 and
+  the 2013/2014 editions). Not collected: HS sections, CTCI/SITC and CGCE/BEC and INSD
+  product lists (HS2 is collected), partner x chapter tables (10.x), transport mode,
+  indices.
+  CROSS-CHECK (verbatim, 2024 edition): T1.1 1995 imports 240,0 exports 82,0 balance
+  -158,0; 2014 imports 1 770,6 exports 1 285,5 balance -485,0; T9.2 exports 2024 Ensemble
+  3 421 320,5, Suisse 1 922 340,3, Émirats Arabes Unis 895 754,7, Côte d'ivoire 99 144,9;
+  T9.4 imports 2024 Ensemble 3 901 120,8; T9.6 balance 2024 -479 800,3 = 3 421 320,5 -
+  3 901 120,8. SUM: imports chapters 2015-2024 = Ensemble exactly (2024: 3 901 120,9 vs
+  3 901 120,8); quarterly SCE 2024 exports 838,2+817,1+814,4+951,6 = 3 421,3 = annual.

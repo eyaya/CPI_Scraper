@@ -1,0 +1,51 @@
+country: Mauritania
+iso3: MRT
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Agence Nationale de la Statistique et de l'Analyse Démographique et Economique (ANSADE) -- DEEC/SESE (data from the Direction Générale des Douanes, SYDONIA)
+publication_code: Note trimestrielle du commerce extérieur; Annuaire des statistiques du commerce extérieur
+frequency: quarterly
+
+# --- discover ---
+# ANSADE's WordPress media library (admin.ansade.mr/wp-json/wp/v2/media?search=commerce)
+# lists every note and yearbook. TLS verifies (2026-11-12): no verify_ssl
+# override. The newest quarterly note is primary; the two yearbooks are extras.
+discover:
+  method: static_url        # pin; replace with the next note (media search above)
+  url: "https://admin.ansade.mr/wp-content/uploads/2026/11/Note-trimestrielle-du-commerce-exterieur-de-la-Mauritanie-3T-2026.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/04/Annuaire-des-statistique-du-commerce-exterieur-2025-1.pdf"
+  - url: "https://admin.ansade.mr/wp-content/uploads/2026/01/Annuaire-des-statistiques-du-commerce-exterieur-2024-1-1-2.pdf"
+
+parser: mauritania_ansade_trade
+geography: National
+expect_rows: 800
+expect_periods: 10
+
+notes: >
+  INVENTORY (wp-json media search, 2026-11-12): quarterly "Notes du commerce
+  extérieur" T1 2016 - T3 2026 (N° 36? - 72 plus the new-layout 1T/2T/3T 2026
+  notes), annual notes 2016, 2022 (N°25) and 2024, and the "Annuaire des
+  statistiques du commerce extérieur" 2024 (years 2020-2024) and 2025
+  (2021-2025). READ: the 3T 2026 note (five quarters 2025-Q3..2026-Q3:
+  exports, imports, balance, total trade; exports by product group and by
+  destination, imports by product type and by origin -- million MRU) and the
+  2024 / 2025 yearbooks (Tableau 1 exports / imports / balance in milliards
+  MRU; Tableau 3 exports by product, 4 by destination, 11 imports by type,
+  12 by origin, million MRU; annual 2020-2025). The 2024 yearbook's Tableau 1
+  and 12 did not extract (layout) -- the 2025 yearbook covers 2021-2025 for
+  them. NOT READ (gap): the older single-quarter notes 2016-2025 (layout with
+  value / tonnes / share columns per quarter; would give quarterly series
+  2016-Q1..2025-Q2) and continuation lines of a few note tables that start a
+  page without a total line after a tonnage table (e.g. CEDEAO / Moyen-Orient
+  destination lines of 3T 2026). Tonnage tables are not read.
+  CROSS-CHECKS (verbatim): 3T 2026 note -- 2026T3 exports 48 911, imports
+  67 383, balance -18 472, échanges 116 294; 2025T4 imports 89 620; Suisse
+  exports 2026T3 11 278; imports of produits pétroliers 2026T3 27 287.
+  Yearbook 2025 -- total exports 2025 181 834, imports 242 917 (million MRU);
+  Tableau 1 balance 2025 -61 (milliards); gold exports 2025 67 963; Chine
+  exports 2021 48 519. Sum check: yearbook 2025 Tableau 11 import types 2025
+  (7 lines) sum 242 917 = printed total.

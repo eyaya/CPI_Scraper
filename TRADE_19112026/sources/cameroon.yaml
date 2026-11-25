@@ -1,0 +1,45 @@
+country: Cameroon
+iso3: CMR
+indicator: Trade
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique (INS) Cameroun -- Note sur le commerce extérieur (customs data DGD/MINFI)
+publication_code: Note sur le commerce extérieur (annual; 2018 Q1 quarterly note)
+frequency: annual
+# TLS verifies on ins-cameroun.cm (2026-11-12); no verify_ssl override.
+discover:
+  # the newest annual note; older notes are extras (newest wins on merge)
+  method: static_url
+  url: "https://ins-cameroun.cm/wp-content/uploads/2026/04/Note-sur-le-commerce-exterieur-en-2025-version-provisoire_FR.pdf"
+extras_cache: true
+extra_urls:
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/06/Note_sur_le_commerce_exterieur_au_1_er_trim_2018.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note_Commerce_exterieur_au_cours_de_l_annee_2019_20_08_2020.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-Commerce-exterieur-2020_VF.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-le-Commerce-Exterieur-2022_VF-du-13-fev-2024-Rev-DG.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/07/Note-sur-le-Commerce-Exterieur-2023-c-1.pdf"
+  - "https://ins-cameroun.cm/wp-content/uploads/2025/12/Commext_2024_FR_Edite-final-1.pdf"
+parser: cameroon_ins_trade
+geography: Total country
+expect_rows: 20
+expect_periods: 2
+notes: >
+  INS Cameroun "Note sur le commerce extérieur" (data DGD/MINFI). INVENTORY on
+  ins-cameroun.cm: annual notes 2019, 2020, 2021 (missing on the server: the -def*.pdf
+  uploads are 404 pages), 2022, 2023, 2024, 2025 (provisional); a Q1 2018 note; half-year
+  and nine-month notes (H1 2012, H1 2021, Jan-Sep 2022: cumulative windows, no schema
+  frequency, not read); thematic notes (CEMAC 2020, Russia/Ukraine, Gulf, Africa, China,
+  India, France, EU 2023, cross-border 2024; not read); the Ministry of Trade's TRADESTAT
+  2019 yearbook (263 pages, not read).
+  COLLECTED: annual 2017-2025 headline (exports, imports, balance, total trade
+  "échanges globaux"; values in milliards FCFA, net weight in milliers de tonnes) and the
+  NSO's own aggregates (Pétrole brut, Gaz, Carburants et lubrifiants, Hydrocarbures,
+  "hors pétrole brut" ..., national); 2017-Q1 and 2018-Q1 from the Q1 2018 note; HS
+  chapters (hs2, rows with a two-digit code only) 2018-2023, mostly imports; principal
+  clients and suppliers and border countries 2019, 2020, 2022, 2023, 2024.
+  GAPS: years before 2017 (old site statistics-cameroon.org Comext9206.xls is in Wayback,
+  429 all session); the 2021 annual note file is missing on the server; the 2025 note's
+  product tables print no codes (not read).
+  CROSS-CHECK (verbatim, 2025 note Tableaux 1-2, milliards FCFA): 2025 exports 3 084,
+  imports 5 229, balance -2 145, échanges globaux 8 313, Pétrole brut exports 706;
+  3 084 - 5 229 = -2 145. 2017 exports 1 882 in the 2019, 2022 and 2023 notes alike.

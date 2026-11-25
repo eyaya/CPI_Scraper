@@ -1,0 +1,27 @@
+country: Somalia
+iso3: SOM
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Somalia National Bureau of Statistics (SNBS) -- Statistical Abstract 2024 (source CBS)
+publication_code: Statistical Abstract 2024, Tables 3.8-3.9
+frequency: annual
+
+discover:
+  method: static_url
+  url: "https://nbs.gov.so/wp-content/uploads/2025/03/Statistical-Abstract-2024.pdf"
+
+parser: somalia_snbs_abstract
+geography: Somalia
+expect_periods: 4
+
+notes: >
+  Statistical Abstract 2024 (the only edition on nbs.gov.so), Table 3.8 "Total
+  import 2019-2022 (Thousand USD)" (14 categories + Total) and Table 3.9 "Total
+  export 2019-2022 (Thousand USD)" (Livestock, Animal Skins, Crops & Vegetable
+  Oil, Forest Products, Other + Total); source CBS. The list of tables says
+  "(Millions USD)" but the table captions and figures are thousands (2022
+  imports 6,379,520 thousand = the QSB quarters' sum order of USD 6.4 bn), so
+  the table caption is used. Labels normalised as in somalia_qsb.yaml.
+  CROSS-CHECK: imports Total 2019 3,203,859.67; 2022 6,379,520.00; Food 2021
+  1,299,151; exports Total 2021 693,167.00; Livestock 2022 558,380.00.

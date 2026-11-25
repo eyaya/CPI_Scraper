@@ -1,0 +1,36 @@
+country: Tanzania
+iso3: TZA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS) Tanzania -- Foreign Trade Statistics 2013
+publication_code: Foreign Trade Statistics 2013
+frequency: annual
+
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.go.tz/statistics/topic/trade-statistics"
+  link_contains:
+    - "Foreign_Trade_Statistics"
+    - ".pdf"
+
+parser: tanzania_nbs_fts
+geography: Tanzania
+expect_periods: 7
+
+notes: >
+  The only report on the NBS "Trade Statistics" topic page (2026-11-12): Foreign
+  Trade Statistics 2013, annual 2007-2013, Mill. TZS. Collected: Table 1 value
+  of foreign trade (exports, domestic exports, re-exports, imports, total,
+  balance); Table 2 domestic exports by commodity group and Table 10 direct
+  imports by commodity group (captioned "(SITC)" but the 11 groups -- Live
+  animals, Food stuff, Beverages, Tobacco, Minerals/Mineral fuels, Animal and
+  vegetable oils, Chemicals, Manufactured goods, Machinery, Transport equipment,
+  Others -- are not SITC sections, so classification "national"); Table 6 domestic
+  exports to the top-20 destinations + Others and Table 12 direct imports from
+  the top-20 origins + Others. Totals only from Table 1 (Table 6's Total 2009
+  3,952,773 differs from Table 1's 3,872,289). Not collected: HS "top-20"
+  tables, EAC/SADC partner x commodity tables, prices.
+  CROSS-CHECK: Table 1 2013 Imports 19,904,472; balance 2007 -4,880,386;
+  Table 2 Minerals 2013 3,059,106; Table 10 Mineral Fuels 2013 7,721,418;
+  Table 12 India 2013 3,668,836; Table 6 South Africa 2007 289,154.

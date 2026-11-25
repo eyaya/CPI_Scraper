@@ -1,0 +1,55 @@
+country: Somalia
+iso3: SOM
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Somalia National Bureau of Statistics (SNBS) -- Quarterly Statistical Bulletin; trade data compiled by the Central Bank of Somalia (CBS)
+publication_code: Quarterly Statistical Bulletin, Trade Statistics
+frequency: quarterly
+# TLS verifies on nbs.gov.so (2026-11-12).
+
+discover:
+  method: wp_media_latest_quarter
+  api_url: "https://nbs.gov.so/wp-json/wp/v2/media?search=Quarterly-Statistical-Bulletin&per_page=100"
+  name_contains: "Quarterly-Statistical-Bulletin"
+
+extras_cache: true
+extra_urls:
+  - "https://nbs.gov.so/wp-content/uploads/2023/07/Quarterly-Statistical-Bulletin-March-2021.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2023/07/Quarterly-Statistical-Bulletin-June-2021.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2023/07/Quarterly-Statistical-Bulletin-September-2021.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2023/07/Quarterly-Statistical-Bulletin-December-2021.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2025/07/Quarterly-Statistical-Bulletin-Q1-2023.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2025/07/Quarterly-Statistical-Bulletin-Q2-2023.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2025/07/Quarterly-Statistical-Bulletin-Q3-2023.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2025/07/Quarterly-Statistical-Bulletin-Q4-2023.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2025/07/Quarterly-Statistical-Bulletin-Q1-2024.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2025/07/Quarterly-Statistical-Bulletin-Q2-2024.pdf"
+  - "https://nbs.gov.so/wp-content/uploads/2025/07/Quarterly-Statistical-Bulletin-Q3-2024.pdf"
+
+parser: somalia_snbs_qsb
+geography: Somalia
+expect_periods: 18
+
+notes: >
+  SNBS Quarterly Statistical Bulletin, Trade Statistics section; source line
+  "Central Bank of Somalia" (CBS compiles the merchandise trade figures; SNBS
+  republishes them on its own site). Table 2 exports by category (Livestock,
+  Livestock Product (Meat), Fishery Export [from 2024], Animal Skins, Crops &
+  Vegetable Oil, Forest Products, Other) + Total; Table 3 imports by 14
+  categories + "Of which khat" + Total. US dollars. Each bulletin prints its
+  quarter and the same quarter of the previous year (left column = current
+  year). Issues on the site: 2021 Q1-Q4, 2023 Q1 - 2024 Q4 (2022 issues and
+  2025+ not published as of 2026-11-12), so the span is 2020-Q1 .. 2024-Q4.
+  Gap: 2022-Q2 and 2023-Q2 IMPORTS -- the Q2-2023 Table 3 omits the Clothes and
+  Construction rows (its categories do not add up to its Total), so the table
+  is dropped (2023-Q2 imports come from the Q2-2024 issue; 2022-Q2 imports have
+  no other quarterly source). Category labels normalised to the latest issue's
+  spelling ("Oil" -> "Oil & Gas", "Furniture" -> "Furniture Utensils",
+  "Animal Skins Products" -> "Animal Skins"). Column headers of some issues are
+  misprinted (Q4-2024 headed "2024 Q1 / 2023 Q1"); the bulletin's quarter is
+  used. Every table is checked: categories (excluding khat) add to the Total.
+  CROSS-CHECK: Q4-2024 exports Total 318,383,349.13 (2024-Q4), 150,004,807.33
+  (2023-Q4); Livestock 2024-Q4 173,707,453.20; imports Total 2024-Q4
+  2,594,902,561.95, Food 641991786.68. March-2021: imports Total 2021-Q1
+  1,116,907,189.71, 2020-Q1 934,336,827.01; Cars & spare parts 2021-Q1 169,525,200.60.

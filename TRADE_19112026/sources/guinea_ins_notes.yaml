@@ -1,0 +1,91 @@
+country: Guinea
+iso3: GIN
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Guinée), commerce extérieur
+publication_code: Note (d'analyse) sur le commerce extérieur -- monthly
+frequency: monthly
+expect_rows: 3000
+expect_periods: 40
+
+discover:
+  method: static_url
+  url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_2026/NOTE_Aot_2026.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_2026/NOTE_AVRIL_2026.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_2026/NOTE_JUILLET_2026.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_2026/NOTE_JUIN_2026.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_2026/NOTE_MAI_2026.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_2026/NOTE_MARS_2026.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_AOT_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_AVRIL_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_DECEMBRE_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_FEVRIER_2026.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_FEV_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_JAN_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_JUILLET_2025_VC.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_JUIN_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_MARS_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_Mai_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_NOVEMBRE_2025_vf.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_OCTOBRE_2025_VF.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE/NOTE_SEPTEMBRE_2025.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_AVRIL_2024.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_Aot_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_Avril_2023_vf.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_DECEMBRE_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_FEV_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_FEV_2024.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_JAN_2024.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_Juillet_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_MARS_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_MARS_2024.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_Mai_2024.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_OCT_2023_vf.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_OCT_2024.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_SEPTEMBRE_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_SEPTEMBRE_2024_V2.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/IHPC/NOTE_AOT_2024_v2.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_DECEMBRE_2022_vf.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_JANVIER_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_JUIN_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_JUIN_2024.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_JULLET_2024.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_Mai_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_NOVEMBRE_2022_vf.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_NOV_2023.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_OCT_2022_vf.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NOTE_SEPT_2022.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/Note_danalyse_commerce_exterieur_juillet_2022.pdf"
+
+parser: guinea_ins_notes
+geography: National
+
+notes: >
+  INS Guinee monthly note on foreign trade, annex tables: Tableau 1/2 "Principaux
+  produits exportes / importes en <mois> <annee>" -- the 20 leading products (HS
+  heading descriptions printed WITHOUT codes -> commodity_classification hs4, code
+  blank), value in billions of GNF ("VALEURS (en milliards de GNF)"), and "Total
+  general" = all products (the monthly headline exports / imports); Tableau 4/5
+  "Principaux pays clients / fournisseurs" -- the 20 leading partners, "Autres pays"
+  (partner_type group) and "Total general", billions of GNF. MONTHLY 2022-07..2026-08
+  from the notes listed (the newest note wins per month). GAPS: 2022-08 (only a
+  differently laid-out "Bulletin"), 2022-11, 2024-02, 2024-04, 2025-07 (tables not
+  laid out one cell per line -- skipped, never guessed), and tables missing from
+  single notes (e.g. 2024-10 partners, 2023-12 suppliers). Earlier: NCE notes
+  2014-10..2015-03 print only price indices and contributions (not collected), the
+  monthly series 2015-2022 is not on the site. Dropped by rule: a table whose title
+  names another month than the note's own (INS copies titles: "Mars 2023" inside the
+  December 2023 note). NOT collected: net weights -- the column is captioned "(en
+  tonne)" but some notes print thousands of tonnes under it (bauxite April 2025
+  "15 987" vs August 2026 "15 069 218,8"), so the scale cannot be read; shares;
+  Tableau 3 (food imports, a subset); the residual product line. Cells printed
+  with a decimal point (2025 notes, "7 167.7") are read as decimals. No trade
+  balance table (the balance is only in the text).
+  CROSS-CHECK (verbatim, aout 2026): exports Total general 14 890,0; imports
+  12 489,7; Or 7 232,2; Minerais d'aluminium 5 736,1; Chine (clients) 6 861,8;
+  Pays-Bas (fournisseurs) 4 435,0; Autres pays (fournisseurs) 908,3. SUM: the 20
+  suppliers + Autres pays = 12 489,6 vs Total general 12 489,7.

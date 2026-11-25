@@ -1,0 +1,58 @@
+country: Djibouti
+iso3: DJI
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique de Djibouti (INSTAD, ex-DISED) -- Annuaire statistique, chapitre 5.1 Commerce exterieur
+publication_code: Annuaire statistique, Tableaux 5.1.1, 5.1.2, 5.1.6
+frequency: annual
+# TLS verifies (instad-dj Heroku API and Firebase storage, 2026-11-12).
+
+# The INSTAD SPA lists its files through an Express API; the newest
+# "Annuaire statistique" record's Firebase download URL is the primary.
+discover:
+  method: instad_dj_ipc
+  api_base: "https://instad-dj-6abc7b0eb612.herokuapp.com"
+  categorie: "Annuaire statistique"
+  save_as: Annuaire_Statistique_2025.pdf
+
+extras_cache: true
+extra_urls:
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2017%2FAnnuaire_Statistique_2017.pdf?alt=media&token=a25614d4-7956-42b6-9836-af32cbac097d"
+    save_as: Annuaire_Statistique_2017.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2018%2FAnnuaire_Statistique_2018.pdf?alt=media&token=2f041641-bb5f-462b-b7a1-ef87053ccc45"
+    save_as: Annuaire_Statistique_2018.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2022%2FAnnuaire_Statistique_2022.pdf?alt=media&token=9d13f2da-b367-40b3-a207-3319d899dc27"
+    save_as: Annuaire_Statistique_2022.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2023%2FAnnuaire_Statistique_2023.pdf?alt=media&token=c74335fa-0881-4b4f-93c6-357e0aba2d85"
+    save_as: Annuaire_Statistique_2023.pdf
+  - url: "https://firebasestorage.googleapis.com/v0/b/instad-dj.appspot.com/o/Annuaire%20statistique%2F2024%2FAnnuaire_Statistique_E2024_VF.pdf?alt=media&token=8b8ff01b-c4da-4737-a11d-6e84c87ff00c"
+    save_as: Annuaire_Statistique_E2024_VF.pdf
+
+parser: djibouti_instad_trade
+geography: Djibouti
+expect_periods: 11
+
+notes: >
+  INSTAD Annuaire statistique, chapter 5.1 "Commerce exterieur" (customs data).
+  Editions on the INSTAD API: 2017, 2018, 2020 (file 404), 2021 (= the 2022
+  file), 2022, 2023, 2024, 2025. Collected: Tableau 5.1.1 imports by 17 "grands
+  groupes" + "Transactions speciales" + "Total importations speciales" (special
+  trade), Valeur CAF in millions of FDJ and Volume in tonnes (measure quantity,
+  unit tonnes -- net or gross not stated), 2014-2024; Tableau 5.1.2 the
+  "Reexportations" row (value, millions FDJ; volume tonnes from the 2022
+  edition on), 2014-2024; Tableau 5.1.6 imports by origin country (VALEUR EN
+  FDJ, POIDS EN KG as quantity kg), 2016 (2017 edition) and 2017 (2018
+  edition). INSTAD prints no export table (Djibouti's domestic exports are not
+  tabulated; the re-exports are the export-side flow) and no partner table
+  after 2017. Gaps: 2013 (only in the 2017 edition, whose Tableau 5.1.1 page is
+  a rotated scan-like layout that does not read in order -- dropped).
+  Not collected: 5.1.3 (tax regimes), 5.1.4 (product x origin, volume), 5.1.5
+  (a mixed list of HS sections/chapters/headings, 2013-2017 only).
+  Check: in every edition the groups add to the Total within 2 (rounding);
+  2018 edition 2017 within 22.
+  CROSS-CHECK (2025 edition, Tableau 5.1.1): Total importations speciales 2024
+  valeur 164 166, volume 1 158 656; Khat 2020 valeur 9 587, volume 9 348;
+  Alimentation et boissons 2024 valeur 37 933. Tableau 5.1.2 Reexportations
+  2024 valeur 671 286. 2018 edition: Total 2014 valeur 133 157; Reexportations
+  2014 920 615. Tableau 5.1.6 (2018 ed.): CHINE 2017 31 499 804 821 FDJ, 67 525 700 kg.

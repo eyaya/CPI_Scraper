@@ -1,0 +1,45 @@
+country: Angola
+iso3: AGO
+indicator: Trade
+tier: 1
+source_type: excel
+agency: Instituto Nacional de Estatística de Angola (INE) -- Comércio Internacional
+publication_code: Comércio Externo de Bens (monthly and annual workbooks)
+frequency: monthly
+discover:
+  method: ine_ao_directory_files
+  index_url: "https://www.ine.gov.ao/Publicacoes/Todas"
+  dirs:
+    - "Comércio Internacional"
+    - "Mensal"
+  files:
+    - ["Sec", "Cap"]
+    - ["Pa", "Parceiros"]
+    - ["Grandes Categorias"]
+  extra_groups:
+    - dirs: ["Comércio Internacional", "Anual"]
+      files:
+        - ["Reexporta"]
+parser: angola_ine_trade
+expect_rows: 200000
+expect_periods: 380
+notes: >
+  INE Angola publishes merchandise trade as workbooks in its directory tree
+  (Publicações > Comércio Internacional > Mensal / Anual / Trimestral; files are
+  POSTed, resolved by folder name with the existing ine_ao_directory_files method).
+  Collected from the Mensal workbooks: exports and imports, January 2004 - latest
+  month (2026), with quarters and complete-year annual columns, in million kwanzas
+  (AOA) and thousand US$ (scale read from each sheet's "U.M."): by HS section
+  (national, roman code) and chapter (hs2), by partner country (ISO2 code printed;
+  "Desconhecido" = group) and by BEC category (bec); totals ("Total Geral") as the
+  headline. From the Anual folder: re-exports by section/chapter 2004-2025 (re-imports
+  not taken: no schema flow). Not taken: the Anual workbooks duplicating the monthly
+  ones' annual columns, "por Produtos" (HS8/HS6-level detail -- finer than HS2), price
+  indices (IPEI). Exact zeros are not emitted (grid cells and unpublished future
+  months); the current year's YTD "Ano" column is not emitted. No balance is printed.
+  Local files are saved as Mensal_/Anual_<original name> (the harness uses the
+  original names; run_local equivalence noted). Verbatim cross-checks: Mensal
+  sections, exports USD Total Geral January 2004 872475.59157 (thousand US$); AOA
+  Total Geral January 2004 69427.060467 (million Kz); partners, exports AOA 2004
+  January South Africa 2392.471543; Anual re-exports Total Geral 2004 662.307981
+  (million Kz).

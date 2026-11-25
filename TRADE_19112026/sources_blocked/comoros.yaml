@@ -1,0 +1,19 @@
+country: Comoros
+iso3: COM
+indicator: Trade
+status: blocked
+checked: 2026-11-12
+routes_tried:
+  - route: "https://www.inseed-comores.org/backend/api/publications (Strapi CMS, the route the CPI/GDP descriptors use), all 116 records, populate=*"
+    result: "HTTP 200; no merchandise-trade publication, dataset or upload. The only trade mentions are in the national-accounts notes ('mise à jour des données du commerce extérieur' as a source update) -- national-accounts exports/imports of goods and services, not merchandise trade statistics."
+  - route: "INSEED site search for commerce / export / import / douane / balance commerciale"
+    result: "no trade bulletin, note or table"
+reason: >
+  INSEED Comores (the NSO) publishes no merchandise-trade statistics on its own
+  domain. Comoros' customs (Administration Générale des Douanes et Droits
+  Indirects) and the central bank (BCC) were not tried: the BCC is not the
+  compiler, and no customs statistics portal was found.
+what_would_unblock: >
+  INSEED (or the customs, as official compiler) publishing an external-trade
+  bulletin or the Annuaire statistique with trade tables; or a Wayback copy of
+  an INSEED trade note if one existed under an earlier site structure.

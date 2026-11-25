@@ -1,0 +1,24 @@
+country: Sao_Tome_and_Principe
+iso3: STP
+indicator: Trade
+status: blocked
+checked: 2026-11-12
+reason: >
+  INE São Tomé e Príncipe lists its merchandise-trade publications in the Phoca
+  Download category "50-comercio-externo" (Estatísticas do Comércio Externo 2010 ...
+  2017, Nota de Imprensa Anual 2016, Notas de Imprensa janeiro / fevereiro 2021), but
+  every file is missing on the server: the download form (POST with the page's own
+  token) answers 200 with the message "Error while downloading file -- File not found
+  on server"; the direct /phocadownload/userupload/... paths answer 404 (UTF-8 and
+  Latin-1 spellings tried). No other trade table was found on ine.st.
+routes_tried:
+  - "https://www.ine.st/index.php/informacoes-estatisticas/comercio-externo -> 200 (links to the category)"
+  - "https://www.ine.st/index.php/component/phocadownload/category/50-comercio-externo -> 200, 11 files listed (ids 258-266, 636, 637)"
+  - "https://www.ine.st/index.php/component/phocadownload/file/<id>-<slug> + POST download form -> 200 HTML 'File not found on server' (all 11)"
+  - "https://www.ine.st/index.php/component/phocadownload/category/50-comercio-externo?download=<id>:<slug> -> 200 HTML, no file"
+  - "https://www.ine.st/phocadownload/userupload/Documentos/Informações Estatísticas/Comercio externo/ESTATÍSTICAS  DO  COMÉRCIO  EXTERNO <year>.pdf -> 404"
+  - "Wayback Machine (web.archive.org) -> answered 429 / connection refused throughout this session; not checked for these files"
+unblock: >
+  INE re-uploads the files (or a Wayback id_ copy of them is found once the archive's
+  rate limit allows). The annual "Estatísticas do Comércio Externo" PDFs would then
+  give 2010-2017 annual exports / imports / balance by product and partner.

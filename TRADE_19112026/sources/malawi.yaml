@@ -1,0 +1,44 @@
+country: Malawi
+iso3: MWI
+indicator: Trade
+tier: 2
+source_type: excel
+agency: National Statistical Office of Malawi (NSO) -- Malawi International Merchandise Trade Statistics
+publication_code: IMTS monthly releases (Bulletin / BEC / DOTS Excel workbooks)
+frequency: monthly
+discover:
+  method: nso_malawi_publication
+  api_base: "https://cms.nsomalawi.mw"
+  title_contains: "Malawi International Merchandise Trade Statistics - September 2026"
+extras_cache: true
+extra_urls:
+  - "https://cms.nsomalawi.mw/api/download/818/Malawi-International-Merchandise-Trade-Statistics-Bulletin_July_2026_MWK.xlsx"
+  - "https://cms.nsomalawi.mw/api/download/498/Malawi-International-Merchandise-Trade-Statistics-Bulletin_December_2024_USD.xlsx"
+  - "https://cms.nsomalawi.mw/api/download/789/Malawi-International-Merchandise-Trade-Statistics_DOTS_April_2026.xlsx"
+parser: malawi_nso_trade
+expect_rows: 800
+expect_periods: 60
+notes: >
+  NSO Malawi's CMS (cms.nsomalawi.mw/api/web/publications; 69 publications listed,
+  24 on merchandise trade, October 2024 - September 2026) carries each monthly
+  release as one file: PDF bulletins (Oct 2024 - Mar 2026) and Excel workbooks (Nov /
+  Dec 2024 US$ bulletin tables; April 2026 DOTS; May, Aug, Sep 2026 BEC; June, July
+  2026 MWK bulletin tables). Collected: Table 2.1 of the July 2026 MWK workbook
+  (monthly January 2021 - July 2026, annual 2021-2025) and of the December 2024 US$
+  workbook (monthly and annual 2021-2024): total imports (CIF), domestic exports,
+  re-exports, total exports (FOB), trade balance; the September 2026 BEC workbook
+  (imports and exports by BEC section/group, April - September 2026, US$); the April
+  2026 DOTS workbook (domestic exports by destination and imports by source country,
+  April 2026, US$; HS4 product tables not taken -- BEC is the commodity cut). Checks:
+  TOTAL IMPORTS must equal IMPORTS + RE-IMPORTS (fails for every 2021 row of the
+  US$ workbook, whose total-imports and balance columns are corrupt -> those are not
+  emitted; US$ imports 2021 missing); months after the release month printed as 0
+  and the year-to-date "2026p" row are not emitted. Gaps: no data before 2021 in the
+  CMS (older NSO trade reports are not online); partner cut only April 2026; US$
+  monthly only 2021-2024 (2022-2024 imports). The PDF bulletins (2024-10 - 2026-03)
+  are not parsed (their months are already in the MWK table). Verbatim cross-checks:
+  Dec 2024 US$ Table 2.1 2024p total imports 3234788931.05, total exports
+  946972550.711, balance -2287816380.339; Jan 2024 imports 224069861; July 2026 MWK
+  2025 total imports 6360657395799.699, total exports 1591225608916.73; DOTS April
+  2026 United Arab Emirates 77816161.94; BEC Sep 2026 imports April 2026 Food &
+  Beverages 22349154.43.

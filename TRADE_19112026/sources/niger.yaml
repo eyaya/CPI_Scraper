@@ -1,0 +1,58 @@
+country: Niger
+iso3: NER
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Niger), Service des statistiques du commerce extérieur
+publication_code: Bulletin des statistiques du commerce extérieur (quarterly) and Bulletin des statistiques annuelles
+frequency: quarterly
+expect_rows: 3000
+expect_periods: 40
+
+discover:
+  method: static_url
+  url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_des_Statistiques_annuelles_provisoire_2025_definitives_2021_2024_VF.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_1T_2026_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_1T_2023_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_2T_2023_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_3T_2023_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_4T_2023_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_1T_2024_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_2T_2024_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_3T_2024_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_4T_2024_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_1T_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_2T_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_3T_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_commerce_exterieur_4T_2025_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_des_Statistiques_annuelles_definitives_2023_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_des_Statistiques_annuelles_definitives_2024_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_des_Statistiques_annuelles_provisoires_2024_VF.pdf"
+  - url: "https://www.stat-niger.org/wp-content/uploads/annuaire_bulletin/bulletin/Bulletin_des_Statistiques_annuelles_provosoires_2023_VF.pdf"
+
+parser: niger_ins_trade
+geography: National
+
+notes: >
+  INS Niger (https://www.stat-niger.org/?pub_eco=bulletin-des-statistiques-du-
+  commerce-exterieur) quarterly bulletins 1T2023..1T2026 (each prints five
+  quarters -> 2022-Q1..2026-Q1) and annual bulletins (provisional 2023, 2024, 2025;
+  definitive 2023, 2024; the 2025 one also definitive 2021-2024). Millions of FCFA.
+  Read: imports CIF / exports FOB / balance by continent (group); exports / imports
+  by leading partner country and INS zones (value block only -- checked against the
+  continent table's Afrique line); product groups (national, where the table splits
+  cleanly: 2022-Q4..2023-Q4); annual Tableau 1 "Evolution des echanges exterieurs
+  1996-2025" (exports and imports in Mds FCFA and 1000 t, balance), ANNUAL 1996-2025.
+  NOT available: the quarterly all-partner total -- every "Total" line prints its
+  cells run together ("291 028 294 172") and is dropped; the quantity blocks of the
+  partner tables (unit not printed on the block); shares. Earlier bulletins on the
+  page (BTCE 2018, 4T2021, 2T-4T2022, annual 2021/2022, file names with accents)
+  were not read. A label printed twice with different values in one table
+  ("Autres") is dropped.
+  CROSS-CHECK (verbatim): Tableau 1 1996 exports 153,9 imports 172,6 balance -18,7;
+  2010 exports 136,7 imports 1 113,1 balance -976,4; 1T2026 exports Afrique 2026-Q1
+  21 021 = partner table AFRIQUE 21 021; Nigeria exports 2026-Q1 3 989; Burkina Faso
+  3 501. Identity guard passes on the continent cells (balance = exports - imports).

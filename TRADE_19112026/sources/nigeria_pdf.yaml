@@ -1,0 +1,53 @@
+country: Nigeria
+iso3: NGA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS) -- Foreign Trade Statistics quarterly reports (PDF back issues)
+publication_code: Foreign Trade Statistics (quarterly report, tables annex)
+frequency: monthly
+
+# --- discover ---
+# Back issues from before the Excel era (nigeria.yaml reads 2020 onward).
+# nigerianstat.gov.ng/elibrary answered HTTP 500 (2026-11-12) and the old
+# /pdfuploads/ files are only retained by the Wayback Machine: id_ copies of
+# NBS's own PDFs. Wayback throttles (429): fetch one file at a time.
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20211208180257id_/https://nigerianstat.gov.ng/pdfuploads/FOREIGN_TRADE_STATISTICS_Q1_2019.pdf"
+  download_timeout: 180
+
+extras_cache: true
+extra_urls:
+  - url: "http://web.archive.org/web/20151203001310id_/http://www.nigerianstat.gov.ng/pdfuploads/FOREIGN_TRADE_STATISTICS_Q2_2015.pdf"
+    save_as: FOREIGN_TRADE_STATISTICS_Q2_2015.pdf
+
+parser: nigeria_nbs_pdf_trade
+geography: National
+expect_rows: 1000
+expect_periods: 50
+
+notes: >
+  INVENTORY (Wayback CDX of nigerianstat.gov.ng/pdfuploads, 2026-11-12): NBS
+  foreign-trade reports 2010-12, 2011 Q3-Q4, 2012 Q1-Q4, 2013 Q1-Q4, 2014
+  Q1-Q4, 2015 Q1-Q4, 2016 Q1-Q3 + annual 2016, 2017 Q1-Q4, 2018 Q1-Q4, 2019
+  Q1-Q4, 2020 Q1-Q4, 2021 Q1-Q2, 2022 Q1-Q2, 2023 Q1-Q4, 2024 Q1-Q2. Read:
+  Q1 2019 (Table 1 monthly 2016-01..2019-03, quarterly 2016-Q1..2019-Q1,
+  annual 2016-2018: imports, exports fob, balance, total trade, crude / non-
+  crude / non-oil exports; Table 8 domestic exports and re-exports; Tabs 2/3
+  HS-section imports/exports annual 2016-2018 + Jan-Mar quarters; Tab 6
+  imports by SITC section monthly 2016-2019) and Q2 2015 (Table 1 rows that
+  print every cell: 2014-04..2015-06 monthly/quarterly; rows with "-" in
+  the non-oil column are skipped -- 2013 and most of 2014 Q1). The 2011-2015
+  layouts (other Q files on disk) do not parse with this module; 2019-Q2..
+  2019-12 needs the Q4 2019 issue, which the Wayback Machine refused (429 /
+  connection refused) in this session: GAP 2019-04..2019-12 and before
+  2014-04 -- re-run with the Q4 2019 / Q4 2017 issues added to extra_urls.
+  Regional/partner tables (Tab 4/5) are images in these PDFs: not read.
+  CROSS-CHECKS (Q1 2019, verbatim): 2016 Jan-Dec imports 8,817,557.72,
+  exports 8,527,430.99, balance -290,126.73; 2018 Q2 imports 2,425,622.78;
+  2016 Jan crude oil exports 354,609.90; 2018 Oct exports 1744993.9 (starred
+  revision, as printed); 2017 Jan re-exports 25.79 (N bn); Tab 3 2016 mineral
+  products exports 8,238,576.0; Tab 6 2016 Q1 food imports 201,316.4. Every
+  Table 1 row kept satisfies balance = exports - imports and total = exports
+  + imports (rows failing it are dropped, not repaired).

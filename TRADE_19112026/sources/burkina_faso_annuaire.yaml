@@ -1,0 +1,41 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: Annuaire du commerce extérieur (editions 1999-2002 .. 2024)
+frequency: annual
+expect_rows: 10000
+expect_periods: 30
+
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2025-09/Annuaire_Commerce_exterieur2024.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.insd.bf/sites/default/files/2021-03/Com_exterieur_2007.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/Annuaire_Commerce_exterieur2019.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/Annuaire_commerce_exterieur_%202005_2009.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/Annuaire_commerce_exterieur_1999_2002.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/Annuaire_commerce_exterieur_2013.pdf"
+
+parser: burkina_faso_insd_annuaire
+geography: National
+
+notes: >
+  INSD Burkina Faso "Annuaire du commerce exterieur" (www.insd.bf, statistiques
+  economiques > commerce exterieur), editions 1999-2002, 2005-2009, 2007, 2013,
+  2014, 2019, 2024. Read: Tableau 1.1 (imports CIF, exports FOB, balance, billions
+  of FCFA, ANNUAL 1995-2024 across editions), Tableaux 3.x (exports / imports by HS
+  chapter with code "CH", millions of FCFA, 2004-2024), 9.1-9.6 (by partner
+  country and INSD regional lines, exports / imports / balance, millions of FCFA,
+  2005-2024) and 9.7-9.12 (economic zones CEDEAO, UEMOA, UE ... -> group). Newest
+  edition wins. A row is kept only when every year column is accounted for.
+  Net weights from the chapter tables where printed (tonnes). GAPS: chapters and
+  partners before 2004/2005 (the 1999-2002 edition's layout); 2010-2012 and
+  2015-2018 come from the later editions' five-year tables.
+  CROSS-CHECK: identity guard passes (balance = exports - imports on the world
+  totals and on every partner row with all three flows). Values were checked by the
+  original parser author against Tableau 1.1 of the 2024 edition.

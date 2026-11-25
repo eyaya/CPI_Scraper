@@ -1,0 +1,37 @@
+country: Mozambique
+iso3: MOZ
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Instituto Nacional de Estatística de Moçambique (INE) -- Anuário Estatístico, ch. 4.2
+publication_code: Anuário Estatístico 2025
+frequency: annual
+verify_ssl: indicators/trade/certs/ine_mz_ca_bundle.pem   # certifi + DigiCert Global G2 TLS RSA SHA256 2020 CA1 (missing intermediate of www.ine.gov.mz; fetched from the certificate's AIA URL cacerts.digicert.com)
+discover:
+  method: static_url
+  url: "https://www.ine.gov.mz/documents/20119/476597/ANU%C3%81RIO%20ESTAT%C3%8DSTICO%202025.pdf/9198aff1-b75a-3e30-d25e-10a36f2b3ad1?download=true"
+  save_as: INE_MZ_Anuario_Estatistico_2025.pdf
+  download_timeout: 600
+parser: mozambique_ine_trade
+expect_rows: 100
+expect_periods: 1
+notes: >
+  INE Mozambique compiles the international trade in goods statistics ("Estatísticas
+  do Comércio Internacional de Bens", from Customs declarations); its site is a
+  Liferay SPA whose search returns no document links to a script, and the stand-alone
+  trade publications could not be located (no URL found). The Anuário Estatístico
+  2025 (INE's own file, as used by the GDP descriptor) prints chapter 4.2: exports and
+  imports by section of the customs tariff (01-21, national classification with the
+  printed code) and by the top-10 partner countries, plus totals, for 2025, in 10^3
+  MT and 10^3 US$. Figures are printed with space thousands and two value columns
+  side by side; the split is fixed by the printed % share (or the total row's MT/US$
+  ratio) and rows no split satisfies are dropped (export section 19, import sections
+  13, 16 and 18 are wrapped/unsplittable and missing). The Anuário 2019 (also on
+  disk) has no extractable chapter-4.2 tables. Only 2025 is collected (annual) --
+  earlier Anuários (2020-2024) and the monthly/quarterly INE trade bulletins need
+  their Liferay document URLs; Banco de Moçambique publishes monthly BoP goods
+  figures but is not the compiler of IMTS. Verbatim cross-checks: Quadro 4.2.1 total
+  exports 498 124 212 (10^3 MT), 7 794 151 (10^3 US$); section 05 Mineral products
+  308 099 364 / 4 820 832; Quadro 4.2.3 imports total 603 942 849 / 9 449 896;
+  Quadro 4.2.4 South Africa 167 116 371 / 2 614 870; Quadro 4.2.2 India 1 602 108
+  (10^3 US$).

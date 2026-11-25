@@ -1,0 +1,47 @@
+country: Morocco
+iso3: MAR
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Office des Changes (official compiler of Morocco's foreign-trade statistics)
+publication_code: Rapport annuel -- Commerce extérieur du Maroc
+frequency: annual
+expect_rows: 200
+
+discover:
+  method: static_url
+  url: "https://www.oc.gov.ma/sites/default/files/2026-10/Rapport%20Annuel%20Commerce%20Ext%C3%A9rieur%202025_0.pdf"
+  save_as: OC_Rapport_Commerce_Exterieur_2025.pdf
+
+parser: morocco_oc_trade
+geography: National
+
+extras_cache: true
+extra_urls:
+  - {url: "https://www.oc.gov.ma/sites/default/files/2025-07/Rapport%20Commerce%20Ext%C3%A9rieur%202024%20VF.pdf", save_as: OC_Rapport_Commerce_Exterieur_2024.pdf}
+  - {url: "https://www.oc.gov.ma/sites/default/files/2024-11/Rapport%20commerce%20ext%C3%A9rieur%202023_Site_VF%20%281%29.pdf", save_as: OC_Rapport_Commerce_Exterieur_2023.pdf}
+  - {url: "https://www.oc.gov.ma/sites/default/files/2022-09/Rapport%20annuel%20du%20commerce%20ext%C3%A9rieur%202021.pdf", save_as: OC_Rapport_Commerce_Exterieur_2021.pdf}
+
+notes: >
+  OFFICIAL COMPILER: the Office des Changes (oc.gov.ma) compiles and publishes
+  Morocco's merchandise-trade statistics; HCP (the NSO) does not compile them.
+  INVENTORY: an interactive database (services.oc.gov.ma/DataBase/
+  CommerceExterieur, monthly from 1998, by HS chapter/product/country/SITC)
+  that requires a reCAPTCHA-gated query flow -- NOT used (a bot check is never
+  bypassed); monthly "Indicateurs des échanges extérieurs" (IMEE/IEE) and
+  "Produits remarquables" workbooks, both year-to-date (not a schema period;
+  their December issues would give the calendar year -- not collected here);
+  annual reports (2021, 2023, 2024, 2025 found on /fr/publications; 2022 and
+  earlier trade reports not listed). COLLECTED from the annual reports
+  (MDH = millions of dirhams, "." thousands separator): T1-1 imports by
+  groupement d'utilisation, T2-1 exports by product group (national groups +
+  Total = all-products imports/exports), T1-2 / T2-2 principal imported /
+  exported products, annual 2019-2025 (three years per report). Rows whose
+  figures are split by stray spaces in the PDF text are dropped (most T1-2
+  rows of the 2025 report). Not collected: the partner tables T4-x (figures
+  broken by stray spaces), ATPA regime tables, services. GAPS: monthly series
+  (database captcha-gated), partners, HS chapters, years before 2019.
+  CROSS-CHECK (verbatim, 2025 report): T1-1 Total 2023 715.752, 2024 761.272,
+  2025 822.332; Energie et lubrifiants 2025 107.520; T2-1 Total 2025 470.048,
+  Demi produits 2025 115.536, Alimentation 2023 76.866. Sum check: the seven
+  T1-1 top-level groups 2025 sum to 822.332.

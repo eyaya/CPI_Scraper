@@ -1,0 +1,98 @@
+country: Rwanda
+iso3: RWA
+indicator: Trade
+tier: 2
+source_type: excel
+agency: National Institute of Statistics of Rwanda (NISR)
+publication_code: Formal External Trade in Goods (monthly and quarterly reports, annex tables)
+frequency: monthly
+# TLS: www.statistics.gov.rw presents a certificate for statistics.gov.rw only
+# (hostname mismatch), so every URL here uses the bare host, which verifies.
+# No verify_ssl override.
+discover:
+  method: chain_scrape
+  index_url: "https://statistics.gov.rw/statistical-publications/business-establishment-finance-trade/business-establishment-finance-trade"
+  # newest "Formal external trade in goods" publication page -> its annex workbook
+  # (monthly YYYYMM_Trade_report_annexTables.xlsx or quarterly YYYYQn_...; the parser reads both)
+  steps: [["formal-external-trade-goods-"], ["annextables", ".xlsx"]]
+  breadth: 4
+extras_cache: true
+extra_urls:
+  # Wayback id_ copy of the NSO's own 2017Q4 annex (2014Q1-2017Q4 window)
+  - {url: "https://web.archive.org/web/20180529030848id_/http://statistics.gov.rw/file/6473/download?token=0Z0oao28", save_as: wb_2017Q4_annex_file6473.xlsx}
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-09/2026Q2_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-10/202608_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2024-09/Tables_Dec_2023.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2024-10/2023Q4_Trade_report_annexTables%20%281%29.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2024-10/2024Q2_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-02/2024Q3_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-02/Trade_Tables_December_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-05/2024Q4_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-05/202501_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-05/202502_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-05/202503_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-06/Tables_April_2025.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-07/2022Q4_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-07/202505_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-07/2025Q1_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-07/Tables_Dec_2022.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-08/202506_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/202507_Trade_report_annexTables_0.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/2025Q2_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_AUG_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_April_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_Feb_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_Jan_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_July_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_June_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_March_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_May_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_November_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_October_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-09/Tables_Sept_2024.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-10/202508_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-11/202509_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-12/202510_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2025-12/2025Q3_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-01/202511_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-02/202512_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-03/2025Q4_Trade_report_annexTables_1.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-03/202601_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-04/202602_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-04/202603_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-06/2026Q1_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-06/Tables%20Formal%20external%20Trade%20April%202026.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-07/202605_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-07/202606_Trade_report_annexTables.xlsx"
+  - "https://statistics.gov.rw/sites/default/files/documents/2026-09/202607_Trade_report_annexTables.xlsx"
+parser: rwanda_nisr_trade
+geography: Total country
+expect_rows: 200
+expect_periods: 3
+notes: >
+  NISR Formal External Trade in Goods (customs data), US$ million.
+  INVENTORY: monthly reports with Excel annex (each prints the month a year earlier
+  (revised), the previous month and the month) -- Excel annexes posted for Dec 2022,
+  Dec 2023, Jan 2024 - Aug 2026; monthly PDFs without Excel exist for Oct-Dec 2020,
+  Jan/Mar/Apr/Jul/Aug/Dec 2022 and Jan-Nov 2023 (not parsed; the 2023 months come back
+  as revised columns of the 2024 annexes). Quarterly reports with Excel annex (a
+  rolling 14-16 quarter window): 2022Q4, 2023Q4, 2024Q2-2026Q2 on the live site,
+  2017Q4 from a Wayback id_ copy of the NSO's own file (file/6473).
+  COLLECTED: monthly 2021-12 .. 2026-08 (total exports f.o.b., domestic exports,
+  re-exports, imports c.i.f., total trade, balance; SITC sections for domestic exports,
+  imports and re-exports; top-10 partners + Rest of the World by flow); quarterly
+  2014-Q1 .. 2017-Q4 and 2019-Q1 .. 2026-Q2 (domestic exports, imports, re-exports,
+  total, balance; SITC sections; top-20 partners; EAC members; blocs CEPGL, COMESA,
+  Commonwealth, ECOWAS, SADC, EU; continents).
+  GAPS: quarterly 2018-Q1..2018-Q4 (needs the 2018Q4-2021Q4 annexes, file/7629, 8712,
+  9557, 11794 -- Wayback answered 429 all session); quarterly before 2014 (2013Q3 and
+  2014 annex .xls on the old /system/files/ path, same reason); monthly before 2021-12
+  (PDF-only issues not parsed).
+  NOTE: NISR's quarterly "Exports" are DOMESTIC exports (Total Trade = Exports + Imports
+  + Re-exports). Where the EAC sheet and the top-20 partner sheets disagree (revised
+  tea and coffee destinations) the partner sheet is kept.
+  CROSS-CHECK (verbatim workbook cells): Aug 2026 total exports f.o.b. 386.0890276953348,
+  imports c.i.f. 641.4043457142052, balance -255.3153180188704 (202608 annex); 2023-Q1
+  exports 402.14468784688006, imports 1476.5099483773447, re-exports 156.25277435433534,
+  total 2034.90741057856, balance -918.1124861761293 (2026Q2 annex); 402.14 + 1476.51 +
+  156.25 = 2034.91 and 402.14 + 156.25 - 1476.51 = -918.11.

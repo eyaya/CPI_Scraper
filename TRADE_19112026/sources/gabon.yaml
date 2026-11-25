@@ -1,0 +1,44 @@
+country: Gabon
+iso3: GAB
+indicator: Trade
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique (INSTAT) Gabon -- Bulletin des statistiques du commerce extérieur (data DGS and DGDDI)
+publication_code: Bulletin des statistiques du commerce extérieur (quarterly)
+frequency: quarterly
+# TLS verifies on new.instatgabon.org (2026-11-12); no verify_ssl override.
+discover:
+  method: page_scrape
+  page_url: "https://new.instatgabon.org/fr/statistiques-commerce-exterieur"
+  link_contains: ["BULLETIN_", ".pdf"]
+extras_cache: true
+extra_urls:
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN-DES-STATISTIQUES-DU-COMMERCE-EXTERIEUR-1ER-TRIMESTRIEL-2020.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN-DES-STATISTIQUES-DU-COMMERCE-EXTERIEUR-2EME-TRIMESTRIEL-2020.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN-DE-STATISTIQUES-DU-COMMERCE-EXTERIEUR-3EME-TRIMESTRIEL-2020.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN-STATISTIQUE-DU-COMMERCE-EXTERIEUR-4EME-TRIMESTRIEL-2020.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN_1T2021.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN_2T2021.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN_3T2021.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN_4T2021.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN_1T2022.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN_2T2022.pdf"
+  - "https://new.instatgabon.org/uploads/folder_1/BULLETIN_3T2022.pdf"
+parser: gabon_instat_trade
+geography: Total country
+expect_rows: 20
+expect_periods: 3
+notes: >
+  INSTAT Gabon quarterly "Bulletin des statistiques du commerce extérieur" (DGS and DGDDI
+  data). INVENTORY on new.instatgabon.org: 2020-Q1 .. 2022-Q3 (11 bulletins); nothing
+  later posted; ANNUAIRE-DU-GABON-2020 not read.
+  COLLECTED: quarterly 2019-Q1 .. 2022-Q3: exports total and by the NSO's product groups
+  (value in milliards FCFA; net weight in milliers de tonnes), imports total and by type
+  of goods / HS section and chapter labels (national; no codes printed), exports and
+  imports by continent and economic zone (groups). The 2020-2021 bulletins print five
+  quarters (Q-4 .. Q), the 2022 ones three (Q-4, Q-1, Q).
+  GAPS: no bulletin after 2022-Q3 on the site; the top-20 client and supplier rankings and
+  Tableau 8 (row labels without a text layer, so the balance cannot be identified) are not
+  read; tables without a printed scale are dropped (e.g. Tableau 1 of 2020-Q1).
+  CROSS-CHECK (verbatim, 3T2022 bulletin): exports 1 826,8 (2022-Q3), 1 598,8 (2022-Q2),
+  929,1 (2021-Q3) milliards FCFA; Pétrole brut 2 131,7 milliers de tonnes (2022-Q3).

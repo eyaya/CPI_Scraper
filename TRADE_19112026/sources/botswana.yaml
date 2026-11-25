@@ -1,0 +1,68 @@
+country: Botswana
+iso3: BWA
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Statistics Botswana -- International Merchandise Trade Statistics (IMTS) Monthly Digest
+publication_code: IMTS Monthly Digest, Excel tables
+frequency: monthly
+discover:
+  method: static_url
+  url: "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/AUGUST%202026_Tables%20%281%29.xlsx"
+extras_cache: true
+extra_urls:
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/AUGUST%20IMTS%20TABLES.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/BIMTS%20APRIL%202026_.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/BIMTS_NOVEMBER%202025%20TABLES.xls"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20%20October%202025%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20December%202024%20Tables_0.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20December%202025%20Tables.xls"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20February%202025%20Tables_0.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20February%202026%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20January%202025%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20July%202025%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20November%202024%20Tables.xls"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20October%202024%20Tables%20%20%28Revised%29.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20September%202025%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20Tables%20Jan%202026.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/IMTS%20Tables%20May%202025.xls"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/International%20Merchandise%20Trade%20April%202024%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/International%20Merchandise%20Trade%20May%202024%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/International%20Merchandise%20Trade%20Statistics%20April%202025%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/International%20Merchandise%20Trade%20Statistics%20August%202024%20Tables.xls"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/International%20Merchandise%20Trade%20Statistics%20July%202024%20Tables.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/International%20Merchandise%20Trade%20Statistics%20June%202024%20Tables_0.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/International%20Merchandise%20Trade%20Statistics%20June%202026%20Tables.xls"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/International%20Merchandise%20Trade%20Statistics%20March%202025%20Tables.xls"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/MARCH%202026_TABLES.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/MAY%202026%20TABLES_Revision%202.xlsx"
+  - "https://www.statsbots.org.bw/sites/default/files/Publication%20Tables/September%202024%20IMTS%20Tables.xls"
+parser: botswana_statsbots_trade
+expect_rows: 3000
+expect_periods: 50
+notes: >
+  Statistics Botswana (NSO) publishes the monthly IMTS Digest (PDF) with an Excel
+  table workbook ("Publication Tables") from the April 2024 issue onward; 27
+  workbooks April 2024 - August 2026 are taken (all linked from the IMTS digest
+  pages, found through the site search for "merchandise trade"). Each workbook's
+  Table 1.0 covers January two (or one) years back to the release month, so the
+  Excel series runs monthly January 2022 - August 2026, quarterly 2022-Q1 -
+  2026-Q2, annual 2022-2025: imports CIF and FOB, domestic exports, re-exports,
+  total exports, trade balance (signed). Tables 2.1/2.2: imports (CIF) and total
+  exports by Statistics Botswana's principal commodity groups (national: Diamonds,
+  Copper, Fuel, Coal, Machinery & Electrical Equipment, ..., Other Goods), same
+  periods. Tables 3.1A/3.2A: imports and exports by partner country and region
+  (SACU, SADC, Africa, Asia, EU, Rest of the World ... as groups) for the release
+  month only (Total Goods column), April 2024 - August 2026 (no partner gaps).
+  Million pula (BWP x 1e6), unrounded as stored. Newest workbook wins for revised
+  months. Workbook layouts vary (titles missing in some issues): tables are found
+  by header contents. Not collected: Table 2.3 diamonds by HS8 (finer than the
+  commodity cut), top-50 HS8 lists, mode of transport, transit trade.
+  Back series before 2022: monthly digest PDFs from 2013 and annual reports
+  2004-2016 exist on the site (PDF only) -- see botswana_pdf descriptor if built.
+  Verbatim cross-checks (August 2026 workbook): Table 1.0 Jan_2025 imports CIF
+  7198.818466967, total exports 3188.09358429, trade balance -4010.724882677;
+  Table 3.1A Total Goods South Africa 4676.83876, Namibia 1091.962493, Total
+  8214.453326; Table 3.2A Total Goods South Africa 658.24802255. December 2024
+  workbook: Total_2022 imports CIF 100541.143, total exports 102533.012, balance
+  1991.869.

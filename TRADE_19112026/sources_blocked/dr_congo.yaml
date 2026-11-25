@@ -1,0 +1,25 @@
+country: DR_Congo
+iso3: COD
+indicator: Trade
+status: blocked
+checked: 2026-11-12
+reason: >
+  The NSO (Institut National de la Statistique, ins-rdc.org) answers every request
+  with a Cloudflare challenge (HTTP 403); passing it would need browser-fingerprint
+  impersonation, which this project does not use. The Banque Centrale du Congo
+  (bcc.cd, reachable, used by the CPI descriptor) was checked as a possible official
+  compiler: its weekly "Condensé hebdomadaire d'informations statistiques" (n°41-2026,
+  48 pages) carries exchange rates, reserves and monetary aggregates but no
+  merchandise-trade table; its external-sector page timed out. No trade statistics
+  were found on a reachable official host.
+routes_tried:
+  - "https://www.ins-rdc.org/ -> 403 (Cloudflare challenge page)"
+  - "https://www.bcc.cd/statistiques -> 200; secteur-exterieur sub-pages: cours de change, marché des changes, matières premières, indicateurs du secteur extérieur"
+  - "https://www.bcc.cd/statistiques/secteur-exterieur -> read timeout (60 s)"
+  - "https://resources.bcc.cd/publications/condense-informations-statistiques/condense_hebdomadaire_d_informations_statistiques_ndeg_41-2026_2eme_semaine_octobre_1.pdf -> 200, no exports/imports table (retained in source_data/DR_Congo/)"
+unblock: >
+  INS-RDC lifting the bot challenge for plain clients (or a Wayback id_ copy of its
+  trade publications once the archive's rate limit allows), or a BCC "Bulletin
+  mensuel / annuel de statistiques" with exports/imports tables -- the BCC monthly
+  bulletin (/publications/bulletin-de-statistiques/<date>) was not opened in this
+  session and is the next route to check.

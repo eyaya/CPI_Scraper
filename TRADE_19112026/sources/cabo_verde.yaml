@@ -1,0 +1,74 @@
+country: Cabo_Verde
+iso3: CPV
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Instituto Nacional de Estatística (INE) Cabo Verde -- Estatísticas do Comércio Externo (data from the Direcção Nacional de Receitas do Estado / customs)
+publication_code: Comércio Externo -- Principais Quadros (annual workbooks)
+frequency: annual
+
+# --- discover ---
+# ine.cv publication API, theme 37 "Comércio Externo", dissemination type 10
+# (Principais Quadros); attachments via /GenericFile/GetFile (see the CPI
+# descriptor's ine_cv_publication_file method). TLS verifies (2026-11-12).
+# The 2025 import workbook is primary; the other annual workbooks are extras
+# (stored names carry INE's upload stamp, which orders revisions). INE also
+# stores 10 KB placeholder copies of some files: not listed.
+discover:
+  method: ine_cv_publication_file
+  api_base: "https://bdmi.ine.cv/site_deploy_api/api"
+  file_base: "https://bdmi.ine.cv/site_deploy_api"
+  code_theme: 37
+  publication_type: 10
+  extension: ".xlsx"
+  save_as: "4437_20260331_114940_c5ecf1e5-d069-4489-8ccc-a1d0062b1d80.xlsx"
+
+extras_cache: true
+extra_urls:
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_155440_57c1d198-dd82-4536-8839-21ac804a9854.xlsx", save_as: "1909_20250401_155440_57c1d198-dd82-4536-8839-21ac804a9854.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20251209_090145_c26e089f-441d-437f-b7d9-2c906a8fcfc8.xlsx", save_as: "1909_20251209_090145_c26e089f-441d-437f-b7d9-2c906a8fcfc8.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_155440_487c9d5d-6de8-46dc-b7b4-cbd6b26f18f6.xlsx", save_as: "1910_20250401_155440_487c9d5d-6de8-46dc-b7b4-cbd6b26f18f6.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20251209_090149_bf0405e3-fafd-4637-8b98-e12e74351497.xlsx", save_as: "1910_20251209_090149_bf0405e3-fafd-4637-8b98-e12e74351497.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_155440_8679ceea-43ac-4e0e-924f-ed075999e2b7.xlsx", save_as: "1911_20250401_155440_8679ceea-43ac-4e0e-924f-ed075999e2b7.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20251209_090200_bbdab465-0831-4da4-bd26-795bd6ed1507.xlsx", save_as: "1911_20251209_090200_bbdab465-0831-4da4-bd26-795bd6ed1507.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_161222_895d9e55-8ebf-4d49-9ede-39cb9f12510e.xls", save_as: "2320_20250401_161222_895d9e55-8ebf-4d49-9ede-39cb9f12510e.xls"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_161642_5385e310-d639-4a4c-aeca-36e1e324c98b.xlsx", save_as: "2451_20250401_161642_5385e310-d639-4a4c-aeca-36e1e324c98b.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_162159_038511c9-5ca7-41ef-af5b-6f404e124bb4.xlsx", save_as: "2621_20250401_162159_038511c9-5ca7-41ef-af5b-6f404e124bb4.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_163505_b282977c-5bcf-4810-8430-5a217a5d5a82.xlsx", save_as: "3001_20250401_163505_b282977c-5bcf-4810-8430-5a217a5d5a82.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20250401_164117_75e38907-8323-420f-8ab6-cc34c9942996.xls", save_as: "3316_20250401_164117_75e38907-8323-420f-8ab6-cc34c9942996.xls"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20251125_154752_b9a28b9e-7010-4118-b1fc-fa5b7ab291f4.xls", save_as: "3664_20251125_154752_b9a28b9e-7010-4118-b1fc-fa5b7ab291f4.xls"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20260331_114842_cee6d0b5-2f4e-4810-aba9-f679ad03f253.xls", save_as: "4436_20260331_114842_cee6d0b5-2f4e-4810-aba9-f679ad03f253.xls"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20260331_114940_953855dc-733e-4b7f-86f3-3db47e2abd78.xlsx", save_as: "4437_20260331_114940_953855dc-733e-4b7f-86f3-3db47e2abd78.xlsx"}
+  - {url: "https://bdmi.ine.cv/site_deploy_api/Uploads/20260331_114940_aaecc5d2-dfd5-40de-b35c-e69a4b690c6d.xlsx", save_as: "4437_20260331_114940_aaecc5d2-dfd5-40de-b35c-e69a4b690c6d.xlsx"}
+
+parser: cabo_verde_ine_trade
+geography: National
+expect_rows: 3000
+expect_periods: 8
+
+notes: >
+  INVENTORY (theme 37, 2026-11-12): 361 items -- type-2 PDF bulletins and
+  type-8 notes, monthly 2021-2023 and quarterly 2012-2026, annual
+  "Estatísticas do Comércio Externo" PDFs back to 2001; and type-10 Excel
+  "Principais Quadros": 2018 (exports, imports, re-exports), 2019-2021
+  (re-exports by section only), 2022, 2023, 2024 (two uploads), 2025. Only
+  the Excel workbooks are read here (annual 2018 and 2022-2025 for exports
+  and imports, 2018-2025 for re-exports). The PDF bulletins (monthly /
+  quarterly headline, partners, products, 2001-2026) are NOT read in this
+  pass -- the main remaining gap; a PDF descriptor would add the quarterly
+  and monthly headline and 2001-2017 / 2019-2021 annual totals.
+  CUTS (thousand escudos, CVE; net weight in tons). Exports (FOB) and imports
+  (CIF) by HS section (national, roman-numeral code) and HS chapter (hs2),
+  and by partner country (each country's total line of the country x section
+  table); re-exports by HS section; totals ("Total Geral"). 2018 and 2022
+  export totals and some re-export totals are not found (their total lines
+  sit outside the value block read); the section/chapter rows are present.
+  The 2024 import partner rows sum to 180,919,4xx vs the printed total
+  190,433,8xx: some partner total lines carry text in the second column and
+  are skipped rather than guessed.
+  CROSS-CHECKS (2024 workbook, verbatim): exports Total Geral 7,939,702.673
+  (net weight 9,762.79 t); Secção IV exports 6,535,195.497; chapter 16
+  exports 6,268,441.086; Spain exports 5,052,097.562; re-exports Total Geral
+  32,656,069.729; China exports 12,288.043. Sum check: 2024 HS2 export
+  chapters sum 7,939,702.67 = Total Geral; HS2 import chapters sum
+  190,433,8xx = Total Geral.

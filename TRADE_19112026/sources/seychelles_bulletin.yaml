@@ -1,0 +1,51 @@
+country: Seychelles
+iso3: SYC
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: National Bureau of Statistics (NBS) Seychelles
+publication_code: Merchandise Trade -- quarterly statistical bulletin
+frequency: quarterly
+expect_rows: 1000
+
+# Newest issue on NBS's own host (downloaded 2026-11-12 before NBS began
+# refusing scripted downloads: 403 for requests' UA, connection reset for the
+# browser-style UA). Back issues are Wayback `id_` copies of NBS's own files.
+discover:
+  method: largest_id_link
+  page_url: "https://www.nbs.gov.sc/"
+  link_contains: ["merchandise-trade", "download"]
+  save_as: NBS_Merchandise_Trade_2026_Q2.pdf
+  user_agent: client_default
+
+parser: seychelles_nbs_trade
+geography: National
+
+extras_cache: true
+extra_urls:
+  - {url: "https://web.archive.org/web/20220301201724id_/https://www.nbs.gov.sc/downloads/merchandise-trade-2019-q4/download", save_as: NBS_Merchandise_Trade_2019_Q4.pdf}
+  - {url: "https://web.archive.org/web/20220303141229id_/https://www.nbs.gov.sc/downloads/merchandise-trade-2020-q4/download", save_as: NBS_Merchandise_Trade_2020_Q4.pdf}
+  - {url: "https://web.archive.org/web/20240506081446id_/https://www.nbs.gov.sc/downloads/1198-merchandise-trade-2021-q4/viewdocument/1198", save_as: NBS_Merchandise_Trade_2021_Q4.pdf}
+  - {url: "https://web.archive.org/web/20230630164909id_/https://www.nbs.gov.sc/downloads/1442-merchandise-trade-q1-2023/download", save_as: NBS_Merchandise_Trade_2023_Q1.pdf}
+  - {url: "https://web.archive.org/web/20231228162733id_/https://www.nbs.gov.sc/downloads/1518-merchandise-trade-q3-2023/download", save_as: NBS_Merchandise_Trade_2023_Q3.pdf}
+
+notes: >
+  NBS quarterly bulletin (text-layer PDF, R'000). COLLECTED: Table 1a annual
+  (2008-2025) and quarterly (2016-Q1..2026-Q2, with gaps) imports c.i.f.,
+  domestic exports f.o.b., re-exports f.o.b. and balance (identity
+  dom + re - imp checked on every row); Table 2a imports by HS section/division
+  quarterly 2025-Q1..2026-Q2 (national labels; older issues use another title
+  and are not read); Tables 3 / 4b imports / domestic exports by country, full
+  year 2017-2024 and Q1 (Jan-Mar columns) 2023; Table 5 re-exports of petroleum
+  products / other, annual and quarterly 2017-2026; Table 6 economic
+  communities (EU, IOC, COMESA, SADC, ASEAN) full-year. Rows whose figures are
+  split by stray spaces (e.g. Table 6 of the Q2 2026 issue) are dropped. GAPS:
+  issues 2020-Q1..Q3, 2021-Q1..Q3, 2022, 2023-Q2/Q4, 2024, 2025, 2026-Q1 could
+  not be fetched (NBS refuses scripted downloads; Wayback refused connections /
+  truncated the 2023-Q4 copy on 2026-11-12) -- re-run when either host allows;
+  extra Wayback captures exist for 2023-Q4 and 2024-Q1..Q4.
+  CROSS-CHECK (verbatim, Q2 2026 issue Table 1a, R'000): 2025 imports
+  22,363,608, domestic exports 5,565,219, re-exports 2,920,587, balance
+  -13,877,802; 2026 Q2 imports 5,943,105, domestic exports 1,855,708,
+  re-exports 1,181,786, balance -2,905,611. Table 5 2024 petroleum products
+  re-exports 2,851,916. Table 3 2024 imports from UAE 7,419,930.

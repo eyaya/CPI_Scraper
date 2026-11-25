@@ -1,0 +1,58 @@
+country: Tunisia
+iso3: TUN
+indicator: Trade
+tier: 2
+source_type: html
+agency: Institut National de la Statistique (INS)
+publication_code: Statistiques > Commerce extérieur (web tables, Millions de dinars)
+frequency: monthly
+expect_rows: 1000
+
+discover:
+  method: static_url
+  url: "https://www.ins.tn/statistiques/50"
+  save_as: ins_statistiques_50.html
+
+parser: tunisia_ins_trade
+geography: National
+
+# The other INS trade pages, plus Wayback `id_` captures of pages 50 and 52
+# (each capture holds the window the page showed that day: page 50 the current
+# year's months, page 52 the last twelve months). Captures chosen from the CDX
+# index (2026-11-12) near each year end. Wayback answers the browser-style UA
+# with 429, hence client_default for the extras.
+extras_cache: false
+extra_urls:
+  - {url: "https://www.ins.tn/statistiques/52", save_as: ins_statistiques_52.html}
+  - {url: "https://www.ins.tn/statistiques/53", save_as: ins_statistiques_53.html}
+  - {url: "https://www.ins.tn/statistiques/54", save_as: ins_statistiques_54.html}
+  - {url: "https://www.ins.tn/statistiques/55", save_as: ins_statistiques_55.html}
+  - {url: "https://web.archive.org/web/20211112214734id_/http://www.ins.tn/statistiques/52", save_as: wayback_20211112214734_statistiques_52.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20211229015735id_/http://www.ins.tn/statistiques/50", save_as: wayback_20211229015735_statistiques_50.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20220122025718id_/http://www.ins.tn/statistiques/50", save_as: wayback_20220122025718_statistiques_50.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20220814123320id_/http://www.ins.tn/statistiques/52", save_as: wayback_20220814123320_statistiques_52.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20221216173748id_/http://www.ins.tn/statistiques/50", save_as: wayback_20221216173748_statistiques_50.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20230130113411id_/http://www.ins.tn/statistiques/52", save_as: wayback_20230130113411_statistiques_52.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20230324225002id_/http://www.ins.tn/statistiques/50", save_as: wayback_20230324225002_statistiques_50.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20231227003550id_/http://www.ins.tn/statistiques/50", save_as: wayback_20231227003550_statistiques_50.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20240301230734id_/http://www.ins.tn/statistiques/50", save_as: wayback_20240301230734_statistiques_50.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20241209214016id_/http://www.ins.tn/statistiques/50", save_as: wayback_20241209214016_statistiques_50.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20250114104715id_/http://www.ins.tn/statistiques/50", save_as: wayback_20250114104715_statistiques_50.html, user_agent: client_default}
+  - {url: "https://web.archive.org/web/20251213173522id_/http://www.ins.tn/statistiques/50", save_as: wayback_20251213173522_statistiques_50.html, user_agent: client_default}
+
+notes: >
+  INS web tables (Unité: millions de dinars). COLLECTED: page 50 balance
+  commerciale -- annual exports, imports, balance 2017-2025 and monthly
+  2026-01..2026-09 (live), with monthly windows of earlier years from Wayback
+  captures of the same page (2021-2025, months shown at capture time); page 52
+  exports / imports by groupement sectoriel d'activité (9 sectors, national),
+  last twelve months live (2025-09..2026-08) plus captures (from 2020-11); page
+  53 by type d'utilisation, annual 2017-2025; page 54 by continent (groups),
+  annual 2017-2025; page 55 principal products exported / imported, annual
+  2017-2025 (a header printing one year twice drops both columns). CVS
+  (seasonally adjusted) tables are not read. GAPS: December of a year appears
+  only where a capture was taken between its release and the next January's
+  release; months before 2021 are not on any captured page.
+  CROSS-CHECK (verbatim, page 50 live 2026-11-12): balance 2025 -21800.3,
+  exports 2025 63695.1, imports 2025 85495.4; September 2026 exports 5728.3,
+  imports 8871.5, balance -3143.2; January 2026 exports 5298.7.

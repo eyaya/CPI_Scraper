@@ -1,0 +1,18 @@
+country: Eswatini
+iso3: SWZ
+indicator: Trade
+status: blocked
+checked: 2026-11-12
+routes_tried:
+  - "https://www.gov.sz/ (CSO pages live under the Ministry of Economic Planning): connection timed out twice (curl 000, 40-60 s), 2026-11-12"
+  - "Wayback CDX url=gov.sz/images/* (4,552 captures, collapse=urlkey): no CSO merchandise-trade publication; only Ministry of Economic Planning economic bulletins, GDP bulletins/tables and inflation reports, and trade-ministry forms/speeches"
+  - "Wayback CDX url=swazistats.org.sz/* and www.swazistats.org.sz/* (former CSO site, 296 captures): no trade report (one CDX call returned the Internet Archive 'Temporarily Offline' page)"
+  - "Existing CPI/PPI/GDP descriptors for Eswatini use gov.sz Wayback copies and centralbank.org.sz; the Central Bank of Eswatini prints trade aggregates in its Quarterly Review but is not the compiler (CSO compiles from Eswatini Revenue Service data), so it is not used"
+reason: >
+  No merchandise trade statistics published by the Central Statistical Office (or an
+  official compiler) were found on reachable hosts or in Wayback captures of the CSO's
+  own hosts.
+unblock: >
+  gov.sz answering again with a CSO trade bulletin/IMTS page, or a CSO trade file URL
+  (gov.sz/images/...) that can be fetched live or via a Wayback id_ copy; or a decision
+  that the Central Bank of Eswatini qualifies as compiler (it does not compile).

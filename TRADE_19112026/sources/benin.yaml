@@ -1,0 +1,38 @@
+country: Benin
+iso3: BEN
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INStaD), DCNSE / Unité des Echanges Extérieurs
+publication_code: Grands traits du commerce extérieur du Bénin en 2025 (published 2026)
+frequency: annual
+expect_rows: 600
+expect_periods: 21
+
+discover:
+  method: static_url
+  url: "https://instad.bj/?cat=trimestriel&download=Grands_Traits_Commerce_Exterieur_Benin_2025.pdf"
+  save_as: Grands_Traits_Commerce_Exterieur_Benin_2025.pdf
+
+parser: benin_instad_trade
+geography: National
+
+notes: >
+  INStaD Benin annual "Grands traits du commerce exterieur", 2025 edition (the only
+  trade publication instad.bj lists; instad.bj answers 503 on its pages but serves
+  the listing and the file). Annexe 2 "Liste des indicateurs": exports and imports
+  of goods, billions of FCFA, ANNUAL 2005-2025. Annexe 1: exports and imports by HS
+  chapter (labels only, code blank), millions of FCFA, 2023-2025. NOT collected:
+  the "Solde" columns (exports - alpha x imports, imports brought to FOB at the
+  official 14,5 % / 11,5 % freight rate -- not exports - imports), shares,
+  contributions, the re-export top-5 tables (HS4/partners, top lists), partner
+  tables in the body (charts). OLDER SOURCES (insae-bj.org, Wayback): quarterly
+  "Bulletin" PDFs 2014-T4..2018-T1, Excel bulletins 2017-T4/2018-T1, annual
+  Export/Import par pays / par produits workbooks 2015-2017, "Echanges exterieurs"
+  2005-2007, 2014, 2016 -- listed in the Wayback CDX index but the archive answered
+  429 (throttled) to every request on 2026-11-12; to add as soon as it serves them
+  (urls in the agent report).
+  CROSS-CHECK (verbatim): Annexe 2 exports 2025 483.5, 2024 685.5, 2005 198.3;
+  imports 2025 2 405.4, 2023 2 622.3; Annexe 1 Viandes et abats imports 2023
+  75 635.9; Animaux vivants exports 2025 44.7. SUM: the HS chapters add up to
+  483 519.8 (exports 2025) and 2 405 373.7 (imports 2025) million = Annexe 2.

@@ -1,0 +1,60 @@
+country: Sierra_Leone
+iso3: SLE
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Statistics Sierra Leone (Stats SL) -- Foreign Trade Statistics Section (data from NRA-Customs ASYCUDA)
+publication_code: Foreign Trade Statistics Bulletin (annual)
+frequency: annual
+
+# --- discover ---
+# Stats SL lists its bulletins on /index.php/resources/publications.html.
+# The host now verifies TLS (2026-11-12) and serves an honest client UA
+# (`client_default`, as the PPI descriptor found). The 2013 bulletin is the
+# last one Stats SL has published; pinned.
+discover:
+  method: static_url
+  url: "https://www.statistics.sl/images/StatisticsSL/Documents/Publications/2013/2013_foreign_trade_statistics_bulletin_2.pdf"
+  user_agent: client_default
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.statistics.sl/images/StatisticsSL/Documents/Publications/2011/foreign_trade_statistics_bullentin_2011.pdf"
+
+parser: sierra_leone_statssl_trade
+geography: National
+expect_rows: 900
+expect_periods: 14
+
+notes: >
+  INVENTORY. Stats SL published annual "Foreign Trade Statistics Bulletins"
+  for 2010 (Nov 2011), 2011 (May 2012) and 2013 (Nov 2014) -- all on the live
+  site (Publications/2010, /2011, /2013) and in Wayback; no 2012 bulletin and
+  nothing after 2013 (the Statistical Abstract 2001-2013 and Annual Statistical
+  Digest 2007-2013 repeat the same series). 2014-2026 is a GAP: Stats SL has
+  not published merchandise-trade statistics since (Bank of Sierra Leone / NRA
+  figures are not NSO publications; see the report).
+  READ. 2011 bulletin (2000-2011 annual, million old leones = SLL): Table 5
+  total exports / imports, value + net weight (metric tons); Table 2 domestic
+  exports by 13 products, domestic exports, re-exports, total exports; Tables
+  3/4 imports by ECOWAS / EU country. 2013 bulletin (2011-2013 annual): Table
+  3.1 imports by SITC section + total; 3.2 / 3.3 imports / exports with ECOWAS
+  countries; 3.2.1 exports of major domestic products; 3.2.2 imports by region;
+  6.1-6.4 imports by country of origin (value + net mass). The 2010 bulletin
+  (2000-2008 annual + an ASYCUDA 2010-2011 monthly annex) is not read: its
+  annual series repeat the 2011 bulletin, and its 2011:01-09 annex table could
+  not be aligned reliably from the text layer. The 2011 bulletin's SITC table
+  (Table 1) is not read: garbled column headers. The 2013 bulletin's total
+  exports are not printed (only the major-products list), so exports stop in
+  2011 except for ECOWAS partners and products.
+  NSO INCONSISTENCIES (as published): 2011 imports 41,520,048 (2011 bulletin)
+  vs 14,985,853.33 (2013 bulletin; the newer figure is kept); the 2013 Table
+  3.1 SITC rows sum to 13,020,568.78 for 2011, not the printed total
+  14,985,853.33 (shares printed sum to 86.9 %).
+  CROSS-CHECKS (verbatim): 2000 total exports 26,770.80, imports 284,359;
+  2010 imports 11,637,059; 2000 domestic exports 24,760.50, re-exports
+  2,010.30; 2007 diamonds 423,942.70; Belgium imports 2000 13,459; 2013
+  imports 7,727,310.43; Benin imports 2013 1,796,474.00; UK imports 2011
+  1,877,853.94; iron ore exports 2013 4,613,287.50. Sum check: 2005 product
+  exports sum 437,258.7 = printed domestic exports 437,258.60; exports =
+  domestic + re-exports for every year 2000-2011.

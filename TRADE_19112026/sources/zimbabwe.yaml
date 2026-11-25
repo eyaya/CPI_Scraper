@@ -1,0 +1,40 @@
+country: Zimbabwe
+iso3: ZWE
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Zimbabwe National Statistics Agency (ZimStat) -- External Trade statistics
+publication_code: Trade Summary with BEC; Exports/Imports Classified by Country (monthly Excel)
+frequency: monthly
+discover:
+  method: static_url
+  url: "https://www.zimstat.co.zw/wp-content/uploads/Macro/Trade/2026/09/Trade_Summary_BEC_09_2026.xlsx"
+extras_cache: false
+extra_urls:
+  - "https://www.zimstat.co.zw/wp-content/uploads/Macro/Trade/2026/09/Exports_Classified_by_Country_09_2026.xlsx"
+  - "https://www.zimstat.co.zw/wp-content/uploads/Macro/Trade/2026/09/Imports_Classified_by_Country_09_2026.xlsx"
+  - "https://www.zimstat.co.zw/wp-content/uploads/Macro/Trade/2005/Trade_Statistics_1985_to_2005.xlsx"
+parser: zimbabwe_zimstat_trade
+expect_rows: 20000
+expect_periods: 90
+notes: >
+  ZimStat's External Trade page (zimstat.co.zw/external-trade/, listed through
+  wp-json/wp/v2/pages?slug=external-trade) links monthly Excel releases; the
+  September 2026 release's cumulative workbooks cover everything since 2021:
+  Exports_/Imports_Classified_by_Country (Eurotrace extract, general trade, US$):
+  every partner x month January 2021 - September 2026, "World" = headline exports /
+  imports; Trade_Summary_BEC: Table 1 domestic exports, re-exports, total exports,
+  imports, trade balance monthly January 2023 - September 2026, Tables 2/3 exports
+  and imports by every printed BEC level (bec, code as printed) for the same months.
+  Annual 1985-2005 from Trade_Statistics_1985_to_2005.xlsx (Table 7.12, "$ million"
+  = Zimbabwe dollars, emitted as ZWD x 1e6 -- see decision note): exports fob
+  (excluding gold sales), domestic exports, re-exports, imports cif; "Total exports"
+  and "Trade balance" there include gold sales and are not taken. Not collected:
+  HS8 / HS4 product tables (BEC is the commodity cut; HS2 not published), top-product
+  and partner share tables, terms-of-trade indices. Gap: 2006-2020 (no tables on the
+  page for those years except 2021-2022 monthly summaries already inside the
+  by-country workbooks). Verbatim cross-checks: Summary 2026-09 domestic exports
+  1354887738.996, re-exports 382023.459, total exports 1355269762.455, imports
+  1308534109.259, balance 46735653.196; 2023-01 total exports 428828903.781;
+  by-country World 2021 January exports 283579848.898; South Africa January 2021
+  exports 152107013.446; Table 7.12 1985 exports (fob) 1596.4, imports 1446.5.

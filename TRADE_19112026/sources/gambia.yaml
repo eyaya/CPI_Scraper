@@ -1,0 +1,93 @@
+country: Gambia
+iso3: GMB
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Gambia Bureau of Statistics (GBoS) -- International Merchandise Trade Statistics Unit (data from GRA-Customs ASYCUDA World)
+publication_code: International Merchandise Trade Statistics (quarterly and annual reports)
+frequency: quarterly
+
+# --- discover ---
+# GBoS posts every report under gbosdata.org/downloads/<id>-imts-<year>; the
+# /downloads-file/<id>-<slug> links answer with the PDF (content-disposition
+# names it). TLS verifies (2026-11-12) -- no verify_ssl override. The newest
+# report is pinned as primary; add each new quarter (largest file id) to the
+# list as GBoS posts it.
+discover:
+  method: static_url
+  url: "https://www.gbosdata.org/downloads-file/567-international-merchandise-trade-statistics-202"
+  save_as: "International Merchandise Trade Statistics - 2025 Quarter 1.pdf"
+
+extras_cache: true
+extra_urls:
+  - {url: "https://www.gbosdata.org/downloads-file/426-international-merchandise-trade-statistics-201", save_as: "International Merchandise Trade Statistics- 2015 Annual Report.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/427-international-merchandise-trade-statistics-201", save_as: "International Merchandise Trade Statistics - 2016 Annual Report.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/428-international-merchandise-trade-statistics-201", save_as: "International Merchandise Trade Statistics - 2017 Annual Report.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/429-international-merchandise-trade-statistics-201", save_as: "International Merchandise Trade Statistics - 2018 Annual Report.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/430-international-merchandise-trade-statistics-201", save_as: "International Merchandise Trade Statistics - 2019 Annual Report.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/431-international-merchandise-trade-statistics-201", save_as: " International Merchandise Trade Statistics - 2019 Quarter 1.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/432-international-merchandise-trade-statistics-201", save_as: " International Merchandise Trade Statistics - 2019 Quarter 2.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/433-international-merchandise-trade-statistics-201", save_as: " International Merchandise Trade Statistics - 2019 Quarter 3.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/434-international-merchandise-trade-statistics-201", save_as: " International Merchandise Trade Statistics - 2019 Quarter 4.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/435-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2020 Annual Report.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/436-international-merchandise-trade-statistics-202", save_as: " International Merchandise Trade Statistics - 2020 Quarter 1.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/437-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2020 Quarter 2.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/438-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2020 Quarter 3.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/439-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2020 Quarter 4.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/440-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2021 Quarter 1.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/441-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2021 Quarter 2.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/442-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2021 Quarter 3.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/443-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2021 Quarter 4.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/444-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2022 Quarter 1.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/445-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2022 Quarter 2.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/446-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2022 Quarter 3.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/458-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2022 Quarter 4.pdf.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/467-international-merchandise-trade-statistics-ann", save_as: "International Merchandise Trade Statistics - Annual Report 2022.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/476-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2023 Quarter 1.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/499-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2023 Quarter 2.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/506-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2023 Quarter 3.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/515-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2023 Quarter 4.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/546-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2024 Quarter 1.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/547-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2024 Quarter 2.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/549-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2024 Quarter 3.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/553-international-merchandise-trade-statistics-202", save_as: "International Merchandise Trade Statistics - 2024 Quarter 4.pdf"}
+  - {url: "https://www.gbosdata.org/downloads-file/554-international-merchandise-trade-statistics-ann", save_as: "International Merchandise Trade Statistics - Annual Report 2024.pdf"}
+
+parser: gambia_gbos_trade
+geography: National
+expect_rows: 1200
+expect_periods: 100
+
+notes: >
+  INVENTORY (gbosdata.org/downloads, IMTS folders, 2026-11-12): annual reports
+  2015, 2016, 2017, 2018, 2019, 2020, 2022, 2024; quarterly reports 2019 Q1 -
+  2025 Q1 (2020 Q3/Q4 posted twice, identical). No 2021 or 2023 annual report,
+  nothing for 2025 Q2 onward yet; nothing before 2015 on the site (older
+  figures are only in the Statistical Abstracts -- not read).
+  CUTS (GMD thousand). Headline: annual 2015-2024 (imports, domestic exports,
+  re-exports, total exports, total trade, balance -- the 2019 report's 2015-2019
+  summary, the annual summaries, 2023+ five-quarter / two-year summaries);
+  quarterly 2019-Q1..2025-Q1 (2025-Q1 imports and balance only: its total
+  exports line did not align); monthly 2015-01..2022-12 imports and domestic
+  exports (2015-2017 also re-exports and total exports; 2021 Jul-Sep missing --
+  the 2021 Q3 report has no monthly table in its text layer). Partner: imports
+  and exports by continent / economic zone (groups) for each report period
+  2018-2022; from 2023 imports by continent and by regional economic community
+  (value + net weight, tons) over the five quarters each report prints.
+  Commodity: imports by SITC section (value + net weight), 2023-2025 quarters
+  and 2023-2024 annual. Top-ten partner/product tables (partial lists),
+  selected commodities and SITC3 annexes are not read.
+  Monthly "EXPORTS" in the 2018-2022 "IMPORTS % EXPORTS %" tables are domestic
+  exports: the 2019 annual report's monthly TOTAL 451,891 = its Table 8
+  domestic exports (total exports 1,573,084). The 2021 Q4 summary prints the
+  balance without its minus sign (10,774,975 beside imports 10,986,777 and
+  total exports 211,802); that cell is not read.
+  CROSS-CHECKS (verbatim): 2015 imports 16,640,430 and Jan 2015 imports
+  1,338,207; 2019 total exports 1,573,084, balance -29,503,066; 2017 balance
+  -24,635,180 (2019 report; the 2017 report printed -24,495,317); 2021 Q4
+  imports 10,986,777; Oct 2022 imports 5,949,418; 2024 Q4 imports 15,328,020,
+  total exports 827,554, balance -14,500,466; 2024 Q4 imports from Africa
+  5,750,513 (net weight 292,397 t). Sum checks: 2015 monthly imports sum
+  16,640,431 vs printed 16,640,430; 2024 Q4 SITC sections sum 15,318,884 vs
+  imports 15,328,020 (one section, "Commodities not classified", is not
+  printed in the annex).

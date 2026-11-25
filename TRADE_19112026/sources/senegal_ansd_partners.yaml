@@ -1,0 +1,41 @@
+country: Senegal
+iso3: SEN
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Agence Nationale de la Statistique et de la Démographie (ANSD), Bureau des Echanges extérieurs
+publication_code: imports_exports_janv2010-fevr2026 (Import_Partenaire / Export_Partenaire, Eurotrace extraction)
+frequency: monthly
+# ANSD omits the GlobalSign GCC R3 DV TLS CA 2020 intermediate; this bundle is
+# certifi + that intermediate (from the certificate's own AIA caIssuers URL
+# http://secure.globalsign.com/cacert/gsgccr3dvtlsca2020.crt). Verification stays ON.
+verify_ssl: indicators/trade/certs/ansd_sn_ca_bundle.pem
+expect_rows: 30000
+expect_periods: 194
+
+discover:
+  method: static_url
+  url: "https://www.ansd.sn/sites/default/files/2026-04/imports_exports_janv2010-fevr2026_MAJ.xlsx"
+
+parser: senegal_ansd_partners_xlsx
+geography: National
+
+notes: >
+  ANSD Senegal merchandise trade by partner, MONTHLY 2010-01..2026-02 (194
+  months), general trade, customs value (VALDOUANE) in FCFA (units: the sheet
+  prints no caption; verified equal to BMSCE Tableau 1/2 "Valeur FAB (FCFA)" /
+  "Valeur CAF (FCFA)"), imports CIF, exports FOB. Every partner ANSD codes
+  ("001:FRANCE" -> partner FRANCE; codes 9xx -- provisions de bord, consignation,
+  origines melangees, divers non determines, Air Afrique, USEX -- are partner_type
+  group) plus the "Total" row = all partners (the monthly headline). Blank cells
+  skipped, printed 0 kept. Two codes carry the label AFGANISTAN (620, 660): 620
+  is empty throughout, so the label stays unique.
+  CROSS-CHECK (verbatim): Total imports 2010-01 170 991 780 898, 2026-02
+  513 214 617 334; exports 2010-01 71 061 939 289, 2026-02 453 128 795 408;
+  FRANCE imports 2010-01 30 523 397 278; exports 2024-02 291 787 852 202 =
+  BMSCE fevr. 2024 Tableau 1 "291 787 852 202"; imports 2024-02 479 320 762 809 =
+  BMSCE Tableau 2. INVENTORY: ANSD publishes (www.ansd.sn/Indicateur/
+  bulletin-mensuel-des-statistiques-du-commerce-exterieur) this workbook, the HS2
+  workbooks (senegal_ansd_hs2), the monthly BMSCE (senegal_ansd_bmsce; back issues
+  "BullComex" 2010-01.. on the same page) and the annual NACE
+  (senegal_ansd_nace). Before 2010 ANSD publishes no monthly series on its site.

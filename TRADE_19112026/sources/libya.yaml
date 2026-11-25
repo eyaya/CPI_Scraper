@@ -1,0 +1,47 @@
+country: Libya
+iso3: LBY
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Bureau of Statistics and Census (BSC), Ministry of Planning
+publication_code: External Trade Statistics (annual bulletin)
+frequency: annual
+expect_rows: 1000
+
+discover:
+  method: static_url
+  url: "https://bsc.ly/wp-content/uploads/2026/10/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%D8%A9-2025.pdf"
+  save_as: BSC_Foreign_Trade_Statistics_2025.pdf
+
+parser: libya_bsc_trade
+geography: National
+
+# Annual bulletins found through bsc.ly/wp-json/wp/v2/media?search=التجارة الخارجية
+# (2026-11-12). Older years exist only as "أهم مؤشرات" (key indicators, 2010-2016)
+# and a 1954-2003 time-series bulletin -- not read.
+extras_cache: true
+extra_urls:
+  - {url: "https://bsc.ly/wp-content/uploads/2026/01/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%D8%A9-2024%D9%85.pdf", save_as: BSC_Foreign_Trade_Statistics_2024.pdf}
+  - {url: "https://bsc.ly/wp-content/uploads/2025/03/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%D8%A9-2023%D9%85.pdf", save_as: BSC_Foreign_Trade_Statistics_2023.pdf}
+  - {url: "https://bsc.ly/wp-content/uploads/2025/02/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%D8%A9-2022%D9%85-1.pdf", save_as: BSC_Foreign_Trade_Statistics_2022.pdf}
+  - {url: "https://bsc.ly/wp-content/uploads/2024/12/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%D8%A9-2021%D9%85.pdf", save_as: BSC_Foreign_Trade_Statistics_2021.pdf}
+  - {url: "https://bsc.ly/wp-content/uploads/2026/03/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%D8%A9-2020%D9%85.pdf", save_as: BSC_Foreign_Trade_Statistics_2020.pdf}
+  - {url: "https://bsc.ly/wp-content/uploads/2026/03/%D8%A5%D8%AD%D8%B5%D8%A7%D8%A1%D8%A7%D8%AA-%D8%A7%D9%84%D8%AA%D8%AC%D8%A7%D8%B1%D8%A9-%D8%A7%D9%84%D8%AE%D8%A7%D8%B1%D8%AC%D9%8A%D8%A9-2019%D9%85.pdf", save_as: BSC_Foreign_Trade_Statistics_2019.pdf}
+
+notes: >
+  BSC (the NSO) compiles and publishes Libya's external-trade statistics (oil
+  exports from the National Oil Corporation). COLLECTED: Table 1 exports and
+  imports, annual 1999-2025 (thousand LYD; each bulletin reprints the series,
+  the newest wins); Table 3 exports / imports by HS section (national) and HS
+  chapter (hs2), LYD, annual 2019-2025 (one year per bulletin); Table 4 exports
+  / imports by country under regional headings (region "Total" lines emitted as
+  groups; "Grand total" skipped), LYD, 2019-2025. Not collected: Table 2
+  (sections, repeated in Table 3), Table 5 (product x country matrix), Tables
+  8-9 (HS-detail value and quantity), % changes, unit-value indices.
+  CROSS-CHECK (verbatim, 2025 bulletin): Table 1 2025 imports 139 584 809,
+  exports 145 246 488 (thousand LYD; surplus 5 661.6 million as printed in the
+  summary); 1999 imports 1 928 588, exports 3 682 182. Table 4: Italy imports
+  11536418026 / exports 51799523649 LYD; UAE 17432859323 / 13963333732; Grand
+  total 139584808568 / 145246488117. Sum check: 2025 HS chapters' exports sum to
+  145 246.5 million LYD = Table 1; imports chapters 138 591.7 million vs Table 1
+  139 584.8 (a chapter row is not read).

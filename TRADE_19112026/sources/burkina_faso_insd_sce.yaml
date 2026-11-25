@@ -1,0 +1,97 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD), Direction des statistiques sur les échanges extérieurs
+publication_code: Statistiques du commerce extérieur (SCE, quarterly; "ICE" issues 2010-2018)
+frequency: quarterly
+expect_rows: 2000
+expect_periods: 60
+
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2026-10/SCE_2T2026.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_2T2019.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_3T2019.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE%204T2019.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T1_2020.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T2_2020.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T3_2020.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE4T2020_VF.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE1T2021_VF.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T2_2021.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T3_2021.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T4_2021.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-09/SCE_T1_2022.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-09/SCE_T2_2022_0.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2023-02/SCE_T3_2022.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2023-02/SCE_T4_2022.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2023-04/SCE_1T2023.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2023-12/SCE_2T2023_Vf.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2024-01/SCE_3T2023.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2024-05/SCE_4T2023.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2024-06/SCE_1T2024.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2024-08/Note_SCE2T2024.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2025-01/SCE_3T2024.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2025-04/Note_Statistiques_Commerce_Exterieur_4T2024%20_VDEF_09-04-25.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2025-09/SCE_2T2025_DEF_15-09-2025.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2025-12/SCE_3T2025_KB_RBF_BB_DEF.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2026-07/SCE_2025_T4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2026-09/SCE_1T2026.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_01t11_final.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2010_Trimestre2.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2010_Trimestre3.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2010_Trimestre4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2011_Trimestre2.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2011_Trimestre4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2012_Trimestre1.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2012_Trimestre2.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2012_Trimestre4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2013_Trimestre1.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2013_Trimestre2.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2013_Trimestre3.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2013_Trimestre4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2014_Trimestre1.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2014_Trimestre2.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2014_Trimestre3.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2014_Trimestre4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2015_Trimestre1.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2015_Trimestre2.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2015_Trimestre3.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2015_Trimestre4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2016_Trimestre1.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2016_Trimestre2.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2016_Trimestre3.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2016_Trimestre4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2017_Trimestre1.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2017_Trimestre3.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2017_Trimestre4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2018_Trimestre1.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2018_Trimestre3.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/ICE_BF_2018_Trimestre4.pdf"
+
+parser: burkina_faso_insd_sce
+geography: National
+
+notes: >
+  INSD quarterly notes on foreign trade ("ICE_BF_<year>_Trimestre<n>" 2010-2018, "SCE"
+  2019-2026). Each prints five quarters. Read: the balance table (Tableau 07 / 1.7
+  "Evolution de la balance commerciale" or "Evolution du commerce extérieur"): exports FOB,
+  imports CIF, BC (balance, signed), billions of FCFA, QUARTERLY 2009-Q4..2026-Q2; Tableaux
+  03/1.3 and 06/1.6 the main partner countries (top 10 each quarter, labels as printed --
+  spelling varies by issue), exports FOB / imports CIF, billions of FCFA, 2012-Q1..2026-Q2.
+  Newest issue wins per quarter. A quarter header that breaks the run of consecutive
+  quarters (3T2021 prints "1 T 20" for 1T21) is dropped, not corrected. Gaps: the
+  2010-T2/T3 and 2012 issues use another layout (not read; their quarters come from later
+  issues), no 1T2025 or 1T2019 issue on the listing (covered by later issues). Not
+  collected: principal products (CTCI codes, top 10), weights (thousand tonnes, labels
+  not on the value line), unit-value / quantity / terms-of-trade indices.
+  CROSS-CHECK (verbatim): 2T2026 Tableau 1.7 exports 2T26 2 334,4, imports 1 128,7, BC
+  1 205,8 (= 2 334,4 - 1 128,7); 2T25 exports 1 555,5; Tableau 1.3 ÉMIRATS ARABES UNIS
+  2T26 1 158,0, SUISSE 863,4; Tableau 1.6 CHINE 2T26 269,9, GHANA 162,4. 2T2019 Tableau 07:
+  BC 2T18 -121,2 (exports 438,1 - imports 559,3). SUM: 2024 quarters = annual (exports
+  3 421,3; imports 3 901,5 vs 3 901,1).

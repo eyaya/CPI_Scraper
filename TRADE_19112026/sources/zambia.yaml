@@ -1,0 +1,54 @@
+country: Zambia
+iso3: ZMB
+indicator: Trade
+tier: 2
+source_type: pdf
+agency: Zambia Statistics Agency (ZamStats) -- The Monthly, Annex 2 International Merchandise Trade
+publication_code: The Monthly (bulletin)
+frequency: monthly
+discover:
+  method: static_url
+  url: "https://www.zamstats.gov.zm/wp-content/uploads/2026/10/Vol-283-of-2026-The-Monthly-October.pdf"
+extras_cache: true
+extra_urls:
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-177-2018-The-Monthly-January.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-190-2019-The-Monthly-January.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-202-2020-The-Monthly-January.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-214-2021-The-Monthly-January.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2023/12/Vol-226-of-2022-The-Monthly-January.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2023/11/Vol-238-of-2023-The-Monthly-January.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2024/07/Vol_250_of_2024_The_Monthly_January.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2025/01/Vol_261_of_2024_The_Monthly_December.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2025/02/Vol-263-of-2025-The-Monthly-February.pdf"
+  - "https://www.zamstats.gov.zm/wp-content/uploads/2026/06/Vol-274-of-2026-The_Monthly_January.pdf"
+parser: zambia_zamstats_trade
+expect_rows: 2000
+expect_periods: 100
+notes: >
+  ZamStats' monthly bulletin "The Monthly" (PDF, wp-content/uploads, listed by the
+  wp-json media search; 292 issues 2004-2026 on the site). Collected from the October
+  2026 issue and the January issues (which carry January-December of the previous
+  year): Table 2.8 annual total exports, domestic exports, re-exports, imports and
+  trade balance in ZMW and US$ (unit 1), 2000-2025 (a year is kept only if domestic
+  + re-exports = total; ZMW 2000 prints total exports 0 and is dropped); Table 10
+  monthly/quarterly imports, domestic exports, total exports, trade balance (K or $
+  as captioned; pre-2020 issues print it untitled "Total Exports (FOB) and Imports
+  (CIF), January to December <y> (K' Million)" with space thousands and bracket
+  negatives); Tables 2.1/2.2/2.3/2.5/2.6: traditional / non-traditional exports
+  (national), exports and imports by BEC-type product category (Raw Materials,
+  Intermediate, Consumer, Capital Goods -> bec), exports and imports by regional
+  grouping (Asia, COMESA, EU, SADC -> groups), monthly and quarterly, plus the
+  annual Total when the caption covers January-December. General trade system.
+  Spans: annual 2000-2025; monthly headline 2017-01 - 2018-12, 2019-12, 2020-01 -
+  2026-09 (2019-01..11 and 2022-12 not in the issues used: the Dec 2019 and 2013-2017
+  January issues use other layouts and yield nothing); monthly BEC / groups / TE-NTE
+  2020-01 - 2026-09 with gaps where an issue lacks a table (2022 issue has Table 10
+  only). Not collected: top-25 partner tables 2.9/2.10 (labelled annual but their
+  totals equal one month), five-major-partner tables (top-5 only), mode of transport.
+  No partner-country cut is published in full. The October 2026 issue captions
+  Table 2.3b "$' Million" though its values are kwacha: only the first "$" table is
+  used. Verbatim cross-checks (Oct 2026): Table 2.1a Jan-26 TE's 1,035.9, NTE's
+  357.4, Total 1,393.3; Table 2.5b Sep-26 imports; Table 2.8 2000 US$ total exports
+  869,485,416, imports 871,386,492, balance -1,901,076; 2013 ZMW total exports
+  57,175,978,211; Jan 2026 Table 10 Dec-25 imports 28.2, total exports 29.2,
+  balance 1.0 (K billion); Jan 2019 issue Apr-18 imports 7 665.7, balance (1 105.7).

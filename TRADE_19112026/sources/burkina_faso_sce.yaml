@@ -1,0 +1,55 @@
+country: Burkina_Faso
+iso3: BFA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique et de la Démographie (INSD)
+publication_code: Statistiques du commerce extérieur (SCE), quarterly note
+frequency: quarterly
+expect_rows: 1000
+expect_periods: 30
+
+discover:
+  method: static_url
+  url: "https://www.insd.bf/sites/default/files/2026-10/SCE_2T2026.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE%204T2019.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE1T2021_VF.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE4T2020_VF.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_2T2019.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_3T2019.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T1_2020.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T2_2020.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T2_2021.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T3_2020.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T3_2021.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-05/SCE_T4_2021.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-09/SCE_T1_2022.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2022-09/SCE_T2_2022_0.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2023-02/SCE_T3_2022.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2023-02/SCE_T4_2022.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2023-04/SCE_1T2023.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2023-12/SCE_2T2023_Vf.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2024-01/SCE_3T2023.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2024-05/SCE_4T2023.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2024-06/SCE_1T2024.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2024-08/Note_SCE2T2024.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2025-01/SCE_3T2024.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2025-09/SCE_2T2025_DEF_15-09-2025.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2025-12/SCE_3T2025_KB_RBF_BB_DEF.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2026-07/SCE_2025_T4.pdf"
+  - url: "https://www.insd.bf/sites/default/files/2026-09/SCE_1T2026.pdf"
+
+parser: burkina_faso_insd_sce
+geography: National
+
+notes: >
+  INSD quarterly note "Statistiques du commerce exterieur" (SCE), 27 issues
+  2019-T2 .. 2026-T2, each printing five quarters: Tableaux 1.1 / 1.4 / 1.7
+  (exports FOB, imports CIF, balance; billions of FCFA) and 1.3 / 1.6 (exports /
+  imports by leading partner country, billions of FCFA). QUARTERLY 2018-Q2..2026-Q2.
+  Newest issue wins. GAPS: the 2T2024 note (Note_SCE2T2024) is laid out differently
+  and contributes nothing; the ICE files on the same page are price indices (not
+  collected). No commodity table in the SCE (chapters are annual, in the Annuaire).

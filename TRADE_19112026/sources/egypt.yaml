@@ -1,0 +1,197 @@
+country: Egypt
+iso3: EGY
+indicator: Trade
+tier: 2                      # 1=API/SDMX, 2=structured file, 3=PDF/DOC scrape
+source_type: excel
+agency: Central Agency for Public Mobilization and Statistics (CAPMAS)
+publication_code: Foreign Trade (Monthly Bulletin) -- CAPMAS publication 22
+frequency: monthly
+expect_rows: 300             # per issue: Table 1 + BEC + partners (~350)
+# TLS verifies with the default CA store (checked 2026-11-12); no verify_ssl override.
+
+# --- discover ---
+# CAPMAS's SPA is backed by a JSON API on port 8080 (the route the CPI/PPI
+# descriptors use). Publication 22 is the monthly foreign-trade bulletin;
+# GET /api/Publication/22 returns the newest issue's Excel URL.
+discover:
+  method: capmas_publication
+  api_base: "https://www.capmas.gov.eg:8080"
+  publication_id: 22
+  prefer: excel
+  save_as: capmas_trade_latest.xlsx
+
+parser: egypt_capmas_trade
+geography: National
+
+# BACK ISSUES: every monthly workbook from January 2021 (the first Excel
+# issue), resolved through /api/Publication/SearchPublicationDetail?
+# PublicationId=22&Year=Y&Month=M (2026-11-12). Earlier issues (2006-2020) are
+# PDF only and not read. ADD each new month here when the primary moves on
+# (merge-on-write keeps rows already collected either way).
+extras_cache: true
+extra_urls:
+  - url: "https://www.capmas.gov.eg:8080/News/Data/ddab1e73-53b2-4fae-aad8-454d6aa37589.xlsx"
+    save_as: "capmas_trade_2021_01.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/69fea694-25eb-4894-b5cd-bec600650da9.xlsx"
+    save_as: "capmas_trade_2021_02.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/dbddd553-a50c-49ea-b732-751a9f22153b.xlsx"
+    save_as: "capmas_trade_2021_03.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/f2a5d1ef-5b06-4f70-b4aa-8b141961417b.xlsx"
+    save_as: "capmas_trade_2021_04.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/b4e9975e-688c-48a9-889b-92ee49e01b70.xlsx"
+    save_as: "capmas_trade_2021_05.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/b0943364-c41f-453e-a9e2-18e3e9969d91.xlsx"
+    save_as: "capmas_trade_2021_06.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/192f625c-5d6a-4d3c-b842-3eb51e9c7333.xlsx"
+    save_as: "capmas_trade_2021_07.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/682bfe69-f9d2-45e6-a4d4-f740bb494012.xlsx"
+    save_as: "capmas_trade_2021_08.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/a32cd29c-1175-4f46-815d-94c36a01e7d3.xlsx"
+    save_as: "capmas_trade_2021_09.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/9f35dec9-3f63-4973-b62d-5f5bffc7c4ad.xlsx"
+    save_as: "capmas_trade_2021_10.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/040186c0-63f7-4e20-8f96-afa6382eb8df.xlsx"
+    save_as: "capmas_trade_2021_11.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/cbc45895-9147-4906-a573-a0c779f42306.xlsx"
+    save_as: "capmas_trade_2021_12.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/1f107929-186d-46df-a18b-d67b1a83b545.xlsx"
+    save_as: "capmas_trade_2022_01.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/acc3ebb4-64e0-4b5d-a785-894baa8b5f1b.xlsx"
+    save_as: "capmas_trade_2022_02.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/013d8e74-094c-41ff-8ef3-d28492fbb6f0.xlsx"
+    save_as: "capmas_trade_2022_03.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/91b3e8cc-7174-42eb-8c60-6bdaf6b0c35e.xlsx"
+    save_as: "capmas_trade_2022_04.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/4145340d-961a-4c2d-ab67-827ea6a253b9.xlsx"
+    save_as: "capmas_trade_2022_05.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/989e01be-602f-4bbc-9b5f-f55bbc13b65e.xlsx"
+    save_as: "capmas_trade_2022_06.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/cbb4df29-edba-41fc-bff0-2db136db71e4.xlsx"
+    save_as: "capmas_trade_2022_07.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/b45f62b4-53c1-43cd-b3e5-fccf5650d60e.xlsx"
+    save_as: "capmas_trade_2022_08.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/aa186468-e35c-4eda-9a6f-a7213570c5a1.xlsx"
+    save_as: "capmas_trade_2022_09.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/755beeeb-1f8c-4cab-a97a-e92162945b38.xlsx"
+    save_as: "capmas_trade_2022_10.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/df1992e1-df90-4fee-ba7d-2b8fa48bd1cb.xlsx"
+    save_as: "capmas_trade_2022_11.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/64fd14de-0f0e-4498-834e-f31ab94b37e9.xlsx"
+    save_as: "capmas_trade_2022_12.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/ef2fe353-2c23-4a2b-af0d-e485715bbf31.xlsx"
+    save_as: "capmas_trade_2023_01.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/df2f7a10-52d5-4072-80ed-b6e5a73aadbf.xlsx"
+    save_as: "capmas_trade_2023_02.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/91862d5b-4353-42bf-a892-de0cbebae1fa.xlsx"
+    save_as: "capmas_trade_2023_03.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/9b9dc148-f850-4f68-9b60-fe73b01c2196.xlsx"
+    save_as: "capmas_trade_2023_04.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/d542e972-9b53-4e69-b445-e28a08636933.xlsx"
+    save_as: "capmas_trade_2023_05.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/85dbb026-f763-4cab-b1fd-13561945f427.xlsx"
+    save_as: "capmas_trade_2023_06.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/08d702ed-4a6b-4127-8dd7-bda245308833.xlsx"
+    save_as: "capmas_trade_2023_07.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/4f1f7d50-5546-4de9-887e-88566ffa77bc.xlsx"
+    save_as: "capmas_trade_2023_08.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/a436f989-71e9-43aa-bcfb-2ef3083a85b2.xlsx"
+    save_as: "capmas_trade_2023_09.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/1421ed85-8e4e-462a-9b2a-18a6c495ca36.xlsx"
+    save_as: "capmas_trade_2023_10.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/10f63c0a-73fe-4902-afc8-b7200a400fac.xlsx"
+    save_as: "capmas_trade_2023_11.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/News/Data/ab90eb00-1fd5-4f44-87e8-241ef51b777c.xlsx"
+    save_as: "capmas_trade_2023_12.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/a5c05b1e-58b9-4147-b65b-a9b1786c0f1e.xlsx"
+    save_as: "capmas_trade_2024_01.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/fd191873-1743-4f08-a756-a102e429cbc2.xlsx"
+    save_as: "capmas_trade_2024_02.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/0c5ca960-3016-4560-924c-2502e44079f1.xlsx"
+    save_as: "capmas_trade_2024_03.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/dd47bbd5-12c7-40d7-bfc1-c5eae3178547.xlsx"
+    save_as: "capmas_trade_2024_04.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/834c7da5-1091-4a24-949f-4de7613f6c05.xlsx"
+    save_as: "capmas_trade_2024_05.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/f77d3429-924e-404b-bcfc-d0b18ca912e5.xlsx"
+    save_as: "capmas_trade_2024_06.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/1c3631dd-ad51-4851-911e-20ab184c9499.xlsx"
+    save_as: "capmas_trade_2024_07.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/c4feb625-bd02-411d-924b-561c55ededf8.xlsx"
+    save_as: "capmas_trade_2024_08.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/f7901363-8a6c-4e1a-8a5d-ca6678f6022e.xlsx"
+    save_as: "capmas_trade_2024_09.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/8d8cb2f0-f155-461f-badc-4287fdd8f5ba.xlsx"
+    save_as: "capmas_trade_2024_10.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/7eed2191-ba80-4c1d-9636-18c314cb4701.xlsx"
+    save_as: "capmas_trade_2024_11.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/2e488a7c-e2d7-4ea6-8a7b-2aed64adbf99.xlsx"
+    save_as: "capmas_trade_2024_12.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/175b355f-93bd-43b6-a00b-8de8d5556452.xlsx"
+    save_as: "capmas_trade_2025_01.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/8ca809f3-8f41-43e3-8e65-20784171cfa7.xlsx"
+    save_as: "capmas_trade_2025_02.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/893180c2-063e-4289-8fd6-5cd55f3da4a0.xlsx"
+    save_as: "capmas_trade_2025_03.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/3da705f4-3939-4a54-a81b-4bda9b833c94.xlsx"
+    save_as: "capmas_trade_2025_04.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/8adbba8e-11cd-40b5-84ee-f2acee2c1bd6.xlsx"
+    save_as: "capmas_trade_2025_05.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/8a63eccb-0fae-42d6-b595-41107c8284be.xlsx"
+    save_as: "capmas_trade_2025_06.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/892a1019-c60b-4ab7-b0a2-75f996339a40.xlsx"
+    save_as: "capmas_trade_2025_07.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/4f2439f7-4ee2-4693-9307-9ec608be06aa.xlsx"
+    save_as: "capmas_trade_2025_08.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/f6a5afc9-762f-4012-a112-d40894edd0b8.xlsx"
+    save_as: "capmas_trade_2025_09.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/aae6103e-7d2b-4ad2-a3ac-d8e50d65d806.xlsx"
+    save_as: "capmas_trade_2025_10.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/fa1cf173-ae77-407a-b41c-70c7a403e353.xlsx"
+    save_as: "capmas_trade_2025_11.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/524ccf16-43cb-4345-b677-3c9e09ec7cb2.xlsx"
+    save_as: "capmas_trade_2025_12.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/651ddc74-8ecd-4888-89a9-6059fd8667ef.xlsx"
+    save_as: "capmas_trade_2026_01.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/00611b45-53e0-4213-93a8-a6f096a9dbf8.xlsx"
+    save_as: "capmas_trade_2026_02.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/de81aa72-c122-4ee7-8842-7e32dc4ce39d.xlsx"
+    save_as: "capmas_trade_2026_03.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/5ae39791-9d09-4151-a7b8-e774de215f42.xlsx"
+    save_as: "capmas_trade_2026_04.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/2f94e4c5-c8bd-4572-8b10-9e4f9aeb2216.xlsx"
+    save_as: "capmas_trade_2026_05.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/0951f656-1745-4b6a-841d-5d38d123f4be.xlsx"
+    save_as: "capmas_trade_2026_06.xlsx"
+  - url: "https://www.capmas.gov.eg:8080/Publication/Data/83c2b094-1f81-4bbe-b36a-0b595df5a380.xlsx"
+    save_as: "capmas_trade_2026_07.xlsx"
+
+notes: >
+  OFFICIAL COMPILER: CAPMAS (the NSO) compiles and publishes Egypt's merchandise
+  trade statistics under the general trade system (since January 2008) from
+  Customs Authority (imports), GOEIC (non-petroleum exports), the Ministry of
+  Petroleum and the Ministry of Electricity. INVENTORY: monthly bulletin
+  (publication 22) since January 2006 -- Excel from January 2021 (68 issues to
+  August 2026), PDF only before (2008-2018 scanned images; 2019-2020 a text
+  layer of reversed Arabic glyphs) -- not read; an annual bulletin
+  (publication 100, PDF only, 1994-2023) is not read. COLLECTED, per monthly
+  issue: Table 1 (US$ million) -- total exports, total imports, trade volume
+  (total), trade balance, and the petroleum breakdown as national product lines
+  (crude oil, LNG from 2022, petroleum products, exports/imports except crude
+  oil and its products / non-petroleum, labels as printed) for the month and the
+  same month a year earlier (validated data); Tables 6-A/6-B exports/imports by
+  BEC category (17 codes, US$ million), the month; Tables 9-A/9-B exports/imports
+  by region and country (US$ thousand), the month and the same month a year
+  earlier. December issues add the January-December cumulative = the calendar
+  year (2021-2025). Spans: headline monthly 2020-01..2026-08 (2020 from the 2021
+  issues' year-ago column), annual 2020-2025; BEC monthly 2021-01..2026-08,
+  annual 2021-2025; partners monthly 2020-01..2026-08, annual 2020-2025. GAPS:
+  2006-2019 (PDF only); Table 9-B (Arab countries) is missing from the June 2023
+  workbook. Year-to-date (January-<month>) blocks are not a schema period and
+  are skipped. The newer issue's figure wins where two issues print one month.
+  Not collected: ports (Table 2), the product lists of Tables 3-5/7 (national
+  lists in US$ thousand), Table 8 (partner x product matrix), changes and shares.
+  CROSS-CHECK (verbatim, August 2026 workbook, Table 1, US$ million): total
+  exports Aug 2026 4696.928, Aug 2025 4179.633; total imports Aug 2026
+  11071.011468; trade volume 15767.939468; crude oil exports 149.015.
+  January 2021 workbook Table 1: total exports Jan 2021 2496.942, imports
+  5654.196, balance -3157.254, volume 8151.138.

@@ -1,0 +1,48 @@
+country: Tanzania
+iso3: TZA
+indicator: Trade
+tier: 2
+source_type: xls
+agency: National Bureau of Statistics (NBS) Tanzania -- High Frequency Data workbook
+publication_code: High Frequency Data
+frequency: quarterly
+# TLS verifies on www.nbs.go.tz (2026-11-12); no verify_ssl override.
+
+# --- discover ---
+# NBS topic page "High Frequency Data" lists every issue (3 listing pages, 30
+# workbooks, 2021-2026). Only the issues from end-March-2025 on carry trade sheets.
+discover:
+  method: page_scrape
+  page_url: "https://www.nbs.go.tz/statistics/topic/high-frequency-data"
+  link_contains:
+    - "High"
+    - "Frequency"
+    - ".xls"
+
+extras_cache: true
+extra_urls:
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1746707389-High_Frequency_Data_end_March_2025.xls"     # Export/Import 2024: annual HS2, kg + USD
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1752235890-High_Frequency_Data_end_May_2025.xls"       # 2025-Q1 (later revised)
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1764139196-High_Frequency_Data_end_September_2025.xls" # 2025-Q1..Q3
+  - "https://www.nbs.go.tz/uploads/statistics/documents/en-1777546349-High_Frequency_Data_end_March_2026.xls"     # 2025-Q1..2026-Q1
+
+parser: tanzania_nbs_hfd
+geography: Tanzania (NBS does not say Mainland or United Republic on these sheets)
+expect_periods: 7
+
+notes: >
+  NBS "High Frequency Data" workbook. Sheets "Exports 2025" (FOB) / "Imports
+  2025" (CIF): every HS chapter (01-97) + Total, quarterly, US dollars, values
+  as stored in the cells (unrounded). Span 2025-Q1 .. 2026-Q2 (end-August-2026
+  issue). Sheets "Export 2024" / "Import 2024" (end-March-2025 issue only):
+  annual 2024 by HS chapter, net weight (kg) and value (USD; the sheet does not
+  say FOB/CIF, so price_basis is blank), plus the Total value. Quarter columns
+  whose Total is blank or 0 (not yet published) are skipped. Revisions are
+  large: the May-2025 issue printed 2025-Q1 exports 2 630 499 359.33 USD, the
+  September-2025 and later issues 2 097 570 461.85 -- the newest issue wins.
+  Issues before March 2025 (2021-2024, 25 workbooks) carry no trade sheet.
+  CROSS-CHECK (end-August-2026 issue): Exports Total 2026-Q2 = 2761046304.598974;
+  Exports "01 - Live Animals" 2025-Q1 = 2405551.88; Exports Total 2025-Q4 =
+  3113397016.055668. End-March-2025 issue: Export 2024 Total = 8702027903.92358
+  (Statistical Abstract 2025 Table 9.3 prints 8,702.0 US$ million);
+  Import 2024 Total = 15684509316.134998.

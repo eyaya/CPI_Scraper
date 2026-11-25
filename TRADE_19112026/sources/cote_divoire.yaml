@@ -1,0 +1,57 @@
+country: Cote_dIvoire
+iso3: CIV
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS, now ANStat), Direction de la Comptabilité Nationale / Commerce Extérieur
+publication_code: Données du commerce extérieur en <année> (en milliards F CFA) -- one file per year
+frequency: monthly
+expect_rows: 100
+expect_periods: 40
+
+discover:
+  method: static_url
+  url: "http://web.archive.org/web/20220118225221id_/https://www.ins.ci/documents/CommercesExterieurs/commerceExterieur2016.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "http://web.archive.org/web/20220118223746id_/https://www.ins.ci/documents/CommercesExterieurs/commerceExterieur2011.pdf"
+  - url: "http://web.archive.org/web/20220118233603id_/https://www.ins.ci/documents/CommercesExterieurs/commerceExterieur2013.pdf"
+  - url: "http://web.archive.org/web/20220118214957id_/https://www.ins.ci/documents/CommercesExterieurs/commerceExterieur2014.pdf"
+  # recovered 2026-11-19 (Wayback served them; CDX index still offline)
+  - url: "http://web.archive.org/web/20221114070116id_/http://www.ins.ci/documents/CommercesExterieurs/commerceExterieur2012.pdf"
+  - url: "http://web.archive.org/web/20221114065935id_/http://www.ins.ci/documents/CommercesExterieurs/commerceExterieur2015.pdf"
+  - url: "http://web.archive.org/web/20221114065827id_/http://www.ins.ci/documents/CommercesExterieurs/commerceExterieur2017.pdf"
+  - url: "http://web.archive.org/web/20181123203529id_/http://www.ins.ci/n/documents/CommercesExterieurs/commerceExterieur2018.pdf"
+
+parser: cote_divoire_ins_trade
+geography: National
+
+notes: >
+  Cote d'Ivoire: the former INS (ins.ci, "SOURCE: INS/DCN/CE") published one file
+  per year, "DONNEES DU COMMERCE EXTERIEUR EN <annee> (en milliards F CFA)":
+  exports, imports, trade balance (and coverage rate, not collected) for each
+  month. ins.ci is gone; read from Wayback id_ copies of the NSO's own files.
+  MONTHLY 2011-2017 (84 months) + 2018-01..06 (provisional file, six months
+  printed) + annual 2015 (the 2015 file's TOTAL column). 2012/2015/2017/2018 PDFs
+  recovered from Wayback on 2026-11-19 (layout quirks handled: 2012 prints the
+  balance's minus after the figure, 2017 "- 44,25" and "Balancecommerciale").
+  NSO INCONSISTENCY (as printed, kept): the provisional 2017 file's balance does not
+  equal exports - imports in 2017-02/03/04/05/07 (2017-03: 894,84 - 468,26 = 426,58,
+  balance printed 513,01) -- the text layer matches the print, so it is not a misread.
+  GAP: the 2018 xlsx / 2019 xls in the Wayback index
+  (www.ins.ci/[n/]documents/CommercesExterieurs/commerceExterieur<YYYY>.xlsx|xls)
+  did not resolve by id_ fetch on 2026-11-19 (CDX offline) -- add them to
+  extra_urls when found (the parser reads the xlsx/xls too). Also on
+  Wayback, not read: statistiques_ind/Balance_commerciale.pdf and
+  Commerce_exterieur_par_groupes_de_produits.pdf (2016 captures). 2020 onward:
+  ANStat (anstat.ci) sits behind a Cloudflare JS challenge ("Just a moment...",
+  HTTP 403 to every scripted request, also its searchPublicationByCritere API);
+  browser impersonation is not allowed, so ANStat's trade publications are
+  unreachable; none of the 27 anstat.ci files in the Wayback index is a trade
+  publication. The DGD (customs) is not the publishing compiler here.
+  In the PDFs the minus sign of a negative balance prints after the figure; it is
+  attached to it. CROSS-CHECK (verbatim): 2011-01 exports 687,06 imports 266,56
+  balance 420,50; 2011-10 balance 35,73 "-" = 303,60 - 339,33; 2013-12 imports
+  1 100,40 balance -163,50; 2016-03 exports 631,47 imports 417,08 balance 214,39.
+  Identity guard passes on all 48 months.

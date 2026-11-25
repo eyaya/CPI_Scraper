@@ -1,0 +1,65 @@
+country: Burundi
+iso3: BDI
+indicator: Trade
+tier: 2
+source_type: pdf
+agency: Institut National de la Statistique du Burundi (INSBU) -- data Office Burundais des Recettes (OBR)
+publication_code: Bulletin du Commerce Extérieur de Marchandises (quarterly)
+frequency: quarterly
+# TLS verifies on api.insbu.bi (2026-11-12): no verify_ssl override (the CPI descriptor's is not mirrored).
+discover:
+  # INSBU's API lists publications (type_publication "bcem" = this bulletin); the newest:
+  method: static_url
+  url: "https://api.insbu.bi/storage/documents/01M4AYK7VMTKY460BFV2W9CS3P.pdf"
+  save_as: Burundi_BCEM_2026Q2.pdf
+extras_cache: true
+extra_urls:
+  - {url: "https://api.insbu.bi/storage/documents/01KTC09D5T5YNT33EB8GVTT4WR.pdf", save_as: Burundi_BCEM_2026Q1.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNM0B89Z5EYDDKH14BDD7AW5.pdf", save_as: Burundi_BCEM_2025Q3.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNM06Q2ES24T9S5V057ZXAXT.pdf", save_as: Burundi_BCEM_2025Q2.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNM000H77RSMRPSHPCY8BCMH.pdf", save_as: Burundi_BCEM_2025Q1.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKZWG44SJBQ6122T1CVW66N.pdf", save_as: Burundi_BCEM_2024Q3.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKZTAAGSR78ZQNFQNPSE21P.pdf", save_as: Burundi_BCEM_2024Q2.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKZPVH6M2NZMMPV0MP1JCXP.pdf", save_as: Burundi_BCEM_2024Q1.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKZKYSERRBZFC0GS47VW0X0.pdf", save_as: Burundi_BCEM_2023Q4.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKZFXRR31MFSWRKEWKGAWBS.pdf", save_as: Burundi_BCEM_2023Q1.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKZ7K4VH55Q1ZTSQ6TKQJF1.pdf", save_as: Burundi_BCEM_2022Q4.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKYSZFMJ6RTS2FV5PYH7WKR.pdf", save_as: Burundi_BCEM_2022Q3.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKYMCN2S84Y6KKY9JXRYYKP.pdf", save_as: Burundi_BCEM_2022Q2.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKYDZMB199YD0WAP3XATN1J.pdf", save_as: Burundi_BCEM_2022Q1.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKY7MMG9TXS5Q7W4XTZWD9X.pdf", save_as: Burundi_BCEM_2021Q4.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKY5E6ZVS0DSBXNXGPR3QBH.pdf", save_as: Burundi_BCEM_2021Q3.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKXVVKNDHXRTJ7QN21HCR8V.pdf", save_as: Burundi_BCEM_2021Q2.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKXS3M78TSDHPCSGVRSFSFN.pdf", save_as: Burundi_BCEM_2021Q1.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKXHDKNRN0H2652B9H8G2Y3.pdf", save_as: Burundi_BCEM_2020Q4.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKXAY8DZBYJA38QV5N5R6P7.pdf", save_as: Burundi_BCEM_2020Q3.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKX9GXT8E5DQ2Q7PDKQ3KPF.pdf", save_as: Burundi_BCEM_2020Q2.pdf}
+  - {url: "https://api.insbu.bi/storage/documents/01KNKX7BTP63M63M7AN271JQ7G.pdf", save_as: Burundi_BCEM_2020Q1.pdf}
+parser: burundi_insbu_trade
+geography: Total country
+expect_rows: 100
+expect_periods: 4
+notes: >
+  INSBU "Bulletin du Commerce Extérieur de Marchandises" (OBR customs data), millions
+  of BIF. INVENTORY (api.insbu.bi publications): quarterly bulletins 2020-Q1..2022-Q4,
+  2023-Q1, 2023-Q4, 2024-Q1..Q3, 2025-Q1..Q3, 2026-Q1, 2026-Q2 (2023-Q2/Q3, 2024-Q4 and
+  2025-Q4 not posted); annual reports 2018, 2020-2024 (downloaded, not parsed); "Indices
+  du commerce extérieur" (unit-value indices, not collected).
+  COLLECTED: headline quarterly 2015-Q1..2026-Q2 and annual 2015-2025 from Tableau 1
+  (imports, domestic exports, re-exports, total trade, balance; the 2020 bulletins'
+  single export column as "export"); HS chapters (hs2) of imports and exports by quarter
+  2019-Q1..2026-Q2 (+ annual where all four quarters print); continents, blocs (UE,
+  COMESA, EAC, CEEAC, CEPGL, SADC) and the countries printed in them, imports and
+  exports, 2019-Q1..2026-Q2.
+  NOTE: "Total des exportations (2)+(3)" includes temporary exports (2026-Q2 bulletin,
+  2021-Q3: 39 276,3 + 4 169,9 + 4 289,9 = 47 736,1), so where domestic exports are
+  printed it is not emitted. A Tableau 1 whose exports - imports does not give the
+  printed balance for more than a quarter of its rows is dropped (2021-Q1, 2021-Q2,
+  2024-Q2, 2025-Q2 bulletin layouts); single inconsistent periods lose their balance and
+  total. A cell printed differently in two zone tables of one bulletin (RDC imports
+  2025-Q4: 85 910,5 COMESA vs 28 993,7 CEEAC/CEPGL) is dropped.
+  GAPS: top-20 partner rankings (side-by-side tables) and temporary exports not read;
+  partner and HS2 detail before 2019 (the 2020 bulletins' windows start 2019).
+  CROSS-CHECK (verbatim, 2026-Q2 bulletin Tableau 1, millions BIF): 2022-Q1 imports
+  576 050,3, domestic exports 107 787,0, re-exports 3 836,1, total trade 692 590,4,
+  balance -459 510,2; 2025-Q4 imports 980 824,3, balance -720 985,6.

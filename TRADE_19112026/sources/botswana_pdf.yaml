@@ -1,0 +1,56 @@
+country: Botswana
+iso3: BWA
+indicator: Trade
+tier: 2
+source_type: pdf
+agency: Statistics Botswana -- International Merchandise Trade Statistics (IMTS) Monthly Digest (PDF back issues)
+publication_code: IMTS Monthly Digest, Table 1 (back series)
+frequency: monthly
+discover:
+  method: static_url
+  url: "https://www.statsbots.org.bw/sites/default/files/publications/International%20Merchandise%20Trade%20Statistics%20December%202023%20Version%202.pdf"
+extras_cache: true
+extra_urls:
+  - "https://www.statsbots.org.bw/sites/default/files/publications/BIMTS%20November%202013.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/BIMTS%20September%202014.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/BIMTS%20December%202015.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/IMTS%20DECEMBER%202016.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/IMTS%20DECEMBER%202017.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/IMTS%20DECEMBER%202018.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/IMTS%20DECEMBER%202019.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/International%20Merchandise%20Trade%20Statistics%20December%20%20Monthly%20Digest%20%20December%202020.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/IMTS%20December%202021_0.pdf"
+  - "https://www.statsbots.org.bw/sites/default/files/publications/IMTS%20December%202022.pdf"
+parser: botswana_statsbots_pdf
+expect_rows: 1500
+expect_periods: 150
+notes: >
+  Back series from Statistics Botswana's own monthly IMTS Digest PDFs (text layer
+  present), one issue per year: November 2013, September 2014, December 2015-2023.
+  Each issue's Table 1 "Total Merchandise Trade" covers two to four years (November
+  2013: quarters from 2008 and months from July 2010, in '000 pula; later issues in
+  million pula -- the caption's scale is read, never assumed). Collected: imports CIF
+  and FOB, domestic exports, re-exports, total exports and trade balance (signed;
+  printed negatives in parentheses), monthly July 2010 - December 2023, quarterly
+  2008-Q1 - 2023-Q4, annual 2008-2023 (Total_<year> rows). The rotated column header
+  is unreadable in most issues, so the fixed column order (Imports CIF, Imports FOB,
+  Freight, Insurance, Domestic Exports, Re-Exports, Total Exports, Trade Balance) is
+  used, read from the header text where it is readable (Nov 2013 prints Re-Exports
+  BEFORE Domestic Exports), and every row must satisfy FOB + freight + insurance =
+  CIF, domestic + re-exports = total exports and total exports - CIF = balance
+  (to rounding) or it is dropped -- a check, nothing derived. The December 2015 issue
+  also prints Tables 3.1A/3.2A by partner x month for January-December 2015 (partner
+  cut, 2015 monthly). Newest issue wins on overlaps; from January 2022 the Excel
+  tables (descriptor botswana) are newer still -- run this descriptor BEFORE
+  botswana. Not collected from PDFs: commodity tables 2.1/2.2 (rotated, reversed
+  column headers whose group list changes over time -- column order cannot be read
+  reliably), month x commodity partner tables (2016+), HS2 Table 5 (2015 layout,
+  PULA, two months per issue). BIMTS Quarter 1 2013 uses a different (quarterly)
+  layout and is not used. Annual External Trade reports 2004-2011 (PDF) exist on the
+  site and are not collected (gap: before 2008 quarterly / July 2010 monthly).
+  Verbatim cross-checks: Dec 2015 Table 1 Jan_2012 imports CIF 4,070.0, total
+  exports 3,354.2, balance (715.8); Total_2015 imports CIF 72,347.4, balance
+  (9,058.4); Dec 2019 Total _2019 imports CIF 70,540.9, total exports 56,257.4,
+  balance (14,283.4); Nov 2013 Q1_2008 imports CIF 7,596,014 ('000), re-exports
+  244,706, domestic exports 8,893,073; Dec 2015 Table 3.2A South Africa January 2015
+  961.1, Namibia December 2015 870.3.

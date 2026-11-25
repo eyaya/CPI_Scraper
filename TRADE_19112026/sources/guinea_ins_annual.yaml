@@ -1,0 +1,53 @@
+country: Guinea
+iso3: GIN
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Institut National de la Statistique (INS Guinée), commerce extérieur
+publication_code: Annuaire statistique du commerce extérieur / Note d'analyse annuelle (2017, 2022, 2023, 2024 editions)
+frequency: annual
+expect_rows: 8000
+expect_periods: 13
+
+discover:
+  method: static_url
+  url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/NOTE_ANALYSE_STATISTIQUE_COMMERCE_EXTERIEUR_2024.pdf"
+
+extras_cache: true
+extra_urls:
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/INS_Statistiques_CommerceExterieur_2017.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/annuelles/CE/ANNUAIRE_CE_2022_VF.pdf"
+  - url: "https://www.stat-guinee.org/images/Documents/Publications/INS/infra_annuelles/NCE/NACE_2023_VF.pdf"
+
+parser: guinea_ins_annual
+geography: National
+
+notes: >
+  INS Guinee annual foreign-trade reports, annex tables, billions of GNF, ANNUAL
+  2012-2024: "Statistiques du commerce exterieur 2017" (2012-2017: Tableau 01.01
+  exports / imports / balance; 02.02 / 02.04 exports / imports by HS chapter WITH
+  codes "03- Poissons ..."; 03.02 / 03.04 by country and zone; 03.05 balance by
+  country), "Annuaire statistique du commerce exterieur 2022" (2018-2022), "Note
+  d'analyse annuelle 2023" (2019-2023) and "Note d'analyse statistique 2024"
+  (2020-2024): Tableau "Evolution generale" (exports, imports), exports / imports /
+  balance by HS chapter (labels only -> code blank), by SITC division ("CTCI",
+  labels only -> sitc2, code blank), by zone and continent (group), CEDEAO partners,
+  the balance by zone and partner, and "Pays clients / fournisseurs par zone" --
+  printed "(valeurs GNF)" with no scale: taken as billions ONLY because every zone
+  subtotal equals the same report's "par zone geographique (Milliards GNF)" table
+  (checked in the parser; tables that fail are dropped). A newer edition replaces an
+  older one year by year. Rows whose label is not followed by exactly one figure per
+  year (wrapped labels, rows printed without label, cells run together) are
+  dropped; HS section subtotals (I, II ...) are skipped. NOT collected: weights
+  (tonnes), shares, price indices, terms of trade, "Principaux produits" (HS4 top
+  lists), Tableau 1 "Liste des indicateurs" (it disagrees with Tableau 2 in the
+  2022 edition: exports 2020 11 766,9 vs 61 148). GAPS: 2010-2011 (a brochure by HS
+  section in GNF units), 2012-2013 booklet is a scanned PDF without text layer
+  (skipped, no OCR), 2014-2015 and 2016-2017 "BDCE" booklets (two-year column
+  layout, not parsed; their years are covered by the 2017 report).
+  CROSS-CHECK (verbatim): 2017 report T01.01 imports 2012 17 082,00, exports 2017
+  41 678,46, balance 2016 -18 507,92 (= 20 723,98 - 39 231,90); 2024 note Tableau 1
+  imports 2024 74 544, exports 2024 88141; annuaire 2022 Tableau 2 exports 2021
+  89 313; T15 ch. MINERAIS, SCORIES ET CENDRES exports 2022 21 637; Tableau 19
+  (2024) exports Afrique de l'ouest 2020 4 514 = T32 subtotal 4 514; Sierra Leone
+  balance 2023 364 (NACE 2023 T38).

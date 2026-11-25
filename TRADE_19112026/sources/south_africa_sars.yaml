@@ -1,0 +1,63 @@
+country: South_Africa
+iso3: ZAF
+indicator: Trade
+tier: 2
+source_type: excel
+agency: South African Revenue Service (SARS) -- Customs trade statistics (official compiler)
+publication_code: SARS Trade Statistics (Excel workbooks)
+frequency: monthly
+discover:
+  method: page_scrape
+  page_url: "https://www.sars.gov.za/customs-and-excise/trade-statistics/reports/"
+  link_contains: ["YoY-World-Zone-Comparison", ".zip"]
+  unzip: false
+extras_cache: false
+extra_urls:
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2018/Sep/Cumulative-Bilateral-Trade-by-Country-2010.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2018/Sep/Cumulative-Bilateral-Trade-by-Country-2011.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2018/Sep/Cumulative-Bilateral-Trade-by-Country-2012.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2019/Dec/Cumulative-Bilateral-Trade-by-Country-2013.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2014.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2015.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2016.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2017.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2018.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2019.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2020.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2021.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2022.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2023.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2024.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2025.zip"
+  - "https://www.sars.gov.za/wp-content/uploads/Docs/TradeStats/2026TradeStats/Sep9987/Cumulative-Bilateral-Trade-by-Country-2026.zip"
+parser: south_africa_sars_trade
+expect_rows: 9000
+expect_periods: 150
+notes: >
+  OFFICIAL COMPILER: South Africa's merchandise trade statistics are compiled and
+  published by the South African Revenue Service (SARS, Customs), not by Stats SA
+  (which republishes SARS figures); SARS therefore qualifies under the source
+  policy. Two SARS Excel products (zipped .xlsx) from
+  sars.gov.za/customs-and-excise/trade-statistics/reports/:
+  (1) YoY-World-Zone-Comparison.zip, sheet "WorldZone Incl BLNS": exports and
+  imports by world zone (AFRICA, EUROPE, AMERICA, ASIA, OCEANIA, OTHER UNCLASSIFIED,
+  SHIP/AIRCRAFT) and TOTAL, monthly January 2014 - September 2026, in rand (unit 1),
+  plus the annual GRAND TOTAL for complete years 2014-2025 (the 2026 YTD total is
+  not emitted). Partner groups, partner_type group. Headline = TOTAL row.
+  (2) Cumulative-Bilateral-Trade-by-Country-<year>.zip, 2010-2025 (2026 is
+  January-September only and is skipped until the December file appears): annual
+  exports and imports by partner country (the "Total" row of each region sheet,
+  HS-section x partner detail not taken), rand. Including-BLNS sheets only; the
+  "Excl BLNS" sheets (SA trade without Botswana, Lesotho, Namibia, Eswatini) are
+  a different coverage and are not collected. Non-country partner lines
+  ("Origin Of The Goods Is Unknown", "Ship/Aircraft") are partner_type group.
+  The world-zone/region totals inside the bilateral workbook duplicate (1) and are
+  skipped. Not published in Excel: monthly by commodity (taken from the PDF
+  releases, descriptor south_africa_sars_pdf) and the trade balance (PDF page 1).
+  Verbatim cross-checks (WorldZone Incl BLNS): exports TOTAL September 2026 =
+  190591057728.76; imports TOTAL September 2026 = 170794521991; exports TOTAL
+  January 2014 = 77511278915; exports AFRICA 2025 GRAND TOTAL = 558814438319;
+  imports TOTAL 2025 GRAND TOTAL = 1884227891390. Bilateral 2026 file (YTD, not
+  emitted) Oceania imports Australia = 11333022706.
+  SARS's interactive Trade Statistics Data portal (tools.sars.gov.za/tradestatsportal,
+  HS8 x country) is an ASP.NET postback form not driven by this harness.

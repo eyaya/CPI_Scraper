@@ -1,0 +1,100 @@
+country: Namibia
+iso3: NAM
+indicator: Trade
+tier: 2
+source_type: excel
+agency: Namibia Statistics Agency (NSA) -- Namibia International Merchandise Trade Statistics Bulletin
+publication_code: Monthly Merchandise Trade Statistics Bulletin, Excel tables
+frequency: monthly
+discover:
+  method: static_url
+  url: "https://nsa.org.na/wp-content/uploads/2026/11/Namibia_International_Merchandise_Trade-Statistics_Bulletin_September_2026_Excel_Tables_Dissemination.xlsx"
+extras_cache: true
+extra_urls:
+  - "https://nsa.org.na/wp-content/uploads/2021/02/March_2021_Excel_tables.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2023/09/Namibia-Merchandise-Trade_Statistics_Bulletin__Sep_2023_Excel_Tables_dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/06/Namibia-Merchandise-Feb-2024_Excel_Tables.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/April_tables_20211.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Copy-of-Trade_Statistics_Bulletin__Annual-2022-and-December_2022_Excel_Tables_dissemination-1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Copy-of-Trade_Statistics_Bulletin__Annual-2022-and-December_2022_Excel_Tables_dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/March-Trade-Statistics-Excell_Table-2022-Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Feb-2024_Excel_Tables.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Jan-2024_Excel_Tables.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Trade-May-2024_Excel_Tables_Dissemination-1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Trade_Statistics_Bulletin__April_2023_Excel_Tables_dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Trade_Statistics_Bulletin__Dec_2023_Excel_Tables_dissemination-2.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Trade_Statistics_Bulletin__July_2023_Excel_Tables_dissemination-1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Trade_Statistics_Bulletin__July_2023_Excel_Tables_dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Trade_Statistics_Bulletin__May_2023_Excel_Tables_dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Namibia-Merchandise-Trade_Statistics_Bulletin__Nov_2023_Excel_Tables_dissemination-FINAL.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Trade_Jun_Tables_2021.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Trade_May_tables_2021_final1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Trade_Sep_Excel-tables_2021.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Trade_Statistics-Bulletin-_July-2022_Excel_Tables-1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Trade_Statistics-Bulletin-_July-2022_Excel_Tables.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Trade_Statistics_Bulletin__February_2022_Excel_Tables_dissemination-1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/07/Trade_Statistics_Bulletin__March_2022_Excel_Tables_dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/08/Namibia-Merchandise-June-2024_Excel_Tables_Dissemination-FINAL.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/09/Namibia-Merchandise-July-2024_Excel_Tables_Dissemination-002.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/10/Namibia_International_Merchandise_Trade-Statistics_Bulletin_August_2024_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/11/Namibia_International_Merchandise_Trade-Statistics_Bulletin_September_2024_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2024/12/Copy-of-Namibia_International_Merchandise_Trade-Statistics_Bulletin_October_2024_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/01/Namibia_International_Merchandise_Trade-Statistics_Bulletin_NOV_2024_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/02/Namibia_International_Merchandise_Trade-Statistics_Bulletin_December_2024_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/03/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Jan_2024_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/04/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Feb_2025_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/05/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Mar_2025_Excel_Tables_Dissemination-002.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/06/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Apr_2025_Excel_Tables_Dissemination1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/07/Namibia_International_Merchandise_Trade-Statistics_Bulletin_May_2025_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/08/Namibia_International_Merchandise_Trade-Statistics_Bulletin_June_2025_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/09/Namibia_International_Merchandise_Trade-Statistics_Bulletin_July_2025_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/10/Namibia_International_Merchandise_Trade-Statistics_Bulletin_August_2025_Excel_Tables_Dissemination-1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/11/Namibia_International_Merchandise_Trade-Statistics_Bulletin_September_2025_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2025/12/Namibia_International_Merchandise_Trade-Statistics_Bulletin_October_2025_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/01/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Nov_2025_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/02/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Dec_2025_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/03/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Jan_2026_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/04/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Feb_2026_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/05/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Mar_2026_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/06/Namibia_International_Merchandise_Trade-Statistics_Bulletin_Apr_2026_Excel_Tables_Dissemination-.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/07/Namibia_International_Merchandise_Trade-Statistics_Bulletin_May_2026_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/08/Namibia_International_Merchandise_Trade-Statistics_Bulletin_June_2026_Excel_Tables_Dissemination.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/09/Namibia_International_Merchandise_Trade-Statistics_Bulletin_July_2026_Excel_Tables_-1.xlsx"
+  - "https://nsa.org.na/wp-content/uploads/2026/10/Namibia_International_Merchandise_Trade-Statistics_Bulletin_August_2026_Dissemination_.xlsx"
+parser: namibia_nsa_trade
+expect_rows: 10000
+expect_periods: 60
+notes: >
+  NSA publishes the monthly trade bulletin (PDF) with an Excel table workbook; 50
+  workbooks March 2021 - September 2026 are linked from nsa.org.na/document/... pages
+  (found through the site's dlp_document sitemap; TLS verifies, no verify_ssl
+  override). Each workbook: exports, imports and trade balance monthly over a
+  13-month window (2021 issues: from January 2020, with quarters), the year's
+  cumulative table, annual 2018-2022 highlights (Annual-2022 issue); exports,
+  re-exports and imports by partner country and by SITC group (3-digit, the only
+  commodity level published monthly -> sitc3; in the current month also domestic
+  exports / re-exports of each group) and by economic region (groups, overlapping:
+  SACU, SADC_excl_SACU, COMESA, EU, OECD, BRIC+ ...) for three months per issue
+  (current, previous, same month a year earlier). N$ million (NAD x 1e6); the July
+  2022 issue prints its balance table in N$ billion and is emitted as such. Month
+  columns are anchored on each table's Total row = the file's headline exports /
+  imports (some issues store "Aug-23" as a date in 2024); re-export and region
+  tables follow the layout proven in the same file. 2021 period tables print no
+  scale: emitted only because their months equal, to the unit, the Total of the
+  same file's partner tables printed in "Value (N$ m)" (series_code says so).
+  Spans: headline monthly January 2020 - September 2026 (81 months), quarterly
+  2020-Q1 - 2022-Q1, annual 2019-2025; partner and SITC3 monthly for 68 months
+  between March 2020 and September 2026 (three months per issue; missing
+  2020-07/08, 2020-10 - 2021-01, 2021-10/11, 2022-01, 2022-08, 2022-10 -- no Excel
+  workbook covers them). Note: revisions can be large (March 2021 exports 6548.4 in
+  the March 2021 issue, 4674.2 in later issues; the newest is kept).
+  Before 2020: NSA bulletins
+  2013-2020 are PDF only on the old site (not collected; gap). Not collected: ISIC
+  tables, top-5 products by country (matrix), mode of transport, border posts,
+  revisions, commodity of the month, annual product tables without codes.
+  Verbatim cross-checks (September 2026 workbook): Table 9 Sep 2026 exports
+  12244.386986, imports 16914.9734, trade bal -4670.586414; Table 12 Total Sep 2026
+  12244.386986, China 4434.693047, South Africa 2397.090455; Table 14 286:Uranium
+  Sep 2026 total export 3394.300855, domestic 3394.300855; Table 22 SACU Sep 2026
+  3008.369373; March 2021 workbook Table 1 Mar 2021 export 6548.408009 = Table 3
+  Total.

@@ -1,0 +1,46 @@
+country: Algeria
+iso3: DZA
+indicator: Trade
+tier: 3
+source_type: pdf
+agency: Office National des Statistiques (ONS) -- republishing the customs (Direction Générale des Douanes) foreign-trade statistics
+publication_code: Rétrospective Statistique 1962-2020, Chapitre X "Commerce extérieur" (ONS article 2858)
+frequency: annual
+expect_rows: 5000
+expect_periods: 55
+# ONS serves an incomplete TLS chain; this CA bundle completes the missing
+# intermediate (the PPI descriptor's bundle) -- verification stays ON.
+verify_ssl: indicators/ppi/certs/ons_dz_ca_bundle.pem
+
+discover:
+  method: static_url
+  url: "https://www.ons.dz/IMG/pdf/CH10_Commerce_exter1962_2020Fr.pdf"
+
+parser: algeria_ons_trade
+geography: National
+
+notes: >
+  COMPILER: Algeria's merchandise-trade statistics are compiled by the customs
+  (Direction Générale des Douanes, douane.gov.dz) and REPUBLISHED by ONS; per the
+  source policy ONS's own file is used. ONS publishes no current trade series of
+  its own (only unit-value / foreign-trade price indices, quarterly, which belong
+  to the PPI package, and 1992-2006 summary PDFs in rubrique 19). The customs
+  host does not verify TLS with the default CA store (2026-11-12) and was not
+  used, so 2021 onward is a GAP.
+  COLLECTED (annual, DZD, 10^6 unless the table says 10^3): Tableau 1.1 imports
+  and exports 1963-1966; Tableaux 1.2/1.3 by zone 1964-1966 (France / zone franc
+  / hors zone franc); Tableaux 2.1-2.8 imports and exports by broad economic
+  category (C.G.C.E. = BEC main categories, labels as printed) and their totals,
+  1967-2020; Tableaux 3.1-3.10 imports and 4.1-4.9 exports by geographical zone
+  (groups, "dont" lines) and main countries 1967-2020; Tableaux 5.x / 6.x
+  principal exported (1967-2019, 10^3 DA from 2009) and imported (1970-2018)
+  products, national list. Headline 1963-2020 continuous. Not read: Tableaux 7.x
+  (ten first clients/suppliers, rank tables). Cells that are not well-formed
+  numbers in the PDF (misprints such as "307 5444,9", Italy imports 2020) are
+  dropped; "-" / "..." are blank.
+  CROSS-CHECK (verbatim, Tableau 2.8, 10^6 DA): imports total 2020 4 363 653,1,
+  2015 5 193 459,7; exports total 2020 2 846 371,4; exports fuels 2020
+  2 560 472,7; imports food 2020 897 914,4. Tableau 1.1: imports 1963 2 887,0,
+  exports 1963 3 610,0. Tableau 3.10: imports from France 2020 462 988,8, China
+  733 366,8. Sum check: the seven C.G.C.E. export categories 2009 sum to the
+  printed total 3 347 636,0.
